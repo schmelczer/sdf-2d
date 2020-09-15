@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "outDir": "build",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "target": "es5",
+    "downlevelIteration": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "Node",
+    "module": "commonjs",
+    "declaration": true,
+    "lib": ["es2015", "dom"]
+  }
+}
