@@ -1,6 +1,5 @@
 import { vec2 } from 'gl-matrix';
-import { IDrawable } from './drawables/i-drawable';
-import { ILight } from './drawables/lights/i-light';
+import { Drawable } from '../drawables/drawable';
 
 export interface IRenderer {
   initialize(): Promise<void>;
@@ -8,9 +7,8 @@ export interface IRenderer {
   startFrame(deltaTime: DOMHighResTimeStamp): void;
   finishFrame(): void;
 
-  drawShape(drawable: IDrawable): void;
-  drawLight(light: ILight): void;
-  drawInfoText(text: string): void;
+  drawShape(drawable: Drawable): void;
+  drawLight(light: Drawable): void;
 
   readonly canvasSize: vec2;
   setViewArea(topLeft: vec2, size: vec2): void;

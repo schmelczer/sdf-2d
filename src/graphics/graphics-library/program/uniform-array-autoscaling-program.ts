@@ -1,7 +1,7 @@
 import { mat2d, vec2 } from 'gl-matrix';
+import { DrawableDescriptor } from '../../../drawables/drawable-descriptor';
 import { getCombinations } from '../../../helper/get-combinations';
 import { last } from '../../../helper/last';
-import { IDrawableDescriptor } from '../../drawables/i-drawable-descriptor';
 import { FragmentShaderOnlyProgram } from './fragment-shader-only-program';
 import { IProgram } from './i-program';
 
@@ -18,7 +18,7 @@ export class UniformArrayAutoScalingProgram implements IProgram {
   constructor(
     private gl: WebGL2RenderingContext,
     shaderSources: [string, string],
-    private descriptors: Array<IDrawableDescriptor>
+    private descriptors: Array<DrawableDescriptor>
   ) {
     const names = descriptors.map((o) => o.countMacroName);
     for (const combination of getCombinations(

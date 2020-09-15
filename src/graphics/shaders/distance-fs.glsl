@@ -2,8 +2,9 @@
 
 precision lowp float;
 
-#define LINE_COUNT {lineCount}
-#define BLOB_COUNT {blobCount}
+// #define LINE_COUNT {lineCount}
+// #define BLOB_COUNT {blobCount}
+#define CIRCLE_COUNT {circleCount}
 
 #define SURFACE_OFFSET 0.001
  
@@ -20,7 +21,7 @@ float smoothMin(float a, float b)
     b = pow(b, k);
     return pow((a * b) / (a + b), 1.0 / k);
 }
-
+/*
 #if LINE_COUNT > 0
     uniform struct {
         vec2 from;
@@ -53,7 +54,22 @@ float smoothMin(float a, float b)
         minDistance = -myMinDistance;
     }
 #endif
+*/
+#if CIRCLE_COUNT > 0
+    uniform struct {
+        vec2 center;
+        float radius;
+    }[CIRCLE_COUNT] circles;
 
+    void circleMinDistance(inout float minDistance, inout float color) {
+        for (int i = 0; i < CIRCLE_COUNT; i++) {
+            float dist = distance(circles[i].center, position) - circles[i].radius;
+            minDistance = min(minDistance, dist);
+        }
+    }
+#endif
+
+/*
 #if BLOB_COUNT > 0
     uniform struct {
         vec2 headCenter;
@@ -88,22 +104,26 @@ float smoothMin(float a, float b)
         }
     }
 #endif
+*/
 
 out vec2 fragmentColor;
 
 void main() {
-    float minDistance = -maxMinDistance;
-    float color = 0.0;
+    float minDistance = 10.0; //-maxMinDistance;
+    float color = 1.0;
 
-    #if LINE_COUNT > 0
+    /*#if LINE_COUNT > 0
         lineMinDistance(minDistance, color);
     #endif
 
     #if BLOB_COUNT > 0
         blobMinDistance(minDistance, color);
+    #endif*/
+
+    #if CIRCLE_COUNT > 0
+        circleMinDistance(minDistance, color);
     #endif
 
-
     // minDistance / 2.0: NDC to UV scale
-    fragmentColor = vec2((minDistance - SURFACE_OFFSET) / 2.0, color);
+    fragmentColor = vec2(minDistance / 2.0, color);
 }

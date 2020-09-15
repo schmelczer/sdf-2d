@@ -1,50 +1,41 @@
 {
-  "name": "sdf-2d-gl",
+  "name": "sdf-2d",
   "version": "0.0.0",
   "scripts": {
-    "start": "webpack-dev-server --mode development",
-    "lint": "npx eslint --fix \"src/**/*.ts\" && npx prettier --write \"src/**/*.ts\"",
-    "build": "webpack && find dist -type f -not -name '*.html' | xargs rm"
+    "clean": "shx rm -rf _bundles lib lib-esm",
+    "build": "npm run clean && tsc && tsc -m es6 --outDir lib-esm && webpack"
   },
   "keywords": [],
   "author": "András Schmelczer",
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
   "browserslist": [
     "defaults"
   ],
   "sideEffects": [
     "*.scss"
   ],
-  "main": "./dist/sdf-2d-gl.js",
-  "types": "./dist/sdf-2d-gl.d.ts",
+  "main": "lib/sdf-2d.js",
+  "types": "lib/src/main.d.ts",
   "files": [
-    "dist"
+    "lib"
   ],
-  "optimization": {
-    "usedExports": true
-  },
   "devDependencies": {
-    "@types/gl-matrix": "^2.4.5",
-    "@typescript-eslint/eslint-plugin": "^3.9.1",
-    "@typescript-eslint/parser": "^3.9.1",
-    "eslint": "^7.2.0",
+    "@typescript-eslint/eslint-plugin": "^3.10.1",
+    "@typescript-eslint/parser": "^3.10.1",
+    "awesome-typescript-loader": "^5.2.1",
+    "eslint": "^7.9.0",
     "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-unused-imports": "^0.1.3",
     "gl-matrix": "^3.3.0",
-    "prettier": "^2.0.5",
+    "prettier": "^2.1.1",
     "raw-loader": "^4.0.1",
     "resolve-url-loader": "^3.1.1",
-    "terser-webpack-plugin": "^2.3.5",
-    "ts-loader": "^8.0.1",
-    "typescript": "^3.8.3",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.10.3"
+    "shx": "^0.3.2",
+    "terser-webpack-plugin": "^2.3.8",
+    "ts-loader": "^8.0.3",
+    "typescript": "^3.9.7",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.11"
   }
 }

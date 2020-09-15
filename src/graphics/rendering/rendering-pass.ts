@@ -1,18 +1,18 @@
 import { vec2 } from 'gl-matrix';
-import { IDrawable } from '../drawables/i-drawable';
-import { IDrawableDescriptor } from '../drawables/i-drawable-descriptor';
+import { Drawable } from '../../drawables/drawable';
+import { DrawableDescriptor } from '../../drawables/drawable-descriptor';
 import { FrameBuffer } from '../graphics-library/frame-buffer/frame-buffer';
 import { UniformArrayAutoScalingProgram } from '../graphics-library/program/uniform-array-autoscaling-program';
 import { settings } from '../settings';
 
 export class RenderingPass {
-  private drawables: Array<IDrawable> = [];
+  private drawables: Array<Drawable> = [];
   private program: UniformArrayAutoScalingProgram;
 
   constructor(
     gl: WebGL2RenderingContext,
     shaderSources: [string, string],
-    drawableDescriptors: Array<IDrawableDescriptor>,
+    drawableDescriptors: Array<DrawableDescriptor>,
     private frame: FrameBuffer
   ) {
     this.program = new UniformArrayAutoScalingProgram(
@@ -26,7 +26,7 @@ export class RenderingPass {
     await this.program.initialize();
   }
 
-  public addDrawable(drawable: IDrawable) {
+  public addDrawable(drawable: Drawable) {
     this.drawables.push(drawable);
   }
 

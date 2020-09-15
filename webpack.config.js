@@ -1,11 +1,34 @@
-const path = require('path');
+var path = require('path');
 const TerserJSPlugin = require('terser-webpack-plugin');
+
+var PATHS = {
+  entryPoint: path.resolve(__dirname, 'src/main.ts'),
+  bundles: path.resolve(__dirname, 'lib'),
+};
 
 const isProduction = process.env.NODE_ENV == 'production';
 const isDevelopment = !isProduction;
 
 module.exports = {
-  devtool: 'inline-source-map',
+  entry: {
+    'sdf-2d': [PATHS.entryPoint],
+    'sdf-2d.min': [PATHS.entryPoint],
+  },
+  output: {
+    path: PATHS.bundles,
+    filename: '[name].js',
+    library: 'SDF2D',
+    libraryTarget: 'umd',
+    umdNamedDefine: true,
+  },
+  devtool: 'source-map',
+  watchOptions: {
+    aggregateTimeout: 600,
+    ignored: /node_modules/,
+  },
+  resolve: {
+    extensions: ['.ts', '.js'],
+  },
   optimization: {
     minimize: true,
     minimizer: [
@@ -31,10 +54,6 @@ module.exports = {
       }),
     ],
   },
-  plugins: [],
-  entry: {
-    main: './src/main.ts',
-  },
   module: {
     rules: [
       {
@@ -44,30 +63,12 @@ module.exports = {
         },
       },
       {
-        test: /\.(woff2?|ttf|eot|svg)(?:[?#].+)?$/,
-        use: {
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]',
-            outputPath: 'static/fonts/',
-          },
-        },
-        include: /fonts/,
-      },
-      {
         test: /\.ts$/,
         use: {
-          loader: 'ts-loader',
+          loader: 'awesome-typescript-loader',
         },
         exclude: /node_modules/,
       },
     ],
-  },
-  resolve: {
-    extensions: ['.ts', '.js', '.glsl'],
-  },
-  output: {
-    filename: '[name]-bundle.js',
-    path: path.resolve(__dirname, 'build'),
   },
 };

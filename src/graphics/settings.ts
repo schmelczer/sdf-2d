@@ -51,9 +51,8 @@ export const settings = {
   tileMultiplier: 8,
   shaderMacros: {},
   shaderCombinations: {
-    lineSteps: [0, 1, 2, 4, 8, 16, 128],
-    blobSteps: [0, 1, 2, 8],
     circleLightSteps: [0, 1],
+    circleSteps: [0, 1, 16],
     flashlightSteps: [0, 1],
   },
 };

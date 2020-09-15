@@ -1,18 +1,14 @@
 import { glMatrix } from 'gl-matrix';
+import { IRenderer } from './graphics/i-renderer';
+import { WebGl2Renderer } from './graphics/rendering/webgl2-renderer';
 import { applyArrayPlugins } from './helper/array';
-import { Random } from './helper/random';
 
-glMatrix.setMatrixArrayType(Array);
-applyArrayPlugins();
+export { Drawable } from './drawables/drawable';
+export { CircleLight } from './drawables/lights/circle-light';
+export { Circle } from './drawables/shapes/circle';
 
-const main = async () => {
-  try {
-    Random.seed = 42;
-    //await new Game().start();
-  } catch (e) {
-    console.error(e);
-    alert(e);
-  }
+export const compile = (canvas: HTMLCanvasElement): IRenderer => {
+  glMatrix.setMatrixArrayType(Array);
+  applyArrayPlugins();
+  return new WebGl2Renderer(canvas);
 };
-
-main();

@@ -1,22 +1,26 @@
 import { mat2d, vec2, vec3 } from 'gl-matrix';
-import { settings } from '../../settings';
-import { IDrawableDescriptor } from '../i-drawable-descriptor';
-import { ILight } from './i-light';
+import { settings } from '../../graphics/settings';
+import { Drawable } from '../drawable';
+import { DrawableDescriptor } from '../drawable-descriptor';
 
-export class CircleLight implements ILight {
-  public static descriptor: IDrawableDescriptor = {
-    uniformName: 'circleLights',
-    countMacroName: 'circleLightCount',
-    shaderCombinationSteps: settings.shaderCombinations.circleLightSteps,
-    empty: new CircleLight(vec2.fromValues(0, 0), 0, vec3.fromValues(0, 0, 0), 0),
-  };
+export class CircleLight extends Drawable {
+  public static get descriptor(): DrawableDescriptor {
+    return {
+      uniformName: 'circleLights',
+      countMacroName: 'circleLightCount',
+      shaderCombinationSteps: settings.shaderCombinations.circleLightSteps,
+      empty: new CircleLight(vec2.fromValues(0, 0), 0, vec3.fromValues(0, 0, 0), 0),
+    };
+  }
 
   constructor(
     public center: vec2,
     public lightDrop: number,
     public color: vec3,
     public lightness: number
-  ) {}
+  ) {
+    super();
+  }
 
   public distance(_: vec2): number {
     return 0;

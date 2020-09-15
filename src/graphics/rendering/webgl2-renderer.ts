@@ -1,8 +1,8 @@
 import { vec2 } from 'gl-matrix';
-import { IDrawable } from '../drawables/i-drawable';
-import { CircleLight } from '../drawables/lights/circle-light';
-import { Flashlight } from '../drawables/lights/flashlight';
-import { ILight } from '../drawables/lights/i-light';
+import { Drawable } from '../../drawables/drawable';
+import { CircleLight } from '../../drawables/lights/circle-light';
+import { Flashlight } from '../../drawables/lights/flashlight';
+import { Circle } from '../../drawables/shapes/circle';
 import { DefaultFrameBuffer } from '../graphics-library/frame-buffer/default-frame-buffer';
 import { IntermediateFrameBuffer } from '../graphics-library/frame-buffer/intermediate-frame-buffer';
 import { getWebGl2Context } from '../graphics-library/helper/get-webgl2-context';
@@ -28,7 +28,7 @@ export class WebGl2Renderer implements IRenderer {
 
   private initializePromise: Promise<[void, void]>;
 
-  constructor(private canvas: HTMLCanvasElement, private overlay: HTMLElement) {
+  constructor(private canvas: HTMLCanvasElement) {
     this.gl = getWebGl2Context(canvas);
 
     this.distanceFieldFrameBuffer = new IntermediateFrameBuffer(this.gl);
@@ -37,7 +37,7 @@ export class WebGl2Renderer implements IRenderer {
     this.distancePass = new RenderingPass(
       this.gl,
       [distanceVertexShader, distanceFragmentShader],
-      [],
+      [Circle.descriptor],
       this.distanceFieldFrameBuffer
     );
 
@@ -74,11 +74,11 @@ export class WebGl2Renderer implements IRenderer {
     await this.initializePromise;
   }
 
-  public drawShape(shape: IDrawable) {
+  public drawShape(shape: Drawable) {
     this.distancePass.addDrawable(shape);
   }
 
-  public drawLight(light: ILight) {
+  public drawLight(light: Drawable) {
     this.lightingPass.addDrawable(light);
   }
 
@@ -116,11 +116,5 @@ export class WebGl2Renderer implements IRenderer {
 
   public get canvasSize(): vec2 {
     return vec2.fromValues(this.canvas.clientWidth, this.canvas.clientHeight);
-  }
-
-  public drawInfoText(text: string) {
-    if (this.overlay.innerText != text) {
-      this.overlay.innerText = text;
-    }
   }
 }

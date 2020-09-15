@@ -1,21 +1,23 @@
 import { mat2d, vec2, vec3 } from 'gl-matrix';
-import { settings } from '../../settings';
-import { IDrawableDescriptor } from '../i-drawable-descriptor';
-import { ILight } from './i-light';
+import { settings } from '../../graphics/settings';
+import { Drawable } from '../drawable';
+import { DrawableDescriptor } from '../drawable-descriptor';
 
-export class Flashlight implements ILight {
-  public static descriptor: IDrawableDescriptor = {
-    uniformName: 'flashlights',
-    countMacroName: 'flashlightCount',
-    shaderCombinationSteps: settings.shaderCombinations.flashlightSteps,
-    empty: new Flashlight(
-      vec2.fromValues(0, 0),
-      vec2.fromValues(0, 0),
-      0,
-      vec3.fromValues(0, 0, 0),
-      0
-    ),
-  };
+export class Flashlight extends Drawable {
+  public static get descriptor(): DrawableDescriptor {
+    return {
+      uniformName: 'flashlights',
+      countMacroName: 'flashlightCount',
+      shaderCombinationSteps: settings.shaderCombinations.flashlightSteps,
+      empty: new Flashlight(
+        vec2.fromValues(0, 0),
+        vec2.fromValues(0, 0),
+        0,
+        vec3.fromValues(0, 0, 0),
+        0
+      ),
+    };
+  }
 
   public constructor(
     public center: vec2,
@@ -23,7 +25,9 @@ export class Flashlight implements ILight {
     public lightDrop: number,
     public color: vec3,
     public lightness: number
-  ) {}
+  ) {
+    super();
+  }
 
   public distance(_: vec2): number {
     return 0;
