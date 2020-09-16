@@ -97,7 +97,13 @@ export class UniformArrayAutoScalingProgram implements IProgram {
     descriptors: Array<DrawableDescriptor>
   ): string {
     return combination
-      .map((v, i) => `#define ${descriptors[i].uniformCountMacroName} ${v}`)
+      .map(
+        (v, i) => `
+      #ifndef ${descriptors[i].uniformCountMacroName}
+        #define ${descriptors[i].uniformCountMacroName} ${v}
+      #endif
+      `
+      )
       .join('\n');
   }
 

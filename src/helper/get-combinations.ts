@@ -6,7 +6,7 @@ export const getCombinations = (values: Array<Array<number>>): Array<Array<numbe
   const result: Array<Array<number>> = [];
   const counters = values.map((_) => 0);
 
-  const increaseCounter = (i: number) => {
+  const increaseCounter = (i: number): boolean => {
     if (i >= counters.length) {
       return false;
     }

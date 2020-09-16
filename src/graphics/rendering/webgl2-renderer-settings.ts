@@ -5,5 +5,7 @@ export interface WebGl2RendererSettings {
   shaderMacros: {
     softShadowTraceCount: string;
     hardShadowTraceCount: string;
+    // ambientColor: vec3;
+    // defaultIsInside: boolean;
   };
 }

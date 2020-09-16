@@ -1,6 +1,8 @@
 import { vec2, vec3 } from 'gl-matrix';
 import { Drawable } from '../../drawables/drawable';
 import { DrawableDescriptor } from '../../drawables/drawable-descriptor';
+import { CircleLight } from '../../drawables/lights/circle-light';
+import { Flashlight } from '../../drawables/lights/flashlight';
 import { DefaultFrameBuffer } from '../graphics-library/frame-buffer/default-frame-buffer';
 import { IntermediateFrameBuffer } from '../graphics-library/frame-buffer/intermediate-frame-buffer';
 import { getWebGl2Context } from '../graphics-library/helper/get-webgl2-context';
@@ -17,13 +19,15 @@ import lightsVertexShader from './shaders/shading-vs.glsl';
 import { UniformsProvider } from './uniforms-provider';
 import { WebGl2RendererSettings } from './webgl2-renderer-settings';
 
+type Passes = { [key in keyof typeof RenderingPassName]: RenderingPass };
+
 export class WebGl2Renderer implements Renderer {
   private gl: WebGL2RenderingContext;
   private stopwatch?: WebGlStopwatch;
   private uniformsProvider: UniformsProvider;
   private distanceFieldFrameBuffer: IntermediateFrameBuffer;
   private lightingFrameBuffer: DefaultFrameBuffer;
-  private passes: { [key in keyof typeof RenderingPassName]: RenderingPass };
+  private passes: Passes;
   private autoscaler: FpsAutoscaler;
 
   private static defaultSettings: WebGl2RendererSettings = {
@@ -55,27 +59,7 @@ export class WebGl2Renderer implements Renderer {
       settings.enableHighDpiRendering
     );
 
-    this.passes = {
-      [RenderingPassName.distance]: new RenderingPass(
-        this.gl,
-        [distanceVertexShader, distanceFragmentShader],
-        descriptors.filter(WebGl2Renderer.hasSdf),
-        this.distanceFieldFrameBuffer,
-        settings.shaderMacros,
-        settings.tileMultiplier
-      ),
-      [RenderingPassName.pixel]: new RenderingPass(
-        this.gl,
-        [lightsVertexShader, lightsFragmentShader],
-        descriptors.filter((d) => !WebGl2Renderer.hasSdf(d)),
-        this.lightingFrameBuffer,
-        {
-          palette: this.generatePaletteCode(palette),
-          ...settings.shaderMacros,
-        },
-        settings.tileMultiplier
-      ),
-    };
+    this.passes = this.createPasses(descriptors, palette, settings);
 
     this.uniformsProvider = new UniformsProvider(this.gl);
 
@@ -94,6 +78,41 @@ export class WebGl2Renderer implements Renderer {
         // no problem
       }
     }
+  }
+
+  @Insights.measure('create render passes')
+  private createPasses(
+    descriptors: Array<DrawableDescriptor>,
+    palette: Array<vec3>,
+    settings: WebGl2RendererSettings
+  ): Passes {
+    const allDescriptors = [
+      ...descriptors,
+      CircleLight.descriptor,
+      Flashlight.descriptor,
+    ];
+
+    return {
+      [RenderingPassName.distance]: new RenderingPass(
+        this.gl,
+        [distanceVertexShader, distanceFragmentShader],
+        allDescriptors.filter(WebGl2Renderer.hasSdf),
+        this.distanceFieldFrameBuffer,
+        settings.shaderMacros,
+        settings.tileMultiplier
+      ),
+      [RenderingPassName.pixel]: new RenderingPass(
+        this.gl,
+        [lightsVertexShader, lightsFragmentShader],
+        allDescriptors.filter((d) => !WebGl2Renderer.hasSdf(d)),
+        this.lightingFrameBuffer,
+        {
+          palette: this.generatePaletteCode(palette),
+          ...settings.shaderMacros,
+        },
+        settings.tileMultiplier
+      ),
+    };
   }
 
   public get insights(): any {
@@ -124,7 +143,7 @@ export class WebGl2Renderer implements Renderer {
   }
 
   private generatePaletteCode(palette: Array<vec3>) {
-    const numberToGlslFloat = (n) => (Number.isInteger(n) ? `${n}.0` : `${n}`);
+    const numberToGlslFloat = (n: number) => (Number.isInteger(n) ? `${n}.0` : `${n}`);
     return palette
       .map(
         (c) =>

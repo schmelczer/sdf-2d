@@ -13,15 +13,15 @@ export class Circle extends Drawable {
           }[CIRCLE_COUNT] circles;
 
           void circleMinDistance(inout float minDistance, inout float color) {
-              float circleMinDistance = minDistance;
+              float myMinDistance = maxMinDistance;
               for (int i = 0; i < CIRCLE_COUNT; i++) {
                   float dist = distance(circles[i].center, position) - circles[i].radius;
-                  circleMinDistance = min(circleMinDistance, dist);
+                  myMinDistance = min(myMinDistance, dist);
               }
-              minDistance = min(minDistance, circleMinDistance);
+              minDistance = min(minDistance, myMinDistance);
               color = mix(2.0, color, step(
                 distanceNdcPixelSize + SURFACE_OFFSET, 
-                circleMinDistance
+                myMinDistance
               ));
           }
         `,

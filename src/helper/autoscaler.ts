@@ -39,7 +39,7 @@ export class Autoscaler {
     const nextTarget =
       floor + 1 == this.targets.length ? previousTarget : this.targets[floor + 1];
 
-    const result = {};
+    const result: any = {};
     for (const key in this.setters) {
       const previous = previousTarget[key];
       const next = nextTarget[key];

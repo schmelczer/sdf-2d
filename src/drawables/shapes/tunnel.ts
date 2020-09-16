@@ -5,8 +5,6 @@ import { Drawable } from '../drawable';
 import { DrawableDescriptor } from '../drawable-descriptor';
 
 export class Tunnel extends Drawable {
-  public readonly isInverted = false;
-
   public static get descriptor(): DrawableDescriptor {
     return {
       sdf: {
@@ -16,11 +14,10 @@ export class Tunnel extends Drawable {
               vec2 toFromDelta;
               float fromRadius;
               float toRadius;
-              float inverted;
           }[TUNNEL_COUNT] tunnels;
       
           void tunnelMinDistance(inout float minDistance, inout float color) {
-              float myMinDistance = minDistance;
+              float myMinDistance = maxMinDistance;
               for (int i = 0; i < TUNNEL_COUNT; i++) {
                   Tunnel tunnel = tunnels[i];
                   vec2 targetFromDelta = position - tunnel.from;
@@ -31,20 +28,20 @@ export class Tunnel extends Drawable {
                       0.0, 1.0
                   );
       
-                  float lineDistance = -mix(
+                  float currentDistance = -mix(
                     tunnel.fromRadius, tunnel.toRadius, h
                   ) + distance(
-                      targetFromDelta, tunnel.toFromDelta * h
+                    targetFromDelta, tunnel.toFromDelta * h
                   );
       
-                  myMinDistance = min(myMinDistance, lineDistance);
+                  myMinDistance = min(myMinDistance, currentDistance);
               }
       
               color = mix(2.0, color, step(
                 distanceNdcPixelSize + SURFACE_OFFSET,
-                -myMinDistance
+                myMinDistance
               ));
-              minDistance = -myMinDistance;
+              minDistance = min(minDistance, myMinDistance);
           }
         `,
         distanceFunctionName: 'tunnelMinDistance',
@@ -52,7 +49,12 @@ export class Tunnel extends Drawable {
       uniformName: 'tunnels',
       uniformCountMacroName: 'TUNNEL_COUNT',
       shaderCombinationSteps: [0, 1, 4, 16, 32],
-      empty: new Tunnel(vec2.fromValues(0, 0), vec2.fromValues(0, 0), 0, 0),
+      empty: new Tunnel(
+        vec2.fromValues(-100000, -100000),
+        vec2.fromValues(-100000, -100000),
+        0,
+        0
+      ),
     };
   }
 
@@ -87,7 +89,6 @@ export class Tunnel extends Drawable {
       toFromDelta: vec2.scale(vec2.create(), toFromDelta, transform1d),
       fromRadius: this.fromRadius * transform1d,
       toRadius: this.toRadius * transform1d,
-      inverted: this.isInverted ? -1 : 1,
     };
   }
 }
