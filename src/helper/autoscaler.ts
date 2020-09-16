@@ -1,3 +1,4 @@
+import { Insights } from '../graphics/rendering/insights';
 import { clamp } from './clamp';
 import { mix } from './mix';
 
@@ -54,6 +55,6 @@ export class Autoscaler {
       this.setters[key](current);
     }
 
-    //InfoText.modifyRecord('quality', result);
+    Insights.setValue('quality', result);
   }
 }

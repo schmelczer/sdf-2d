@@ -1,19 +1,21 @@
-import { vec2 } from 'gl-matrix';
+import { vec2, vec3 } from 'gl-matrix';
 import { Drawable } from '../../drawables/drawable';
 import { DrawableDescriptor } from '../../drawables/drawable-descriptor';
 import { DefaultFrameBuffer } from '../graphics-library/frame-buffer/default-frame-buffer';
 import { IntermediateFrameBuffer } from '../graphics-library/frame-buffer/intermediate-frame-buffer';
 import { getWebGl2Context } from '../graphics-library/helper/get-webgl2-context';
 import { WebGlStopwatch } from '../graphics-library/helper/stopwatch';
-import distanceFragmentShader from '../shaders/distance-fs.glsl';
-import distanceVertexShader from '../shaders/distance-vs.glsl';
-import lightsFragmentShader from '../shaders/shading-fs.glsl';
-import lightsVertexShader from '../shaders/shading-vs.glsl';
 import { FpsAutoscaler } from './fps-autoscaler';
+import { Insights } from './insights';
 import { Renderer } from './renderer';
 import { RenderingPass } from './rendering-pass';
 import { RenderingPassName } from './rendering-pass-name';
+import distanceFragmentShader from './shaders/distance-fs.glsl';
+import distanceVertexShader from './shaders/distance-vs.glsl';
+import lightsFragmentShader from './shaders/shading-fs.glsl';
+import lightsVertexShader from './shaders/shading-vs.glsl';
 import { UniformsProvider } from './uniforms-provider';
+import { WebGl2RendererSettings } from './webgl2-renderer-settings';
 
 export class WebGl2Renderer implements Renderer {
   private gl: WebGL2RenderingContext;
@@ -24,24 +26,54 @@ export class WebGl2Renderer implements Renderer {
   private passes: { [key in keyof typeof RenderingPassName]: RenderingPass };
   private autoscaler: FpsAutoscaler;
 
-  constructor(private canvas: HTMLCanvasElement, descriptors: Array<DrawableDescriptor>) {
+  private static defaultSettings: WebGl2RendererSettings = {
+    enableHighDpiRendering: true,
+    enableStopwatch: true,
+    tileMultiplier: 8,
+    shaderMacros: {
+      softShadowTraceCount: '128',
+      hardShadowTraceCount: '32',
+    },
+  };
+
+  constructor(
+    private canvas: HTMLCanvasElement,
+    descriptors: Array<DrawableDescriptor>,
+    palette: Array<vec3>,
+    settingsOverrides: Partial<WebGl2RendererSettings>
+  ) {
+    const settings = { ...WebGl2Renderer.defaultSettings, ...settingsOverrides };
+
     this.gl = getWebGl2Context(canvas);
 
-    this.distanceFieldFrameBuffer = new IntermediateFrameBuffer(this.gl);
-    this.lightingFrameBuffer = new DefaultFrameBuffer(this.gl);
+    this.distanceFieldFrameBuffer = new IntermediateFrameBuffer(
+      this.gl,
+      settings.enableHighDpiRendering
+    );
+    this.lightingFrameBuffer = new DefaultFrameBuffer(
+      this.gl,
+      settings.enableHighDpiRendering
+    );
 
     this.passes = {
       [RenderingPassName.distance]: new RenderingPass(
         this.gl,
         [distanceVertexShader, distanceFragmentShader],
         descriptors.filter(WebGl2Renderer.hasSdf),
-        this.distanceFieldFrameBuffer
+        this.distanceFieldFrameBuffer,
+        settings.shaderMacros,
+        settings.tileMultiplier
       ),
       [RenderingPassName.pixel]: new RenderingPass(
         this.gl,
         [lightsVertexShader, lightsFragmentShader],
         descriptors.filter((d) => !WebGl2Renderer.hasSdf(d)),
-        this.lightingFrameBuffer
+        this.lightingFrameBuffer,
+        {
+          palette: this.generatePaletteCode(palette),
+          ...settings.shaderMacros,
+        },
+        settings.tileMultiplier
       ),
     };
 
@@ -55,11 +87,24 @@ export class WebGl2Renderer implements Renderer {
         (this.uniformsProvider.softShadowsEnabled = v as boolean),
     });
 
-    try {
-      this.stopwatch = new WebGlStopwatch(this.gl);
-    } catch {
-      // no problem
+    if (settings.enableStopwatch) {
+      try {
+        this.stopwatch = new WebGlStopwatch(this.gl);
+      } catch {
+        // no problem
+      }
     }
+  }
+
+  public get insights(): any {
+    return Insights.values;
+  }
+
+  public destroy(): void {
+    // todo
+    /*const extension = enableExtension(this.gl, 'WEBGL_lose_context');
+    extension.loseContext();
+    extension.restoreContext();*/
   }
 
   private static hasSdf(descriptor: DrawableDescriptor) {
@@ -76,6 +121,18 @@ export class WebGl2Renderer implements Renderer {
 
   public autoscaleQuality(deltaTime: DOMHighResTimeStamp) {
     this.autoscaler.autoscale(deltaTime);
+  }
+
+  private generatePaletteCode(palette: Array<vec3>) {
+    const numberToGlslFloat = (n) => (Number.isInteger(n) ? `${n}.0` : `${n}`);
+    return palette
+      .map(
+        (c) =>
+          `vec3(${numberToGlslFloat(c[0])}, ${numberToGlslFloat(
+            c[1]
+          )}, ${numberToGlslFloat(c[2])})`
+      )
+      .join(',\n');
   }
 
   public renderDrawables() {

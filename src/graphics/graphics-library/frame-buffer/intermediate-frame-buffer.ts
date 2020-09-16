@@ -5,8 +5,8 @@ export class IntermediateFrameBuffer extends FrameBuffer {
   private frameTexture: WebGLTexture;
   private floatLinearEnabled = false;
 
-  constructor(gl: WebGL2RenderingContext) {
-    super(gl);
+  constructor(gl: WebGL2RenderingContext, enableHighDpiRendering: boolean) {
+    super(gl, enableHighDpiRendering);
 
     enableExtension(gl, 'EXT_color_buffer_float');
 
@@ -17,18 +17,12 @@ export class IntermediateFrameBuffer extends FrameBuffer {
       // it's okay
     }
 
-    const texture = this.gl.createTexture();
-    if (!texture) {
-      throw new Error('Could not create texture');
-    }
-    this.frameTexture = texture;
+    // can only return null on lost context
+    this.frameTexture = this.gl.createTexture()!;
     this.configureTexture();
 
-    const frameBuffer = this.gl.createFramebuffer();
-    if (!frameBuffer) {
-      throw new Error('Could not create frame buffer');
-    }
-    this.frameBuffer = frameBuffer;
+    // can only return null on lost context
+    this.frameBuffer = this.gl.createFramebuffer()!;
     this.configureFrameBuffer();
 
     this.setSize();

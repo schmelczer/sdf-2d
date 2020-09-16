@@ -3,7 +3,6 @@ import { Drawable } from '../../drawables/drawable';
 import { DrawableDescriptor } from '../../drawables/drawable-descriptor';
 import { FrameBuffer } from '../graphics-library/frame-buffer/frame-buffer';
 import { UniformArrayAutoScalingProgram } from '../graphics-library/program/uniform-array-autoscaling-program';
-import { settings } from '../settings';
 
 export class RenderingPass {
   private drawables: Array<Drawable> = [];
@@ -13,12 +12,15 @@ export class RenderingPass {
     gl: WebGL2RenderingContext,
     shaderSources: [string, string],
     drawableDescriptors: Array<DrawableDescriptor>,
-    private frame: FrameBuffer
+    private frame: FrameBuffer,
+    substitutions: { [name: string]: any },
+    private tileMultiplier: number
   ) {
     this.program = new UniformArrayAutoScalingProgram(
       gl,
       shaderSources,
-      drawableDescriptors
+      drawableDescriptors,
+      substitutions
     );
   }
 
@@ -29,7 +31,7 @@ export class RenderingPass {
   public render(commonUniforms: any, inputTexture?: WebGLTexture) {
     this.frame.bindAndClear(inputTexture);
 
-    const stepsInUV = 1 / settings.tileMultiplier;
+    const stepsInUV = 1 / this.tileMultiplier;
 
     const worldR =
       0.5 *
@@ -41,7 +43,7 @@ export class RenderingPass {
 
     for (let x = -1; x < 1; x += stepsInNDC) {
       for (let y = -1; y < 1; y += stepsInNDC) {
-        const uniforms = { ...commonUniforms, maxMinDistance: 0.0 };
+        const uniforms = { ...commonUniforms, maxMinDistance: radiusInNDC };
 
         const ndcBottomLeft = vec2.fromValues(x, y);
 

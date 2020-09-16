@@ -9,11 +9,8 @@ export const createShader = (
     return Number.isInteger(value) ? `${value}.0` : value;
   });
 
-  const shader = gl.createShader(type);
-
-  if (!shader) {
-    throw new Error('Could not create shader');
-  }
+  // can only return null on lost context
+  const shader = gl.createShader(type)!;
 
   gl.shaderSource(shader, source);
   gl.compileShader(shader);

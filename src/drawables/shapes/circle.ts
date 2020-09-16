@@ -13,10 +13,16 @@ export class Circle extends Drawable {
           }[CIRCLE_COUNT] circles;
 
           void circleMinDistance(inout float minDistance, inout float color) {
+              float circleMinDistance = minDistance;
               for (int i = 0; i < CIRCLE_COUNT; i++) {
                   float dist = distance(circles[i].center, position) - circles[i].radius;
-                  minDistance = min(minDistance, dist);
+                  circleMinDistance = min(circleMinDistance, dist);
               }
+              minDistance = min(minDistance, circleMinDistance);
+              color = mix(2.0, color, step(
+                distanceNdcPixelSize + SURFACE_OFFSET, 
+                circleMinDistance
+              ));
           }
         `,
         distanceFunctionName: 'circleMinDistance',
@@ -32,8 +38,8 @@ export class Circle extends Drawable {
     super();
   }
 
-  public distance(position: vec2): number {
-    return vec2.dist(this.center, position) - this.radius;
+  public distance(target: vec2): number {
+    return vec2.dist(this.center, target) - this.radius;
   }
 
   protected getObjectToSerialize(transform2d: mat2d, transform1d: number): any {

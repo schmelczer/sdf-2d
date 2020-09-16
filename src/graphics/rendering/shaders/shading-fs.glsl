@@ -3,9 +3,11 @@
 precision lowp float;
 
 #define INFINITY 1000.0
-#define LIGHT_DROP_INSIDE_RATIO 0.3
+#define LIGHT_DROP_INSIDE_RATIO 0.5
 #define AMBIENT_LIGHT vec3(0.25, 0.15, 0.25)
 #define SHADOW_HARDNESS 150.0
+#define HARD_SHADOW_TRACE_COUNT {hardShadowTraceCount}
+#define SOFT_SHADOW_TRACE_COUNT {softShadowTraceCount}
 
 {macroDefinitions}
 
@@ -18,9 +20,7 @@ in vec2 position;
 in vec2 uvCoordinates;
 
 vec3[3] colors = vec3[](
-    vec3(0.4, 0.35, 0.6),   // cave color
-    vec3(0.0, 1.0, 0.0),
-    vec3(0.0, 0.0, 1.0)
+    {palette}
 );
 
 float getDistance(in vec2 target, out vec3 color) {
@@ -37,7 +37,7 @@ float softShadowTransparency(float startingDistance, float lightCenterDistance, 
     float rayLength = startingDistance;
     float q = 1.0 / SHADOW_HARDNESS;
 
-    for (int j = 0; j < 128; j++) {
+    for (int j = 0; j < SOFT_SHADOW_TRACE_COUNT; j++) {
         float minDistance = getDistance(uvCoordinates + direction * rayLength);
 
         q = min(q, minDistance / rayLength);
@@ -54,7 +54,7 @@ float softShadowTransparency(float startingDistance, float lightCenterDistance, 
 float hardShadowTransparency(float startingDistance, float lightCenterDistance, vec2 direction) {
     float rayLength = startingDistance;
     
-    for (int j = 0; j < 32; j++) {
+    for (int j = 0; j < HARD_SHADOW_TRACE_COUNT; j++) {
         rayLength += getDistance(uvCoordinates + direction * rayLength);
     }
 

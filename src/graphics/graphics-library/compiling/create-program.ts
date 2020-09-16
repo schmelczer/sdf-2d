@@ -7,11 +7,8 @@ export const createProgram = (
   fragmentShaderSource: string,
   substitutions: { [name: string]: string }
 ): WebGLProgram => {
-  const program = gl.createProgram();
-
-  if (!program) {
-    throw new Error('Could not create program');
-  }
+  // can only return null on lost context
+  const program = gl.createProgram()!;
 
   // const extension = tryEnableExtension(gl, 'KHR_parallel_shader_compile');
 
@@ -42,6 +39,9 @@ export const createProgram = (
   }*/
 
   checkProgram(gl, program);
+
+  gl.deleteShader(vertexShader);
+  gl.deleteShader(fragmentShader);
 
   return program;
 };

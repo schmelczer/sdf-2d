@@ -1,5 +1,4 @@
 import { mat2d, vec2 } from 'gl-matrix';
-import { settings } from '../../settings';
 import { createProgram } from '../compiling/create-program';
 import { loadUniform } from '../helper/load-uniform';
 import { IProgram } from './i-program';
@@ -20,7 +19,7 @@ export default abstract class Program implements IProgram {
     [vertexShaderSource, fragmentShaderSource]: [string, string],
     substitutions: { [name: string]: string }
   ) {
-    substitutions = { ...settings.shaderMacros, ...substitutions };
+    substitutions = { ...substitutions };
 
     this.program = createProgram(
       this.gl,

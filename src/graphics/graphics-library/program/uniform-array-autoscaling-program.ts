@@ -18,7 +18,8 @@ export class UniformArrayAutoScalingProgram implements IProgram {
   constructor(
     private gl: WebGL2RenderingContext,
     shaderSources: [string, string],
-    private descriptors: Array<DrawableDescriptor>
+    private descriptors: Array<DrawableDescriptor>,
+    private substitutions: { [name: string]: any }
   ) {
     for (const combination of getCombinations(
       descriptors.map((o) => o.shaderCombinationSteps)
@@ -75,6 +76,7 @@ export class UniformArrayAutoScalingProgram implements IProgram {
     shaderSources: [string, string]
   ): FragmentShaderOnlyProgram {
     const substitutions = {
+      ...this.substitutions,
       macroDefinitions: this.getMacroDefinitions(combination, descriptors),
       declarations: this.getDeclarations(combination, descriptors),
       functionCalls: this.getFunctionCalls(combination, descriptors),

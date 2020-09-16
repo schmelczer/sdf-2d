@@ -1,11 +1,13 @@
+import { Insights } from '../../rendering/insights';
+
 const extensions: Map<string, any> = new Map();
 
-const printExtensions = () => {
+const logExtensions = () => {
   const values = {};
   for (const [k, v] of extensions.entries()) {
     values[k] = v !== null;
   }
-  //InfoText.modifyRecord('extensions', values);
+  Insights.setValue('extensions', values);
 };
 
 export const tryEnableExtension = (
@@ -23,7 +25,7 @@ export const tryEnableExtension = (
 
   extensions.set(name, extension);
 
-  printExtensions();
+  logExtensions();
 
   return extension;
 };

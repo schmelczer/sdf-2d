@@ -1,3 +1,4 @@
+import { Insights } from '../../rendering/insights';
 import { enableExtension } from './enable-extension';
 
 // https://www.khronos.org/registry/webgl/extensions/EXT_disjoint_timer_query_webgl2/
@@ -37,7 +38,7 @@ export class WebGlStopwatch {
         this.gl.QUERY_RESULT
       );
 
-      //InfoText.modifyRecord('Draw time', `${this.resultsInMilliSeconds.toFixed(2)} ms`);
+      Insights.setValue('GPU draw time', `${this.resultsInMilliSeconds.toFixed(2)} ms`);
 
       this.isReady = true;
     }

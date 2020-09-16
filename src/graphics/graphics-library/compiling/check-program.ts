@@ -3,7 +3,7 @@ import { checkShader } from './check-shader';
 export const checkProgram = (gl: WebGL2RenderingContext, program: WebGLProgram) => {
   const success = gl.getProgramParameter(program, gl.LINK_STATUS);
 
-  if (!success) {
+  if (!success && !gl.isContextLost()) {
     gl.getAttachedShaders(program)?.forEach((s) => {
       checkShader(gl, s);
     });

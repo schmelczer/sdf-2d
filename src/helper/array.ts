@@ -10,40 +10,22 @@ declare global {
   }
 }
 
+const setIndexAlias = (name: string, index: number, type: any) => {
+  if (!Object.prototype.hasOwnProperty.call(type.prototype, name)) {
+    Object.defineProperty(type.prototype, name, {
+      get() {
+        return this[index];
+      },
+      set(value) {
+        this[index] = value;
+      },
+    });
+  }
+};
+
 export const applyArrayPlugins = () => {
-  Object.defineProperty(Array.prototype, 'x', {
-    get() {
-      return this[0];
-    },
-    set(value) {
-      this[0] = value;
-    },
-  });
-
-  Object.defineProperty(Array.prototype, 'y', {
-    get() {
-      return this[1];
-    },
-    set(value) {
-      this[1] = value;
-    },
-  });
-
-  Object.defineProperty(Float32Array.prototype, 'x', {
-    get() {
-      return this[0];
-    },
-    set(value) {
-      this[0] = value;
-    },
-  });
-
-  Object.defineProperty(Float32Array.prototype, 'y', {
-    get() {
-      return this[1];
-    },
-    set(value) {
-      this[1] = value;
-    },
-  });
+  setIndexAlias('x', 0, Array);
+  setIndexAlias('y', 1, Array);
+  setIndexAlias('x', 0, Float32Array);
+  setIndexAlias('y', 1, Float32Array);
 };

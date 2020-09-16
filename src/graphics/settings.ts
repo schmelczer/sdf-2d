@@ -1,5 +1,4 @@
 export const settings = {
-  enableHighDpiRendering: true,
   qualityScaling: {
     targetDeltaTimeInMilliseconds: 20,
     deltaTimeError: 2,
@@ -47,12 +46,5 @@ export const settings = {
       additiveIncrease: 0.2,
       multiplicativeDecrease: 1.05,
     },
-  },
-  tileMultiplier: 8,
-  shaderMacros: {},
-  shaderCombinations: {
-    circleLightSteps: [0, 1],
-    circleSteps: [0, 1, 16],
-    flashlightSteps: [0, 1],
   },
 };

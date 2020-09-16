@@ -35,11 +35,9 @@ export class FragmentShaderOnlyProgram extends Program {
       new Float32Array([-1.0, -1.0, -1.0, 1.0, 1.0, -1.0, 1.0, 1.0]),
       this.gl.STATIC_DRAW
     );
-    const vao = this.gl.createVertexArray();
-    if (!vao) {
-      throw new Error('Could not create vertex array object');
-    }
-    this.vao = vao;
+
+    // can only return null on lost context
+    this.vao = this.gl.createVertexArray()!;
 
     this.gl.bindVertexArray(this.vao);
     this.gl.enableVertexAttribArray(positionAttributeLocation);

@@ -13,37 +13,6 @@ in vec2 position;
 {declarations}
 
 /*
-#if LINE_COUNT > 0
-    uniform struct {
-        vec2 from;
-        vec2 toFromDelta;
-        float fromRadius;
-        float toRadius;
-    }[LINE_COUNT] lines;
-
-    void lineMinDistance(inout float minDistance, inout float color) {
-        float myMinDistance = maxMinDistance;
-        for (int i = 0; i < LINE_COUNT; i++) {
-            vec2 targetFromDelta = position - lines[i].from;
-            vec2 toFromDelta = lines[i].toFromDelta;
-            
-            float h = clamp(
-                dot(targetFromDelta, toFromDelta) / dot(toFromDelta, toFromDelta),
-                0.0, 1.0
-            );
-
-            float lineDistance = -mix(
-                lines[i].fromRadius, lines[i].toRadius, h
-            ) + distance(
-                targetFromDelta, toFromDelta * h
-            );
-
-            myMinDistance = min(myMinDistance, lineDistance);
-        }
-
-        color = mix(0.0, color, step(distanceNdcPixelSize + SURFACE_OFFSET, -myMinDistance));
-        minDistance = -myMinDistance;
-    }
 #endif
 #if BLOB_COUNT > 0
     uniform struct {
@@ -93,7 +62,7 @@ in vec2 position;
 out vec2 fragmentColor;
 
 void main() {
-    float minDistance = 10.0; //-maxMinDistance;
+    float minDistance = maxMinDistance;
     float color = 1.0;
 
     {functionCalls}

@@ -1,5 +1,4 @@
 import { mat2d, vec2, vec3 } from 'gl-matrix';
-import { settings } from '../../graphics/settings';
 import { Drawable } from '../drawable';
 import { DrawableDescriptor } from '../drawable-descriptor';
 
@@ -8,7 +7,7 @@ export class CircleLight extends Drawable {
     return {
       uniformName: 'circleLights',
       uniformCountMacroName: 'CIRCLE_LIGHT_COUNT',
-      shaderCombinationSteps: settings.shaderCombinations.circleLightSteps,
+      shaderCombinationSteps: [0, 1, 2, 4],
       empty: new CircleLight(vec2.fromValues(0, 0), 0, vec3.fromValues(0, 0, 0), 0),
     };
   }
