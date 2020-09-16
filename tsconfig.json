@@ -2,7 +2,6 @@
   "compilerOptions": {
     "outDir": "lib",
     "sourceMap": true,
-    "noImplicitAny": false,
     "target": "es5",
     "downlevelIteration": true,
     "allowJs": true,
@@ -10,7 +9,7 @@
     "strict": true,
     "experimentalDecorators": true,
     "moduleResolution": "Node",
-    "module": "commonjs",
+    "module": "es6",
     "declaration": true,
     "composite": true,
     "declarationMap": true,

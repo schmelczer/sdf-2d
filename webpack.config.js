@@ -11,9 +11,9 @@ const isDevelopment = !isProduction;
 
 module.exports = {
   entry: {
-    'sdf-2d': [PATHS.entryPoint],
-    'sdf-2d.min': [PATHS.entryPoint],
+    main: [PATHS.entryPoint],
   },
+  target: 'web',
   output: {
     path: PATHS.bundles,
     filename: '[name].js',
@@ -31,26 +31,10 @@ module.exports = {
   },
   optimization: {
     minimize: true,
+    usedExports: true,
     minimizer: [
       new TerserJSPlugin({
-        sourceMap: isDevelopment,
-        cache: true,
-        test: /\.ts$/i,
-        terserOptions: {
-          ecma: 5,
-          warnings: true,
-          parse: {},
-          compress: { defaults: true },
-          mangle: true,
-          module: false,
-          output: null,
-          toplevel: true,
-          nameCache: null,
-          ie8: false,
-          keep_classnames: false,
-          keep_fnames: false,
-          safari10: false,
-        },
+        test: /\.js$/i,
       }),
     ],
   },
