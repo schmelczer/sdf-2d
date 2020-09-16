@@ -20,16 +20,11 @@ export class UniformArrayAutoScalingProgram implements IProgram {
     shaderSources: [string, string],
     private descriptors: Array<DrawableDescriptor>
   ) {
-    const names = descriptors.map((o) => o.countMacroName);
     for (const combination of getCombinations(
       descriptors.map((o) => o.shaderCombinationSteps)
     )) {
-      this.createProgram(names, combination, shaderSources);
+      this.createProgram(descriptors, combination, shaderSources);
     }
-  }
-
-  public async initialize(): Promise<void> {
-    await Promise.all(this.programs.map((p) => p.program.initialize()));
   }
 
   public bindAndSetUniforms(uniforms: { [name: string]: any }): void {
@@ -45,7 +40,7 @@ export class UniformArrayAutoScalingProgram implements IProgram {
       this.descriptors.map((d, i) => {
         const difference = closest.values[i] - values[i];
         for (let i = 0; i < difference; i++) {
-          d.empty.serializeToUniforms(uniforms, 0, mat2d.create());
+          d.empty.serializeToUniforms(uniforms, mat2d.create(), 0);
         }
       });
     }
@@ -75,12 +70,15 @@ export class UniformArrayAutoScalingProgram implements IProgram {
   }
 
   private createProgram(
-    names: Array<string>,
+    descriptors: Array<DrawableDescriptor>,
     combination: Array<number>,
     shaderSources: [string, string]
   ): FragmentShaderOnlyProgram {
-    const substitutions = {};
-    names.forEach((v, i) => (substitutions[v] = combination[i].toString()));
+    const substitutions = {
+      macroDefinitions: this.getMacroDefinitions(combination, descriptors),
+      declarations: this.getDeclarations(combination, descriptors),
+      functionCalls: this.getFunctionCalls(combination, descriptors),
+    };
 
     const program = new FragmentShaderOnlyProgram(this.gl, shaderSources, substitutions);
 
@@ -90,5 +88,44 @@ export class UniformArrayAutoScalingProgram implements IProgram {
     });
 
     return program;
+  }
+
+  private getMacroDefinitions(
+    combination: Array<number>,
+    descriptors: Array<DrawableDescriptor>
+  ): string {
+    return combination
+      .map((v, i) => `#define ${descriptors[i].uniformCountMacroName} ${v}`)
+      .join('\n');
+  }
+
+  private getDeclarations(
+    combination: Array<number>,
+    descriptors: Array<DrawableDescriptor>
+  ): string {
+    return combination
+      .map((v, i) => {
+        if (v == 0 || descriptors[i].sdf === undefined) {
+          return '';
+        }
+
+        return descriptors[i].sdf!.shader;
+      })
+      .join('\n');
+  }
+
+  private getFunctionCalls(
+    combination: Array<number>,
+    descriptors: Array<DrawableDescriptor>
+  ): string {
+    return combination
+      .map((v, i) => {
+        if (v == 0 || descriptors[i].sdf === undefined) {
+          return '';
+        }
+
+        return `${descriptors[i].sdf!.distanceFunctionName}(minDistance, color);`;
+      })
+      .join('\n');
   }
 }

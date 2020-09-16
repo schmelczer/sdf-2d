@@ -7,8 +7,7 @@ precision lowp float;
 #define AMBIENT_LIGHT vec3(0.25, 0.15, 0.25)
 #define SHADOW_HARDNESS 150.0
 
-#define CIRCLE_LIGHT_COUNT {circleLightCount}
-#define FLASHLIGHT_COUNT {flashlightCount}
+{macroDefinitions}
 
 uniform bool softShadowsEnabled;
 uniform vec2 squareToAspectRatioTimes2;

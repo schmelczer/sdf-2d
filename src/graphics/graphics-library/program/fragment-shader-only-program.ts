@@ -9,10 +9,6 @@ export class FragmentShaderOnlyProgram extends Program {
     substitutions: { [name: string]: string }
   ) {
     super(gl, sources, substitutions);
-  }
-
-  public async initialize(): Promise<void> {
-    await super.initialize();
     this.prepareScreenQuad('vertexPosition');
   }
 

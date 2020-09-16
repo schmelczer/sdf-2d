@@ -7,9 +7,20 @@ export abstract class Drawable {
   }
 
   public abstract distance(target: vec2): number;
-  public abstract serializeToUniforms(
+
+  protected abstract getObjectToSerialize(transform2d: mat2d, transform1d: number): any;
+
+  public serializeToUniforms(
     uniforms: any,
-    scale: number,
-    transform: mat2d
-  ): void;
+    transform2d: mat2d,
+    transform1d: number
+  ): void {
+    const { uniformName } = (this.constructor as typeof Drawable).descriptor;
+
+    if (!Object.prototype.hasOwnProperty.call(uniforms, uniformName)) {
+      uniforms[uniformName] = [];
+    }
+
+    uniforms[uniformName].push(this.getObjectToSerialize(transform2d, transform1d));
+  }
 }

@@ -7,7 +7,6 @@ import { IProgram } from './i-program';
 export default abstract class Program implements IProgram {
   protected program?: WebGLProgram;
 
-  private programPromise: Promise<WebGLProgram>;
   private modelTransform = mat2d.identity(mat2d.create());
   private readonly ndcToUv = mat2d.fromValues(0.5, 0, 0, 0.5, 0.5, 0.5);
   private uniforms: Array<{
@@ -23,16 +22,13 @@ export default abstract class Program implements IProgram {
   ) {
     substitutions = { ...settings.shaderMacros, ...substitutions };
 
-    this.programPromise = createProgram(
+    this.program = createProgram(
       this.gl,
       vertexShaderSource,
       fragmentShaderSource,
       substitutions
     );
-  }
 
-  public async initialize(): Promise<void> {
-    this.program = await this.programPromise;
     this.queryUniforms();
   }
 

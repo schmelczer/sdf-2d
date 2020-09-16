@@ -22,10 +22,6 @@ export class RenderingPass {
     );
   }
 
-  public async initialize(): Promise<void> {
-    await this.program.initialize();
-  }
-
   public addDrawable(drawable: Drawable) {
     this.drawables.push(drawable);
   }
@@ -71,8 +67,8 @@ export class RenderingPass {
         primitivesNearTile.forEach((p) =>
           p.serializeToUniforms(
             uniforms,
-            uniforms.scaleWorldLengthToNDC,
-            uniforms.transformWorldToNDC
+            uniforms.transformWorldToNDC,
+            uniforms.scaleWorldLengthToNDC
           )
         );
 

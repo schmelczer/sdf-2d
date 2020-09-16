@@ -12,6 +12,8 @@
     "moduleResolution": "Node",
     "module": "commonjs",
     "declaration": true,
+    "composite": true,
+    "declarationMap": true,
     "lib": ["es6", "dom", "es2017"]
   }
 }

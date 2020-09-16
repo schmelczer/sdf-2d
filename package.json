@@ -3,15 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "clean": "shx rm -rf _bundles lib lib-esm",
+    "start": "shx rm -rf lib/* && webpack --watch",
     "build": "npm run clean && tsc && tsc -m es6 --outDir lib-esm && webpack"
   },
   "keywords": [],
   "author": "András Schmelczer",
   "browserslist": [
     "defaults"
-  ],
-  "sideEffects": [
-    "*.scss"
   ],
   "main": "lib/sdf-2d.js",
   "types": "lib/src/main.d.ts",
@@ -28,7 +26,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-unused-imports": "^0.1.3",
     "gl-matrix": "^3.3.0",
-    "prettier": "^2.1.1",
+    "prettier": "^2.1.2",
     "raw-loader": "^4.0.1",
     "resolve-url-loader": "^3.1.1",
     "shx": "^0.3.2",

@@ -2,8 +2,7 @@
 
 precision lowp float;
 
-#define CIRCLE_LIGHT_COUNT {circleLightCount}
-#define FLASHLIGHT_COUNT {flashlightCount}
+{macroDefinitions}
 
 uniform mat3 modelTransform;
 in vec4 vertexPosition;
