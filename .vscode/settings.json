@@ -1,8 +1,0 @@
-{
-  "typescript.tsdk": "node_modules\\typescript\\lib",
-  "editor.tabSize": 2,
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": true
-  }
-}
