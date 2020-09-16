@@ -6,7 +6,6 @@ import { DrawableDescriptor } from '../drawable-descriptor';
 
 export class Tunnel extends Drawable {
   public readonly isInverted = false;
-  public readonly toFromDelta: vec2;
 
   public static get descriptor(): DrawableDescriptor {
     return {
@@ -21,7 +20,7 @@ export class Tunnel extends Drawable {
           }[TUNNEL_COUNT] tunnels;
       
           void tunnelMinDistance(inout float minDistance, inout float color) {
-              float tunnelMinDistance = minDistance;
+              float myMinDistance = minDistance;
               for (int i = 0; i < TUNNEL_COUNT; i++) {
                   Tunnel tunnel = tunnels[i];
                   vec2 targetFromDelta = position - tunnel.from;
@@ -34,25 +33,25 @@ export class Tunnel extends Drawable {
       
                   float lineDistance = -mix(
                     tunnel.fromRadius, tunnel.toRadius, h
-                  ) + tunnel.inverted * distance(
+                  ) + distance(
                       targetFromDelta, tunnel.toFromDelta * h
                   );
       
-                  tunnelMinDistance = min(tunnelMinDistance, lineDistance);
+                  myMinDistance = min(myMinDistance, lineDistance);
               }
       
               color = mix(2.0, color, step(
                 distanceNdcPixelSize + SURFACE_OFFSET,
-                -tunnelMinDistance
+                -myMinDistance
               ));
-              minDistance = -tunnelMinDistance;
+              minDistance = -myMinDistance;
           }
         `,
         distanceFunctionName: 'tunnelMinDistance',
       },
       uniformName: 'tunnels',
       uniformCountMacroName: 'TUNNEL_COUNT',
-      shaderCombinationSteps: [0, 1, 2, 8, 32],
+      shaderCombinationSteps: [0, 1, 4, 16, 32],
       empty: new Tunnel(vec2.fromValues(0, 0), vec2.fromValues(0, 0), 0, 0),
     };
   }
@@ -64,27 +63,28 @@ export class Tunnel extends Drawable {
     public readonly toRadius: number
   ) {
     super();
-    this.toFromDelta = vec2.subtract(vec2.create(), to, from);
   }
 
   public distance(target: vec2): number {
+    const toFromDelta = vec2.subtract(vec2.create(), this.to, this.from);
     const targetFromDelta = vec2.subtract(vec2.create(), target, this.from);
 
     const h = clamp01(
-      vec2.dot(targetFromDelta, this.toFromDelta) /
-        vec2.dot(this.toFromDelta, this.toFromDelta)
+      vec2.dot(targetFromDelta, toFromDelta) / vec2.dot(toFromDelta, toFromDelta)
     );
 
     return (
-      vec2.distance(targetFromDelta, vec2.scale(vec2.create(), this.toFromDelta, h)) -
+      vec2.distance(targetFromDelta, vec2.scale(vec2.create(), toFromDelta, h)) -
       mix(this.fromRadius, this.toRadius, h)
     );
   }
 
   protected getObjectToSerialize(transform2d: mat2d, transform1d: number): any {
+    const toFromDelta = vec2.subtract(vec2.create(), this.to, this.from);
+
     return {
       from: vec2.transformMat2d(vec2.create(), this.from, transform2d),
-      toFromDelta: vec2.scale(vec2.create(), this.toFromDelta, transform1d),
+      toFromDelta: vec2.scale(vec2.create(), toFromDelta, transform1d),
       fromRadius: this.fromRadius * transform1d,
       toRadius: this.toRadius * transform1d,
       inverted: this.isInverted ? -1 : 1,
