@@ -68,6 +68,7 @@ float shadowTransparency(float startingDistance, float lightCenterDistance, vec2
 }
  
 
+#ifdef CIRCLE_LIGHT_COUNT
 #if CIRCLE_LIGHT_COUNT > 0
     uniform struct CircleLight {
         vec2 center;
@@ -91,7 +92,9 @@ float shadowTransparency(float startingDistance, float lightCenterDistance, vec2
         );
     }
 #endif
+#endif
 
+#ifdef FLASHLIGHT_COUNT
 #if FLASHLIGHT_COUNT > 0
     uniform struct Flashlight {
         vec2 center;
@@ -120,6 +123,7 @@ float shadowTransparency(float startingDistance, float lightCenterDistance, vec2
         );
     }
 #endif
+#endif
 
 out vec4 fragmentColor;
 void main() {
@@ -129,20 +133,25 @@ void main() {
     float startingDistance = getDistance(uvCoordinates, colorAtPosition);
     
     if (startingDistance < 0.0) {
+        #ifdef CIRCLE_LIGHT_COUNT
         #if CIRCLE_LIGHT_COUNT > 0
         for (int i = 0; i < CIRCLE_LIGHT_COUNT; i++) {
             lighting += colorInPositionInside(circleLights[i]);
         }
         #endif
+        #endif
 
+        #ifdef FLASHLIGHT_COUNT
         #if FLASHLIGHT_COUNT > 0
         for (int i = 0; i < FLASHLIGHT_COUNT; i++) {
             lighting += colorInPositionInside(flashlights[i], normalize(flashlightDirections[i]));
         }
         #endif
+        #endif
     } else {
         colorAtPosition = vec3(1.0);
 
+        #ifdef CIRCLE_LIGHT_COUNT
         #if CIRCLE_LIGHT_COUNT > 0
         for (int i = 0; i < CIRCLE_LIGHT_COUNT; i++) {
             vec2 direction = normalize(circleLightDirections[i]) / squareToAspectRatioTimes2;
@@ -153,7 +162,9 @@ void main() {
             lighting += lightColorAtPosition * shadowTransparency(startingDistance, lightCenterDistance, direction);
         }
         #endif
+        #endif
 
+        #ifdef FLASHLIGHT_COUNT
         #if FLASHLIGHT_COUNT > 0
         for (int i = 0; i < FLASHLIGHT_COUNT; i++) {
             vec2 originalDirection = normalize(flashlightDirections[i]);
@@ -168,6 +179,7 @@ void main() {
 
             lighting += lightColorAtPosition * shadowTransparency(startingDistance, lightCenterDistance, direction);
         }
+        #endif
         #endif
     }
     

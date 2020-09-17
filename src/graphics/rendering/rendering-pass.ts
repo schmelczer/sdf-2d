@@ -10,18 +10,18 @@ export class RenderingPass {
 
   constructor(
     gl: WebGL2RenderingContext,
-    shaderSources: [string, string],
-    drawableDescriptors: Array<DrawableDescriptor>,
     private frame: FrameBuffer,
-    substitutions: { [name: string]: any },
     private tileMultiplier: number
   ) {
-    this.program = new UniformArrayAutoScalingProgram(
-      gl,
-      shaderSources,
-      drawableDescriptors,
-      substitutions
-    );
+    this.program = new UniformArrayAutoScalingProgram(gl);
+  }
+
+  public async initialize(
+    shaderSources: [string, string],
+    descriptors: Array<DrawableDescriptor>,
+    substitutions: { [name: string]: any }
+  ): Promise<void> {
+    await this.program.initialize(shaderSources, descriptors, substitutions);
   }
 
   public addDrawable(drawable: Drawable) {

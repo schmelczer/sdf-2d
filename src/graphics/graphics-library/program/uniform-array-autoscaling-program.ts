@@ -12,24 +12,34 @@ export class UniformArrayAutoScalingProgram implements IProgram {
   }> = [];
 
   private current?: FragmentShaderOnlyProgram;
+  private descriptors?: Array<DrawableDescriptor>;
   private drawingRectangleBottomLeft = vec2.fromValues(0, 0);
   private drawingRectangleSize = vec2.fromValues(1, 1);
 
-  constructor(
-    private gl: WebGL2RenderingContext,
+  constructor(private gl: WebGL2RenderingContext) {}
+
+  public async initialize(
     shaderSources: [string, string],
-    private descriptors: Array<DrawableDescriptor>,
-    private substitutions: { [name: string]: any }
-  ) {
+    descriptors: Array<DrawableDescriptor>,
+    substitutions: { [name: string]: any }
+  ): Promise<void> {
+    this.descriptors = descriptors;
+
+    const promises: Array<Promise<void>> = [];
+
     for (const combination of getCombinations(
       descriptors.map((o) => o.shaderCombinationSteps)
     )) {
-      this.createProgram(descriptors, combination, shaderSources);
+      promises.push(
+        this.createProgram(descriptors, substitutions, combination, shaderSources)
+      );
     }
+
+    await Promise.all(promises);
   }
 
   public bindAndSetUniforms(uniforms: { [name: string]: any }): void {
-    const values = this.descriptors.map((d) =>
+    const values = this.descriptors!.map((d) =>
       uniforms[d.uniformName] ? uniforms[d.uniformName].length : 0
     );
 
@@ -38,7 +48,7 @@ export class UniformArrayAutoScalingProgram implements IProgram {
     this.current = closest ? closest.program : last(this.programs)?.program;
 
     if (closest) {
-      this.descriptors.map((d, i) => {
+      this.descriptors!.map((d, i) => {
         const difference = closest.values[i] - values[i];
         for (let i = 0; i < difference; i++) {
           d.empty.serializeToUniforms(uniforms, mat2d.create(), 0);
@@ -70,26 +80,26 @@ export class UniformArrayAutoScalingProgram implements IProgram {
     this.programs.forEach((p) => p.program.delete());
   }
 
-  private createProgram(
+  private async createProgram(
     descriptors: Array<DrawableDescriptor>,
+    substitutions: { [name: string]: any },
     combination: Array<number>,
     shaderSources: [string, string]
-  ): FragmentShaderOnlyProgram {
-    const substitutions = {
-      ...this.substitutions,
+  ): Promise<void> {
+    const processedSubstitutions = {
+      ...substitutions,
       macroDefinitions: this.getMacroDefinitions(combination, descriptors),
       declarations: this.getDeclarations(combination, descriptors),
       functionCalls: this.getFunctionCalls(combination, descriptors),
     };
 
-    const program = new FragmentShaderOnlyProgram(this.gl, shaderSources, substitutions);
+    const program = new FragmentShaderOnlyProgram(this.gl);
+    await program.initialize(shaderSources, processedSubstitutions);
 
     this.programs.push({
       program,
       values: combination,
     });
-
-    return program;
   }
 
   private getMacroDefinitions(
@@ -97,13 +107,7 @@ export class UniformArrayAutoScalingProgram implements IProgram {
     descriptors: Array<DrawableDescriptor>
   ): string {
     return combination
-      .map(
-        (v, i) => `
-      #ifndef ${descriptors[i].uniformCountMacroName}
-        #define ${descriptors[i].uniformCountMacroName} ${v}
-      #endif
-      `
-      )
+      .map((v, i) => `#define ${descriptors[i].uniformCountMacroName} ${v}`)
       .join('\n');
   }
 

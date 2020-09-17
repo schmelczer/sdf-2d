@@ -1,12 +1,11 @@
 import { vec2, vec3 } from 'gl-matrix';
 import { Drawable } from '../../drawables/drawable';
 import { DrawableDescriptor } from '../../drawables/drawable-descriptor';
-import { CircleLight } from '../../drawables/lights/circle-light';
-import { Flashlight } from '../../drawables/lights/flashlight';
 import { DefaultFrameBuffer } from '../graphics-library/frame-buffer/default-frame-buffer';
 import { IntermediateFrameBuffer } from '../graphics-library/frame-buffer/intermediate-frame-buffer';
 import { getWebGl2Context } from '../graphics-library/helper/get-webgl2-context';
 import { WebGlStopwatch } from '../graphics-library/helper/stopwatch';
+import { ParallelCompiler } from '../graphics-library/parallel-compiler';
 import { FpsAutoscaler } from './fps-autoscaler';
 import { Insights } from './insights';
 import { Renderer } from './renderer';
@@ -29,6 +28,7 @@ export class WebGl2Renderer implements Renderer {
   private lightingFrameBuffer: DefaultFrameBuffer;
   private passes: Passes;
   private autoscaler: FpsAutoscaler;
+  private settings: WebGl2RendererSettings;
 
   private static defaultSettings: WebGl2RendererSettings = {
     enableHighDpiRendering: true,
@@ -42,24 +42,26 @@ export class WebGl2Renderer implements Renderer {
 
   constructor(
     private canvas: HTMLCanvasElement,
-    descriptors: Array<DrawableDescriptor>,
-    palette: Array<vec3>,
+    private descriptors: Array<DrawableDescriptor>,
+    private palette: Array<vec3>,
     settingsOverrides: Partial<WebGl2RendererSettings>
   ) {
-    const settings = { ...WebGl2Renderer.defaultSettings, ...settingsOverrides };
+    this.settings = { ...WebGl2Renderer.defaultSettings, ...settingsOverrides };
 
     this.gl = getWebGl2Context(canvas);
 
+    ParallelCompiler.initialize(this.gl);
+
     this.distanceFieldFrameBuffer = new IntermediateFrameBuffer(
       this.gl,
-      settings.enableHighDpiRendering
+      this.settings.enableHighDpiRendering
     );
     this.lightingFrameBuffer = new DefaultFrameBuffer(
       this.gl,
-      settings.enableHighDpiRendering
+      this.settings.enableHighDpiRendering
     );
 
-    this.passes = this.createPasses(descriptors, palette, settings);
+    this.passes = this.createPasses();
 
     this.uniformsProvider = new UniformsProvider(this.gl);
 
@@ -71,7 +73,7 @@ export class WebGl2Renderer implements Renderer {
         (this.uniformsProvider.softShadowsEnabled = v as boolean),
     });
 
-    if (settings.enableStopwatch) {
+    if (this.settings.enableStopwatch) {
       try {
         this.stopwatch = new WebGlStopwatch(this.gl);
       } catch {
@@ -81,38 +83,47 @@ export class WebGl2Renderer implements Renderer {
   }
 
   @Insights.measure('create render passes')
-  private createPasses(
-    descriptors: Array<DrawableDescriptor>,
-    palette: Array<vec3>,
-    settings: WebGl2RendererSettings
-  ): Passes {
-    const allDescriptors = [
-      ...descriptors,
-      CircleLight.descriptor,
-      Flashlight.descriptor,
-    ];
-
+  private createPasses(): Passes {
     return {
       [RenderingPassName.distance]: new RenderingPass(
         this.gl,
-        [distanceVertexShader, distanceFragmentShader],
-        allDescriptors.filter(WebGl2Renderer.hasSdf),
         this.distanceFieldFrameBuffer,
-        settings.shaderMacros,
-        settings.tileMultiplier
+        this.settings.tileMultiplier
       ),
       [RenderingPassName.pixel]: new RenderingPass(
         this.gl,
-        [lightsVertexShader, lightsFragmentShader],
-        allDescriptors.filter((d) => !WebGl2Renderer.hasSdf(d)),
         this.lightingFrameBuffer,
-        {
-          palette: this.generatePaletteCode(palette),
-          ...settings.shaderMacros,
-        },
-        settings.tileMultiplier
+        this.settings.tileMultiplier
       ),
     };
+  }
+
+  @Insights.measure('initialize render passes')
+  public async initialize(): Promise<void> {
+    const promises: Array<Promise<void>> = [];
+
+    promises.push(
+      this.passes[RenderingPassName.distance].initialize(
+        [distanceVertexShader, distanceFragmentShader],
+        this.descriptors.filter(WebGl2Renderer.hasSdf),
+        this.settings.shaderMacros
+      )
+    );
+
+    promises.push(
+      this.passes[RenderingPassName.pixel].initialize(
+        [lightsVertexShader, lightsFragmentShader],
+        this.descriptors.filter((d) => !WebGl2Renderer.hasSdf(d)),
+        {
+          palette: this.generatePaletteCode(this.palette),
+          ...this.settings.shaderMacros,
+        }
+      )
+    );
+
+    ParallelCompiler.compilePrograms();
+
+    await Promise.all(promises);
   }
 
   public get insights(): any {

@@ -12,6 +12,7 @@ out vec2 uvCoordinates;
 
 uniform vec2 squareToAspectRatio;
 
+#ifdef CIRCLE_LIGHT_COUNT
 #if CIRCLE_LIGHT_COUNT > 0
     uniform struct CircleLight {
         vec2 center;
@@ -21,7 +22,9 @@ uniform vec2 squareToAspectRatio;
 
     out vec2[CIRCLE_LIGHT_COUNT] circleLightDirections;
 #endif
+#endif
 
+#ifdef FLASHLIGHT_COUNT
 #if FLASHLIGHT_COUNT > 0
     uniform struct Flashlight {
         vec2 center;
@@ -31,6 +34,7 @@ uniform vec2 squareToAspectRatio;
     }[FLASHLIGHT_COUNT] flashlights;
 
     out vec2[FLASHLIGHT_COUNT] flashlightDirections;
+#endif
 #endif
 
 void main() {
@@ -44,15 +48,19 @@ void main() {
         0.0, 0.0, 1.0
     )).xy;
 
+    #ifdef CIRCLE_LIGHT_COUNT
     #if CIRCLE_LIGHT_COUNT > 0
         for (int i = 0; i < CIRCLE_LIGHT_COUNT; i++) {
             circleLightDirections[i] = circleLights[i].center - position;
         }
     #endif
+    #endif
 
+    #ifdef FLASHLIGHT_COUNT
     #if FLASHLIGHT_COUNT > 0
         for (int i = 0; i < FLASHLIGHT_COUNT; i++) {
             flashlightDirections[i] = flashlights[i].center - position;
         }
+    #endif
     #endif
 }

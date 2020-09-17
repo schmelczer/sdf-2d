@@ -1,6 +1,6 @@
 import { mat2d, vec2 } from 'gl-matrix';
-import { createProgram } from '../compiling/create-program';
 import { loadUniform } from '../helper/load-uniform';
+import { ParallelCompiler } from '../parallel-compiler';
 import { IProgram } from './i-program';
 
 export default abstract class Program implements IProgram {
@@ -14,15 +14,15 @@ export default abstract class Program implements IProgram {
     type: GLenum;
   }> = [];
 
-  constructor(
-    protected gl: WebGL2RenderingContext,
+  constructor(protected gl: WebGL2RenderingContext) {}
+
+  public async initialize(
     [vertexShaderSource, fragmentShaderSource]: [string, string],
     substitutions: { [name: string]: string }
-  ) {
+  ): Promise<void> {
     substitutions = { ...substitutions };
 
-    this.program = createProgram(
-      this.gl,
+    this.program = await ParallelCompiler.createProgram(
       vertexShaderSource,
       fragmentShaderSource,
       substitutions

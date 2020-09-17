@@ -3,12 +3,15 @@ import Program from './program';
 export class FragmentShaderOnlyProgram extends Program {
   private vao?: WebGLVertexArrayObject;
 
-  constructor(
-    gl: WebGL2RenderingContext,
+  constructor(gl: WebGL2RenderingContext) {
+    super(gl);
+  }
+
+  public async initialize(
     sources: [string, string],
     substitutions: { [name: string]: string }
-  ) {
-    super(gl, sources, substitutions);
+  ): Promise<void> {
+    await super.initialize(sources, substitutions);
     this.prepareScreenQuad('vertexPosition');
   }
 

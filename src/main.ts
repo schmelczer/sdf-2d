@@ -1,4 +1,4 @@
-import { glMatrix, vec3 } from 'gl-matrix';
+import { vec3 } from 'gl-matrix';
 import { DrawableDescriptor } from './drawables/drawable-descriptor';
 import { Renderer } from './graphics/rendering/renderer';
 import { WebGl2Renderer } from './graphics/rendering/webgl2-renderer';
@@ -14,13 +14,27 @@ export { Tunnel } from './drawables/shapes/tunnel';
 export { Renderer } from './graphics/rendering/renderer';
 export { RenderingPassName } from './graphics/rendering/rendering-pass-name';
 
-export const compile = (
+declare global {
+  interface Array<T> {
+    x: number;
+    y: number;
+  }
+
+  interface Float32Array {
+    x: number;
+    y: number;
+  }
+}
+
+export const compile = async (
   canvas: HTMLCanvasElement,
   descriptors: Array<DrawableDescriptor>,
   palette: Array<vec3>,
   settings: Partial<WebGl2RendererSettings> = {}
-): Renderer => {
-  glMatrix.setMatrixArrayType(Array);
+): Promise<Renderer> => {
   applyArrayPlugins();
-  return new WebGl2Renderer(canvas, descriptors, palette, settings);
+
+  const renderer = new WebGl2Renderer(canvas, descriptors, palette, settings);
+  await renderer.initialize();
+  return renderer;
 };
