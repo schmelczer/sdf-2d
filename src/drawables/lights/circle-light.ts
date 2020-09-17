@@ -8,16 +8,11 @@ export class CircleLight extends Drawable {
       uniformName: 'circleLights',
       uniformCountMacroName: 'CIRCLE_LIGHT_COUNT',
       shaderCombinationSteps: [0, 1, 2, 4],
-      empty: new CircleLight(vec2.fromValues(0, 0), 0, vec3.fromValues(0, 0, 0), 0),
+      empty: new CircleLight(vec2.fromValues(0, 0), vec3.fromValues(0, 0, 0), 0),
     };
   }
 
-  constructor(
-    public center: vec2,
-    public lightDrop: number,
-    public color: vec3,
-    public lightness: number
-  ) {
+  constructor(public center: vec2, public color: vec3, public intensity: number) {
     super();
   }
 
@@ -28,16 +23,8 @@ export class CircleLight extends Drawable {
   protected getObjectToSerialize(transform2d: mat2d, transform1d: number): any {
     return {
       center: vec2.transformMat2d(vec2.create(), this.center, transform2d),
-      lightDrop: this.lightDrop,
-      value: this.value,
+      color: this.color,
+      intensity: this.intensity,
     };
-  }
-
-  public get value(): vec3 {
-    return vec3.scale(
-      vec3.create(),
-      vec3.normalize(this.color, this.color),
-      this.lightness
-    );
   }
 }

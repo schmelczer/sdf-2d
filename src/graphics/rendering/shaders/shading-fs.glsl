@@ -3,7 +3,7 @@
 precision lowp float;
 
 #define INFINITY 1000.0
-#define LIGHT_DROP_INSIDE_RATIO 0.5
+#define INTENSITY_INSIDE_RATIO 0.5
 #define AMBIENT_LIGHT vec3(0.25, 0.15, 0.25)
 #define SHADOW_HARDNESS 150.0
 #define HARD_SHADOW_TRACE_COUNT {hardShadowTraceCount}
@@ -71,23 +71,23 @@ float shadowTransparency(float startingDistance, float lightCenterDistance, vec2
 #if CIRCLE_LIGHT_COUNT > 0
     uniform struct CircleLight {
         vec2 center;
-        float lightDrop;
-        vec3 value;
+        float intensity;
+        vec3 color;
     }[CIRCLE_LIGHT_COUNT] circleLights;
 
     in vec2[CIRCLE_LIGHT_COUNT] circleLightDirections;
 
     vec3 colorInPosition(CircleLight light, out float lightCenterDistance) {
         lightCenterDistance = distance(light.center, position);
-        return light.value / pow(
-            lightCenterDistance / light.lightDrop + 1.0, 2.0
+        return light.color / pow(
+            lightCenterDistance / light.intensity + 1.0, 2.0
         );
     }
 
     vec3 colorInPositionInside(CircleLight light) {
         float lightCenterDistance = distance(light.center, position);
-        return light.value / pow(
-            lightCenterDistance / (light.lightDrop * LIGHT_DROP_INSIDE_RATIO) + 1.0, 2.0
+        return light.color / pow(
+            lightCenterDistance / (light.intensity * INTENSITY_INSIDE_RATIO) + 1.0, 2.0
         );
     }
 #endif
@@ -96,8 +96,8 @@ float shadowTransparency(float startingDistance, float lightCenterDistance, vec2
     uniform struct Flashlight {
         vec2 center;
         vec2 direction;
-        float lightDrop;
-        vec3 value;
+        float intensity;
+        vec3 color;
     }[FLASHLIGHT_COUNT] flashlights;
 
     in vec2[FLASHLIGHT_COUNT] flashlightDirections;
@@ -108,15 +108,15 @@ float shadowTransparency(float startingDistance, float lightCenterDistance, vec2
 
     vec3 colorInPosition(Flashlight light, vec2 positionDirection, out float lightCenterDistance) {
         lightCenterDistance = distance(light.center, position);
-        return intensityInDirection(light.direction, positionDirection) * light.value / pow(
-            lightCenterDistance / light.lightDrop + 1.0, 2.0
+        return intensityInDirection(light.direction, positionDirection) * light.color / pow(
+            lightCenterDistance / light.intensity + 1.0, 2.0
         );
     }
 
     vec3 colorInPositionInside(Flashlight light, vec2 positionDirection) {
         float lightCenterDistance = distance(light.center, position);
-        return intensityInDirection(light.direction, positionDirection) * light.value / pow(
-            lightCenterDistance / (light.lightDrop * LIGHT_DROP_INSIDE_RATIO) + 1.0, 2.0
+        return intensityInDirection(light.direction, positionDirection) * light.color / pow(
+            lightCenterDistance / (light.intensity * INTENSITY_INSIDE_RATIO) + 1.0, 2.0
         );
     }
 #endif

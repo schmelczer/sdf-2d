@@ -11,7 +11,6 @@ export class Flashlight extends Drawable {
       empty: new Flashlight(
         vec2.fromValues(0, 0),
         vec2.fromValues(0, 0),
-        0,
         vec3.fromValues(0, 0, 0),
         0
       ),
@@ -21,9 +20,8 @@ export class Flashlight extends Drawable {
   public constructor(
     public center: vec2,
     public direction: vec2,
-    public lightDrop: number,
     public color: vec3,
-    public lightness: number
+    public intensity: number
   ) {
     super();
   }
@@ -36,12 +34,8 @@ export class Flashlight extends Drawable {
     return {
       center: vec2.transformMat2d(vec2.create(), this.center, transform2d),
       direction: this.direction,
-      lightDrop: this.lightDrop,
-      value: this.value,
+      intensity: this.intensity,
+      color: this.color,
     };
-  }
-
-  public get value(): vec3 {
-    return vec3.scale(vec3.create(), this.color, this.lightness);
   }
 }

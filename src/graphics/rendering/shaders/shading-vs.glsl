@@ -15,8 +15,8 @@ uniform vec2 squareToAspectRatio;
 #if CIRCLE_LIGHT_COUNT > 0
     uniform struct CircleLight {
         vec2 center;
-        float lightDrop;
-        vec3 value;
+        float intensity;
+        vec3 color;
     }[CIRCLE_LIGHT_COUNT] circleLights;
 
     out vec2[CIRCLE_LIGHT_COUNT] circleLightDirections;
@@ -26,8 +26,8 @@ uniform vec2 squareToAspectRatio;
     uniform struct Flashlight {
         vec2 center;
         vec2 direction;
-        float lightDrop;
-        vec3 value;
+        float intensity;
+        vec3 color;
     }[FLASHLIGHT_COUNT] flashlights;
 
     out vec2[FLASHLIGHT_COUNT] flashlightDirections;
