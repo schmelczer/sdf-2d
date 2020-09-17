@@ -1,6 +1,8 @@
-import { mat2d, vec2 } from 'gl-matrix';
+import { mat2d, vec2, vec3 } from 'gl-matrix';
 
 export class UniformsProvider {
+  public ambientLight = vec3.fromValues(0.25, 0.15, 0.25);
+
   private scaleWorldLengthToNDC = 1;
   private transformWorldToNDC = mat2d.create();
 
@@ -8,17 +10,15 @@ export class UniformsProvider {
   private worldAreaInView = vec2.create();
   private squareToAspectRatio = vec2.create();
   private uvToWorld = mat2d.create();
-  private cursorPosition = vec2.create();
 
   public softShadowsEnabled?: boolean;
 
   public constructor(private gl: WebGL2RenderingContext) {}
 
   public getUniforms(uniforms: any): any {
-    const cursorPosition = this.uvToWorldCoordinate(this.cursorPosition);
     return {
       ...uniforms,
-      cursorPosition,
+      ambientLight: this.ambientLight,
       uvToWorld: this.uvToWorld,
       worldAreaInView: this.worldAreaInView,
       squareToAspectRatio: this.squareToAspectRatio,
@@ -49,6 +49,10 @@ export class UniformsProvider {
       vec2.multiply(vec2.create(), screenUvPosition, resolution),
       this.getScreenToWorldTransform(resolution)
     );
+  }
+
+  public getViewArea(): vec2 {
+    return this.worldAreaInView;
   }
 
   public setViewArea(topLeft: vec2, size: vec2) {
@@ -86,9 +90,5 @@ export class UniformsProvider {
 
     this.uvToWorld = mat2d.fromTranslation(mat2d.create(), this.viewAreaBottomLeft);
     mat2d.scale(this.uvToWorld, this.uvToWorld, this.worldAreaInView);
-  }
-
-  public setCursorPosition(position: vec2): void {
-    this.cursorPosition = position;
   }
 }

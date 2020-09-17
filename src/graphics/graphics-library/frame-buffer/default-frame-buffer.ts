@@ -1,8 +1,8 @@
 import { FrameBuffer } from './frame-buffer';
 
 export class DefaultFrameBuffer extends FrameBuffer {
-  constructor(gl: WebGL2RenderingContext, enableHighDpiRendering: boolean) {
-    super(gl, enableHighDpiRendering);
+  constructor(gl: WebGL2RenderingContext) {
+    super(gl);
     this.frameBuffer = null;
     this.setSize();
   }

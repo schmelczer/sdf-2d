@@ -5,8 +5,8 @@ export class IntermediateFrameBuffer extends FrameBuffer {
   private frameTexture: WebGLTexture;
   private floatLinearEnabled = false;
 
-  constructor(gl: WebGL2RenderingContext, enableHighDpiRendering: boolean) {
-    super(gl, enableHighDpiRendering);
+  constructor(gl: WebGL2RenderingContext) {
+    super(gl);
 
     enableExtension(gl, 'EXT_color_buffer_float');
 

@@ -2,16 +2,14 @@ import { vec2 } from 'gl-matrix';
 
 export abstract class FrameBuffer {
   public renderScale = 1;
+  public enableHighDpiRendering = false;
 
   protected size = vec2.create();
 
   // null means the default framebuffer
   protected frameBuffer: WebGLFramebuffer | null = null;
 
-  constructor(
-    protected gl: WebGL2RenderingContext,
-    private enableHighDpiRendering: boolean
-  ) {}
+  constructor(protected gl: WebGL2RenderingContext) {}
 
   public bindAndClear(colorInput?: WebGLTexture) {
     this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, this.frameBuffer);

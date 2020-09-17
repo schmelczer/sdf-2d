@@ -4,7 +4,6 @@ precision lowp float;
 
 #define INFINITY 1000.0
 #define INTENSITY_INSIDE_RATIO 0.5
-#define AMBIENT_LIGHT vec3(0.25, 0.15, 0.25)
 #define SHADOW_HARDNESS 150.0
 #define HARD_SHADOW_TRACE_COUNT {hardShadowTraceCount}
 #define SOFT_SHADOW_TRACE_COUNT {softShadowTraceCount}
@@ -18,6 +17,8 @@ uniform sampler2D distanceTexture;
 
 in vec2 position;
 in vec2 uvCoordinates;
+
+uniform vec3 ambientLight;
 
 vec3[3] colors = vec3[](
     {palette}
@@ -127,7 +128,7 @@ float shadowTransparency(float startingDistance, float lightCenterDistance, vec2
 
 out vec4 fragmentColor;
 void main() {
-    vec3 lighting = AMBIENT_LIGHT;
+    vec3 lighting = ambientLight;
     
     vec3 colorAtPosition;
     float startingDistance = getDistance(uvCoordinates, colorAtPosition);

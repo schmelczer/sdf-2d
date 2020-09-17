@@ -11,12 +11,13 @@ import { Insights } from './insights';
 import { Renderer } from './renderer';
 import { RenderingPass } from './rendering-pass';
 import { RenderingPassName } from './rendering-pass-name';
+import { RuntimeSettings } from './runtime-settings';
 import distanceFragmentShader from './shaders/distance-fs.glsl';
 import distanceVertexShader from './shaders/distance-vs.glsl';
 import lightsFragmentShader from './shaders/shading-fs.glsl';
 import lightsVertexShader from './shaders/shading-vs.glsl';
+import { StartupSettings } from './startup-settings';
 import { UniformsProvider } from './uniforms-provider';
-import { WebGl2RendererSettings } from './webgl2-renderer-settings';
 
 type Passes = { [key in keyof typeof RenderingPassName]: RenderingPass };
 
@@ -28,38 +29,49 @@ export class WebGl2Renderer implements Renderer {
   private lightingFrameBuffer: DefaultFrameBuffer;
   private passes: Passes;
   private autoscaler: FpsAutoscaler;
-  private settings: WebGl2RendererSettings;
 
-  private static defaultSettings: WebGl2RendererSettings = {
-    enableHighDpiRendering: true,
-    enableStopwatch: true,
-    tileMultiplier: 8,
-    shaderMacros: {
-      softShadowTraceCount: '128',
-      hardShadowTraceCount: '32',
+  private applyRuntimeSettings: {
+    [key: string]: (value: any) => void;
+  } = {
+    enableHighDpiRendering: (v) => {
+      this.distanceFieldFrameBuffer.enableHighDpiRendering = v;
+      this.lightingFrameBuffer.enableHighDpiRendering = v;
+    },
+    tileMultiplier: (v) => {
+      this.passes[RenderingPassName.distance].tileMultiplier = v;
+      this.passes[RenderingPassName.pixel].tileMultiplier = v;
+    },
+    isWorldInverted: (v) => {
+      this.passes[RenderingPassName.distance].isWorldInverted = v;
+      this.passes[RenderingPassName.pixel].isWorldInverted = v;
+    },
+    ambientLight: (v) => {
+      this.uniformsProvider.ambientLight = v;
     },
   };
 
+  private static defaultStartupSettings: StartupSettings = {
+    enableStopwatch: true,
+    softShadowTraceCount: '128',
+    hardShadowTraceCount: '32',
+  };
+
+  setRuntimeSettings(overrides: Partial<RuntimeSettings>): void {
+    Object.entries(overrides).forEach((k, v) => {
+      this.applyRuntimeSettings[(k as unknown) as string](v);
+    });
+  }
+
   constructor(
     private canvas: HTMLCanvasElement,
-    private descriptors: Array<DrawableDescriptor>,
-    private palette: Array<vec3>,
-    settingsOverrides: Partial<WebGl2RendererSettings>
+    private descriptors: Array<DrawableDescriptor>
   ) {
-    this.settings = { ...WebGl2Renderer.defaultSettings, ...settingsOverrides };
-
     this.gl = getWebGl2Context(canvas);
 
     ParallelCompiler.initialize(this.gl);
 
-    this.distanceFieldFrameBuffer = new IntermediateFrameBuffer(
-      this.gl,
-      this.settings.enableHighDpiRendering
-    );
-    this.lightingFrameBuffer = new DefaultFrameBuffer(
-      this.gl,
-      this.settings.enableHighDpiRendering
-    );
+    this.distanceFieldFrameBuffer = new IntermediateFrameBuffer(this.gl);
+    this.lightingFrameBuffer = new DefaultFrameBuffer(this.gl);
 
     this.passes = this.createPasses();
 
@@ -72,14 +84,6 @@ export class WebGl2Renderer implements Renderer {
       softShadowsEnabled: (v) =>
         (this.uniformsProvider.softShadowsEnabled = v as boolean),
     });
-
-    if (this.settings.enableStopwatch) {
-      try {
-        this.stopwatch = new WebGlStopwatch(this.gl);
-      } catch {
-        // no problem
-      }
-    }
   }
 
   @Insights.measure('create render passes')
@@ -87,26 +91,25 @@ export class WebGl2Renderer implements Renderer {
     return {
       [RenderingPassName.distance]: new RenderingPass(
         this.gl,
-        this.distanceFieldFrameBuffer,
-        this.settings.tileMultiplier
+        this.distanceFieldFrameBuffer
       ),
-      [RenderingPassName.pixel]: new RenderingPass(
-        this.gl,
-        this.lightingFrameBuffer,
-        this.settings.tileMultiplier
-      ),
+      [RenderingPassName.pixel]: new RenderingPass(this.gl, this.lightingFrameBuffer),
     };
   }
 
   @Insights.measure('initialize render passes')
-  public async initialize(): Promise<void> {
+  public async initialize(
+    palette: Array<vec3>,
+    settingsOverrides: Partial<StartupSettings>
+  ): Promise<void> {
+    const settings = { ...WebGl2Renderer.defaultStartupSettings, ...settingsOverrides };
+
     const promises: Array<Promise<void>> = [];
 
     promises.push(
       this.passes[RenderingPassName.distance].initialize(
         [distanceVertexShader, distanceFragmentShader],
-        this.descriptors.filter(WebGl2Renderer.hasSdf),
-        this.settings.shaderMacros
+        this.descriptors.filter(WebGl2Renderer.hasSdf)
       )
     );
 
@@ -115,8 +118,9 @@ export class WebGl2Renderer implements Renderer {
         [lightsVertexShader, lightsFragmentShader],
         this.descriptors.filter((d) => !WebGl2Renderer.hasSdf(d)),
         {
-          palette: this.generatePaletteCode(this.palette),
-          ...this.settings.shaderMacros,
+          palette: this.generatePaletteCode(palette),
+          hardShadowTraceCount: settings.hardShadowTraceCount,
+          softShadowTraceCount: settings.softShadowTraceCount,
         }
       )
     );
@@ -124,6 +128,14 @@ export class WebGl2Renderer implements Renderer {
     ParallelCompiler.compilePrograms();
 
     await Promise.all(promises);
+
+    if (settings.enableStopwatch) {
+      try {
+        this.stopwatch = new WebGlStopwatch(this.gl);
+      } catch {
+        // no problem
+      }
+    }
   }
 
   public get insights(): any {
@@ -191,8 +203,8 @@ export class WebGl2Renderer implements Renderer {
     this.uniformsProvider.setViewArea(topLeft, size);
   }
 
-  public setCursorPosition(position: vec2) {
-    this.uniformsProvider.setCursorPosition(position);
+  public get viewAreaSize(): vec2 {
+    return this.uniformsProvider.getViewArea();
   }
 
   public get canvasSize(): vec2 {

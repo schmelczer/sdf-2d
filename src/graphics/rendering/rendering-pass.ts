@@ -5,21 +5,20 @@ import { FrameBuffer } from '../graphics-library/frame-buffer/frame-buffer';
 import { UniformArrayAutoScalingProgram } from '../graphics-library/program/uniform-array-autoscaling-program';
 
 export class RenderingPass {
+  public tileMultiplier = 8;
+  public isWorldInverted = false;
+
   private drawables: Array<Drawable> = [];
   private program: UniformArrayAutoScalingProgram;
 
-  constructor(
-    gl: WebGL2RenderingContext,
-    private frame: FrameBuffer,
-    private tileMultiplier: number
-  ) {
+  constructor(gl: WebGL2RenderingContext, private frame: FrameBuffer) {
     this.program = new UniformArrayAutoScalingProgram(gl);
   }
 
   public async initialize(
     shaderSources: [string, string],
     descriptors: Array<DrawableDescriptor>,
-    substitutions: { [name: string]: any }
+    substitutions: { [name: string]: any } = {}
   ): Promise<void> {
     await this.program.initialize(shaderSources, descriptors, substitutions);
   }
@@ -43,7 +42,10 @@ export class RenderingPass {
 
     for (let x = -1; x < 1; x += stepsInNDC) {
       for (let y = -1; y < 1; y += stepsInNDC) {
-        const uniforms = { ...commonUniforms, maxMinDistance: radiusInNDC };
+        const uniforms = {
+          ...commonUniforms,
+          maxMinDistance: radiusInNDC * (this.isWorldInverted ? -1 : 1),
+        };
 
         const ndcBottomLeft = vec2.fromValues(x, y);
 
