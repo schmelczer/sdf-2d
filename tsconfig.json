@@ -2,17 +2,15 @@
   "compilerOptions": {
     "outDir": "lib",
     "sourceMap": true,
-    "target": "es5",
-    "downlevelIteration": true,
-    "allowJs": true,
+    "declaration": true,
+    "declarationMap": true,
+    "target": "es6",
     "esModuleInterop": true,
     "strict": true,
     "experimentalDecorators": true,
     "moduleResolution": "Node",
     "module": "es6",
-    "declaration": true,
     "composite": true,
-    "declarationMap": true,
-    "lib": ["es6", "dom", "es2017"]
+    "lib": ["dom", "es2017"]
   }
 }

@@ -6,9 +6,6 @@ var PATHS = {
   bundles: path.resolve(__dirname, 'lib'),
 };
 
-const isProduction = process.env.NODE_ENV == 'production';
-const isDevelopment = !isProduction;
-
 module.exports = {
   entry: {
     main: [PATHS.entryPoint],
@@ -31,9 +28,9 @@ module.exports = {
   },
   optimization: {
     minimize: true,
-    usedExports: true,
     minimizer: [
       new TerserJSPlugin({
+        sourceMap: true,
         test: /\.js$/i,
       }),
     ],
