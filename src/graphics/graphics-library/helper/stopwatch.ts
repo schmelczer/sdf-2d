@@ -1,29 +1,44 @@
-import { Insights } from '../../rendering/insights';
 import { enableExtension } from './enable-extension';
 
-// https://www.khronos.org/registry/webgl/extensions/EXT_disjoint_timer_query_webgl2/
+enum StopwatchState {
+  ready = 'ready',
+  running = 'running',
+  waitingForResults = 'waitingForResults',
+}
 
 export class WebGlStopwatch {
+  private state = StopwatchState.ready;
+  private resultsInNanoSeconds = 0;
+
   private timerExtension: any;
   private timerQuery?: WebGLQuery;
-  private isReady = true;
-  private resultsInNanoSeconds?: number;
 
   constructor(private gl: WebGL2RenderingContext) {
     this.timerExtension = enableExtension(gl, 'EXT_disjoint_timer_query_webgl2');
   }
 
   public start() {
-    if (this.isReady) {
-      this.timerQuery = this.gl.createQuery()!;
-      this.gl.beginQuery(this.timerExtension.TIME_ELAPSED_EXT, this.timerQuery);
+    if (this.state != StopwatchState.ready) {
+      throw new Error(`Could not start stopwatch in state ${this.state}`);
     }
+
+    this.timerQuery = this.gl.createQuery()!;
+    this.gl.beginQuery(this.timerExtension.TIME_ELAPSED_EXT, this.timerQuery);
+    this.state = StopwatchState.running;
   }
 
   public stop() {
-    if (this.isReady) {
-      this.gl.endQuery(this.timerExtension.TIME_ELAPSED_EXT);
-      this.isReady = false;
+    if (this.state != StopwatchState.running) {
+      throw new Error(`Could not stop stopwatch in state ${this.state}`);
+    }
+
+    this.gl.endQuery(this.timerExtension.TIME_ELAPSED_EXT);
+    this.state = StopwatchState.waitingForResults;
+  }
+
+  public tryGetResults(): boolean {
+    if (this.state != StopwatchState.waitingForResults) {
+      throw new Error(`Could not check for results in state ${this.state}`);
     }
 
     const available = this.gl.getQueryParameter(
@@ -38,10 +53,18 @@ export class WebGlStopwatch {
         this.gl.QUERY_RESULT
       );
 
-      Insights.setValue('GPU draw time', `${this.resultsInMilliSeconds.toFixed(2)} ms`);
-
-      this.isReady = true;
+      this.state = StopwatchState.ready;
+      return true;
     }
+    return false;
+  }
+
+  public get isReady(): boolean {
+    return this.state == StopwatchState.ready;
+  }
+
+  public get isRunning(): boolean {
+    return this.state == StopwatchState.running;
   }
 
   public get resultsInMilliSeconds(): number {
