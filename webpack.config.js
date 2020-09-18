@@ -1,7 +1,7 @@
-var path = require('path');
+const path = require('path');
 const TerserJSPlugin = require('terser-webpack-plugin');
 
-var PATHS = {
+const PATHS = {
   entryPoint: path.resolve(__dirname, 'src/main.ts'),
   bundles: path.resolve(__dirname, 'lib'),
 };
@@ -22,9 +22,6 @@ module.exports = {
   watchOptions: {
     aggregateTimeout: 600,
     ignored: /node_modules/,
-  },
-  resolve: {
-    extensions: ['.ts', '.js'],
   },
   optimization: {
     minimize: true,
@@ -51,5 +48,8 @@ module.exports = {
         exclude: /node_modules/,
       },
     ],
+  },
+  resolve: {
+    extensions: ['.ts', '.js'],
   },
 };
