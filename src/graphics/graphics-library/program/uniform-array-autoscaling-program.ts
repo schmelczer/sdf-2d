@@ -38,7 +38,12 @@ export class UniformArrayAutoScalingProgram implements IProgram {
     await Promise.all(promises);
   }
 
-  public bindAndSetUniforms(uniforms: { [name: string]: any }): void {
+  public setDrawingRectangleUV(bottomLeft: vec2, size: vec2) {
+    this.drawingRectangleBottomLeft = bottomLeft;
+    this.drawingRectangleSize = size;
+  }
+
+  public draw(uniforms: { [name: string]: any }): void {
     const values = this.descriptors!.map((d) =>
       uniforms[d.uniformName] ? uniforms[d.uniformName].length : 0
     );
@@ -56,28 +61,16 @@ export class UniformArrayAutoScalingProgram implements IProgram {
       });
     }
 
-    this.current?.setDrawingRectangleUV(
+    this.current!.setDrawingRectangleUV(
       this.drawingRectangleBottomLeft,
       this.drawingRectangleSize
     );
-    this.current?.bindAndSetUniforms(uniforms);
+
+    this.current!.draw(uniforms);
   }
 
-  public setDrawingRectangleUV(bottomLeft: vec2, size: vec2) {
-    this.drawingRectangleBottomLeft = bottomLeft;
-    this.drawingRectangleSize = size;
-  }
-
-  public draw(): void {
-    if (!this.current) {
-      throw new Error('Method bindAndSetUniforms have not been called yet');
-    }
-
-    this.current.draw();
-  }
-
-  public delete(): void {
-    this.programs.forEach((p) => p.program.delete());
+  public destroy(): void {
+    this.programs.forEach((p) => p.program.destroy());
   }
 
   private async createProgram(

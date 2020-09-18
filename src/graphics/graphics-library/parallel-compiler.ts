@@ -50,6 +50,7 @@ export abstract class ParallelCompiler {
     return promise;
   }
 
+  @Insights.measure('compile programs')
   public static async compilePrograms(): Promise<void> {
     ParallelCompiler.programs.forEach((p) => ParallelCompiler.gl.linkProgram(p.program));
 

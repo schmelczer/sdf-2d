@@ -23,6 +23,10 @@ export abstract class FrameBuffer {
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
   }
 
+  public destroy(): void {
+    this.gl.deleteFramebuffer(this.frameBuffer);
+  }
+
   public setSize(): boolean {
     const realToCssPixels =
       (this.enableHighDpiRendering ? window.devicePixelRatio : 1) * this.renderScale;

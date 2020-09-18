@@ -4,22 +4,22 @@ import { mix } from '../../helper/mix';
 import { Drawable } from '../drawable';
 import { DrawableDescriptor } from '../drawable-descriptor';
 
-export class Tunnel extends Drawable {
+export class InvertedTunnel extends Drawable {
   public static get descriptor(): DrawableDescriptor {
     return {
       sdf: {
         shader: `
-          uniform struct Tunnel {
+          uniform struct InvertedTunnel {
             vec2 from;
             vec2 toFromDelta;
             float fromRadius;
             float toRadius;
-          }[TUNNEL_COUNT] tunnels;
+          }[INVERTED_TUNNEL_COUNT] invertedTunnels;
       
-          void tunnelMinDistance(inout float minDistance, inout float color) {
-            float myMinDistance = minDistance;
-            for (int i = 0; i < TUNNEL_COUNT; i++) {
-              Tunnel tunnel = tunnels[i];
+          void invertedTunnelMinDistance(inout float minDistance, inout float color) {
+            float myMinDistance = -minDistance;
+            for (int i = 0; i < INVERTED_TUNNEL_COUNT; i++) {
+              InvertedTunnel tunnel = invertedTunnels[i];
               vec2 targetFromDelta = position - tunnel.from;
               
               float h = clamp(
@@ -33,28 +33,23 @@ export class Tunnel extends Drawable {
               ) + distance(
                 targetFromDelta, tunnel.toFromDelta * h
               );
-    
+  
               myMinDistance = min(myMinDistance, currentDistance);
             }
-      
-            color = mix(2.0, color, step(
+    
+            color = mix(0.0, color, step(
               distanceNdcPixelSize + SURFACE_OFFSET,
-              myMinDistance
+              -myMinDistance
             ));
-            minDistance = min(minDistance, myMinDistance);
+            minDistance = -myMinDistance;
           }
         `,
-        distanceFunctionName: 'tunnelMinDistance',
+        distanceFunctionName: 'invertedTunnelMinDistance',
       },
-      uniformName: 'tunnels',
-      uniformCountMacroName: 'TUNNEL_COUNT',
+      uniformName: 'invertedTunnels',
+      uniformCountMacroName: 'INVERTED_TUNNEL_COUNT',
       shaderCombinationSteps: [0, 1, 4, 16, 32],
-      empty: new Tunnel(
-        vec2.fromValues(-100000, -100000),
-        vec2.fromValues(-100000, -100000),
-        0,
-        0
-      ),
+      empty: new InvertedTunnel(vec2.fromValues(0, 0), vec2.fromValues(0, 0), 0, 0),
     };
   }
 

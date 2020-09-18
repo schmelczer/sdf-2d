@@ -28,6 +28,10 @@ export class IntermediateFrameBuffer extends FrameBuffer {
     this.setSize();
   }
 
+  public destroy(): void {
+    this.gl.deleteTexture(this.frameTexture);
+  }
+
   public get colorTexture(): WebGLTexture {
     return this.frameTexture;
   }

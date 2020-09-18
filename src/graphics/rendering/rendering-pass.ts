@@ -3,6 +3,8 @@ import { Drawable } from '../../drawables/drawable';
 import { DrawableDescriptor } from '../../drawables/drawable-descriptor';
 import { FrameBuffer } from '../graphics-library/frame-buffer/frame-buffer';
 import { UniformArrayAutoScalingProgram } from '../graphics-library/program/uniform-array-autoscaling-program';
+import { Insights } from './insights';
+import { RenderingPassName } from './rendering-pass-name';
 
 export class RenderingPass {
   public tileMultiplier = 8;
@@ -11,7 +13,11 @@ export class RenderingPass {
   private drawables: Array<Drawable> = [];
   private program: UniformArrayAutoScalingProgram;
 
-  constructor(gl: WebGL2RenderingContext, private frame: FrameBuffer) {
+  constructor(
+    gl: WebGL2RenderingContext,
+    private frame: FrameBuffer,
+    private name: RenderingPassName
+  ) {
     this.program = new UniformArrayAutoScalingProgram(gl);
   }
 
@@ -40,6 +46,7 @@ export class RenderingPass {
 
     const stepsInNDC = 2 * stepsInUV;
 
+    let drawnDrawablesCount = 0;
     for (let x = -1; x < 1; x += stepsInNDC) {
       for (let y = -1; y < 1; y += stepsInNDC) {
         const uniforms = {
@@ -47,10 +54,10 @@ export class RenderingPass {
           maxMinDistance: radiusInNDC * (this.isWorldInverted ? -1 : 1),
         };
 
-        const ndcBottomLeft = vec2.fromValues(x, y);
+        const uvBottomLeft = vec2.fromValues(x / 2 + 0.5, y / 2 + 0.5);
 
         this.program.setDrawingRectangleUV(
-          [(ndcBottomLeft.x + 1) / 2, (ndcBottomLeft.y + 1) / 2],
+          uvBottomLeft,
           vec2.fromValues(stepsInUV, stepsInUV)
         );
 
@@ -58,17 +65,19 @@ export class RenderingPass {
           vec2.create(),
           vec2.add(
             vec2.create(),
-            [(ndcBottomLeft.x + 1) / 2, (ndcBottomLeft.y + 1) / 2],
+            uvBottomLeft,
             vec2.fromValues(stepsInUV / 2, stepsInUV / 2)
           ),
           uniforms.uvToWorld
         );
 
-        const primitivesNearTile = this.drawables.filter(
+        const drawablesNearTile = this.drawables.filter(
           (d) => d.distance(tileCenterWorldCoordinates) < 2 * worldR
         );
 
-        primitivesNearTile.forEach((p) =>
+        drawnDrawablesCount += drawablesNearTile.length;
+
+        drawablesNearTile.forEach((p) =>
           p.serializeToUniforms(
             uniforms,
             uniforms.transformWorldToNDC,
@@ -76,11 +85,22 @@ export class RenderingPass {
           )
         );
 
-        this.program.bindAndSetUniforms(uniforms);
-        this.program.draw();
+        this.program.draw(uniforms);
       }
     }
 
+    Insights.setValue(['render pass', this.name, 'all drawables'], this.drawables.length);
+    Insights.setValue(['render pass', this.name, 'tile count'], this.tileMultiplier ** 2);
+    Insights.setValue(
+      ['render pass', this.name, 'rendered drawables'],
+      drawnDrawablesCount / this.tileMultiplier ** 2
+    );
+
     this.drawables = [];
+  }
+
+  public destroy(): void {
+    this.frame.destroy();
+    this.program.destroy();
   }
 }

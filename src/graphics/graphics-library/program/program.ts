@@ -31,11 +31,6 @@ export default abstract class Program implements IProgram {
     this.queryUniforms();
   }
 
-  public bindAndSetUniforms(values: { [name: string]: any }) {
-    this.bind();
-    this.setUniforms({ modelTransform: this.modelTransform, ...values });
-  }
-
   public setDrawingRectangleUV(bottomLeft: vec2, size: vec2) {
     mat2d.invert(this.modelTransform, this.ndcToUv);
     mat2d.translate(this.modelTransform, this.modelTransform, bottomLeft);
@@ -56,12 +51,14 @@ export default abstract class Program implements IProgram {
     });
   }
 
-  public delete() {
-    this.gl.getAttachedShaders(this.program!)?.forEach((s) => this.gl.deleteShader(s));
+  public destroy() {
     this.gl.deleteProgram(this.program!);
   }
 
-  public abstract draw(): void;
+  public draw(values: { [name: string]: any }): void {
+    this.bind();
+    this.setUniforms({ modelTransform: this.modelTransform, ...values });
+  }
 
   protected bind() {
     this.gl.useProgram(this.program!);

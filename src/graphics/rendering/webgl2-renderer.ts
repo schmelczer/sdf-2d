@@ -1,6 +1,7 @@
 import { vec2, vec3 } from 'gl-matrix';
 import { Drawable } from '../../drawables/drawable';
 import { DrawableDescriptor } from '../../drawables/drawable-descriptor';
+import { msToString } from '../../helper/ms-to-string';
 import { DefaultFrameBuffer } from '../graphics-library/frame-buffer/default-frame-buffer';
 import { IntermediateFrameBuffer } from '../graphics-library/frame-buffer/intermediate-frame-buffer';
 import { getWebGl2Context } from '../graphics-library/helper/get-webgl2-context';
@@ -39,7 +40,7 @@ export class WebGl2Renderer implements Renderer {
     },
     tileMultiplier: (v) => {
       this.passes[RenderingPassName.distance].tileMultiplier = v;
-      this.passes[RenderingPassName.pixel].tileMultiplier = v;
+      this.passes[RenderingPassName.pixel].tileMultiplier = 1;
     },
     isWorldInverted: (v) => {
       this.passes[RenderingPassName.distance].isWorldInverted = v;
@@ -51,13 +52,12 @@ export class WebGl2Renderer implements Renderer {
   };
 
   private static defaultStartupSettings: StartupSettings = {
-    enableStopwatch: true,
     softShadowTraceCount: '128',
     hardShadowTraceCount: '32',
   };
 
   setRuntimeSettings(overrides: Partial<RuntimeSettings>): void {
-    Object.entries(overrides).forEach((k, v) => {
+    Object.entries(overrides).forEach(([k, v]) => {
       this.applyRuntimeSettings[(k as unknown) as string](v);
     });
   }
@@ -75,6 +75,8 @@ export class WebGl2Renderer implements Renderer {
 
     this.passes = this.createPasses();
 
+    this.passes.pixel.tileMultiplier = 1;
+
     this.uniformsProvider = new UniformsProvider(this.gl);
 
     this.autoscaler = new FpsAutoscaler({
@@ -86,18 +88,21 @@ export class WebGl2Renderer implements Renderer {
     });
   }
 
-  @Insights.measure('create render passes')
   private createPasses(): Passes {
     return {
       [RenderingPassName.distance]: new RenderingPass(
         this.gl,
-        this.distanceFieldFrameBuffer
+        this.distanceFieldFrameBuffer,
+        RenderingPassName.distance
       ),
-      [RenderingPassName.pixel]: new RenderingPass(this.gl, this.lightingFrameBuffer),
+      [RenderingPassName.pixel]: new RenderingPass(
+        this.gl,
+        this.lightingFrameBuffer,
+        RenderingPassName.pixel
+      ),
     };
   }
 
-  @Insights.measure('initialize render passes')
   public async initialize(
     palette: Array<vec3>,
     settingsOverrides: Partial<StartupSettings>
@@ -129,24 +134,15 @@ export class WebGl2Renderer implements Renderer {
 
     await Promise.all(promises);
 
-    if (settings.enableStopwatch) {
-      try {
-        this.stopwatch = new WebGlStopwatch(this.gl);
-      } catch {
-        // no problem
-      }
+    try {
+      this.stopwatch = new WebGlStopwatch(this.gl);
+    } catch {
+      // no problem
     }
   }
 
   public get insights(): any {
     return Insights.values;
-  }
-
-  public destroy(): void {
-    // todo
-    /*const extension = enableExtension(this.gl, 'WEBGL_lose_context');
-    extension.loseContext();
-    extension.restoreContext();*/
   }
 
   private static hasSdf(descriptor: DrawableDescriptor) {
@@ -178,7 +174,17 @@ export class WebGl2Renderer implements Renderer {
   }
 
   public renderDrawables() {
-    this.stopwatch?.start();
+    if (this.stopwatch) {
+      if (this.stopwatch.isReady) {
+        this.stopwatch.start();
+      } else {
+        this.stopwatch.tryGetResults();
+        Insights.setValue(
+          'GPU render time',
+          msToString(this.stopwatch.resultsInMilliSeconds)
+        );
+      }
+    }
 
     this.distanceFieldFrameBuffer.setSize();
     this.lightingFrameBuffer.setSize();
@@ -196,7 +202,9 @@ export class WebGl2Renderer implements Renderer {
       this.distanceFieldFrameBuffer.colorTexture
     );
 
-    this.stopwatch?.stop();
+    if (this.stopwatch?.isRunning) {
+      this.stopwatch?.stop();
+    }
   }
 
   public setViewArea(topLeft: vec2, size: vec2) {
@@ -209,5 +217,10 @@ export class WebGl2Renderer implements Renderer {
 
   public get canvasSize(): vec2 {
     return vec2.fromValues(this.canvas.clientWidth, this.canvas.clientHeight);
+  }
+
+  public destroy(): void {
+    this.passes.distance.destroy();
+    this.passes.pixel.destroy();
   }
 }

@@ -20,8 +20,14 @@ export class FragmentShaderOnlyProgram extends Program {
     this.gl.bindVertexArray(this.vao!);
   }
 
-  public draw() {
+  public draw(uniforms: { [name: string]: any }) {
+    super.draw(uniforms);
     this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4);
+  }
+
+  public destroy(): void {
+    this.gl.deleteVertexArray(this.vao!);
+    super.destroy();
   }
 
   private prepareScreenQuad(attributeName: string) {

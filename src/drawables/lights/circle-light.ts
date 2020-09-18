@@ -16,8 +16,8 @@ export class CircleLight extends Drawable {
     super();
   }
 
-  public distance(_: vec2): number {
-    return 0;
+  public distance(target: vec2): number {
+    return vec2.dist(this.center, target);
   }
 
   protected getObjectToSerialize(transform2d: mat2d, transform1d: number): any {

@@ -23,7 +23,7 @@ export const settings = {
       {
         distanceRenderScale: 0.3,
         finalRenderScale: 1.0,
-        softShadowsEnabled: true,
+        softShadowsEnabled: false,
       },
       /*{
         distanceRenderScale: 1.0,

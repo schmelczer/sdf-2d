@@ -42,7 +42,7 @@ float softShadowTransparency(float startingDistance, float lightCenterDistance, 
         float minDistance = getDistance(uvCoordinates + direction * rayLength);
 
         q = min(q, minDistance / rayLength);
-        rayLength += minDistance / 2.5;
+        rayLength += minDistance;
 
         if (rayLength >= lightCenterDistance) {
             return q * SHADOW_HARDNESS;
@@ -59,7 +59,7 @@ float hardShadowTransparency(float startingDistance, float lightCenterDistance, 
         rayLength += getDistance(uvCoordinates + direction * rayLength);
     }
 
-    return step(lightCenterDistance, rayLength);
+    return min(1.0, step(lightCenterDistance, rayLength) + rayLength / (150.0 * shadingNdcPixelSize));
 }
 
 float shadowTransparency(float startingDistance, float lightCenterDistance, vec2 direction) {
