@@ -4,15 +4,13 @@ precision lowp float;
 
 #define INFINITY 1000.0
 #define INTENSITY_INSIDE_RATIO 0.5
-#define SHADOW_HARDNESS 150.0
-#define HARD_SHADOW_TRACE_COUNT {hardShadowTraceCount}
-#define SOFT_SHADOW_TRACE_COUNT {softShadowTraceCount}
+#define SHADOW_TRACE_COUNT {shadowTraceCount}
 
 {macroDefinitions}
 
-uniform bool softShadowsEnabled;
 uniform vec2 squareToAspectRatioTimes2;
 uniform float shadingNdcPixelSize;
+uniform float shadowLength;
 uniform sampler2D distanceTexture;
 
 in vec2 position;
@@ -34,40 +32,21 @@ float getDistance(in vec2 target) {
     return texture(distanceTexture, target)[0];
 }
 
-float softShadowTransparency(float startingDistance, float lightCenterDistance, vec2 direction) {
-    float rayLength = startingDistance;
-    float q = 1.0 / SHADOW_HARDNESS;
-
-    for (int j = 0; j < SOFT_SHADOW_TRACE_COUNT; j++) {
-        float minDistance = getDistance(uvCoordinates + direction * rayLength);
-
-        q = min(q, minDistance / rayLength);
-        rayLength += minDistance;
-
-        if (rayLength >= lightCenterDistance) {
-            return q * SHADOW_HARDNESS;
-        }
-    }
-
-    return 0.0;
-}
-
-float hardShadowTransparency(float startingDistance, float lightCenterDistance, vec2 direction) {
+float shadowTransparency(float startingDistance, float lightCenterDistance, vec2 direction) {
     float rayLength = startingDistance;
     
-    for (int j = 0; j < HARD_SHADOW_TRACE_COUNT; j++) {
+    for (int j = 0; j < SHADOW_TRACE_COUNT; j++) {
         rayLength += getDistance(uvCoordinates + direction * rayLength);
     }
 
-    return min(1.0, step(lightCenterDistance, rayLength) + rayLength / (150.0 * shadingNdcPixelSize));
+    return min(
+        1.0, 
+        (
+            step(lightCenterDistance, rayLength) +
+            rayLength / (shadowLength * shadingNdcPixelSize)
+        ) * 2.0
+    );
 }
-
-float shadowTransparency(float startingDistance, float lightCenterDistance, vec2 direction) {
-    return softShadowsEnabled ? 
-        softShadowTransparency(startingDistance, lightCenterDistance, direction) :
-        hardShadowTransparency(startingDistance, lightCenterDistance, direction);
-}
- 
 
 #ifdef CIRCLE_LIGHT_COUNT
 #if CIRCLE_LIGHT_COUNT > 0
