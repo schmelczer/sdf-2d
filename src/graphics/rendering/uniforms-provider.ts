@@ -2,6 +2,7 @@ import { mat2d, vec2, vec3 } from 'gl-matrix';
 
 export class UniformsProvider {
   public ambientLight = vec3.fromValues(0.25, 0.15, 0.25);
+  public shadowLength = 150;
 
   private scaleWorldLengthToNDC = 1;
   private transformWorldToNDC = mat2d.create();
@@ -11,21 +12,19 @@ export class UniformsProvider {
   private squareToAspectRatio = vec2.create();
   private uvToWorld = mat2d.create();
 
-  public softShadowsEnabled?: boolean;
-
   public constructor(private gl: WebGL2RenderingContext) {}
 
   public getUniforms(uniforms: any): any {
     return {
       ...uniforms,
       ambientLight: this.ambientLight,
+      shadowLength: this.shadowLength,
       uvToWorld: this.uvToWorld,
       worldAreaInView: this.worldAreaInView,
       squareToAspectRatio: this.squareToAspectRatio,
       scaleWorldLengthToNDC: this.scaleWorldLengthToNDC,
       transformWorldToNDC: this.transformWorldToNDC,
       squareToAspectRatioTimes2: vec2.scale(vec2.create(), this.squareToAspectRatio, 2),
-      softShadowsEnabled: this.softShadowsEnabled,
     };
   }
 

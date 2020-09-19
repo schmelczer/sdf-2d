@@ -1,6 +1,6 @@
 import { vec2 } from 'gl-matrix';
 import { Drawable } from '../../drawables/drawable';
-import { RuntimeSettings } from './runtime-settings';
+import { RuntimeSettings } from './settings/runtime-settings';
 
 export interface Renderer {
   readonly canvasSize: vec2;

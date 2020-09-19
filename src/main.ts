@@ -2,7 +2,7 @@ import { vec3 } from 'gl-matrix';
 import { DrawableDescriptor } from './drawables/drawable-descriptor';
 import { Insights } from './graphics/rendering/insights';
 import { Renderer } from './graphics/rendering/renderer';
-import { StartupSettings } from './graphics/rendering/startup-settings';
+import { StartupSettings } from './graphics/rendering/settings/startup-settings';
 import { WebGl2Renderer } from './graphics/rendering/webgl2-renderer';
 import { applyArrayPlugins } from './helper/array';
 export { Drawable } from './drawables/drawable';

@@ -12,12 +12,12 @@ import { Insights } from './insights';
 import { Renderer } from './renderer';
 import { RenderingPass } from './rendering-pass';
 import { RenderingPassName } from './rendering-pass-name';
-import { RuntimeSettings } from './runtime-settings';
+import { RuntimeSettings } from './settings/runtime-settings';
+import { StartupSettings } from './settings/startup-settings';
 import distanceFragmentShader from './shaders/distance-fs.glsl';
 import distanceVertexShader from './shaders/distance-vs.glsl';
 import lightsFragmentShader from './shaders/shading-fs.glsl';
 import lightsVertexShader from './shaders/shading-vs.glsl';
-import { StartupSettings } from './startup-settings';
 import { UniformsProvider } from './uniforms-provider';
 
 type Passes = { [key in keyof typeof RenderingPassName]: RenderingPass };
@@ -46,14 +46,16 @@ export class WebGl2Renderer implements Renderer {
       this.passes[RenderingPassName.distance].isWorldInverted = v;
       this.passes[RenderingPassName.pixel].isWorldInverted = v;
     },
+    shadowLength: (v) => {
+      this.uniformsProvider.shadowLength;
+    },
     ambientLight: (v) => {
       this.uniformsProvider.ambientLight = v;
     },
   };
 
   private static defaultStartupSettings: StartupSettings = {
-    softShadowTraceCount: '128',
-    hardShadowTraceCount: '32',
+    shadowTraceCount: '16',
   };
 
   setRuntimeSettings(overrides: Partial<RuntimeSettings>): void {
@@ -83,8 +85,6 @@ export class WebGl2Renderer implements Renderer {
       distanceRenderScale: (v) =>
         (this.distanceFieldFrameBuffer.renderScale = v as number),
       finalRenderScale: (v) => (this.lightingFrameBuffer.renderScale = v as number),
-      softShadowsEnabled: (v) =>
-        (this.uniformsProvider.softShadowsEnabled = v as boolean),
     });
   }
 
@@ -124,8 +124,7 @@ export class WebGl2Renderer implements Renderer {
         this.descriptors.filter((d) => !WebGl2Renderer.hasSdf(d)),
         {
           palette: this.generatePaletteCode(palette),
-          hardShadowTraceCount: settings.hardShadowTraceCount,
-          softShadowTraceCount: settings.softShadowTraceCount,
+          shadowTraceCount: settings.shadowTraceCount,
         }
       )
     );

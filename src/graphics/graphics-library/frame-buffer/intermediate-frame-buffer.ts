@@ -38,6 +38,7 @@ export class IntermediateFrameBuffer extends FrameBuffer {
 
   public setSize(): boolean {
     const hasChanged = super.setSize();
+
     if (hasChanged) {
       this.gl.bindTexture(this.gl.TEXTURE_2D, this.frameTexture);
 

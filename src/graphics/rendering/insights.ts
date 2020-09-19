@@ -29,7 +29,9 @@ export class Insights {
       const targetFunction = descriptor.value;
 
       descriptor.value = function (...values: Array<any>) {
-        return Insights.measureFunction(key, () => targetFunction(...values));
+        return Insights.measureFunction(key, () =>
+          targetFunction.bind(target)(...values)
+        );
       };
       return descriptor;
     };
