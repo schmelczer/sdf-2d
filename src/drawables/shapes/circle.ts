@@ -3,10 +3,9 @@ import { Drawable } from '../drawable';
 import { DrawableDescriptor } from '../drawable-descriptor';
 
 export class Circle extends Drawable {
-  public static get descriptor(): DrawableDescriptor {
-    return {
-      sdf: {
-        shader: `
+  public static descriptor: DrawableDescriptor = {
+    sdf: {
+      shader: `
           uniform struct {
               vec2 center;
               float radius;
@@ -25,14 +24,13 @@ export class Circle extends Drawable {
               ));
           }
         `,
-        distanceFunctionName: 'circleMinDistance',
-      },
-      uniformName: 'circles',
-      uniformCountMacroName: 'CIRCLE_COUNT',
-      shaderCombinationSteps: [0, 1, 2, 3, 16, 32],
-      empty: new Circle(vec2.fromValues(0, 0), 0),
-    };
-  }
+      distanceFunctionName: 'circleMinDistance',
+    },
+    uniformName: 'circles',
+    uniformCountMacroName: 'CIRCLE_COUNT',
+    shaderCombinationSteps: [0, 1, 2, 3, 16, 32],
+    empty: new Circle(vec2.fromValues(0, 0), 0),
+  };
 
   constructor(public center: vec2, public radius: number) {
     super();

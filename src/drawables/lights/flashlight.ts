@@ -3,19 +3,17 @@ import { Drawable } from '../drawable';
 import { DrawableDescriptor } from '../drawable-descriptor';
 
 export class Flashlight extends Drawable {
-  public static get descriptor(): DrawableDescriptor {
-    return {
-      uniformName: 'flashlights',
-      uniformCountMacroName: 'FLASHLIGHT_COUNT',
-      shaderCombinationSteps: [0, 1, 2, 4],
-      empty: new Flashlight(
-        vec2.fromValues(0, 0),
-        vec2.fromValues(0, 0),
-        vec3.fromValues(0, 0, 0),
-        0
-      ),
-    };
-  }
+  public static readonly descriptor: DrawableDescriptor = {
+    uniformName: 'flashlights',
+    uniformCountMacroName: 'FLASHLIGHT_COUNT',
+    shaderCombinationSteps: [0, 1, 2, 4],
+    empty: new Flashlight(
+      vec2.fromValues(0, 0),
+      vec2.fromValues(0, 0),
+      vec3.fromValues(0, 0, 0),
+      0
+    ),
+  };
 
   public constructor(
     public center: vec2,

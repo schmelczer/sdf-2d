@@ -2,9 +2,8 @@ import { mat2d, vec2 } from 'gl-matrix';
 import { DrawableDescriptor } from './drawable-descriptor';
 
 export abstract class Drawable {
-  static get descriptor(): DrawableDescriptor {
-    throw new Error('This getter should be overriden');
-  }
+  // This should be overriden by inherited classes
+  public static readonly descriptor: DrawableDescriptor;
 
   public abstract distance(target: vec2): number;
 

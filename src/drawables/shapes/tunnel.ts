@@ -5,10 +5,9 @@ import { Drawable } from '../drawable';
 import { DrawableDescriptor } from '../drawable-descriptor';
 
 export class Tunnel extends Drawable {
-  public static get descriptor(): DrawableDescriptor {
-    return {
-      sdf: {
-        shader: `
+  public static descriptor: DrawableDescriptor = {
+    sdf: {
+      shader: `
           uniform struct Tunnel {
             vec2 from;
             vec2 toFromDelta;
@@ -44,19 +43,18 @@ export class Tunnel extends Drawable {
             minDistance = min(minDistance, myMinDistance);
           }
         `,
-        distanceFunctionName: 'tunnelMinDistance',
-      },
-      uniformName: 'tunnels',
-      uniformCountMacroName: 'TUNNEL_COUNT',
-      shaderCombinationSteps: [0, 1, 4, 16, 32],
-      empty: new Tunnel(
-        vec2.fromValues(-100000, -100000),
-        vec2.fromValues(-100000, -100000),
-        0,
-        0
-      ),
-    };
-  }
+      distanceFunctionName: 'tunnelMinDistance',
+    },
+    uniformName: 'tunnels',
+    uniformCountMacroName: 'TUNNEL_COUNT',
+    shaderCombinationSteps: [0, 1, 4, 16, 32],
+    empty: new Tunnel(
+      vec2.fromValues(-100000, -100000),
+      vec2.fromValues(-100000, -100000),
+      0,
+      0
+    ),
+  };
 
   constructor(
     public readonly from: vec2,

@@ -5,10 +5,9 @@ import { Drawable } from '../drawable';
 import { DrawableDescriptor } from '../drawable-descriptor';
 
 export class InvertedTunnel extends Drawable {
-  public static get descriptor(): DrawableDescriptor {
-    return {
-      sdf: {
-        shader: `
+  public static descriptor: DrawableDescriptor = {
+    sdf: {
+      shader: `
           uniform struct InvertedTunnel {
             vec2 from;
             vec2 toFromDelta;
@@ -44,14 +43,13 @@ export class InvertedTunnel extends Drawable {
             minDistance = -myMinDistance;
           }
         `,
-        distanceFunctionName: 'invertedTunnelMinDistance',
-      },
-      uniformName: 'invertedTunnels',
-      uniformCountMacroName: 'INVERTED_TUNNEL_COUNT',
-      shaderCombinationSteps: [0, 1, 4, 16, 32],
-      empty: new InvertedTunnel(vec2.fromValues(0, 0), vec2.fromValues(0, 0), 0, 0),
-    };
-  }
+      distanceFunctionName: 'invertedTunnelMinDistance',
+    },
+    uniformName: 'invertedTunnels',
+    uniformCountMacroName: 'INVERTED_TUNNEL_COUNT',
+    shaderCombinationSteps: [0, 1, 4, 16, 32],
+    empty: new InvertedTunnel(vec2.fromValues(0, 0), vec2.fromValues(0, 0), 0, 0),
+  };
 
   constructor(
     public readonly from: vec2,
