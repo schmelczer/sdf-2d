@@ -2,7 +2,7 @@ import { mat2d, vec2, vec3 } from 'gl-matrix';
 
 export class UniformsProvider {
   public ambientLight = vec3.fromValues(0.25, 0.15, 0.25);
-  public shadowLength = 150;
+  public shadowLength = 400;
 
   private scaleWorldLengthToNDC = 1;
   private transformWorldToNDC = mat2d.create();

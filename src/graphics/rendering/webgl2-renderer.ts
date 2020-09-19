@@ -47,7 +47,7 @@ export class WebGl2Renderer implements Renderer {
       this.passes[RenderingPassName.pixel].isWorldInverted = v;
     },
     shadowLength: (v) => {
-      this.uniformsProvider.shadowLength;
+      this.uniformsProvider.shadowLength = v;
     },
     ambientLight: (v) => {
       this.uniformsProvider.ambientLight = v;
