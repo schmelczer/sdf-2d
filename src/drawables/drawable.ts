@@ -5,7 +5,7 @@ export abstract class Drawable {
   // This should be overriden by inherited classes
   public static readonly descriptor: DrawableDescriptor;
 
-  public abstract distance(target: vec2): number;
+  public abstract minDistance(target: vec2): number;
 
   protected abstract getObjectToSerialize(transform2d: mat2d, transform1d: number): any;
 

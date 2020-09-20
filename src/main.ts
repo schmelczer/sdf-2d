@@ -5,6 +5,7 @@ import { Renderer } from './graphics/rendering/renderer';
 import { StartupSettings } from './graphics/rendering/settings/startup-settings';
 import { WebGl2Renderer } from './graphics/rendering/webgl2-renderer';
 import { applyArrayPlugins } from './helper/array';
+
 export { Drawable } from './drawables/drawable';
 export { DrawableDescriptor } from './drawables/drawable-descriptor';
 export { CircleLight } from './drawables/lights/circle-light';
@@ -13,7 +14,6 @@ export { Circle } from './drawables/shapes/circle';
 export { InvertedTunnel } from './drawables/shapes/inverted-tunnel';
 export { Tunnel } from './drawables/shapes/tunnel';
 export { Renderer } from './graphics/rendering/renderer';
-export { RenderingPassName } from './graphics/rendering/rendering-pass-name';
 
 declare global {
   interface Array<T> {

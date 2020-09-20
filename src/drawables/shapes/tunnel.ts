@@ -65,7 +65,7 @@ export class Tunnel extends Drawable {
     super();
   }
 
-  public distance(target: vec2): number {
+  public minDistance(target: vec2): number {
     const toFromDelta = vec2.subtract(vec2.create(), this.to, this.from);
     const targetFromDelta = vec2.subtract(vec2.create(), target, this.from);
 

@@ -1,8 +1,8 @@
-import { mat2d, vec2, vec3 } from 'gl-matrix';
-import { Drawable } from '../drawable';
+import { vec2, vec3 } from 'gl-matrix';
 import { DrawableDescriptor } from '../drawable-descriptor';
+import { LightDrawable } from './light-drawable';
 
-export class CircleLight extends Drawable {
+export class CircleLight extends LightDrawable {
   public static readonly descriptor: DrawableDescriptor = {
     uniformName: 'circleLights',
     uniformCountMacroName: 'CIRCLE_LIGHT_COUNT',
@@ -10,19 +10,7 @@ export class CircleLight extends Drawable {
     empty: new CircleLight(vec2.fromValues(0, 0), vec3.fromValues(0, 0, 0), 0),
   };
 
-  constructor(public center: vec2, public color: vec3, public intensity: number) {
-    super();
-  }
-
-  public distance(target: vec2): number {
-    return vec2.dist(this.center, target);
-  }
-
-  protected getObjectToSerialize(transform2d: mat2d, transform1d: number): any {
-    return {
-      center: vec2.transformMat2d(vec2.create(), this.center, transform2d),
-      color: this.color,
-      intensity: this.intensity,
-    };
+  constructor(center: vec2, color: vec3, intensity: number) {
+    super(center, color, intensity);
   }
 }

@@ -4,7 +4,7 @@
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
-    "target": "es6",
+    "target": "ES2017",
     "esModuleInterop": true,
     "strict": true,
     "experimentalDecorators": true,

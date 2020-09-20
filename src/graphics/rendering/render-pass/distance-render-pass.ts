@@ -1,33 +1,13 @@
 import { vec2 } from 'gl-matrix';
-import { Drawable } from '../../drawables/drawable';
-import { DrawableDescriptor } from '../../drawables/drawable-descriptor';
-import { FrameBuffer } from '../graphics-library/frame-buffer/frame-buffer';
-import { UniformArrayAutoScalingProgram } from '../graphics-library/program/uniform-array-autoscaling-program';
-import { Insights } from './insights';
-import { RenderingPassName } from './rendering-pass-name';
+import { Drawable } from '../../../drawables/drawable';
+import { Insights } from '../insights';
+import { RenderPass } from './render-pass';
 
-export class RenderingPass {
+export class DistanceRenderPass extends RenderPass {
   public tileMultiplier = 8;
   public isWorldInverted = false;
 
   private drawables: Array<Drawable> = [];
-  private program: UniformArrayAutoScalingProgram;
-
-  constructor(
-    gl: WebGL2RenderingContext,
-    private frame: FrameBuffer,
-    private name: RenderingPassName
-  ) {
-    this.program = new UniformArrayAutoScalingProgram(gl);
-  }
-
-  public async initialize(
-    shaderSources: [string, string],
-    descriptors: Array<DrawableDescriptor>,
-    substitutions: { [name: string]: any } = {}
-  ): Promise<void> {
-    await this.program.initialize(shaderSources, descriptors, substitutions);
-  }
 
   public addDrawable(drawable: Drawable) {
     this.drawables.push(drawable);
@@ -72,7 +52,7 @@ export class RenderingPass {
         );
 
         const drawablesNearTile = this.drawables.filter(
-          (d) => d.distance(tileCenterWorldCoordinates) < 2 * worldR
+          (d) => d.minDistance(tileCenterWorldCoordinates) < 2 * worldR
         );
 
         drawnDrawablesCount += drawablesNearTile.length;
@@ -89,18 +69,19 @@ export class RenderingPass {
       }
     }
 
-    Insights.setValue(['render pass', this.name, 'all drawables'], this.drawables.length);
-    Insights.setValue(['render pass', this.name, 'tile count'], this.tileMultiplier ** 2);
     Insights.setValue(
-      ['render pass', this.name, 'rendered drawables'],
+      ['render pass', 'distance', 'all drawables'],
+      this.drawables.length
+    );
+    Insights.setValue(
+      ['render pass', 'distance', 'tile count'],
+      this.tileMultiplier ** 2
+    );
+    Insights.setValue(
+      ['render pass', 'distance', 'rendered drawables'],
       drawnDrawablesCount / this.tileMultiplier ** 2
     );
 
     this.drawables = [];
-  }
-
-  public destroy(): void {
-    this.frame.destroy();
-    this.program.destroy();
   }
 }

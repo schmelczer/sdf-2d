@@ -36,7 +36,7 @@ export class Circle extends Drawable {
     super();
   }
 
-  public distance(target: vec2): number {
+  public minDistance(target: vec2): number {
     return vec2.dist(this.center, target) - this.radius;
   }
 

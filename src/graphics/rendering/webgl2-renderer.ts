@@ -1,6 +1,7 @@
 import { vec2, vec3 } from 'gl-matrix';
 import { Drawable } from '../../drawables/drawable';
 import { DrawableDescriptor } from '../../drawables/drawable-descriptor';
+import { LightDrawable } from '../../drawables/lights/light-drawable';
 import { msToString } from '../../helper/ms-to-string';
 import { DefaultFrameBuffer } from '../graphics-library/frame-buffer/default-frame-buffer';
 import { IntermediateFrameBuffer } from '../graphics-library/frame-buffer/intermediate-frame-buffer';
@@ -9,9 +10,9 @@ import { WebGlStopwatch } from '../graphics-library/helper/stopwatch';
 import { ParallelCompiler } from '../graphics-library/parallel-compiler';
 import { FpsAutoscaler } from './fps-autoscaler';
 import { Insights } from './insights';
+import { DistanceRenderPass } from './render-pass/distance-render-pass';
+import { LightsRenderPass } from './render-pass/lights-render-pass';
 import { Renderer } from './renderer';
-import { RenderingPass } from './rendering-pass';
-import { RenderingPassName } from './rendering-pass-name';
 import { RuntimeSettings } from './settings/runtime-settings';
 import { StartupSettings } from './settings/startup-settings';
 import distanceFragmentShader from './shaders/distance-fs.glsl';
@@ -20,15 +21,14 @@ import lightsFragmentShader from './shaders/shading-fs.glsl';
 import lightsVertexShader from './shaders/shading-vs.glsl';
 import { UniformsProvider } from './uniforms-provider';
 
-type Passes = { [key in keyof typeof RenderingPassName]: RenderingPass };
-
 export class WebGl2Renderer implements Renderer {
   private gl: WebGL2RenderingContext;
   private stopwatch?: WebGlStopwatch;
   private uniformsProvider: UniformsProvider;
   private distanceFieldFrameBuffer: IntermediateFrameBuffer;
+  private distancePass: DistanceRenderPass;
+  private lightsPass: LightsRenderPass;
   private lightingFrameBuffer: DefaultFrameBuffer;
-  private passes: Passes;
   private autoscaler: FpsAutoscaler;
 
   private applyRuntimeSettings: {
@@ -39,12 +39,10 @@ export class WebGl2Renderer implements Renderer {
       this.lightingFrameBuffer.enableHighDpiRendering = v;
     },
     tileMultiplier: (v) => {
-      this.passes[RenderingPassName.distance].tileMultiplier = v;
-      this.passes[RenderingPassName.pixel].tileMultiplier = 1;
+      this.distancePass.tileMultiplier = v;
     },
     isWorldInverted: (v) => {
-      this.passes[RenderingPassName.distance].isWorldInverted = v;
-      this.passes[RenderingPassName.pixel].isWorldInverted = v;
+      this.distancePass.isWorldInverted = v;
     },
     shadowLength: (v) => {
       this.uniformsProvider.shadowLength = v;
@@ -75,9 +73,8 @@ export class WebGl2Renderer implements Renderer {
     this.distanceFieldFrameBuffer = new IntermediateFrameBuffer(this.gl);
     this.lightingFrameBuffer = new DefaultFrameBuffer(this.gl);
 
-    this.passes = this.createPasses();
-
-    this.passes.pixel.tileMultiplier = 1;
+    this.distancePass = new DistanceRenderPass(this.gl, this.distanceFieldFrameBuffer);
+    this.lightsPass = new LightsRenderPass(this.gl, this.lightingFrameBuffer);
 
     this.uniformsProvider = new UniformsProvider(this.gl);
 
@@ -86,21 +83,6 @@ export class WebGl2Renderer implements Renderer {
         (this.distanceFieldFrameBuffer.renderScale = v as number),
       finalRenderScale: (v) => (this.lightingFrameBuffer.renderScale = v as number),
     });
-  }
-
-  private createPasses(): Passes {
-    return {
-      [RenderingPassName.distance]: new RenderingPass(
-        this.gl,
-        this.distanceFieldFrameBuffer,
-        RenderingPassName.distance
-      ),
-      [RenderingPassName.pixel]: new RenderingPass(
-        this.gl,
-        this.lightingFrameBuffer,
-        RenderingPassName.pixel
-      ),
-    };
   }
 
   public async initialize(
@@ -112,14 +94,14 @@ export class WebGl2Renderer implements Renderer {
     const promises: Array<Promise<void>> = [];
 
     promises.push(
-      this.passes[RenderingPassName.distance].initialize(
+      this.distancePass.initialize(
         [distanceVertexShader, distanceFragmentShader],
         this.descriptors.filter(WebGl2Renderer.hasSdf)
       )
     );
 
     promises.push(
-      this.passes[RenderingPassName.pixel].initialize(
+      this.lightsPass.initialize(
         [lightsVertexShader, lightsFragmentShader],
         this.descriptors.filter((d) => !WebGl2Renderer.hasSdf(d)),
         {
@@ -150,9 +132,9 @@ export class WebGl2Renderer implements Renderer {
 
   public addDrawable(drawable: Drawable): void {
     if (WebGl2Renderer.hasSdf((drawable.constructor as typeof Drawable).descriptor)) {
-      this.passes[RenderingPassName.distance].addDrawable(drawable);
+      this.distancePass.addDrawable(drawable);
     } else {
-      this.passes[RenderingPassName.pixel].addDrawable(drawable);
+      this.lightsPass.addDrawable(drawable as LightDrawable);
     }
   }
 
@@ -193,10 +175,8 @@ export class WebGl2Renderer implements Renderer {
       shadingNdcPixelSize: 2 / Math.max(...this.distanceFieldFrameBuffer.getSize()),
     };
 
-    this.passes[RenderingPassName.distance].render(
-      this.uniformsProvider.getUniforms(common)
-    );
-    this.passes[RenderingPassName.pixel].render(
+    this.distancePass.render(this.uniformsProvider.getUniforms(common));
+    this.lightsPass.render(
       this.uniformsProvider.getUniforms(common),
       this.distanceFieldFrameBuffer.colorTexture
     );
@@ -219,7 +199,7 @@ export class WebGl2Renderer implements Renderer {
   }
 
   public destroy(): void {
-    this.passes.distance.destroy();
-    this.passes.pixel.destroy();
+    this.distancePass.destroy();
+    this.lightsPass.destroy();
   }
 }

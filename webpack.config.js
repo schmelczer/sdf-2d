@@ -14,7 +14,7 @@ module.exports = {
   output: {
     path: PATHS.bundles,
     filename: '[name].js',
-    library: 'SDF2D',
+    library: 'sdf-2d',
     libraryTarget: 'umd',
     umdNamedDefine: true,
   },
@@ -23,8 +23,12 @@ module.exports = {
     aggregateTimeout: 600,
     ignored: /node_modules/,
   },
+  externals: {
+    'gl-matrix': 'gl-matrix',
+  },
   optimization: {
     minimize: true,
+    usedExports: true,
     minimizer: [
       new TerserJSPlugin({
         sourceMap: true,
