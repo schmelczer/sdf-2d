@@ -2,4 +2,4 @@
 
 # SDF-2D library
 
-Documentation will be provided by the end of september 2020.
+Documentation will be provided by the end of September 2020.
