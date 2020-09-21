@@ -20,7 +20,7 @@ export class LightDrawable extends Drawable {
     return {
       center: vec2.transformMat2d(vec2.create(), this.center, transform2d),
       color: this.color,
-      intensity: this.intensity * this.lightnessRatio,
+      intensity: this.intensity * this.lightnessRatio * transform1d * 1500,
     };
   }
 }

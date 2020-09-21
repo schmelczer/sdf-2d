@@ -5,7 +5,7 @@ import { Insights } from '../insights';
 import { RenderPass } from './render-pass';
 
 export class LightsRenderPass extends RenderPass {
-  public lightPhaseOutLength = 400;
+  public lightCutoffDistance = 400;
   private drawables: Array<LightDrawable> = [];
 
   public addDrawable(drawable: LightDrawable) {
@@ -33,9 +33,9 @@ export class LightsRenderPass extends RenderPass {
       const distance =
         vec2.length([Math.max(d.x, 0), Math.max(d.y, 0)]) +
         Math.min(Math.max(d.x, d.y), 0.0);
-      l.setLightnessRatio(clamp01(1 - distance / this.lightPhaseOutLength));
+      l.setLightnessRatio(clamp01(1 - distance / this.lightCutoffDistance));
 
-      return distance < this.lightPhaseOutLength;
+      return distance < this.lightCutoffDistance;
     });
 
     drawablesNearTile.forEach((p) =>

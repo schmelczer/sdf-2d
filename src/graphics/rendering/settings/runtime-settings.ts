@@ -5,5 +5,6 @@ export interface RuntimeSettings {
   tileMultiplier: number;
   isWorldInverted: boolean;
   shadowLength: number;
+  lightCutoffDistance: number;
   ambientLight: vec3;
 }

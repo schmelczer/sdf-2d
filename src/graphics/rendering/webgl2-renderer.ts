@@ -50,6 +50,9 @@ export class WebGl2Renderer implements Renderer {
     ambientLight: (v) => {
       this.uniformsProvider.ambientLight = v;
     },
+    lightCutoffDistance: (v) => {
+      this.lightsPass.lightCutoffDistance = v;
+    },
   };
 
   private static defaultStartupSettings: StartupSettings = {
