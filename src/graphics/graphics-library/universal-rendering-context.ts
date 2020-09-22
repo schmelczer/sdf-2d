@@ -7,28 +7,27 @@ export const getUniversalRenderingContext = (
   canvas: HTMLCanvasElement,
   ignoreWebGL2 = false
 ): UniversalRenderingContext => {
-  let context: WebGL2RenderingContext | WebGLRenderingContext | null = ignoreWebGL2
+  const context: WebGL2RenderingContext | WebGLRenderingContext | null = ignoreWebGL2
     ? null
     : canvas.getContext('webgl2');
 
-  let webgl2Support = true;
+  let result = context as UniversalRenderingContext;
 
-  if (!context) {
-    context = canvas.getContext('webgl');
-    webgl2Support = false;
+  if (context) {
+    if (!Object.prototype.hasOwnProperty.call(context, 'isWebGL2')) {
+      result.isWebGL2 = true;
+    }
+  } else {
+    result = (canvas.getContext('webgl') ||
+      canvas.getContext('experimental-webgl')) as UniversalRenderingContext;
+
+    if (!result) {
+      throw new Error('Neither WebGL or WebGL2 is supported');
+    }
+
+    result.isWebGL2 = false;
   }
 
-  if (!context) {
-    context = canvas.getContext('experimental-webgl') as WebGLRenderingContext;
-  }
-
-  if (!context) {
-    throw new Error('Neither WebGL or WebGL2 is supported');
-  }
-
-  Insights.setValue('using WebGL2', webgl2Support);
-
-  const result = context as UniversalRenderingContext;
-  result.isWebGL2 = webgl2Support;
+  Insights.setValue('using WebGL2', result.isWebGL2);
   return result;
 };
