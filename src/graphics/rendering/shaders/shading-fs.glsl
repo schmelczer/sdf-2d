@@ -18,7 +18,7 @@ in vec2 uvCoordinates;
 
 uniform vec3 ambientLight;
 
-vec3[colorCount] colors = vec3[](
+vec3[{colorCount}] colors = vec3[](
     {palette}
 );
 
@@ -36,7 +36,7 @@ float shadowTransparency(float startingDistance, float lightCenterDistance, vec2
     float rayLength = startingDistance;
     
     for (int j = 0; j < SHADOW_TRACE_COUNT; j++) {
-        rayLength += getDistance(uvCoordinates + direction * rayLength);
+        rayLength += max(0.0, getDistance(uvCoordinates + direction * rayLength));
     }
 
     return min(
@@ -57,7 +57,7 @@ float shadowTransparency(float startingDistance, float lightCenterDistance, vec2
     in vec2[CIRCLE_LIGHT_COUNT] circleLightDirections;
 
     vec3 colorInPosition(int lightIndex, out float lightCenterDistance) {
-        lightCenterDistance = distance(circleLightCenters[lightIndex], position);
+        lightCenterDistance = max(0.0, distance(circleLightCenters[lightIndex], position));
         return circleLightColors[lightIndex] / pow(
             lightCenterDistance / circleLightIntensities[lightIndex] + 1.0, 2.0
         );
@@ -98,7 +98,7 @@ float shadowTransparency(float startingDistance, float lightCenterDistance, vec2
         return intensityInDirection(flashlightDirections[lightIndex], positionDirection) * 
             flashlightColors[lightIndex] / pow(
                 lightCenterDistance / (flashlightIntensities[lightIndex] * INTENSITY_INSIDE_RATIO) + 1.0, 2.0
-            );
+            ));
     }
 #endif
 #endif

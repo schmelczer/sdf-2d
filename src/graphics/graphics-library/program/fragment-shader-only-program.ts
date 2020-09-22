@@ -7,7 +7,9 @@ export class FragmentShaderOnlyProgram extends Program {
   private vertexArrayExtension: any;
   constructor(gl: UniversalRenderingContext) {
     super(gl);
-    this.vertexArrayExtension = enableExtension(this.gl, 'OES_vertex_array_object');
+    if (!gl.isWebGL2) {
+      this.vertexArrayExtension = enableExtension(this.gl, 'OES_vertex_array_object');
+    }
   }
 
   public async initialize(

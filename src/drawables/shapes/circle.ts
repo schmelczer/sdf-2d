@@ -7,7 +7,7 @@ export class Circle extends Drawable {
     sdf: {
       shader: `
           uniform vec2 circleCenters[CIRCLE_COUNT];
-          uniform vec2 circleRadii[CIRCLE_COUNT];
+          uniform float circleRadii[CIRCLE_COUNT];
 
           void circleMinDistance(inout float minDistance, inout float color) {
               float myMinDistance = maxMinDistance;
