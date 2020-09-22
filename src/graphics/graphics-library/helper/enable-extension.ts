@@ -1,4 +1,5 @@
 import { Insights } from '../../rendering/insights';
+import { UniversalRenderingContext } from '../universal-rendering-context';
 
 const extensions: Map<string, any> = new Map();
 
@@ -11,7 +12,7 @@ const logExtensions = () => {
 };
 
 export const tryEnableExtension = (
-  gl: WebGL2RenderingContext,
+  gl: UniversalRenderingContext,
   name: string
 ): any | null => {
   if (extensions.has(name)) {
@@ -30,7 +31,7 @@ export const tryEnableExtension = (
   return extension;
 };
 
-export const enableExtension = (gl: WebGL2RenderingContext, name: string): any => {
+export const enableExtension = (gl: UniversalRenderingContext, name: string): any => {
   const extension = tryEnableExtension(gl, name);
 
   if (extension === null) {

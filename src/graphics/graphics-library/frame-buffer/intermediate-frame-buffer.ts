@@ -1,14 +1,17 @@
 import { enableExtension } from '../helper/enable-extension';
+import { UniversalRenderingContext } from '../universal-rendering-context';
 import { FrameBuffer } from './frame-buffer';
 
 export class IntermediateFrameBuffer extends FrameBuffer {
   private frameTexture: WebGLTexture;
   private floatLinearEnabled = false;
 
-  constructor(gl: WebGL2RenderingContext) {
+  constructor(gl: UniversalRenderingContext) {
     super(gl);
 
-    enableExtension(gl, 'EXT_color_buffer_float');
+    if (gl.isWebGL2) {
+      enableExtension(gl, 'EXT_color_buffer_float');
+    }
 
     try {
       enableExtension(gl, 'OES_texture_float_linear');
@@ -45,12 +48,12 @@ export class IntermediateFrameBuffer extends FrameBuffer {
       this.gl.texImage2D(
         this.gl.TEXTURE_2D,
         0,
-        this.gl.RG16F,
+        this.gl.isWebGL2 ? this.gl.RG16F : this.gl.RGBA,
         this.size.x,
         this.size.y,
         0,
-        this.gl.RG,
-        this.gl.FLOAT,
+        this.gl.isWebGL2 ? this.gl.RG : this.gl.RGBA,
+        this.gl.isWebGL2 ? this.gl.FLOAT : this.gl.UNSIGNED_BYTE,
         null
       );
     }

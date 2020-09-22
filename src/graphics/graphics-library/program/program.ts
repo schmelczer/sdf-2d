@@ -1,6 +1,7 @@
 import { mat2d, vec2 } from 'gl-matrix';
 import { loadUniform } from '../helper/load-uniform';
 import { ParallelCompiler } from '../parallel-compiler';
+import { UniversalRenderingContext } from '../universal-rendering-context';
 import { IProgram } from './i-program';
 
 export default abstract class Program implements IProgram {
@@ -14,7 +15,7 @@ export default abstract class Program implements IProgram {
     type: GLenum;
   }> = [];
 
-  constructor(protected gl: WebGL2RenderingContext) {}
+  constructor(protected gl: UniversalRenderingContext) {}
 
   public async initialize(
     [vertexShaderSource, fragmentShaderSource]: [string, string],
@@ -67,7 +68,7 @@ export default abstract class Program implements IProgram {
   private queryUniforms() {
     const uniformCount = this.gl.getProgramParameter(
       this.program!,
-      WebGL2RenderingContext.ACTIVE_UNIFORMS
+      WebGLRenderingContext.ACTIVE_UNIFORMS
     );
 
     for (let i = 0; i < uniformCount; i++) {

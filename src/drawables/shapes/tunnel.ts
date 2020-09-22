@@ -8,44 +8,46 @@ export class Tunnel extends Drawable {
   public static descriptor: DrawableDescriptor = {
     sdf: {
       shader: `
-          uniform struct Tunnel {
-            vec2 from;
-            vec2 toFromDelta;
-            float fromRadius;
-            float toRadius;
-          }[TUNNEL_COUNT] tunnels;
+        uniform vec2 froms[TUNNEL_COUNT];
+        uniform vec2 toFromDeltas[TUNNEL_COUNT];
+        uniform float fromRadii[TUNNEL_COUNT];
+        uniform float toRadii[TUNNEL_COUNT];
       
-          void tunnelMinDistance(inout float minDistance, inout float color) {
-            float myMinDistance = minDistance;
-            for (int i = 0; i < TUNNEL_COUNT; i++) {
-              Tunnel tunnel = tunnels[i];
-              vec2 targetFromDelta = position - tunnel.from;
-              
-              float h = clamp(
-                  dot(targetFromDelta, tunnel.toFromDelta)
-                / dot(tunnel.toFromDelta, tunnel.toFromDelta),
-                0.0, 1.0
-              );
-  
-              float currentDistance = -mix(
-                tunnel.fromRadius, tunnel.toRadius, h
-              ) + distance(
-                targetFromDelta, tunnel.toFromDelta * h
-              );
+        void tunnelMinDistance(inout float minDistance, inout float color) {
+          float myMinDistance = minDistance;
+          for (int i = 0; i < TUNNEL_COUNT; i++) {
+            vec2 targetFromDelta = position - froms[i];
+            
+            float h = clamp(
+                dot(targetFromDelta, toFromDeltas[i])
+              / dot(toFromDeltas[i], toFromDeltas[i]),
+              0.0, 1.0
+            );
+
+            float currentDistance = -mix(
+              fromRadii[i], toRadii[i], h
+            ) + distance(
+              targetFromDelta, toFromDeltas[i] * h
+            );
     
-              myMinDistance = min(myMinDistance, currentDistance);
-            }
-      
-            color = mix(2.0, color, step(
-              distanceNdcPixelSize + SURFACE_OFFSET,
-              myMinDistance
-            ));
-            minDistance = min(minDistance, myMinDistance);
+            myMinDistance = min(myMinDistance, currentDistance);
           }
-        `,
+    
+          color = mix(2.0, color, step(
+            distanceNdcPixelSize + SURFACE_OFFSET,
+            myMinDistance
+          ));
+          minDistance = min(minDistance, myMinDistance);
+        }
+      `,
       distanceFunctionName: 'tunnelMinDistance',
     },
-    uniformName: 'tunnels',
+    propertyUniformMapping: {
+      from: 'froms',
+      toFromDelta: 'toFromDeltas',
+      fromRadius: 'fromRadii',
+      toRadius: 'toRadii',
+    },
     uniformCountMacroName: 'TUNNEL_COUNT',
     shaderCombinationSteps: [0, 1, 4, 16, 32],
     empty: new Tunnel(

@@ -5,9 +5,12 @@ import { LightDrawable } from '../../drawables/lights/light-drawable';
 import { msToString } from '../../helper/ms-to-string';
 import { DefaultFrameBuffer } from '../graphics-library/frame-buffer/default-frame-buffer';
 import { IntermediateFrameBuffer } from '../graphics-library/frame-buffer/intermediate-frame-buffer';
-import { getWebGl2Context } from '../graphics-library/helper/get-webgl2-context';
 import { WebGlStopwatch } from '../graphics-library/helper/stopwatch';
 import { ParallelCompiler } from '../graphics-library/parallel-compiler';
+import {
+  getUniversalRenderingContext,
+  UniversalRenderingContext,
+} from '../graphics-library/universal-rendering-context';
 import { FpsAutoscaler } from './fps-autoscaler';
 import { Insights } from './insights';
 import { DistanceRenderPass } from './render-pass/distance-render-pass';
@@ -15,14 +18,18 @@ import { LightsRenderPass } from './render-pass/lights-render-pass';
 import { Renderer } from './renderer';
 import { RuntimeSettings } from './settings/runtime-settings';
 import { StartupSettings } from './settings/startup-settings';
+import distanceFragmentShader100 from './shaders/distance-fs-100.glsl';
 import distanceFragmentShader from './shaders/distance-fs.glsl';
+import distanceVertexShader100 from './shaders/distance-vs-100.glsl';
 import distanceVertexShader from './shaders/distance-vs.glsl';
+import lightsFragmentShader100 from './shaders/shading-fs-100.glsl';
 import lightsFragmentShader from './shaders/shading-fs.glsl';
+import lightsVertexShader100 from './shaders/shading-vs-100.glsl';
 import lightsVertexShader from './shaders/shading-vs.glsl';
 import { UniformsProvider } from './uniforms-provider';
 
-export class WebGl2Renderer implements Renderer {
-  private gl: WebGL2RenderingContext;
+export class RendererImplementation implements Renderer {
+  private gl: UniversalRenderingContext;
   private stopwatch?: WebGlStopwatch;
   private uniformsProvider: UniformsProvider;
   private distanceFieldFrameBuffer: IntermediateFrameBuffer;
@@ -69,7 +76,7 @@ export class WebGl2Renderer implements Renderer {
     private canvas: HTMLCanvasElement,
     private descriptors: Array<DrawableDescriptor>
   ) {
-    this.gl = getWebGl2Context(canvas);
+    this.gl = getUniversalRenderingContext(canvas);
 
     ParallelCompiler.initialize(this.gl);
 
@@ -92,23 +99,30 @@ export class WebGl2Renderer implements Renderer {
     palette: Array<vec3>,
     settingsOverrides: Partial<StartupSettings>
   ): Promise<void> {
-    const settings = { ...WebGl2Renderer.defaultStartupSettings, ...settingsOverrides };
+    const settings = {
+      ...RendererImplementation.defaultStartupSettings,
+      ...settingsOverrides,
+    };
 
     const promises: Array<Promise<void>> = [];
 
     promises.push(
       this.distancePass.initialize(
-        [distanceVertexShader, distanceFragmentShader],
-        this.descriptors.filter(WebGl2Renderer.hasSdf)
+        this.gl.isWebGL2
+          ? [distanceVertexShader, distanceFragmentShader]
+          : [distanceVertexShader100, distanceFragmentShader100],
+        this.descriptors.filter(RendererImplementation.hasSdf)
       )
     );
-
     promises.push(
       this.lightsPass.initialize(
-        [lightsVertexShader, lightsFragmentShader],
-        this.descriptors.filter((d) => !WebGl2Renderer.hasSdf(d)),
+        this.gl.isWebGL2
+          ? [lightsVertexShader, lightsFragmentShader]
+          : [lightsVertexShader100, lightsFragmentShader100],
+        this.descriptors.filter((d) => !RendererImplementation.hasSdf(d)),
         {
           palette: this.generatePaletteCode(palette),
+          colorCount: palette.length.toString(),
           shadowTraceCount: settings.shadowTraceCount,
         }
       )
@@ -134,7 +148,9 @@ export class WebGl2Renderer implements Renderer {
   }
 
   public addDrawable(drawable: Drawable): void {
-    if (WebGl2Renderer.hasSdf((drawable.constructor as typeof Drawable).descriptor)) {
+    if (
+      RendererImplementation.hasSdf((drawable.constructor as typeof Drawable).descriptor)
+    ) {
       this.distancePass.addDrawable(drawable);
     } else {
       this.lightsPass.addDrawable(drawable as LightDrawable);
@@ -149,12 +165,12 @@ export class WebGl2Renderer implements Renderer {
     const numberToGlslFloat = (n: number) => (Number.isInteger(n) ? `${n}.0` : `${n}`);
     return palette
       .map(
-        (c) =>
-          `vec3(${numberToGlslFloat(c[0])}, ${numberToGlslFloat(
-            c[1]
-          )}, ${numberToGlslFloat(c[2])})`
+        (c, i) =>
+          `${this.gl.isWebGL2 ? '' : `colors[${i}] = `}vec3(${numberToGlslFloat(
+            c[0]
+          )}, ${numberToGlslFloat(c[1])}, ${numberToGlslFloat(c[2])})`
       )
-      .join(',\n');
+      .join(this.gl.isWebGL2 ? ',\n' : ';\n');
   }
 
   public renderDrawables() {

@@ -4,7 +4,12 @@ import { LightDrawable } from './light-drawable';
 
 export class Flashlight extends LightDrawable {
   public static readonly descriptor: DrawableDescriptor = {
-    uniformName: 'flashlights',
+    propertyUniformMapping: {
+      center: 'flashlightCenters',
+      color: 'flashlightColors',
+      intensity: 'flashlightIntensities',
+      direction: 'flashlightDirections',
+    },
     uniformCountMacroName: 'FLASHLIGHT_COUNT',
     shaderCombinationSteps: [0, 1, 2, 4],
     empty: new Flashlight(

@@ -4,9 +4,13 @@ import { LightDrawable } from './light-drawable';
 
 export class CircleLight extends LightDrawable {
   public static readonly descriptor: DrawableDescriptor = {
-    uniformName: 'circleLights',
+    propertyUniformMapping: {
+      center: 'circleLightCenters',
+      color: 'circleLightColors',
+      intensity: 'circleLightIntensities',
+    },
     uniformCountMacroName: 'CIRCLE_LIGHT_COUNT',
-    shaderCombinationSteps: [0, 1, 2, 4, 8],
+    shaderCombinationSteps: [0, 1, 2, 4, 8, 16],
     empty: new CircleLight(vec2.fromValues(0, 0), vec3.fromValues(0, 0, 0), 0),
   };
 

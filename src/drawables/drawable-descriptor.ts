@@ -1,7 +1,7 @@
 import { Drawable } from './drawable';
 
 export interface DrawableDescriptor {
-  uniformName: string;
+  propertyUniformMapping: { [property: string]: string };
   uniformCountMacroName: string;
   sdf?: {
     shader: string;

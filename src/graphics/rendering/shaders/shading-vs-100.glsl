@@ -1,28 +1,28 @@
-#version 300 es
+#version 100
 
 precision lowp float;
 
 {macroDefinitions}
 
 uniform mat3 modelTransform;
-in vec4 vertexPosition;
+attribute vec4 vertexPosition;
 
-out vec2 position;
-out vec2 uvCoordinates;
+varying vec2 position;
+varying vec2 uvCoordinates;
 
 uniform vec2 squareToAspectRatio;
 
 #ifdef CIRCLE_LIGHT_COUNT
 #if CIRCLE_LIGHT_COUNT > 0
     uniform vec2 circleLightCenters[CIRCLE_LIGHT_COUNT];
-    out vec2[CIRCLE_LIGHT_COUNT] circleLightDirections;
+    varying vec2 circleLightDirections[CIRCLE_LIGHT_COUNT];
 #endif
 #endif
 
 #ifdef FLASHLIGHT_COUNT
 #if FLASHLIGHT_COUNT > 0
     uniform vec2 flashlightCenters[FLASHLIGHT_COUNT];
-    out vec2[FLASHLIGHT_COUNT] flashlightActualDirections;
+    varying vec2 flashlightActualDirections[FLASHLIGHT_COUNT];
 #endif
 #endif
 

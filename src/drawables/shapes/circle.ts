@@ -6,15 +6,13 @@ export class Circle extends Drawable {
   public static descriptor: DrawableDescriptor = {
     sdf: {
       shader: `
-          uniform struct {
-              vec2 center;
-              float radius;
-          }[CIRCLE_COUNT] circles;
+          uniform vec2 circleCenters[CIRCLE_COUNT];
+          uniform vec2 circleRadii[CIRCLE_COUNT];
 
           void circleMinDistance(inout float minDistance, inout float color) {
               float myMinDistance = maxMinDistance;
               for (int i = 0; i < CIRCLE_COUNT; i++) {
-                  float dist = distance(circles[i].center, position) - circles[i].radius;
+                  float dist = distance(circleCenters[i], position) - circleRadii[i];
                   myMinDistance = min(myMinDistance, dist);
               }
               minDistance = min(minDistance, myMinDistance);
@@ -26,9 +24,12 @@ export class Circle extends Drawable {
         `,
       distanceFunctionName: 'circleMinDistance',
     },
-    uniformName: 'circles',
+    propertyUniformMapping: {
+      center: 'circleCenters',
+      radius: 'circleRadii',
+    },
     uniformCountMacroName: 'CIRCLE_COUNT',
-    shaderCombinationSteps: [0, 1, 2, 3, 16, 32],
+    shaderCombinationSteps: [0, 1, 2, 3, 8, 16],
     empty: new Circle(vec2.fromValues(0, 0), 0),
   };
 

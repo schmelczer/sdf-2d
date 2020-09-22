@@ -2,8 +2,8 @@ import { vec3 } from 'gl-matrix';
 import { DrawableDescriptor } from './drawables/drawable-descriptor';
 import { Insights } from './graphics/rendering/insights';
 import { Renderer } from './graphics/rendering/renderer';
+import { RendererImplementation } from './graphics/rendering/renderer-implementation';
 import { StartupSettings } from './graphics/rendering/settings/startup-settings';
-import { WebGl2Renderer } from './graphics/rendering/webgl2-renderer';
 import { applyArrayPlugins } from './helper/array';
 
 export { Drawable } from './drawables/drawable';
@@ -36,7 +36,7 @@ export async function compile(
   settings: Partial<StartupSettings> = {}
 ): Promise<Renderer> {
   return Insights.measureFunction('startup', async () => {
-    const renderer = new WebGl2Renderer(canvas, descriptors);
+    const renderer = new RendererImplementation(canvas, descriptors);
     await renderer.initialize(palette, settings);
     return renderer;
   });

@@ -1,10 +1,13 @@
+import { enableExtension } from '../helper/enable-extension';
+import { UniversalRenderingContext } from '../universal-rendering-context';
 import Program from './program';
 
 export class FragmentShaderOnlyProgram extends Program {
   private vao?: WebGLVertexArrayObject;
-
-  constructor(gl: WebGL2RenderingContext) {
+  private vertexArrayExtension: any;
+  constructor(gl: UniversalRenderingContext) {
     super(gl);
+    this.vertexArrayExtension = enableExtension(this.gl, 'OES_vertex_array_object');
   }
 
   public async initialize(
@@ -17,7 +20,11 @@ export class FragmentShaderOnlyProgram extends Program {
 
   public bind() {
     super.bind();
-    this.gl.bindVertexArray(this.vao!);
+    if (this.gl.isWebGL2) {
+      this.gl.bindVertexArray(this.vao!);
+    } else {
+      this.vertexArrayExtension.createVertexArrayOES();
+    }
   }
 
   public draw(uniforms: { [name: string]: any }) {
@@ -26,7 +33,12 @@ export class FragmentShaderOnlyProgram extends Program {
   }
 
   public destroy(): void {
-    this.gl.deleteVertexArray(this.vao!);
+    if (this.gl.isWebGL2) {
+      this.gl.deleteVertexArray(this.vao!);
+    } else {
+      this.vertexArrayExtension.deleteVertexArrayOES(this.vao!);
+    }
+
     super.destroy();
   }
 
@@ -45,10 +57,15 @@ export class FragmentShaderOnlyProgram extends Program {
       this.gl.STATIC_DRAW
     );
 
-    // can only return null on lost context
-    this.vao = this.gl.createVertexArray()!;
+    if (this.gl.isWebGL2) {
+      // can only return null on lost context
+      this.vao = this.gl.createVertexArray()!;
+      this.gl.bindVertexArray(this.vao!);
+    } else {
+      this.vao = this.vertexArrayExtension.createVertexArrayOES();
+      this.vertexArrayExtension.bindVertexArrayOES(this.vao!);
+    }
 
-    this.gl.bindVertexArray(this.vao);
     this.gl.enableVertexAttribArray(positionAttributeLocation);
     this.gl.vertexAttribPointer(positionAttributeLocation, 2, this.gl.FLOAT, false, 0, 0);
   }

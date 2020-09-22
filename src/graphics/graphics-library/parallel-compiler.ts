@@ -1,18 +1,23 @@
 import { wait } from '../../helper/wait';
 import { Insights } from '../rendering/insights';
 import { tryEnableExtension } from './helper/enable-extension';
+import { UniversalRenderingContext } from './universal-rendering-context';
 
 type CompilingProgram = {
   program: WebGLProgram;
   resolvePromise: ((program: WebGLProgram) => void) | null;
+  vertexShader: ShaderWithSource;
+  fragmentShader: ShaderWithSource;
 };
+
+type ShaderWithSource = WebGLShader & { source: string };
 
 export abstract class ParallelCompiler {
   private static extension?: any;
-  private static gl: WebGL2RenderingContext;
+  private static gl: UniversalRenderingContext;
   private static programs: Array<CompilingProgram> = [];
 
-  public static initialize(gl: WebGL2RenderingContext) {
+  public static initialize(gl: UniversalRenderingContext) {
     ParallelCompiler.gl = gl;
     ParallelCompiler.extension = tryEnableExtension(gl, 'KHR_parallel_shader_compile');
   }
@@ -28,14 +33,14 @@ export abstract class ParallelCompiler {
     // can only return null on lost context
     const program = ParallelCompiler.gl.createProgram()!;
 
-    ParallelCompiler.compileShader(
+    const vertexShader = ParallelCompiler.compileShader(
       vertexShaderSource,
       ParallelCompiler.gl.VERTEX_SHADER,
       program,
       substitutions
     );
 
-    ParallelCompiler.compileShader(
+    const fragmentShader = ParallelCompiler.compileShader(
       fragmentShaderSource,
       ParallelCompiler.gl.FRAGMENT_SHADER,
       program,
@@ -45,6 +50,8 @@ export abstract class ParallelCompiler {
     ParallelCompiler.programs.push({
       program,
       resolvePromise,
+      vertexShader,
+      fragmentShader,
     });
 
     return promise;
@@ -67,7 +74,7 @@ export abstract class ParallelCompiler {
     type: GLenum,
     program: WebGLProgram,
     substitutions: { [name: string]: string }
-  ) {
+  ): ShaderWithSource {
     const processedSource = source.replace(/{(.+)}/gm, (_, name: string): string => {
       const value = substitutions[name];
       return Number.isInteger(value) ? `${value}.0` : value;
@@ -79,7 +86,11 @@ export abstract class ParallelCompiler {
     this.gl.shaderSource(shader, processedSource);
     this.gl.compileShader(shader);
     this.gl.attachShader(program, shader);
-    this.gl.deleteShader(shader);
+
+    const result = shader as ShaderWithSource;
+    result.source = processedSource;
+
+    return result;
   }
 
   private static resolveFinishedPrograms() {
@@ -93,7 +104,7 @@ export abstract class ParallelCompiler {
           ParallelCompiler.extension.COMPLETION_STATUS_KHR
         )
       ) {
-        ParallelCompiler.checkProgram(p.program);
+        ParallelCompiler.checkProgram(p);
         done.push(p);
         p.resolvePromise!(p.program);
       }
@@ -104,18 +115,39 @@ export abstract class ParallelCompiler {
     );
   }
 
-  private static checkProgram(program: WebGLProgram) {
+  private static checkProgram(program: CompilingProgram) {
     const success = ParallelCompiler.gl.getProgramParameter(
-      program,
+      program.program,
       ParallelCompiler.gl.LINK_STATUS
     );
 
     if (!success && !ParallelCompiler.gl.isContextLost()) {
-      ParallelCompiler.gl.getAttachedShaders(program)?.forEach((s) => {
-        ParallelCompiler.checkShader(s);
-      });
+      ParallelCompiler.prettyPrintErrorsIfThereAreAny(program.vertexShader);
+      ParallelCompiler.prettyPrintErrorsIfThereAreAny(program.fragmentShader);
 
-      throw new Error(ParallelCompiler.gl.getProgramInfoLog(program)!);
+      throw new Error(ParallelCompiler.gl.getProgramInfoLog(program.program)!);
+    }
+
+    this.gl.deleteShader(program.vertexShader);
+    this.gl.deleteShader(program.fragmentShader);
+  }
+
+  private static prettyPrintErrorsIfThereAreAny(shader: ShaderWithSource) {
+    try {
+      ParallelCompiler.checkShader(shader);
+    } catch (e) {
+      for (const match of e
+        .toString()
+        .matchAll(/ERROR: 0:(?<line>\d+): (?<error>.*)$/gm)) {
+        const line = Number.parseInt(match.groups.line);
+        const error = match.groups.error;
+        console.error(
+          `Error: ${error}\nSource (line ${line}):\n${
+            shader.source.split('\n')[line - 1]
+          }`
+        );
+      }
+      throw new Error('Error while compiling shader');
     }
   }
 

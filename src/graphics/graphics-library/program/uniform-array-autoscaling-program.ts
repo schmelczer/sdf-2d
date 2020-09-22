@@ -2,6 +2,7 @@ import { mat2d, vec2 } from 'gl-matrix';
 import { DrawableDescriptor } from '../../../drawables/drawable-descriptor';
 import { getCombinations } from '../../../helper/get-combinations';
 import { last } from '../../../helper/last';
+import { UniversalRenderingContext } from '../universal-rendering-context';
 import { FragmentShaderOnlyProgram } from './fragment-shader-only-program';
 import { IProgram } from './i-program';
 
@@ -16,7 +17,7 @@ export class UniformArrayAutoScalingProgram implements IProgram {
   private drawingRectangleBottomLeft = vec2.fromValues(0, 0);
   private drawingRectangleSize = vec2.fromValues(1, 1);
 
-  constructor(private gl: WebGL2RenderingContext) {}
+  constructor(private gl: UniversalRenderingContext) {}
 
   public async initialize(
     shaderSources: [string, string],
@@ -44,9 +45,14 @@ export class UniformArrayAutoScalingProgram implements IProgram {
   }
 
   public draw(uniforms: { [name: string]: any }): void {
-    const values = this.descriptors!.map((d) =>
-      uniforms[d.uniformName] ? uniforms[d.uniformName].length : 0
-    );
+    const values = this.descriptors!.map((d) => {
+      const uniformNames = last(Object.entries(d.propertyUniformMapping));
+      if (!uniformNames) {
+        return 0;
+      }
+      const uniformName = uniformNames[1];
+      return uniforms[uniformName] ? uniforms[uniformName].length : 0;
+    });
 
     const closest = this.programs.find((p) => p.values.every((v, i) => v >= values[i]));
 

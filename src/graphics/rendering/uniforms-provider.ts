@@ -1,4 +1,5 @@
 import { mat2d, vec2, vec3 } from 'gl-matrix';
+import { UniversalRenderingContext } from '../graphics-library/universal-rendering-context';
 
 export class UniformsProvider {
   public ambientLight = vec3.fromValues(0.25, 0.15, 0.25);
@@ -12,7 +13,7 @@ export class UniformsProvider {
   private squareToAspectRatio = vec2.create();
   private uvToWorld = mat2d.create();
 
-  public constructor(private gl: WebGL2RenderingContext) {}
+  public constructor(private gl: UniversalRenderingContext) {}
 
   public getUniforms(uniforms: any): any {
     return {

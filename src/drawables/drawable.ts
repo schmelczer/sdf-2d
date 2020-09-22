@@ -6,7 +6,6 @@ export abstract class Drawable {
   public static readonly descriptor: DrawableDescriptor;
 
   public abstract minDistance(target: vec2): number;
-
   protected abstract getObjectToSerialize(transform2d: mat2d, transform1d: number): any;
 
   public serializeToUniforms(
@@ -14,12 +13,15 @@ export abstract class Drawable {
     transform2d: mat2d,
     transform1d: number
   ): void {
-    const { uniformName } = (this.constructor as typeof Drawable).descriptor;
+    const { propertyUniformMapping } = (this.constructor as typeof Drawable).descriptor;
 
-    if (!Object.prototype.hasOwnProperty.call(uniforms, uniformName)) {
-      uniforms[uniformName] = [];
-    }
+    const serialized = this.getObjectToSerialize(transform2d, transform1d);
+    Object.entries(propertyUniformMapping).forEach(([k, v]) => {
+      if (!Object.prototype.hasOwnProperty.call(uniforms, v)) {
+        uniforms[v] = [];
+      }
 
-    uniforms[uniformName].push(this.getObjectToSerialize(transform2d, transform1d));
+      uniforms[v].push(serialized[k]);
+    });
   }
 }

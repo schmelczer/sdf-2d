@@ -1,4 +1,5 @@
 import { vec2 } from 'gl-matrix';
+import { UniversalRenderingContext } from '../universal-rendering-context';
 
 export abstract class FrameBuffer {
   public renderScale = 1;
@@ -9,7 +10,7 @@ export abstract class FrameBuffer {
   // null means the default framebuffer
   protected frameBuffer: WebGLFramebuffer | null = null;
 
-  constructor(protected gl: WebGL2RenderingContext) {}
+  constructor(protected gl: UniversalRenderingContext) {}
 
   public bindAndClear(colorInput?: WebGLTexture) {
     this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, this.frameBuffer);

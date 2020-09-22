@@ -8,44 +8,46 @@ export class InvertedTunnel extends Drawable {
   public static descriptor: DrawableDescriptor = {
     sdf: {
       shader: `
-          uniform struct InvertedTunnel {
-            vec2 from;
-            vec2 toFromDelta;
-            float fromRadius;
-            float toRadius;
-          }[INVERTED_TUNNEL_COUNT] invertedTunnels;
+        uniform vec2 froms[INVERTED_TUNNEL_COUNT];
+        uniform vec2 toFromDeltas[INVERTED_TUNNEL_COUNT];
+        uniform float fromRadii[INVERTED_TUNNEL_COUNT];
+        uniform float toRadii[INVERTED_TUNNEL_COUNT];
       
-          void invertedTunnelMinDistance(inout float minDistance, inout float color) {
-            float myMinDistance = -minDistance;
-            for (int i = 0; i < INVERTED_TUNNEL_COUNT; i++) {
-              InvertedTunnel tunnel = invertedTunnels[i];
-              vec2 targetFromDelta = position - tunnel.from;
-              
-              float h = clamp(
-                  dot(targetFromDelta, tunnel.toFromDelta)
-                / dot(tunnel.toFromDelta, tunnel.toFromDelta),
-                0.0, 1.0
-              );
-  
-              float currentDistance = -mix(
-                tunnel.fromRadius, tunnel.toRadius, h
-              ) + distance(
-                targetFromDelta, tunnel.toFromDelta * h
-              );
-  
-              myMinDistance = min(myMinDistance, currentDistance);
-            }
-    
-            color = mix(0.0, color, step(
-              distanceNdcPixelSize + SURFACE_OFFSET,
-              -myMinDistance
-            ));
-            minDistance = -myMinDistance;
+        void invertedTunnelMinDistance(inout float minDistance, inout float color) {
+          float myMinDistance = -minDistance;
+          for (int i = 0; i < INVERTED_TUNNEL_COUNT; i++) {
+            vec2 targetFromDelta = position - froms[i];
+            
+            float h = clamp(
+                dot(targetFromDelta, toFromDeltas[i])
+              / dot(toFromDeltas[i], toFromDeltas[i]),
+              0.0, 1.0
+            );
+
+            float currentDistance = -mix(
+              fromRadii[i], toRadii[i], h
+            ) + distance(
+              targetFromDelta, toFromDeltas[i] * h
+            );
+
+            myMinDistance = min(myMinDistance, currentDistance);
           }
-        `,
+  
+          color = mix(0.0, color, step(
+            distanceNdcPixelSize + SURFACE_OFFSET,
+            -myMinDistance
+          ));
+          minDistance = -myMinDistance;
+        }
+      `,
       distanceFunctionName: 'invertedTunnelMinDistance',
     },
-    uniformName: 'invertedTunnels',
+    propertyUniformMapping: {
+      from: 'froms',
+      toFromDelta: 'toFromDeltas',
+      fromRadius: 'fromRadii',
+      toRadius: 'toRadii',
+    },
     uniformCountMacroName: 'INVERTED_TUNNEL_COUNT',
     shaderCombinationSteps: [0, 1, 4, 16, 32],
     empty: new InvertedTunnel(vec2.fromValues(0, 0), vec2.fromValues(0, 0), 0, 0),
