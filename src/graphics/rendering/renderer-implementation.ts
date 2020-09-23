@@ -1,4 +1,4 @@
-import { vec2, vec3 } from 'gl-matrix';
+import { vec2 } from 'gl-matrix';
 import { Drawable } from '../../drawables/drawable';
 import { DrawableDescriptor } from '../../drawables/drawable-descriptor';
 import { LightDrawable } from '../../drawables/lights/light-drawable';
@@ -6,6 +6,7 @@ import { msToString } from '../../helper/ms-to-string';
 import { DefaultFrameBuffer } from '../graphics-library/frame-buffer/default-frame-buffer';
 import { IntermediateFrameBuffer } from '../graphics-library/frame-buffer/intermediate-frame-buffer';
 import { WebGlStopwatch } from '../graphics-library/helper/stopwatch';
+import { PaletteTexture } from '../graphics-library/palette-texture';
 import { ParallelCompiler } from '../graphics-library/parallel-compiler';
 import {
   getUniversalRenderingContext,
@@ -29,13 +30,14 @@ import lightsVertexShader from './shaders/shading-vs.glsl';
 import { UniformsProvider } from './uniforms-provider';
 
 export class RendererImplementation implements Renderer {
-  private gl: UniversalRenderingContext;
+  private readonly gl: UniversalRenderingContext;
   private stopwatch?: WebGlStopwatch;
   private uniformsProvider: UniformsProvider;
   private distanceFieldFrameBuffer: IntermediateFrameBuffer;
   private distancePass: DistanceRenderPass;
-  private lightsPass: LightsRenderPass;
   private lightingFrameBuffer: DefaultFrameBuffer;
+  private lightsPass: LightsRenderPass;
+  private palette?: PaletteTexture;
   private autoscaler: FpsAutoscaler;
 
   private applyRuntimeSettings: {
@@ -45,25 +47,17 @@ export class RendererImplementation implements Renderer {
       this.distanceFieldFrameBuffer.enableHighDpiRendering = v;
       this.lightingFrameBuffer.enableHighDpiRendering = v;
     },
-    tileMultiplier: (v) => {
-      this.distancePass.tileMultiplier = v;
-    },
-    isWorldInverted: (v) => {
-      this.distancePass.isWorldInverted = v;
-    },
-    shadowLength: (v) => {
-      this.uniformsProvider.shadowLength = v;
-    },
-    ambientLight: (v) => {
-      this.uniformsProvider.ambientLight = v;
-    },
-    lightCutoffDistance: (v) => {
-      this.lightsPass.lightCutoffDistance = v;
-    },
+    tileMultiplier: (v) => (this.distancePass.tileMultiplier = v),
+    isWorldInverted: (v) => (this.distancePass.isWorldInverted = v),
+    shadowLength: (v) => (this.uniformsProvider.shadowLength = v),
+    ambientLight: (v) => (this.uniformsProvider.ambientLight = v),
+    lightCutoffDistance: (v) => (this.lightsPass.lightCutoffDistance = v),
+    colorPalette: (v) => this.palette!.setPalette(v),
   };
 
   private static defaultStartupSettings: StartupSettings = {
-    shadowTraceCount: '16',
+    shadowTraceCount: 16,
+    paletteSize: 4,
   };
 
   setRuntimeSettings(overrides: Partial<RuntimeSettings>): void {
@@ -88,6 +82,8 @@ export class RendererImplementation implements Renderer {
 
     this.uniformsProvider = new UniformsProvider(this.gl);
 
+    this.queryPrecisions();
+
     this.autoscaler = new FpsAutoscaler({
       distanceRenderScale: (v) =>
         (this.distanceFieldFrameBuffer.renderScale = v as number),
@@ -95,15 +91,13 @@ export class RendererImplementation implements Renderer {
     });
   }
 
-  public async initialize(
-    palette: Array<vec3>,
-    settingsOverrides: Partial<StartupSettings>
-  ): Promise<void> {
+  public async initialize(settingsOverrides: Partial<StartupSettings>): Promise<void> {
     const settings = {
       ...RendererImplementation.defaultStartupSettings,
       ...settingsOverrides,
     };
 
+    this.palette = new PaletteTexture(this.gl, settings.paletteSize);
     const promises: Array<Promise<void>> = [];
 
     promises.push(
@@ -111,7 +105,10 @@ export class RendererImplementation implements Renderer {
         this.gl.isWebGL2
           ? [distanceVertexShader, distanceFragmentShader]
           : [distanceVertexShader100, distanceFragmentShader100],
-        this.descriptors.filter(RendererImplementation.hasSdf)
+        this.descriptors.filter(RendererImplementation.hasSdf),
+        {
+          paletteSize: settings.paletteSize,
+        }
       )
     );
     promises.push(
@@ -121,9 +118,7 @@ export class RendererImplementation implements Renderer {
           : [lightsVertexShader100, lightsFragmentShader100],
         this.descriptors.filter((d) => !RendererImplementation.hasSdf(d)),
         {
-          palette: this.generatePaletteCode(palette),
-          colorCount: palette.length.toString(),
-          shadowTraceCount: settings.shadowTraceCount,
+          shadowTraceCount: settings.shadowTraceCount.toString(),
         }
       )
     );
@@ -147,6 +142,30 @@ export class RendererImplementation implements Renderer {
     return Object.prototype.hasOwnProperty.call(descriptor, 'sdf');
   }
 
+  private queryPrecisions() {
+    const precisionToObject = (shader: GLenum, precision: GLenum) => {
+      const toExponent = (v: number): string => `2^${v}`;
+      const p = this.gl.getShaderPrecisionFormat(shader, precision)!;
+      return {
+        range: `[${toExponent(p.rangeMin)}, ${toExponent(p.rangeMax)}]`,
+        precision: toExponent(p.precision),
+      };
+    };
+
+    Insights.setValue('precisions', {
+      'vertex shader': {
+        'low float': precisionToObject(this.gl.VERTEX_SHADER, this.gl.LOW_FLOAT),
+        'medium float': precisionToObject(this.gl.VERTEX_SHADER, this.gl.MEDIUM_FLOAT),
+        'high float': precisionToObject(this.gl.VERTEX_SHADER, this.gl.HIGH_FLOAT),
+      },
+      'fragment shader': {
+        'low float': precisionToObject(this.gl.FRAGMENT_SHADER, this.gl.LOW_FLOAT),
+        'medium float': precisionToObject(this.gl.FRAGMENT_SHADER, this.gl.MEDIUM_FLOAT),
+        'high float': precisionToObject(this.gl.FRAGMENT_SHADER, this.gl.HIGH_FLOAT),
+      },
+    });
+  }
+
   public addDrawable(drawable: Drawable): void {
     if (
       RendererImplementation.hasSdf((drawable.constructor as typeof Drawable).descriptor)
@@ -159,18 +178,6 @@ export class RendererImplementation implements Renderer {
 
   public autoscaleQuality(deltaTime: DOMHighResTimeStamp) {
     this.autoscaler.autoscale(deltaTime);
-  }
-
-  private generatePaletteCode(palette: Array<vec3>) {
-    const numberToGlslFloat = (n: number) => (Number.isInteger(n) ? `${n}.0` : `${n}`);
-    return palette
-      .map(
-        (c, i) =>
-          `${this.gl.isWebGL2 ? '' : `colors[${i}] = `}vec3(${numberToGlslFloat(
-            c[0]
-          )}, ${numberToGlslFloat(c[1])}, ${numberToGlslFloat(c[2])})`
-      )
-      .join(this.gl.isWebGL2 ? ',\n' : ';\n');
   }
 
   public renderDrawables() {
@@ -190,6 +197,10 @@ export class RendererImplementation implements Renderer {
     this.lightingFrameBuffer.setSize();
 
     const common = {
+      // texture units
+      distanceTexture: 0,
+      palette: 1,
+      // regular uniforms
       distanceNdcPixelSize: 2 / Math.max(...this.distanceFieldFrameBuffer.getSize()),
       shadingNdcPixelSize: 2 / Math.max(...this.distanceFieldFrameBuffer.getSize()),
     };
@@ -197,7 +208,8 @@ export class RendererImplementation implements Renderer {
     this.distancePass.render(this.uniformsProvider.getUniforms(common));
     this.lightsPass.render(
       this.uniformsProvider.getUniforms(common),
-      this.distanceFieldFrameBuffer.colorTexture
+      this.distanceFieldFrameBuffer.colorTexture,
+      this.palette!.colorTexture
     );
 
     if (this.stopwatch?.isRunning) {
@@ -220,5 +232,6 @@ export class RendererImplementation implements Renderer {
   public destroy(): void {
     this.distancePass.destroy();
     this.lightsPass.destroy();
+    this.palette!.destroy();
   }
 }

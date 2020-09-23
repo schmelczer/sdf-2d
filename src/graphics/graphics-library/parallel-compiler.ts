@@ -75,10 +75,16 @@ export abstract class ParallelCompiler {
     program: WebGLProgram,
     substitutions: { [name: string]: string }
   ): ShaderWithSource {
-    const processedSource = source.replace(/{(.+)}/gm, (_, name: string): string => {
-      const value = substitutions[name];
-      return Number.isInteger(value) ? `${value}.0` : value;
-    });
+    let processedSource = source;
+    let replaceHappened: boolean;
+    do {
+      replaceHappened = false;
+      processedSource = processedSource.replace(/{(.+)}/gm, (_, name: string): string => {
+        replaceHappened = true;
+        const value = substitutions[name];
+        return Number.isInteger(value) ? `${value}.0` : value;
+      });
+    } while (replaceHappened);
 
     // can only return null on lost context
     const shader = ParallelCompiler.gl.createShader(type)!;
@@ -136,11 +142,9 @@ export abstract class ParallelCompiler {
     try {
       ParallelCompiler.checkShader(shader);
     } catch (e) {
-      for (const match of e
-        .toString()
-        .matchAll(/ERROR: 0:(?<line>\d+): (?<error>.*)$/gm)) {
-        const line = Number.parseInt(match.groups.line);
-        const error = match.groups.error;
+      for (const match of e.toString().matchAll(/ERROR: 0:(\d+): (.*)$/gm)) {
+        const line = Number.parseInt(match[1]);
+        const error = match[2];
         console.error(
           `Error: ${error}\nSource (line ${line}):\n${
             shader.source.split('\n')[line - 1]

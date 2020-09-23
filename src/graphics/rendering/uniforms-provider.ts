@@ -7,13 +7,12 @@ export class UniformsProvider {
 
   private scaleWorldLengthToNDC = 1;
   private transformWorldToNDC = mat2d.create();
-
   private viewAreaBottomLeft = vec2.create();
   private worldAreaInView = vec2.create();
   private squareToAspectRatio = vec2.create();
   private uvToWorld = mat2d.create();
 
-  public constructor(private gl: UniversalRenderingContext) {}
+  public constructor(private readonly gl: UniversalRenderingContext) {}
 
   public getUniforms(uniforms: any): any {
     return {
@@ -23,32 +22,10 @@ export class UniformsProvider {
       uvToWorld: this.uvToWorld,
       worldAreaInView: this.worldAreaInView,
       squareToAspectRatio: this.squareToAspectRatio,
+      squareToAspectRatioTimes2: vec2.scale(vec2.create(), this.squareToAspectRatio, 2),
       scaleWorldLengthToNDC: this.scaleWorldLengthToNDC,
       transformWorldToNDC: this.transformWorldToNDC,
-      squareToAspectRatioTimes2: vec2.scale(vec2.create(), this.squareToAspectRatio, 2),
     };
-  }
-
-  private getScreenToWorldTransform(screenSize: vec2) {
-    const transform = mat2d.fromTranslation(mat2d.create(), this.viewAreaBottomLeft);
-    mat2d.scale(
-      transform,
-      transform,
-      vec2.divide(vec2.create(), this.worldAreaInView, screenSize)
-    );
-    mat2d.translate(transform, transform, vec2.fromValues(0.5, 0.5));
-
-    return transform;
-  }
-
-  public uvToWorldCoordinate(screenUvPosition: vec2): vec2 {
-    const resolution = vec2.fromValues(this.gl.canvas.width, this.gl.canvas.height);
-
-    return vec2.transformMat2d(
-      vec2.create(),
-      vec2.multiply(vec2.create(), screenUvPosition, resolution),
-      this.getScreenToWorldTransform(resolution)
-    );
   }
 
   public getViewArea(): vec2 {
@@ -90,5 +67,20 @@ export class UniformsProvider {
 
     this.uvToWorld = mat2d.fromTranslation(mat2d.create(), this.viewAreaBottomLeft);
     mat2d.scale(this.uvToWorld, this.uvToWorld, this.worldAreaInView);
+  }
+
+  public screenToWorldPosition(screenPosition: vec2): vec2 {
+    const resolution = vec2.fromValues(this.gl.canvas.width, this.gl.canvas.height);
+
+    const transform = mat2d.fromTranslation(mat2d.create(), this.viewAreaBottomLeft);
+
+    mat2d.scale(
+      transform,
+      transform,
+      vec2.divide(vec2.create(), this.worldAreaInView, resolution)
+    );
+    mat2d.translate(transform, transform, vec2.fromValues(0.5, 0.5));
+
+    return vec2.transformMat2d(vec2.create(), screenPosition, transform);
   }
 }

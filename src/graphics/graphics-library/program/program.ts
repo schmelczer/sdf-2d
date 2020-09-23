@@ -15,7 +15,7 @@ export default abstract class Program implements IProgram {
     type: GLenum;
   }> = [];
 
-  constructor(protected gl: UniversalRenderingContext) {}
+  constructor(protected readonly gl: UniversalRenderingContext) {}
 
   public async initialize(
     [vertexShaderSource, fragmentShaderSource]: [string, string],

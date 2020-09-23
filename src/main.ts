@@ -1,4 +1,3 @@
-import { vec3 } from 'gl-matrix';
 import { DrawableDescriptor } from './drawables/drawable-descriptor';
 import { Insights } from './graphics/rendering/insights';
 import { Renderer } from './graphics/rendering/renderer';
@@ -32,12 +31,11 @@ applyArrayPlugins();
 export async function compile(
   canvas: HTMLCanvasElement,
   descriptors: Array<DrawableDescriptor>,
-  palette: Array<vec3>,
   settings: Partial<StartupSettings> = {}
 ): Promise<Renderer> {
   return Insights.measureFunction('startup', async () => {
     const renderer = new RendererImplementation(canvas, descriptors);
-    await renderer.initialize(palette, settings);
+    await renderer.initialize(settings);
     return renderer;
   });
 }

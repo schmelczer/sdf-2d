@@ -14,7 +14,7 @@ export class WebGlStopwatch {
   private timerExtension: any;
   private timerQuery?: WebGLQuery;
 
-  constructor(private gl: UniversalRenderingContext) {
+  constructor(private readonly gl: UniversalRenderingContext) {
     this.timerExtension = enableExtension(gl, 'EXT_disjoint_timer_query_webgl2');
   }
 

@@ -6,5 +6,6 @@ export interface RuntimeSettings {
   isWorldInverted: boolean;
   shadowLength: number;
   lightCutoffDistance: number;
+  colorPalette: Array<vec3>;
   ambientLight: vec3;
 }

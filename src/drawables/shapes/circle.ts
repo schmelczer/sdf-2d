@@ -16,7 +16,7 @@ export class Circle extends Drawable {
                   myMinDistance = min(myMinDistance, dist);
               }
               minDistance = min(minDistance, myMinDistance);
-              color = mix(2.0, color, step(
+              color = mix(1.0 / {paletteSize}, color, step(
                 distanceNdcPixelSize + SURFACE_OFFSET, 
                 myMinDistance
               ));

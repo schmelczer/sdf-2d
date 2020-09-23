@@ -1,3 +1,4 @@
 export interface StartupSettings {
-  shadowTraceCount: string;
+  shadowTraceCount: number;
+  paletteSize: number;
 }

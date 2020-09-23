@@ -33,7 +33,7 @@ export class Tunnel extends Drawable {
             myMinDistance = min(myMinDistance, currentDistance);
           }
     
-          color = mix(2.0, color, step(
+          color = mix(2.0 / {paletteSize}, color, step(
             distanceNdcPixelSize + SURFACE_OFFSET,
             myMinDistance
           ));

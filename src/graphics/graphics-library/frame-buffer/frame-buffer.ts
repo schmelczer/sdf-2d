@@ -10,14 +10,15 @@ export abstract class FrameBuffer {
   // null means the default framebuffer
   protected frameBuffer: WebGLFramebuffer | null = null;
 
-  constructor(protected gl: UniversalRenderingContext) {}
+  constructor(protected readonly gl: UniversalRenderingContext) {}
 
-  public bindAndClear(colorInput?: WebGLTexture) {
+  public bindAndClear(inputTextures: Array<WebGLTexture>) {
     this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, this.frameBuffer);
 
-    if (colorInput) {
-      this.gl.bindTexture(this.gl.TEXTURE_2D, colorInput);
-    }
+    inputTextures.forEach((t, i) => {
+      this.gl.activeTexture(this.gl.TEXTURE0 + i);
+      this.gl.bindTexture(this.gl.TEXTURE_2D, t);
+    });
 
     this.gl.viewport(0, 0, this.size.x, this.size.y);
     this.gl.clearColor(0, 0, 0, 0);

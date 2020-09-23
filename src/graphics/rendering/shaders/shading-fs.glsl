@@ -12,19 +12,16 @@ uniform vec2 squareToAspectRatioTimes2;
 uniform float shadingNdcPixelSize;
 uniform float shadowLength;
 uniform sampler2D distanceTexture;
+uniform sampler2D palette;
 
 in vec2 position;
 in vec2 uvCoordinates;
 
 uniform vec3 ambientLight;
 
-vec3[{colorCount}] colors = vec3[](
-    {palette}
-);
-
 float getDistance(in vec2 target, out vec3 color) {
     vec4 values = texture(distanceTexture, target);
-    color = colors[int(values[1])];
+    color = texture(palette, vec2(values[1], 0.0)).rgb;
     return values[0];
 }
 

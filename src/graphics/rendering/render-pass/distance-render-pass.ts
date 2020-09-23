@@ -13,8 +13,8 @@ export class DistanceRenderPass extends RenderPass {
     this.drawables.push(drawable);
   }
 
-  public render(commonUniforms: any, inputTexture?: WebGLTexture) {
-    this.frame.bindAndClear(inputTexture);
+  public render(commonUniforms: any, ...inputTextures: Array<WebGLTexture>) {
+    this.frame.bindAndClear(inputTextures);
 
     const stepsInUV = 1 / this.tileMultiplier;
 

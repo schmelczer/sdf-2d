@@ -14,6 +14,10 @@ export const loadUniform = (
     (gl: UniversalRenderingContext, value: any, location: WebGLUniformLocation) => void
   > = new Map();
   {
+    converters.set(WebGLRenderingContext.SAMPLER_2D, (gl, v, l) => {
+      gl.uniform1i(l, v);
+    });
+
     converters.set(WebGLRenderingContext.FLOAT, (gl, v, l) => {
       if (v instanceof Array || v[0] instanceof Float32Array) {
         if (v.length == 0) {

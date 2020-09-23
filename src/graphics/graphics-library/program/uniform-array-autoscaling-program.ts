@@ -17,7 +17,7 @@ export class UniformArrayAutoScalingProgram implements IProgram {
   private drawingRectangleBottomLeft = vec2.fromValues(0, 0);
   private drawingRectangleSize = vec2.fromValues(1, 1);
 
-  constructor(private gl: UniversalRenderingContext) {}
+  constructor(private readonly gl: UniversalRenderingContext) {}
 
   public async initialize(
     shaderSources: [string, string],
@@ -86,10 +86,10 @@ export class UniformArrayAutoScalingProgram implements IProgram {
     shaderSources: [string, string]
   ): Promise<void> {
     const processedSubstitutions = {
-      ...substitutions,
       macroDefinitions: this.getMacroDefinitions(combination, descriptors),
       declarations: this.getDeclarations(combination, descriptors),
       functionCalls: this.getFunctionCalls(combination, descriptors),
+      ...substitutions,
     };
 
     const program = new FragmentShaderOnlyProgram(this.gl);

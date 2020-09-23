@@ -12,16 +12,16 @@ uniform vec2 squareToAspectRatioTimes2;
 uniform float shadingNdcPixelSize;
 uniform float shadowLength;
 uniform sampler2D distanceTexture;
+uniform sampler2D palette;
 
 varying vec2 position;
 varying vec2 uvCoordinates;
-uniform vec3 ambientLight;
 
-vec3 colors[{colorCount}];
+uniform vec3 ambientLight;
 
 float getDistance(in vec2 target, out vec3 color) {
     vec4 values = texture2D(distanceTexture, target);
-    color = vec3(0.5);
+    color = texture2D(palette, vec2(values[1], 0.0)).rgb;
     return values[0];
 }
 
@@ -72,13 +72,11 @@ float shadowTransparency(float startingDistance, float lightCenterDistance, vec2
 
 void main() {
     vec3 lighting = ambientLight;
-
-    {palette};
     
     vec3 colorAtPosition;
     float startingDistance = getDistance(uvCoordinates, colorAtPosition);
     
-    if (startingDistance < 0.0) {
+    if (startingDistance <= 0.0) {
         #ifdef CIRCLE_LIGHT_COUNT
         #if CIRCLE_LIGHT_COUNT > 0
         for (int i = 0; i < CIRCLE_LIGHT_COUNT; i++) {
