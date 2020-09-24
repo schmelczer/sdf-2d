@@ -15,10 +15,16 @@ in vec2 position;
 out vec2 fragmentColor;
 
 void main() {
-    float minDistance = maxMinDistance;
+    float minDistance = abs(maxMinDistance);
     float color = 0.0;
 
+    float objectMinDistance, objectColor;
+
     {functionCalls}
+
+    #ifndef NOT_EMPTY
+    minDistance = maxMinDistance;
+    #endif
 
     // minDistance / 2.0: NDC to UV scale
     fragmentColor = vec2(minDistance / 2.0, color);

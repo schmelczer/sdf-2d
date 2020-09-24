@@ -12,12 +12,13 @@ export class InvertedTunnel extends Drawable {
         uniform vec2 toFromDeltas[INVERTED_TUNNEL_COUNT];
         uniform float fromRadii[INVERTED_TUNNEL_COUNT];
         uniform float toRadii[INVERTED_TUNNEL_COUNT];
-      
-        void invertedTunnelMinDistance(inout float minDistance, inout float color) {
-          float myMinDistance = -minDistance;
+
+        float invertedTunnelMinDistance(vec2 target, out float colorIndex) {
+          float minDistance = 1000.0;
+
           for (int i = 0; i < INVERTED_TUNNEL_COUNT; i++) {
-            vec2 targetFromDelta = position - froms[i];
-            
+            vec2 targetFromDelta = target - froms[i];
+
             float h = clamp(
                 dot(targetFromDelta, toFromDeltas[i])
               / dot(toFromDeltas[i], toFromDeltas[i]),
@@ -30,14 +31,10 @@ export class InvertedTunnel extends Drawable {
               targetFromDelta, toFromDeltas[i] * h
             );
 
-            myMinDistance = min(myMinDistance, currentDistance);
+            minDistance = min(minDistance, currentDistance);
           }
-  
-          color = mix(0.0, color, step(
-            distanceNdcPixelSize + SURFACE_OFFSET,
-            -myMinDistance
-          ));
-          minDistance = -myMinDistance;
+
+          return -minDistance;
         }
       `,
       distanceFunctionName: 'invertedTunnelMinDistance',

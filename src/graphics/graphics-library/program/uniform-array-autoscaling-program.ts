@@ -135,7 +135,22 @@ export class UniformArrayAutoScalingProgram implements IProgram {
           return '';
         }
 
-        return `${descriptors[i].sdf!.distanceFunctionName}(minDistance, color);`;
+        return `
+          #ifndef NOT_EMPTY
+          #define NOT_EMPTY
+          #endif
+
+          objectMinDistance = ${
+            descriptors[i].sdf!.distanceFunctionName
+          }(position, objectColor);
+
+          color = mix(objectColor / {paletteSize}, color, step(
+            distanceNdcPixelSize + SURFACE_OFFSET, 
+            objectMinDistance
+          ));
+
+          minDistance = min(minDistance, objectMinDistance);
+        `;
       })
       .join('\n');
   }

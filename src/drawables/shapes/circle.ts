@@ -9,17 +9,15 @@ export class Circle extends Drawable {
           uniform vec2 circleCenters[CIRCLE_COUNT];
           uniform float circleRadii[CIRCLE_COUNT];
 
-          void circleMinDistance(inout float minDistance, inout float color) {
-              float myMinDistance = maxMinDistance;
-              for (int i = 0; i < CIRCLE_COUNT; i++) {
-                  float dist = distance(circleCenters[i], position) - circleRadii[i];
-                  myMinDistance = min(myMinDistance, dist);
-              }
-              minDistance = min(minDistance, myMinDistance);
-              color = mix(1.0 / {paletteSize}, color, step(
-                distanceNdcPixelSize + SURFACE_OFFSET, 
-                myMinDistance
-              ));
+          float circleMinDistance(vec2 target, out float colorIndex) {
+            colorIndex = 2.0;
+            float minDistance = 1000.0;
+            for (int i = 0; i < CIRCLE_COUNT; i++) {
+              float dist = distance(circleCenters[i], target) - circleRadii[i];
+              minDistance = min(minDistance, dist);
+            }
+
+            return minDistance;
           }
         `,
       distanceFunctionName: 'circleMinDistance',

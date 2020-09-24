@@ -12,11 +12,13 @@ export class Tunnel extends Drawable {
         uniform vec2 toFromDeltas[TUNNEL_COUNT];
         uniform float fromRadii[TUNNEL_COUNT];
         uniform float toRadii[TUNNEL_COUNT];
-      
-        void tunnelMinDistance(inout float minDistance, inout float color) {
-          float myMinDistance = minDistance;
+
+        float tunnelMinDistance(vec2 target, out float colorIndex) {
+          colorIndex = 1.0;
+
+          float minDistance = 1000.0;
           for (int i = 0; i < TUNNEL_COUNT; i++) {
-            vec2 targetFromDelta = position - froms[i];
+            vec2 targetFromDelta = target - froms[i];
             
             float h = clamp(
                 dot(targetFromDelta, toFromDeltas[i])
@@ -29,15 +31,11 @@ export class Tunnel extends Drawable {
             ) + distance(
               targetFromDelta, toFromDeltas[i] * h
             );
-    
-            myMinDistance = min(myMinDistance, currentDistance);
+
+            minDistance = min(minDistance, currentDistance);
           }
-    
-          color = mix(2.0 / {paletteSize}, color, step(
-            distanceNdcPixelSize + SURFACE_OFFSET,
-            myMinDistance
-          ));
-          minDistance = min(minDistance, myMinDistance);
+
+          return minDistance;
         }
       `,
       distanceFunctionName: 'tunnelMinDistance',
