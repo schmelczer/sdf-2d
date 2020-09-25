@@ -2,8 +2,6 @@
 
 precision lowp float;
 
-#define SURFACE_OFFSET 0.001
- 
 uniform float maxMinDistance;
 uniform float distanceNdcPixelSize;
 varying vec2 position;
@@ -24,6 +22,5 @@ void main() {
     minDistance = maxMinDistance;
     #endif
 
-    // minDistance / 2.0: NDC to UV scale
-    gl_FragColor = vec4(minDistance / 2.0, color, 0.0, 0.0);
+    gl_FragColor = vec4(minDistance * 8.0, color, 0.0, 1.0);
 }

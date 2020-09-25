@@ -2,47 +2,38 @@
 
 precision lowp float;
 
-#define INFINITY 1000.0
 #define INTENSITY_INSIDE_RATIO 0.5
 #define SHADOW_TRACE_COUNT {shadowTraceCount}
 
 {macroDefinitions}
 
-uniform vec2 squareToAspectRatioTimes2;
 uniform float shadingNdcPixelSize;
-uniform float shadowLength;
+uniform vec2 squareToAspectRatioTimes2;
+uniform vec3 ambientLight;
+uniform vec4 backgroundColor;
+
 uniform sampler2D distanceTexture;
 uniform sampler2D palette;
 
 varying vec2 position;
 varying vec2 uvCoordinates;
 
-uniform vec3 ambientLight;
-
-float getDistance(in vec2 target, out vec3 color) {
+float getDistance(in vec2 target, out vec4 color) {
     vec4 values = texture2D(distanceTexture, target);
-    color = texture2D(palette, vec2(values[1], 0.0)).rgb;
-    return values[0];
+    color = texture2D(palette, vec2(values[1], 0.0));
+    return values[0] / 8.0;
 }
 
 float getDistance(in vec2 target) {
-    return texture2D(distanceTexture, target)[0];
+    return texture2D(distanceTexture, target)[0] / 8.0;
 }
 
 float shadowTransparency(float startingDistance, float lightCenterDistance, vec2 direction) {
     float rayLength = startingDistance;
-    
     for (int j = 0; j < SHADOW_TRACE_COUNT; j++) {
-        rayLength += getDistance(uvCoordinates + direction * rayLength);
+        rayLength += max(0.0, getDistance(uvCoordinates + direction * rayLength));
     }
-
-    return min(
-        1.0, 
-        (
-            step(lightCenterDistance, rayLength) +
-            rayLength / (shadowLength * shadingNdcPixelSize)
-        ) * 2.0
-    );
+    return min(1.0, pow(rayLength / lightCenterDistance, 0.3));
 }
 
 #ifdef CIRCLE_LIGHT_COUNT
@@ -50,7 +41,6 @@ float shadowTransparency(float startingDistance, float lightCenterDistance, vec2
     uniform vec2 circleLightCenters[CIRCLE_LIGHT_COUNT];
     uniform float circleLightIntensities[CIRCLE_LIGHT_COUNT];
     uniform vec3 circleLightColors[CIRCLE_LIGHT_COUNT];
-    
     varying vec2 circleLightDirections[CIRCLE_LIGHT_COUNT];
 #endif
 #endif
@@ -61,7 +51,6 @@ float shadowTransparency(float startingDistance, float lightCenterDistance, vec2
     uniform float flashlightIntensities[FLASHLIGHT_COUNT];
     uniform vec3 flashlightColors[FLASHLIGHT_COUNT];
     uniform vec2 flashlightDirections[FLASHLIGHT_COUNT];
-
     varying vec2 flashlightActualDirections[FLASHLIGHT_COUNT];
 
     float intensityInDirection(vec2 lightDirection, vec2 targetDirection) {
@@ -71,73 +60,70 @@ float shadowTransparency(float startingDistance, float lightCenterDistance, vec2
 #endif
 
 void main() {
+    vec4 rgbaColorAtPosition;
+    float startingDistance = getDistance(uvCoordinates, rgbaColorAtPosition);
+
+    vec3 colorAtPosition = rgbaColorAtPosition.rgb;
+
     vec3 lighting = ambientLight;
-    
-    vec3 colorAtPosition;
-    float startingDistance = getDistance(uvCoordinates, colorAtPosition);
-    
-    if (startingDistance <= 0.0) {
-        #ifdef CIRCLE_LIGHT_COUNT
-        #if CIRCLE_LIGHT_COUNT > 0
-        for (int i = 0; i < CIRCLE_LIGHT_COUNT; i++) {
-            float lightCenterDistance = distance(circleLightCenters[i], position);
-            lighting += circleLightColors[i] / pow(
-                lightCenterDistance / (circleLightIntensities[i] * INTENSITY_INSIDE_RATIO) + 1.0, 2.0
-            );
-        }
-        #endif
-        #endif
+    vec3 lightingInside = lighting * INTENSITY_INSIDE_RATIO;
 
-        #ifdef FLASHLIGHT_COUNT
-        #if FLASHLIGHT_COUNT > 0
-        for (int i = 0; i < FLASHLIGHT_COUNT; i++) {
-            float lightCenterDistance = distance(flashlightCenters[i], position);
-            lighting += intensityInDirection(
-                flashlightDirections[i], 
-                normalize(flashlightActualDirections[i])
-            ) * flashlightColors[i] / pow(
-                lightCenterDistance / (flashlightIntensities[i] * INTENSITY_INSIDE_RATIO) + 1.0, 2.0
-            );
-        }
-        #endif
-        #endif
-    } else {
-        colorAtPosition = vec3(1.0);
+    #ifdef CIRCLE_LIGHT_COUNT
+    #if CIRCLE_LIGHT_COUNT > 0
+    for (int i = 0; i < CIRCLE_LIGHT_COUNT; i++) {
+        float lightCenterDistance = distance(circleLightCenters[i], position);
 
-        #ifdef CIRCLE_LIGHT_COUNT
-        #if CIRCLE_LIGHT_COUNT > 0
-        for (int i = 0; i < CIRCLE_LIGHT_COUNT; i++) {
-            vec2 direction = normalize(circleLightDirections[i]) / squareToAspectRatioTimes2;
+        vec3 lightColorAtPosition = circleLightColors[i] / pow(
+            lightCenterDistance / circleLightIntensities[i] + 1.0, 2.0
+        );
 
-            float lightCenterDistance = distance(circleLightCenters[i], position);
-            lighting += circleLightColors[i] / pow(
-                lightCenterDistance / circleLightIntensities[i] + 1.0, 2.0
-            ) * shadowTransparency(startingDistance, lightCenterDistance, direction);
-        }
-        #endif
-        #endif
+        vec2 direction = normalize(circleLightDirections[i]) / squareToAspectRatioTimes2;
+        lighting += lightColorAtPosition * shadowTransparency(
+            startingDistance, 
+            lightCenterDistance, 
+            direction
+        );
 
-        #ifdef FLASHLIGHT_COUNT
-        #if FLASHLIGHT_COUNT > 0
-        for (int i = 0; i < FLASHLIGHT_COUNT; i++) {
-            vec2 originalDirection = normalize(flashlightDirections[i]);
-            vec2 direction = originalDirection / squareToAspectRatioTimes2;
+        lightingInside += lightColorAtPosition;
+    }
+    #endif
+    #endif
 
-            float lightCenterDistance = distance(flashlightCenters[i], position);
-            vec3 lightColorAtPosition = intensityInDirection(flashlightDirections[i], positionDirection) *
-            flashlightColors[i] / pow(
+    #ifdef FLASHLIGHT_COUNT
+    #if FLASHLIGHT_COUNT > 0
+    for (int i = 0; i < FLASHLIGHT_COUNT; i++) {
+        vec2 originalDirection = normalize(flashlightDirections[i]);
+
+        vec3 lightColorAtPosition = colorInPosition(i, originalDirection, lightCenterDistance);
+        float lightCenterDistance = intensityInDirection(flashlightDirections[i], positionDirection) 
+            * flashlightColors[lightIndex] / pow(
                 lightCenterDistance / flashlightIntensities[i] + 1.0, 2.0
             );
-            
-            if (length(lightColorAtPosition) < 0.01) {
-                continue;
-            }
 
-            lighting += lightColorAtPosition * shadowTransparency(startingDistance, lightCenterDistance, direction);
+        vec2 direction = originalDirection / squareToAspectRatioTimes2
+
+        if (length(lightColorAtPosition) < 0.0) {
+            continue;
         }
-        #endif
-        #endif
+
+        lighting += lightColorAtPosition * shadowTransparency(
+            startingDistance, 
+            lightCenterDistance, 
+            direction
+        );
+
+        lightingInside += lightColorAtPosition;
     }
-    
-    gl_FragColor = vec4(colorAtPosition * lighting, 1.0);
+    #endif
+    #endif
+
+    vec3 outsideColor = backgroundColor.rgb * lighting;
+    vec3 insideColor = colorAtPosition * lightingInside;
+
+    float edge = clamp(startingDistance / shadingNdcPixelSize, 0.0, 1.0);
+    vec3 antialiasedColor = mix(insideColor, outsideColor, edge);
+    gl_FragColor = vec4(
+        antialiasedColor,
+        mix(rgbaColorAtPosition.a, backgroundColor.a, step(0.0, startingDistance))
+    );
 }

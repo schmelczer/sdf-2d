@@ -1,4 +1,4 @@
-import { mat3, ReadonlyVec3, vec2, vec3 } from 'gl-matrix';
+import { mat3, ReadonlyVec3, ReadonlyVec4, vec2, vec3, vec4 } from 'gl-matrix';
 import { UniversalRenderingContext } from '../universal-rendering-context';
 
 const loaderMat3 = mat3.create();
@@ -67,6 +67,30 @@ export const loadUniform = (
           gl.uniform3fv(l, result);
         } else {
           gl.uniform3fv(l, v as vec3);
+        }
+      }
+    );
+
+    converters.set(
+      WebGLRenderingContext.FLOAT_VEC4,
+      (gl, v: ReadonlyVec4 | Array<vec4>, l) => {
+        if (v.length == 0) {
+          return;
+        }
+
+        if (v[0] instanceof Array || v[0] instanceof Float32Array) {
+          const result = new Float32Array(v.length * 4);
+
+          for (let i = 0; i < v.length; i++) {
+            result[3 * i] = (v[i] as Array<number>)[0];
+            result[3 * i + 1] = (v[i] as Array<number>)[1];
+            result[3 * i + 2] = (v[i] as Array<number>)[2];
+            result[3 * i + 3] = (v[i] as Array<number>)[3];
+          }
+
+          gl.uniform4fv(l, result);
+        } else {
+          gl.uniform4fv(l, v as vec4);
         }
       }
     );

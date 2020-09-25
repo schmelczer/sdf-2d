@@ -38,11 +38,9 @@ export class PaletteTexture {
       imageData.data[4 * i + 0] = c[0] * 255;
       imageData.data[4 * i + 1] = c[1] * 255;
       imageData.data[4 * i + 2] = c[2] * 255;
-      imageData.data[4 * i + 3] = c.length == 4 ? c[3] : 255;
+      imageData.data[4 * i + 3] = c.length == 4 ? c[3] * 255 : 255;
     });
     ctx.putImageData(imageData, 0, 0);
-
-    document.body.appendChild(canvas);
 
     this.setImage(canvas);
   }

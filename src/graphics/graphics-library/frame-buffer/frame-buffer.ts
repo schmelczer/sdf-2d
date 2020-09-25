@@ -21,8 +21,6 @@ export abstract class FrameBuffer {
     });
 
     this.gl.viewport(0, 0, this.size.x, this.size.y);
-    this.gl.clearColor(0, 0, 0, 0);
-    this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
   }
 
   public destroy(): void {

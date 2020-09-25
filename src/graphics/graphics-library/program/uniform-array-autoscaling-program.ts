@@ -144,10 +144,15 @@ export class UniformArrayAutoScalingProgram implements IProgram {
             descriptors[i].sdf!.distanceFunctionName
           }(position, objectColor);
 
-          color = mix(objectColor / {paletteSize}, color, step(
-            distanceNdcPixelSize + SURFACE_OFFSET, 
-            objectMinDistance
-          ));
+          color = mix(
+            objectColor / {paletteSize}, 
+            color, 
+            ${
+              descriptors[i].sdf?.isInverted
+                ? `step(-distanceNdcPixelSize, -objectMinDistance)`
+                : `step(distanceNdcPixelSize, objectMinDistance)`
+            }
+          );
 
           minDistance = min(minDistance, objectMinDistance);
         `;

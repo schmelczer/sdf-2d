@@ -5,6 +5,7 @@ export interface DrawableDescriptor {
   uniformCountMacroName: string;
   sdf?: {
     shader: string;
+    isInverted?: boolean;
     distanceFunctionName: string;
   };
   shaderCombinationSteps: Array<number>;

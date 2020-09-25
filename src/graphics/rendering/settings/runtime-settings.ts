@@ -1,11 +1,11 @@
-import { vec3 } from 'gl-matrix';
+import { vec3, vec4 } from 'gl-matrix';
 
 export interface RuntimeSettings {
   enableHighDpiRendering: boolean;
   tileMultiplier: number;
   isWorldInverted: boolean;
-  shadowLength: number;
   lightCutoffDistance: number;
-  colorPalette: Array<vec3>;
+  backgroundColor: vec3 | vec4;
+  colorPalette: Array<vec3 | vec4>;
   ambientLight: vec3;
 }
