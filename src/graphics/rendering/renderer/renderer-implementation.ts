@@ -1,33 +1,34 @@
 import { vec2 } from 'gl-matrix';
-import { Drawable } from '../../drawables/drawable';
-import { DrawableDescriptor } from '../../drawables/drawable-descriptor';
-import { LightDrawable } from '../../drawables/lights/light-drawable';
-import { msToString } from '../../helper/ms-to-string';
-import { DefaultFrameBuffer } from '../graphics-library/frame-buffer/default-frame-buffer';
-import { IntermediateFrameBuffer } from '../graphics-library/frame-buffer/intermediate-frame-buffer';
-import { WebGlStopwatch } from '../graphics-library/helper/stopwatch';
-import { PaletteTexture } from '../graphics-library/palette-texture';
-import { ParallelCompiler } from '../graphics-library/parallel-compiler';
+import { Drawable } from '../../../drawables/drawable';
+import { DrawableDescriptor } from '../../../drawables/drawable-descriptor';
+import { LightDrawable } from '../../../drawables/lights/light-drawable';
+import { msToString } from '../../../helper/ms-to-string';
+import { DefaultFrameBuffer } from '../../graphics-library/frame-buffer/default-frame-buffer';
+import { IntermediateFrameBuffer } from '../../graphics-library/frame-buffer/intermediate-frame-buffer';
+import { WebGlStopwatch } from '../../graphics-library/helper/stopwatch';
+import { PaletteTexture } from '../../graphics-library/palette-texture';
+import { ParallelCompiler } from '../../graphics-library/parallel-compiler';
 import {
   getUniversalRenderingContext,
   UniversalRenderingContext,
-} from '../graphics-library/universal-rendering-context';
-import { FpsAutoscaler } from './fps-autoscaler';
-import { Insights } from './insights';
-import { DistanceRenderPass } from './render-pass/distance-render-pass';
-import { LightsRenderPass } from './render-pass/lights-render-pass';
+} from '../../graphics-library/universal-rendering-context';
+import { FpsAutoscaler } from '../fps-autoscaler';
+import { Insights } from '../insights';
+import { DistanceRenderPass } from '../render-pass/distance-render-pass';
+import { LightsRenderPass } from '../render-pass/lights-render-pass';
+import { defaultStartupSettings } from '../settings/default-startup-settings';
+import { RuntimeSettings } from '../settings/runtime-settings';
+import { StartupSettings } from '../settings/startup-settings';
+import distanceFragmentShader100 from '../shaders/distance-fs-100.glsl';
+import distanceFragmentShader from '../shaders/distance-fs.glsl';
+import distanceVertexShader100 from '../shaders/distance-vs-100.glsl';
+import distanceVertexShader from '../shaders/distance-vs.glsl';
+import lightsFragmentShader100 from '../shaders/shading-fs-100.glsl';
+import lightsFragmentShader from '../shaders/shading-fs.glsl';
+import lightsVertexShader100 from '../shaders/shading-vs-100.glsl';
+import lightsVertexShader from '../shaders/shading-vs.glsl';
+import { UniformsProvider } from '../uniforms-provider';
 import { Renderer } from './renderer';
-import { RuntimeSettings } from './settings/runtime-settings';
-import { StartupSettings } from './settings/startup-settings';
-import distanceFragmentShader100 from './shaders/distance-fs-100.glsl';
-import distanceFragmentShader from './shaders/distance-fs.glsl';
-import distanceVertexShader100 from './shaders/distance-vs-100.glsl';
-import distanceVertexShader from './shaders/distance-vs.glsl';
-import lightsFragmentShader100 from './shaders/shading-fs-100.glsl';
-import lightsFragmentShader from './shaders/shading-fs.glsl';
-import lightsVertexShader100 from './shaders/shading-vs-100.glsl';
-import lightsVertexShader from './shaders/shading-vs.glsl';
-import { UniformsProvider } from './uniforms-provider';
 
 export class RendererImplementation implements Renderer {
   private readonly gl: UniversalRenderingContext;
@@ -41,7 +42,7 @@ export class RendererImplementation implements Renderer {
   private autoscaler: FpsAutoscaler;
 
   private applyRuntimeSettings: {
-    [key: string]: (value: any) => void;
+    [key in keyof RuntimeSettings]: (value: any) => void;
   } = {
     enableHighDpiRendering: (v) => {
       this.distanceFieldFrameBuffer.enableHighDpiRendering = v;
@@ -49,30 +50,29 @@ export class RendererImplementation implements Renderer {
     },
     tileMultiplier: (v) => (this.distancePass.tileMultiplier = v),
     isWorldInverted: (v) => (this.distancePass.isWorldInverted = v),
-    shadowLength: (v) => (this.uniformsProvider.shadowLength = v),
+    backgroundColor: (v) => (this.uniformsProvider.backgroundColor = v),
     ambientLight: (v) => (this.uniformsProvider.ambientLight = v),
     lightCutoffDistance: (v) => (this.lightsPass.lightCutoffDistance = v),
     colorPalette: (v) => this.palette!.setPalette(v),
   };
 
-  private static defaultStartupSettings: StartupSettings = {
-    shadowTraceCount: 16,
-    paletteSize: 4,
-  };
-
   setRuntimeSettings(overrides: Partial<RuntimeSettings>): void {
     Object.entries(overrides).forEach(([k, v]) => {
-      this.applyRuntimeSettings[(k as unknown) as string](v);
+      this.applyRuntimeSettings[k as keyof RuntimeSettings](v);
     });
   }
 
   constructor(
     private canvas: HTMLCanvasElement,
-    private descriptors: Array<DrawableDescriptor>
+    private descriptors: Array<DrawableDescriptor>,
+    ignoreWebGL2?: boolean
   ) {
-    this.gl = getUniversalRenderingContext(canvas);
+    this.gl = getUniversalRenderingContext(
+      canvas,
+      ignoreWebGL2 !== undefined ? ignoreWebGL2 : defaultStartupSettings.ignoreWebGL2
+    );
 
-    ParallelCompiler.initialize(this.gl);
+    this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE);
 
     this.distanceFieldFrameBuffer = new IntermediateFrameBuffer(this.gl);
     this.lightingFrameBuffer = new DefaultFrameBuffer(this.gl);
@@ -81,6 +81,11 @@ export class RendererImplementation implements Renderer {
     this.lightsPass = new LightsRenderPass(this.gl, this.lightingFrameBuffer);
 
     this.uniformsProvider = new UniformsProvider(this.gl);
+
+    this.setViewArea(
+      vec2.fromValues(0, canvas.clientHeight),
+      vec2.fromValues(canvas.clientWidth, canvas.clientHeight)
+    );
 
     this.queryPrecisions();
 
@@ -93,12 +98,14 @@ export class RendererImplementation implements Renderer {
 
   public async initialize(settingsOverrides: Partial<StartupSettings>): Promise<void> {
     const settings = {
-      ...RendererImplementation.defaultStartupSettings,
+      ...defaultStartupSettings,
       ...settingsOverrides,
     };
 
     this.palette = new PaletteTexture(this.gl, settings.paletteSize);
     const promises: Array<Promise<void>> = [];
+
+    const compiler = new ParallelCompiler(this.gl);
 
     promises.push(
       this.distancePass.initialize(
@@ -108,7 +115,8 @@ export class RendererImplementation implements Renderer {
         this.descriptors.filter(RendererImplementation.hasSdf),
         {
           paletteSize: settings.paletteSize,
-        }
+        },
+        compiler
       )
     );
     promises.push(
@@ -119,12 +127,12 @@ export class RendererImplementation implements Renderer {
         this.descriptors.filter((d) => !RendererImplementation.hasSdf(d)),
         {
           shadowTraceCount: settings.shadowTraceCount.toString(),
-        }
+        },
+        compiler
       )
     );
 
-    ParallelCompiler.compilePrograms();
-
+    await compiler.compilePrograms();
     await Promise.all(promises);
 
     try {
@@ -200,17 +208,20 @@ export class RendererImplementation implements Renderer {
       // texture units
       distanceTexture: 0,
       palette: 1,
-      // regular uniforms
+
       distanceNdcPixelSize: 2 / Math.max(...this.distanceFieldFrameBuffer.getSize()),
       shadingNdcPixelSize: 2 / Math.max(...this.distanceFieldFrameBuffer.getSize()),
     };
 
     this.distancePass.render(this.uniformsProvider.getUniforms(common));
+
+    this.gl.enable(this.gl.BLEND);
     this.lightsPass.render(
       this.uniformsProvider.getUniforms(common),
       this.distanceFieldFrameBuffer.colorTexture,
       this.palette!.colorTexture
     );
+    this.gl.disable(this.gl.BLEND);
 
     if (this.stopwatch?.isRunning) {
       this.stopwatch?.stop();

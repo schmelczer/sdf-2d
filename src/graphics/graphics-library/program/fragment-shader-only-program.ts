@@ -1,4 +1,5 @@
 import { enableExtension } from '../helper/enable-extension';
+import { ParallelCompiler } from '../parallel-compiler';
 import { UniversalRenderingContext } from '../universal-rendering-context';
 import Program from './program';
 
@@ -14,9 +15,10 @@ export class FragmentShaderOnlyProgram extends Program {
 
   public async initialize(
     sources: [string, string],
-    substitutions: { [name: string]: string }
+    substitutions: { [name: string]: string },
+    compiler: ParallelCompiler
   ): Promise<void> {
-    await super.initialize(sources, substitutions);
+    await super.initialize(sources, substitutions, compiler);
     this.prepareScreenQuad('vertexPosition');
   }
 

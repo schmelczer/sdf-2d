@@ -19,11 +19,12 @@ export default abstract class Program implements IProgram {
 
   public async initialize(
     [vertexShaderSource, fragmentShaderSource]: [string, string],
-    substitutions: { [name: string]: string }
+    substitutions: { [name: string]: string },
+    compiler: ParallelCompiler
   ): Promise<void> {
     substitutions = { ...substitutions };
 
-    this.program = await ParallelCompiler.createProgram(
+    this.program = await compiler.createProgram(
       vertexShaderSource,
       fragmentShaderSource,
       substitutions

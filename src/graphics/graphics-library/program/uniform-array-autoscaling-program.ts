@@ -2,6 +2,7 @@ import { mat2d, vec2 } from 'gl-matrix';
 import { DrawableDescriptor } from '../../../drawables/drawable-descriptor';
 import { getCombinations } from '../../../helper/get-combinations';
 import { last } from '../../../helper/last';
+import { ParallelCompiler } from '../parallel-compiler';
 import { UniversalRenderingContext } from '../universal-rendering-context';
 import { FragmentShaderOnlyProgram } from './fragment-shader-only-program';
 import { IProgram } from './i-program';
@@ -22,7 +23,8 @@ export class UniformArrayAutoScalingProgram implements IProgram {
   public async initialize(
     shaderSources: [string, string],
     descriptors: Array<DrawableDescriptor>,
-    substitutions: { [name: string]: any }
+    substitutions: { [name: string]: any },
+    compiler: ParallelCompiler
   ): Promise<void> {
     this.descriptors = descriptors;
 
@@ -32,7 +34,13 @@ export class UniformArrayAutoScalingProgram implements IProgram {
       descriptors.map((o) => o.shaderCombinationSteps)
     )) {
       promises.push(
-        this.createProgram(descriptors, substitutions, combination, shaderSources)
+        this.createProgram(
+          descriptors,
+          substitutions,
+          combination,
+          shaderSources,
+          compiler
+        )
       );
     }
 
@@ -56,7 +64,7 @@ export class UniformArrayAutoScalingProgram implements IProgram {
 
     const closest = this.programs.find((p) => p.values.every((v, i) => v >= values[i]));
 
-    this.current = closest ? closest.program : last(this.programs)?.program;
+    this.current = (closest ? closest : last(this.programs))?.program;
 
     if (closest) {
       this.descriptors!.map((d, i) => {
@@ -67,12 +75,12 @@ export class UniformArrayAutoScalingProgram implements IProgram {
       });
     }
 
-    this.current!.setDrawingRectangleUV(
+    this.current?.setDrawingRectangleUV(
       this.drawingRectangleBottomLeft,
       this.drawingRectangleSize
     );
 
-    this.current!.draw(uniforms);
+    this.current?.draw(uniforms);
   }
 
   public destroy(): void {
@@ -83,7 +91,8 @@ export class UniformArrayAutoScalingProgram implements IProgram {
     descriptors: Array<DrawableDescriptor>,
     substitutions: { [name: string]: any },
     combination: Array<number>,
-    shaderSources: [string, string]
+    shaderSources: [string, string],
+    compiler: ParallelCompiler
   ): Promise<void> {
     const processedSubstitutions = {
       macroDefinitions: this.getMacroDefinitions(combination, descriptors),
@@ -93,7 +102,7 @@ export class UniformArrayAutoScalingProgram implements IProgram {
     };
 
     const program = new FragmentShaderOnlyProgram(this.gl);
-    await program.initialize(shaderSources, processedSubstitutions);
+    await program.initialize(shaderSources, processedSubstitutions, compiler);
 
     this.programs.push({
       program,
@@ -150,7 +159,7 @@ export class UniformArrayAutoScalingProgram implements IProgram {
             ${
               descriptors[i].sdf?.isInverted
                 ? `step(-distanceNdcPixelSize, -objectMinDistance)`
-                : `step(distanceNdcPixelSize, objectMinDistance)`
+                : `step(1.0 * distanceNdcPixelSize, objectMinDistance)`
             }
           );
 

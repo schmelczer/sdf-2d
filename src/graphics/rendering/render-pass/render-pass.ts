@@ -1,5 +1,6 @@
 import { DrawableDescriptor } from '../../../drawables/drawable-descriptor';
 import { FrameBuffer } from '../../graphics-library/frame-buffer/frame-buffer';
+import { ParallelCompiler } from '../../graphics-library/parallel-compiler';
 import { UniformArrayAutoScalingProgram } from '../../graphics-library/program/uniform-array-autoscaling-program';
 import { UniversalRenderingContext } from '../../graphics-library/universal-rendering-context';
 
@@ -13,9 +14,10 @@ export abstract class RenderPass {
   public async initialize(
     shaderSources: [string, string],
     descriptors: Array<DrawableDescriptor>,
-    substitutions: { [name: string]: any } = {}
+    substitutions: { [name: string]: any } = {},
+    compiler: ParallelCompiler
   ): Promise<void> {
-    await this.program.initialize(shaderSources, descriptors, substitutions);
+    await this.program.initialize(shaderSources, descriptors, substitutions, compiler);
   }
 
   public abstract render(commonUniforms: any, inputTexture?: WebGLTexture): void;

@@ -12,17 +12,17 @@ type CompilingProgram = {
 
 type ShaderWithSource = WebGLShader & { source: string };
 
-export abstract class ParallelCompiler {
-  private static extension?: any;
-  private static gl: UniversalRenderingContext;
-  private static programs: Array<CompilingProgram> = [];
+export class ParallelCompiler {
+  private extension?: any;
+  private gl: UniversalRenderingContext;
+  private programs: Array<CompilingProgram> = [];
 
-  public static initialize(gl: UniversalRenderingContext) {
-    ParallelCompiler.gl = gl;
-    ParallelCompiler.extension = tryEnableExtension(gl, 'KHR_parallel_shader_compile');
+  public constructor(gl: UniversalRenderingContext) {
+    this.gl = gl;
+    this.extension = tryEnableExtension(gl, 'KHR_parallel_shader_compile');
   }
 
-  public static createProgram(
+  public createProgram(
     vertexShaderSource: string,
     fragmentShaderSource: string,
     substitutions: { [name: string]: string }
@@ -31,23 +31,23 @@ export abstract class ParallelCompiler {
     const promise = new Promise<WebGLProgram>((r) => (resolvePromise = r));
 
     // can only return null on lost context
-    const program = ParallelCompiler.gl.createProgram()!;
+    const program = this.gl.createProgram()!;
 
-    const vertexShader = ParallelCompiler.compileShader(
+    const vertexShader = this.compileShader(
       vertexShaderSource,
-      ParallelCompiler.gl.VERTEX_SHADER,
+      this.gl.VERTEX_SHADER,
       program,
       substitutions
     );
 
-    const fragmentShader = ParallelCompiler.compileShader(
+    const fragmentShader = this.compileShader(
       fragmentShaderSource,
-      ParallelCompiler.gl.FRAGMENT_SHADER,
+      this.gl.FRAGMENT_SHADER,
       program,
       substitutions
     );
 
-    ParallelCompiler.programs.push({
+    this.programs.push({
       program,
       resolvePromise,
       vertexShader,
@@ -58,18 +58,18 @@ export abstract class ParallelCompiler {
   }
 
   @Insights.measure('compile programs')
-  public static async compilePrograms(): Promise<void> {
-    ParallelCompiler.programs.forEach((p) => ParallelCompiler.gl.linkProgram(p.program));
+  public async compilePrograms(): Promise<void> {
+    this.programs.forEach((p) => this.gl.linkProgram(p.program));
 
-    Insights.setValue('program count', ParallelCompiler.programs.length);
+    Insights.setValue('program count', this.programs.length);
 
-    while (ParallelCompiler.programs.length > 0) {
-      ParallelCompiler.resolveFinishedPrograms();
+    while (this.programs.length > 0) {
+      this.resolveFinishedPrograms();
       await wait(0);
     }
   }
 
-  private static compileShader(
+  private compileShader(
     source: string,
     type: GLenum,
     program: WebGLProgram,
@@ -87,7 +87,7 @@ export abstract class ParallelCompiler {
     } while (replaceHappened);
 
     // can only return null on lost context
-    const shader = ParallelCompiler.gl.createShader(type)!;
+    const shader = this.gl.createShader(type)!;
 
     this.gl.shaderSource(shader, processedSource);
     this.gl.compileShader(shader);
@@ -99,48 +99,40 @@ export abstract class ParallelCompiler {
     return result;
   }
 
-  private static resolveFinishedPrograms() {
+  private resolveFinishedPrograms() {
     const done: Array<CompilingProgram> = [];
 
-    ParallelCompiler.programs.forEach((p) => {
+    this.programs.forEach((p) => {
       if (
-        !ParallelCompiler.extension ||
-        ParallelCompiler.gl.getProgramParameter(
-          p.program,
-          ParallelCompiler.extension.COMPLETION_STATUS_KHR
-        )
+        !this.extension ||
+        this.gl.getProgramParameter(p.program, this.extension.COMPLETION_STATUS_KHR)
       ) {
-        ParallelCompiler.checkProgram(p);
+        this.checkProgram(p);
         done.push(p);
         p.resolvePromise!(p.program);
       }
     });
 
-    ParallelCompiler.programs = ParallelCompiler.programs.filter(
-      (p1) => done.findIndex((p2) => p2 === p1) == -1
-    );
+    this.programs = this.programs.filter((p1) => done.findIndex((p2) => p2 === p1) == -1);
   }
 
-  private static checkProgram(program: CompilingProgram) {
-    const success = ParallelCompiler.gl.getProgramParameter(
-      program.program,
-      ParallelCompiler.gl.LINK_STATUS
-    );
+  private checkProgram(program: CompilingProgram) {
+    const success = this.gl.getProgramParameter(program.program, this.gl.LINK_STATUS);
 
-    if (!success && !ParallelCompiler.gl.isContextLost()) {
-      ParallelCompiler.prettyPrintErrorsIfThereAreAny(program.vertexShader);
-      ParallelCompiler.prettyPrintErrorsIfThereAreAny(program.fragmentShader);
+    if (!success) {
+      this.prettyPrintErrorsIfThereAreAny(program.vertexShader);
+      this.prettyPrintErrorsIfThereAreAny(program.fragmentShader);
 
-      throw new Error(ParallelCompiler.gl.getProgramInfoLog(program.program)!);
+      throw new Error(this.gl.getProgramInfoLog(program.program)!);
     }
 
     this.gl.deleteShader(program.vertexShader);
     this.gl.deleteShader(program.fragmentShader);
   }
 
-  private static prettyPrintErrorsIfThereAreAny(shader: ShaderWithSource) {
+  private prettyPrintErrorsIfThereAreAny(shader: ShaderWithSource) {
     try {
-      ParallelCompiler.checkShader(shader);
+      this.checkShader(shader);
     } catch (e) {
       for (const match of e.toString().matchAll(/ERROR: 0:(\d+): (.*)$/gm)) {
         const line = Number.parseInt(match[1]);
@@ -155,14 +147,11 @@ export abstract class ParallelCompiler {
     }
   }
 
-  private static checkShader(shader: WebGLShader) {
-    const success = ParallelCompiler.gl.getShaderParameter(
-      shader,
-      ParallelCompiler.gl.COMPILE_STATUS
-    );
+  private checkShader(shader: WebGLShader) {
+    const success = this.gl.getShaderParameter(shader, this.gl.COMPILE_STATUS);
 
-    if (!success && !ParallelCompiler.gl.isContextLost()) {
-      throw new Error(ParallelCompiler.gl.getShaderInfoLog(shader)!);
+    if (!success) {
+      throw new Error(this.gl.getShaderInfoLog(shader)!);
     }
   }
 }

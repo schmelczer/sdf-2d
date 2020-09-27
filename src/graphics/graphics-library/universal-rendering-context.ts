@@ -29,5 +29,32 @@ export const getUniversalRenderingContext = (
   }
 
   Insights.setValue('using WebGL2', result.isWebGL2);
-  return result;
+
+  let isDestroyed = false;
+
+  const handleContextLost = (e: Event) => {
+    e.preventDefault();
+    isDestroyed = true;
+    canvas.removeEventListener('webglcontextlost', handleContextLost, false);
+  };
+  canvas.addEventListener('webglcontextlost', handleContextLost, false);
+
+  const contextLostHandler = {
+    get: function (target: UniversalRenderingContext, prop: string) {
+      if (isDestroyed || target.isContextLost()) {
+        isDestroyed = true;
+        throw new Error('Context lost');
+      }
+
+      const value = (target as any)[prop];
+
+      if (typeof value === 'function') {
+        return value.bind(target);
+      }
+
+      return value;
+    },
+  };
+
+  return new Proxy(result, contextLostHandler);
 };
