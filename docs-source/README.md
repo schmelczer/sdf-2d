@@ -1,4 +1,4 @@
-# ![SDF-2D logo](../docs/media/logo-colored.svg) Documentation
+# ![SDF-2D logo](media/logo-colored.svg) Documentation
 
 Background and more in depth information about the rendring techniques can be found in [this technical report](media/sdf-2d.pdf).
 
