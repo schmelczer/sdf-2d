@@ -1,6 +1,7 @@
 import { vec3, vec4 } from 'gl-matrix';
 import { UniversalRenderingContext } from './universal-rendering-context';
 
+/** @internal */
 export class PaletteTexture {
   private texture: WebGLTexture;
 

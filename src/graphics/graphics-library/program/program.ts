@@ -4,6 +4,7 @@ import { ParallelCompiler } from '../parallel-compiler';
 import { UniversalRenderingContext } from '../universal-rendering-context';
 import { IProgram } from './i-program';
 
+/** @internal */
 export default abstract class Program implements IProgram {
   protected program?: WebGLProgram;
 

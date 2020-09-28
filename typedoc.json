@@ -13,5 +13,5 @@
   "inputFiles": "src",
   "ignoreCompilerErrors": true,
   "listInvalidSymbolLinks": true,
-  "readme": "docs-source/README.md"
+  "readme": "documentation-readme.md"
 }

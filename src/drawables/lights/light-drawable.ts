@@ -1,6 +1,7 @@
 import { mat2d, vec2, vec3 } from 'gl-matrix';
 import { Drawable } from '../../main';
 
+/** @internal */
 export class LightDrawable extends Drawable {
   protected lightnessRatio = 1;
 

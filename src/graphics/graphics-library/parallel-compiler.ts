@@ -3,6 +3,7 @@ import { Insights } from '../rendering/insights';
 import { tryEnableExtension } from './helper/enable-extension';
 import { UniversalRenderingContext } from './universal-rendering-context';
 
+/** @internal */
 type CompilingProgram = {
   program: WebGLProgram;
   resolvePromise: ((program: WebGLProgram) => void) | null;
@@ -10,8 +11,10 @@ type CompilingProgram = {
   fragmentShader: ShaderWithSource;
 };
 
+/** @internal */
 type ShaderWithSource = WebGLShader & { source: string };
 
+/** @internal */
 export class ParallelCompiler {
   private extension?: any;
   private gl: UniversalRenderingContext;

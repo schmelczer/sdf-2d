@@ -1,5 +1,7 @@
+/** @internal */
 let isEnabled = false;
 
+/** @internal */
 export const enableContextLostSimulator = (canvas: HTMLCanvasElement) => {
   if (isEnabled) {
     return;

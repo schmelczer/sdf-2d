@@ -2,6 +2,9 @@ import { mat2d, vec2 } from 'gl-matrix';
 import { Drawable } from '../drawable';
 import { DrawableDescriptor } from '../drawable-descriptor';
 
+/**
+ * @category Drawable
+ */
 export class Circle extends Drawable {
   public static descriptor: DrawableDescriptor = {
     sdf: {

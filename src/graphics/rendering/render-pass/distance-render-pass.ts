@@ -3,9 +3,10 @@ import { Drawable } from '../../../drawables/drawable';
 import { Insights } from '../insights';
 import { RenderPass } from './render-pass';
 
+/** @internal */
 export class DistanceRenderPass extends RenderPass {
-  public tileMultiplier = 8;
-  public isWorldInverted = false;
+  public tileMultiplier!: number;
+  public isWorldInverted!: boolean;
 
   private drawables: Array<Drawable> = [];
 

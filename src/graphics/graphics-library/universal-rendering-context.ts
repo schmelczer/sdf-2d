@@ -1,8 +1,10 @@
 import { Insights } from '../rendering/insights';
 
+/** @internal */
 export type UniversalRenderingContext = WebGL2RenderingContext &
   WebGLRenderingContext & { isWebGL2: boolean };
 
+/** @internal */
 export const getUniversalRenderingContext = (
   canvas: HTMLCanvasElement,
   ignoreWebGL2 = false

@@ -1,6 +1,7 @@
 import { Insights } from '../../rendering/insights';
 import { UniversalRenderingContext } from '../universal-rendering-context';
 
+/** @internal */
 export const tryEnableExtension = (
   gl: UniversalRenderingContext,
   name: string
@@ -15,6 +16,7 @@ export const tryEnableExtension = (
   return extension;
 };
 
+/** @internal */
 export const enableExtension = (gl: UniversalRenderingContext, name: string): any => {
   const extension = tryEnableExtension(gl, name);
 

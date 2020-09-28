@@ -1,3 +1,4 @@
+/** @internal */
 export const getCombinations = (values: Array<Array<number>>): Array<Array<number>> => {
   if (!values.every((a) => a.length > 0)) {
     return [];

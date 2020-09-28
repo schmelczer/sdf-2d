@@ -2,6 +2,7 @@ import { enableExtension } from '../helper/enable-extension';
 import { UniversalRenderingContext } from '../universal-rendering-context';
 import { FrameBuffer } from './frame-buffer';
 
+/** @internal */
 export class IntermediateFrameBuffer extends FrameBuffer {
   private frameTexture: WebGLTexture;
   private floatEnabled = false;

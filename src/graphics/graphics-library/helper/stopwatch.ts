@@ -1,12 +1,14 @@
 import { UniversalRenderingContext } from '../universal-rendering-context';
 import { enableExtension } from './enable-extension';
 
+/** @internal */
 enum StopwatchState {
   ready = 'ready',
   running = 'running',
   waitingForResults = 'waitingForResults',
 }
 
+/** @internal */
 export class WebGlStopwatch {
   private state = StopwatchState.ready;
   private resultsInNanoSeconds = 0;

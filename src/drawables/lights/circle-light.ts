@@ -2,6 +2,9 @@ import { vec2, vec3 } from 'gl-matrix';
 import { DrawableDescriptor } from '../drawable-descriptor';
 import { LightDrawable } from './light-drawable';
 
+/**
+ * @category Drawable
+ */
 export class CircleLight extends LightDrawable {
   public static readonly descriptor: DrawableDescriptor = {
     propertyUniformMapping: {

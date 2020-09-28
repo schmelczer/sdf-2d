@@ -7,6 +7,7 @@ import { UniversalRenderingContext } from '../universal-rendering-context';
 import { FragmentShaderOnlyProgram } from './fragment-shader-only-program';
 import { IProgram } from './i-program';
 
+/** @internal */
 export class UniformArrayAutoScalingProgram implements IProgram {
   private programs: Array<{
     program: FragmentShaderOnlyProgram;

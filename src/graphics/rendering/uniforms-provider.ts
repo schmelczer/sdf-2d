@@ -1,9 +1,10 @@
 import { mat2d, vec2, vec3, vec4 } from 'gl-matrix';
 import { UniversalRenderingContext } from '../graphics-library/universal-rendering-context';
 
+/** @internal */
 export class UniformsProvider {
-  public ambientLight = vec3.fromValues(0.25, 0.15, 0.25);
-  public _backgroundColor = vec4.fromValues(1, 1, 1, 1);
+  public ambientLight!: vec3;
+  public _backgroundColor!: vec4;
 
   private scaleWorldLengthToNDC = 1;
   private transformWorldToNDC = mat2d.create();

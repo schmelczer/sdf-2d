@@ -4,6 +4,7 @@ import { ParallelCompiler } from '../../graphics-library/parallel-compiler';
 import { UniformArrayAutoScalingProgram } from '../../graphics-library/program/uniform-array-autoscaling-program';
 import { UniversalRenderingContext } from '../../graphics-library/universal-rendering-context';
 
+/** @internal */
 export abstract class RenderPass {
   protected program: UniformArrayAutoScalingProgram;
 

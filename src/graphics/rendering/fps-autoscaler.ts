@@ -3,6 +3,7 @@ import { exponentialDecay } from '../../helper/exponential-decay';
 import { mix } from '../../helper/mix';
 import { Insights } from './insights';
 
+/** @internal */
 const settings = {
   targetDeltaTimeInMilliseconds: 20,
   deltaTimeErrorInMilliseconds: 3,
@@ -30,6 +31,7 @@ const settings = {
   qualityStepDecrese: 0.2,
 };
 
+/** @internal */
 export class FpsAutoscaler {
   private timeSinceLastAdjusment = 0;
   private exponentialDecayedDeltaTime = settings.targetDeltaTimeInMilliseconds;

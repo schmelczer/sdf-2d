@@ -16,6 +16,7 @@ import { FpsAutoscaler } from '../fps-autoscaler';
 import { Insights } from '../insights';
 import { DistanceRenderPass } from '../render-pass/distance-render-pass';
 import { LightsRenderPass } from '../render-pass/lights-render-pass';
+import { defaultRuntimeSettings } from '../settings/default-runtime-settings';
 import { defaultStartupSettings } from '../settings/default-startup-settings';
 import { RuntimeSettings } from '../settings/runtime-settings';
 import { StartupSettings } from '../settings/startup-settings';
@@ -30,6 +31,7 @@ import lightsVertexShader from '../shaders/shading-vs.glsl';
 import { UniformsProvider } from '../uniforms-provider';
 import { Renderer } from './renderer';
 
+/** @internal */
 export class RendererImplementation implements Renderer {
   private readonly gl: UniversalRenderingContext;
   private stopwatch?: WebGlStopwatch;
@@ -38,7 +40,7 @@ export class RendererImplementation implements Renderer {
   private distancePass: DistanceRenderPass;
   private lightingFrameBuffer: DefaultFrameBuffer;
   private lightsPass: LightsRenderPass;
-  private palette?: PaletteTexture;
+  private palette!: PaletteTexture;
   private autoscaler: FpsAutoscaler;
 
   private applyRuntimeSettings: {
@@ -53,7 +55,7 @@ export class RendererImplementation implements Renderer {
     backgroundColor: (v) => (this.uniformsProvider.backgroundColor = v),
     ambientLight: (v) => (this.uniformsProvider.ambientLight = v),
     lightCutoffDistance: (v) => (this.lightsPass.lightCutoffDistance = v),
-    colorPalette: (v) => this.palette!.setPalette(v),
+    colorPalette: (v) => this.palette.setPalette(v),
   };
 
   setRuntimeSettings(overrides: Partial<RuntimeSettings>): void {
@@ -103,6 +105,8 @@ export class RendererImplementation implements Renderer {
     };
 
     this.palette = new PaletteTexture(this.gl, settings.paletteSize);
+    this.setRuntimeSettings(defaultRuntimeSettings);
+
     const promises: Array<Promise<void>> = [];
 
     const compiler = new ParallelCompiler(this.gl);
@@ -219,7 +223,7 @@ export class RendererImplementation implements Renderer {
     this.lightsPass.render(
       this.uniformsProvider.getUniforms(common),
       this.distanceFieldFrameBuffer.colorTexture,
-      this.palette!.colorTexture
+      this.palette.colorTexture
     );
     this.gl.disable(this.gl.BLEND);
 
@@ -243,6 +247,6 @@ export class RendererImplementation implements Renderer {
   public destroy(): void {
     this.distancePass.destroy();
     this.lightsPass.destroy();
-    this.palette!.destroy();
+    this.palette.destroy();
   }
 }

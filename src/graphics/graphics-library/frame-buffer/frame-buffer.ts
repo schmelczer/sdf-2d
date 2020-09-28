@@ -1,9 +1,10 @@
 import { vec2 } from 'gl-matrix';
 import { UniversalRenderingContext } from '../universal-rendering-context';
 
+/** @internal */
 export abstract class FrameBuffer {
   public renderScale = 1;
-  public enableHighDpiRendering = false;
+  public enableHighDpiRendering!: boolean;
 
   protected size = vec2.create();
 

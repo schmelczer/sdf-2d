@@ -1,6 +1,7 @@
 import { UniversalRenderingContext } from '../universal-rendering-context';
 import { FrameBuffer } from './frame-buffer';
 
+/** @internal */
 export class DefaultFrameBuffer extends FrameBuffer {
   constructor(gl: UniversalRenderingContext) {
     super(gl);

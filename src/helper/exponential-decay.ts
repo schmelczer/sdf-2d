@@ -1,3 +1,4 @@
+/** @internal */
 export const exponentialDecay = (
   accumulator: number,
   nextValue: number,

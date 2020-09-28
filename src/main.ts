@@ -13,6 +13,7 @@ import { Renderer } from './graphics/rendering/renderer/renderer';
 import { StartupSettings } from './graphics/rendering/settings/startup-settings';
 import { applyArrayPlugins } from './helper/array';
 
+/** @internal */
 declare global {
   interface Array<T> {
     x: number;
@@ -29,8 +30,8 @@ applyArrayPlugins();
 
 /**
  * Compiles a new renderer instance. There can multiple renderers on a single page.
- * > Asynchronous behaviour is required for paralell shader compiling.
- * > Trying to draw before the returned promise resolves results in no action taken.
+ * > Asynchronous behaviour is required for parallel shader compiling.
+ * > Trying to draw before the returned promise resolves, results in no action taken.
  * > Settings can be set before promise resolution and they will be applied later.
  *
  * The descriptors of every to-be-drawn objects are required before creating the renderer,
@@ -48,9 +49,7 @@ applyArrayPlugins();
  * @param canvas The returned renderer will only be able to draw to this canvas.
  * @param descriptors The descriptor of every single object (and light) that
  * ever needs to be drawn by this renderer has to be given before compiling.
- * @param settingsOverrides Sensible defaults are provided, but these can be overriden.
- *
- * @category Startup
+ * @param settingsOverrides Sensible defaults are provided, but these can be overridden.
  */
 export async function compile(
   canvas: HTMLCanvasElement,

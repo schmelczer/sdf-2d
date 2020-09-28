@@ -4,6 +4,9 @@ import { mix } from '../../helper/mix';
 import { Drawable } from '../drawable';
 import { DrawableDescriptor } from '../drawable-descriptor';
 
+/**
+ * @category Drawable
+ */
 export class InvertedTunnel extends Drawable {
   public static descriptor: DrawableDescriptor = {
     sdf: {

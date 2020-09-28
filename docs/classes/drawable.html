@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Drawable | SDF-2D - v0.3.1</title>
-	<meta name="description" content="Documentation for SDF-2D - v0.3.1">
+	<title>Drawable | SDF-2D - v0.3.2</title>
+	<meta name="description" content="Documentation for SDF-2D - v0.3.2">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">SDF-2D - v0.3.1</a>
+					<a href="../index.html" class="title">SDF-2D - v0.3.2</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -62,6 +62,17 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Base class of every drawable object.</p>
+					</div>
+					<p>To create your own drawables, you need to subclass from this.</p>
+					<blockquote>
+						<p>Although lights are also subclasses of Drawable, you cannot create your own light sources.</p>
+					</blockquote>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -76,9 +87,6 @@
 							</li>
 							<li>
 								<a href="tunnel.html" class="tsd-signature-type">Tunnel</a>
-							</li>
-							<li>
-								<a href="lightdrawable.html" class="tsd-signature-type">LightDrawable</a>
 							</li>
 						</ul>
 					</li>
@@ -113,9 +121,14 @@
 					<div class="tsd-signature tsd-kind-icon">descriptor<span class="tsd-signature-symbol">:</span> <a href="../interfaces/drawabledescriptor.html" class="tsd-signature-type">DrawableDescriptor</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/48490b3/src/drawables/drawable.ts#L6">drawables/drawable.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/49473bf/src/drawables/drawable.ts#L15">drawables/drawable.ts:15</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>This should be defined in inherited classes.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -130,16 +143,29 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/48490b3/src/drawables/drawable.ts#L9">drawables/drawable.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/49473bf/src/drawables/drawable.ts#L34">drawables/drawable.ts:34</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return the values that should be given to the shaders through uniform inputs.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>transform2d: <span class="tsd-signature-type">mat2d</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>position-like properties should be transformed by this matrix
+										before being returned.</p>
+									</div>
 								</li>
 								<li>
 									<h5>transform1d: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>scalar properties should be transformed by this number
+										before being returned.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -156,13 +182,22 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/48490b3/src/drawables/drawable.ts#L8">drawables/drawable.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/49473bf/src/drawables/drawable.ts#L24">drawables/drawable.ts:24</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The lower bound of the distance between the target and the object.</p>
+								</div>
+								<p>It can return 0 by default, the only consequence of this, is a reduced performance.
+								Because this object won&#39;t benefit from tile-based rendering.</p>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>target: <span class="tsd-signature-type">vec2</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -179,7 +214,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/48490b3/src/drawables/drawable.ts#L11">drawables/drawable.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/49473bf/src/drawables/drawable.ts#L36">drawables/drawable.ts:36</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -210,6 +245,12 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="circle.html" class="tsd-kind-icon">Circle</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="circlelight.html" class="tsd-kind-icon">Circle<wbr>Light</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
@@ -231,6 +272,36 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class">
+						<a href="flashlight.html" class="tsd-kind-icon">Flashlight</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="invertedtunnel.html" class="tsd-kind-icon">Inverted<wbr>Tunnel</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="tunnel.html" class="tsd-kind-icon">Tunnel</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/drawabledescriptor.html" class="tsd-kind-icon">Drawable<wbr>Descriptor</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/renderer.html" class="tsd-kind-icon">Renderer</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/runtimesettings.html" class="tsd-kind-icon">Runtime<wbr>Settings</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/startupsettings.html" class="tsd-kind-icon">Startup<wbr>Settings</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#compile" class="tsd-kind-icon">compile</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="../globals.html#defaultruntimesettings" class="tsd-kind-icon">default<wbr>Runtime<wbr>Settings</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="../globals.html#defaultstartupsettings" class="tsd-kind-icon">default<wbr>Startup<wbr>Settings</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
@@ -246,21 +317,18 @@
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-			</ul>
-			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>

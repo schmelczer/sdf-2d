@@ -22,6 +22,7 @@ A graphics library to enable the real-time rendering of 2D signed distance field
 - Has built-in quality autoscaling
 - Requires no boilerplate code
   - Automatic detection of WebGL and its extensions is provided
+  - Parallel, non-blocking shader compiling
   - Context lost is handled with automatic restoration
   - Can be used without thinking of the GPU _(although for stunning results it, should be kept in mind)_
 
@@ -30,8 +31,6 @@ A graphics library to enable the real-time rendering of 2D signed distance field
 > Three separate screenshots taken on a mobile device
 
 ## Install
-
-> The package is available on NPM, at [npmjs.com/package/sdf-2d](https://www.npmjs.com/package/sdf-2d)
 
 ```sh
 npm install sdf-2d --save-dev

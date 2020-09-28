@@ -1,8 +1,10 @@
 import { mat3, ReadonlyVec3, ReadonlyVec4, vec2, vec3, vec4 } from 'gl-matrix';
 import { UniversalRenderingContext } from '../universal-rendering-context';
 
+/** @internal */
 const loaderMat3 = mat3.create();
 
+/** @internal */
 export const loadUniform = (
   gl: UniversalRenderingContext,
   value: any,

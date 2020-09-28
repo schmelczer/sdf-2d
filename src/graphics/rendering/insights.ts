@@ -1,6 +1,7 @@
 import { last } from '../../helper/last';
 import { msToString } from '../../helper/ms-to-string';
 
+/** @internal */
 export class Insights {
   private static insights: any = {};
 

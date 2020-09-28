@@ -1,10 +1,12 @@
 import { vec2 } from 'gl-matrix';
-import { Drawable, DrawableDescriptor } from '../../../main';
+import { Drawable } from '../../../drawables/drawable';
+import { DrawableDescriptor } from '../../../drawables/drawable-descriptor';
 import { RuntimeSettings } from '../settings/runtime-settings';
 import { StartupSettings } from '../settings/startup-settings';
 import { Renderer } from './renderer';
 import { RendererImplementation } from './renderer-implementation';
 
+/** @internal */
 export class ContextAwareRenderer implements Renderer {
   private renderer?: RendererImplementation;
   private isRendererReady = false;

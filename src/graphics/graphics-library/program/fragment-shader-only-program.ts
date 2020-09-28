@@ -3,6 +3,7 @@ import { ParallelCompiler } from '../parallel-compiler';
 import { UniversalRenderingContext } from '../universal-rendering-context';
 import Program from './program';
 
+/** @internal */
 export class FragmentShaderOnlyProgram extends Program {
   private vao?: WebGLVertexArrayObject;
   private vertexArrayExtension: any;

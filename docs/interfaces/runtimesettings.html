@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>RuntimeSettings | SDF-2D - v0.3.1</title>
-	<meta name="description" content="Documentation for SDF-2D - v0.3.1">
+	<title>RuntimeSettings | SDF-2D - v0.3.2</title>
+	<meta name="description" content="Documentation for SDF-2D - v0.3.2">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">SDF-2D - v0.3.1</a>
+					<a href="../index.html" class="title">SDF-2D - v0.3.2</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -62,6 +62,15 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Interface for a configuration object containing the settings
+						that can be changed during runtime.</p>
+					</div>
+					<p>The default values for RuntimeSettings can be found in <a href="../globals.html#defaultruntimesettings">defaultRuntimeSettings</a>.</p>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -97,9 +106,14 @@
 					<div class="tsd-signature tsd-kind-icon">ambient<wbr>Light<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">vec3</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/48490b3/src/graphics/rendering/settings/runtime-settings.ts#L10">graphics/rendering/settings/runtime-settings.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/49473bf/src/graphics/rendering/settings/runtime-settings.ts#L58">graphics/rendering/settings/runtime-settings.ts:58</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A light affecting every pixel (even the ones inside objects).</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="backgroundcolor" class="tsd-anchor"></a>
@@ -107,19 +121,32 @@
 					<div class="tsd-signature tsd-kind-icon">background<wbr>Color<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">vec3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">vec4</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/48490b3/src/graphics/rendering/settings/runtime-settings.ts#L8">graphics/rendering/settings/runtime-settings.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/49473bf/src/graphics/rendering/settings/runtime-settings.ts#L43">graphics/rendering/settings/runtime-settings.ts:43</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The default background color of the scene, can have transparency.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="colorpalette" class="tsd-anchor"></a>
 					<h3>color<wbr>Palette</h3>
-					<div class="tsd-signature tsd-kind-icon">color<wbr>Palette<span class="tsd-signature-symbol">:</span> <a href="__global.array.html" class="tsd-signature-type">Array</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">vec3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">vec4</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">color<wbr>Palette<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">vec3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">vec4</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/48490b3/src/graphics/rendering/settings/runtime-settings.ts#L9">graphics/rendering/settings/runtime-settings.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/49473bf/src/graphics/rendering/settings/runtime-settings.ts#L53">graphics/rendering/settings/runtime-settings.ts:53</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Its length should be less than the one specified in <a href="startupsettings.html">StartupSettings</a>.paletteSize.</p>
+						</div>
+						<p>The possible colors for the objects. Each color is referenced by its index in the
+						palette.</p>
+						<p>Can have transparency.</p>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="enablehighdpirendering" class="tsd-anchor"></a>
@@ -127,9 +154,14 @@
 					<div class="tsd-signature tsd-kind-icon">enable<wbr>High<wbr>Dpi<wbr>Rendering<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/48490b3/src/graphics/rendering/settings/runtime-settings.ts#L4">graphics/rendering/settings/runtime-settings.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/49473bf/src/graphics/rendering/settings/runtime-settings.ts#L13">graphics/rendering/settings/runtime-settings.ts:13</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>When set to <code>true</code> rendering will be done on the screen&#39;s real resolution.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="isworldinverted" class="tsd-anchor"></a>
@@ -137,9 +169,16 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>World<wbr>Inverted<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/48490b3/src/graphics/rendering/settings/runtime-settings.ts#L6">graphics/rendering/settings/runtime-settings.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/49473bf/src/graphics/rendering/settings/runtime-settings.ts#L32">graphics/rendering/settings/runtime-settings.ts:32</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>By default, every pixel is outside of objects. Flipping this value to <code>true</code> will
+								result in every pixel being inside a large object. From then it only makes sense to
+							draw inverted objects.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="lightcutoffdistance" class="tsd-anchor"></a>
@@ -147,9 +186,15 @@
 					<div class="tsd-signature tsd-kind-icon">light<wbr>Cutoff<wbr>Distance<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/48490b3/src/graphics/rendering/settings/runtime-settings.ts#L7">graphics/rendering/settings/runtime-settings.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/49473bf/src/graphics/rendering/settings/runtime-settings.ts#L38">graphics/rendering/settings/runtime-settings.ts:38</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>When lights reach the end of the display, they are slowly faded out. The length
+							of this phaseout can be set through this value.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="tilemultiplier" class="tsd-anchor"></a>
@@ -157,9 +202,20 @@
 					<div class="tsd-signature tsd-kind-icon">tile<wbr>Multiplier<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/48490b3/src/graphics/rendering/settings/runtime-settings.ts#L5">graphics/rendering/settings/runtime-settings.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/49473bf/src/graphics/rendering/settings/runtime-settings.ts#L25">graphics/rendering/settings/runtime-settings.ts:25</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>First, the SDF of the scene is evaluated at every single pixel.
+								For speeding this process up, the screen is divided up into tiles,
+							this way each having to deal with a fewer objects.</p>
+						</div>
+						<p>For each tile, it is decided which objects are near its close vicinity.
+							This comes with some overhead for the CPU, while saving the GPU from loads of
+							calculations. The workload can be balanced between the CPU and the GPU by setting
+						this number.</p>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -173,6 +229,30 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="../classes/circle.html" class="tsd-kind-icon">Circle</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/circlelight.html" class="tsd-kind-icon">Circle<wbr>Light</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/drawable.html" class="tsd-kind-icon">Drawable</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/flashlight.html" class="tsd-kind-icon">Flashlight</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/invertedtunnel.html" class="tsd-kind-icon">Inverted<wbr>Tunnel</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/tunnel.html" class="tsd-kind-icon">Tunnel</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="drawabledescriptor.html" class="tsd-kind-icon">Drawable<wbr>Descriptor</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="renderer.html" class="tsd-kind-icon">Renderer</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
@@ -203,6 +283,18 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface">
+						<a href="startupsettings.html" class="tsd-kind-icon">Startup<wbr>Settings</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#compile" class="tsd-kind-icon">compile</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="../globals.html#defaultruntimesettings" class="tsd-kind-icon">default<wbr>Runtime<wbr>Settings</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="../globals.html#defaultstartupsettings" class="tsd-kind-icon">default<wbr>Startup<wbr>Settings</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
@@ -218,21 +310,18 @@
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-			</ul>
-			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>

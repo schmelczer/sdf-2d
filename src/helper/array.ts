@@ -1,3 +1,4 @@
+/** @internal */
 declare global {
   interface Array<T> {
     x: number;
@@ -10,6 +11,7 @@ declare global {
   }
 }
 
+/** @internal */
 const setIndexAlias = (name: string, index: number, type: any) => {
   if (!Object.prototype.hasOwnProperty.call(type.prototype, name)) {
     Object.defineProperty(type.prototype, name, {
@@ -23,6 +25,7 @@ const setIndexAlias = (name: string, index: number, type: any) => {
   }
 };
 
+/** @internal */
 export const applyArrayPlugins = () => {
   setIndexAlias('x', 0, Array);
   setIndexAlias('y', 1, Array);

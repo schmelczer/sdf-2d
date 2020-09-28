@@ -4,8 +4,9 @@ import { clamp01 } from '../../../helper/clamp';
 import { Insights } from '../insights';
 import { RenderPass } from './render-pass';
 
+/** @internal */
 export class LightsRenderPass extends RenderPass {
-  public lightCutoffDistance = 400;
+  public lightCutoffDistance!: number;
   private drawables: Array<LightDrawable> = [];
 
   public addDrawable(drawable: LightDrawable) {

@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>SDF-2D - v0.3.1</title>
-	<meta name="description" content="Documentation for SDF-2D - v0.3.1">
+	<title>SDF-2D - v0.3.2</title>
+	<meta name="description" content="Documentation for SDF-2D - v0.3.2">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
 </head>
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">SDF-2D - v0.3.1</a>
+					<a href="index.html" class="title">SDF-2D - v0.3.2</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -52,7 +52,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1>SDF-2D - v0.3.1</h1>
+			<h1>SDF-2D - v0.3.2</h1>
 		</div>
 	</div>
 </header>
@@ -63,7 +63,7 @@
 				<a href="#-documentation" id="-documentation" style="color: inherit; text-decoration: none;">
 					<h1><img src="media/logo-colored.svg" alt="SDF-2D logo"> Documentation</h1>
 				</a>
-				<p>Background and more in depth information about the rendring techniques can be found in <a href="media/sdf-2d.pdf">this technical report</a>.</p>
+				<p>The motivation behind this library and more in-depth information about the rendering techniques utilised can be found in <a href="media/sdf-2d.pdf">this technical report</a>.</p>
 				<a href="#links" id="links" style="color: inherit; text-decoration: none;">
 					<h2>Links</h2>
 				</a>
@@ -71,19 +71,44 @@
 					<li><a href="https://github.com/schmelczerandras/sdf-2d">Repository</a></li>
 					<li><a href="https://sdf2d.schmelczer.dev/">Demo</a></li>
 					<li><a href="https://github.com/schmelczerandras/sdf-2d-minimal-example">Minimal example</a></li>
-					<li><a href="https://github.com/schmelczerandras/sdf-2d-minimal-example">More complex example</a></li>
+					<li><a href="https://github.com/schmelczerandras/sdf-2d-more-complex-example">More complex example</a></li>
+					<li><a href="https://github.com/schmelczerandras/sdf-2d-demo">Source code of the demo</a></li>
 				</ul>
-				<a href="#important-to-know" id="important-to-know" style="color: inherit; text-decoration: none;">
-					<h2>Important to know</h2>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
 				</a>
+				<ul>
+					<li>To start using cutting-edge 2D graphics, first you have get a renderer instance. This is possible by calling the <a href="globals.html#compile">compile function</a>.<ul>
+							<li>For this, some <a href="interfaces/drawabledescriptor.html">DrawableDescriptors</a> has to be provided.</li>
+							<li>Optionally, default compile settings can overridden using <a href="interfaces/startupsettings.html">StartupSettings</a>.</li>
+						</ul>
+					</li>
+					<li>After acquiring a renderer, the drawing of objects can be started through the <a href="interfaces/renderer.html">Renderer</a> interface.</li>
+				</ul>
+				<a href="#extending-drawables" id="extending-drawables" style="color: inherit; text-decoration: none;">
+					<h2>Extending drawables</h2>
+				</a>
+				<ul>
+					<li>Subclass <a href="classes/drawable.html">Drawable</a></li>
+					<li>Implement its abstract methods</li>
+					<li>Add a static property to your class called <code>descriptor</code> of type <a href="interfaces/drawabledescriptor.html">DrawableDescriptors</a></li>
+					<li>Follow the instructions given in <a href="#usage">Usage</a></li>
+				</ul>
+				<a href="#useful-to-know" id="useful-to-know" style="color: inherit; text-decoration: none;">
+					<h2>Useful to know</h2>
+				</a>
+				<a href="#math" id="math" style="color: inherit; text-decoration: none;">
+					<h3>Math</h3>
+				</a>
+				<p>The <code>vec2</code>, <code>vec3</code>, and <code>vec4</code> types seen in the documentation come from the <a href="http://glmatrix.net/">glMatrix</a> library and are equivalent to regular JS Arrays or Float32Arrays. So, feel free to give <code>[x, y]</code> as an input for functions requiring <code>vec2</code>.</p>
 				<a href="#coordinates" id="coordinates" style="color: inherit; text-decoration: none;">
 					<h3>Coordinates</h3>
 				</a>
-				<p>Anywhere, where positions need to specified, the <code>y</code> values grow upwards, so are the <code>x</code> values. That means, when specifying the view area, the origin is at the bottom left corner of the display.</p>
+				<p>Anywhere, where positions need to be specified, the <code>y</code> values grow upwards. That means, when setting the view area, the origin is at the bottom left corner of the display.</p>
 				<a href="#tile-based-rendering" id="tile-based-rendering" style="color: inherit; text-decoration: none;">
 					<h3>Tile-based rendering</h3>
 				</a>
-				<p>For optimising the evaluation of the distance field, the display is divided up into a grid of tiles. The shader for each tile is compiled to support a fix maximum number of objects on it. When using the built-in drawables, it is possible that after a certain number of on-screen objects, new ones won&#39;t be visible.</p>
+				<p>For optimising the evaluation of the distance field, the display is divided up into a grid of tiles. The shaders for each tile are compiled to support a fix maximum number of objects on it. When using the built-in drawables it is possible that after a certain number of on-screen objects new ones won&#39;t be visible.</p>
 				<p>Mitigating this issue is quite easy. Instead of the following code:</p>
 				<pre><code class="language-js"><span class="hljs-built_in">this</span>.renderer = <span class="hljs-keyword">await</span> compile(canvas, [Circle.descriptor, CircleLight.descriptor]);</code></pre>
 				<p>Modify it to something similar:</p>
@@ -99,12 +124,8 @@
 ]);</code></pre>
 				<p>The usage of too large numbers is not advised for compatibility and performance reasons alike.</p>
 				<blockquote>
-					<p>Steps are very useful for tile-based rendering, because it is possible for one tile (at a given moment) to be empty or contain just a few objects, while others have a large cluster of objects. The compiled shaders only take into account the necesseary number of objects on each tiles.</p>
+					<p>Steps are very useful for tile-based rendering, because it is possible for one tile (at a given moment) to be empty or contain just a few objects, while others have a large cluster of objects. The compiled shaders only take into account the necessary number of objects on each tile.</p>
 				</blockquote>
-				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
-					<h2>Usage</h2>
-				</a>
-				<p>To start using cutting-edge 2D graphics, first you have get a renderer instance. This is possible by calling the <a href="globals.html#compile">compile function</a>.</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -113,30 +134,15 @@
 					<li class="globals  ">
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/__global.html">__global</a>
-					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-enum">
-						<a href="enums/stopwatchstate.html" class="tsd-kind-icon">Stopwatch<wbr>State</a>
-					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/circle.html" class="tsd-kind-icon">Circle</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/circlelight.html" class="tsd-kind-icon">Circle<wbr>Light</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/contextawarerenderer.html" class="tsd-kind-icon">Context<wbr>Aware<wbr>Renderer</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/defaultframebuffer.html" class="tsd-kind-icon">Default<wbr>Frame<wbr>Buffer</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/distancerenderpass.html" class="tsd-kind-icon">Distance<wbr>Render<wbr>Pass</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/drawable.html" class="tsd-kind-icon">Drawable</a>
@@ -145,61 +151,13 @@
 						<a href="classes/flashlight.html" class="tsd-kind-icon">Flashlight</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/fpsautoscaler.html" class="tsd-kind-icon">Fps<wbr>Autoscaler</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/fragmentshaderonlyprogram.html" class="tsd-kind-icon">Fragment<wbr>Shader<wbr>Only<wbr>Program</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/framebuffer.html" class="tsd-kind-icon">Frame<wbr>Buffer</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/insights.html" class="tsd-kind-icon">Insights</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/intermediateframebuffer.html" class="tsd-kind-icon">Intermediate<wbr>Frame<wbr>Buffer</a>
-					</li>
-					<li class=" tsd-kind-class">
 						<a href="classes/invertedtunnel.html" class="tsd-kind-icon">Inverted<wbr>Tunnel</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/lightdrawable.html" class="tsd-kind-icon">Light<wbr>Drawable</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/lightsrenderpass.html" class="tsd-kind-icon">Lights<wbr>Render<wbr>Pass</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/palettetexture.html" class="tsd-kind-icon">Palette<wbr>Texture</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/parallelcompiler.html" class="tsd-kind-icon">Parallel<wbr>Compiler</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/program.html" class="tsd-kind-icon">Program</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/renderpass.html" class="tsd-kind-icon">Render<wbr>Pass</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/rendererimplementation.html" class="tsd-kind-icon">Renderer<wbr>Implementation</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/tunnel.html" class="tsd-kind-icon">Tunnel</a>
 					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/uniformarrayautoscalingprogram.html" class="tsd-kind-icon">Uniform<wbr>Array<wbr>Auto<wbr>Scaling<wbr>Program</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/uniformsprovider.html" class="tsd-kind-icon">Uniforms<wbr>Provider</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/webglstopwatch.html" class="tsd-kind-icon">Web<wbr>GlStopwatch</a>
-					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/drawabledescriptor.html" class="tsd-kind-icon">Drawable<wbr>Descriptor</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/iprogram.html" class="tsd-kind-icon">IProgram</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/renderer.html" class="tsd-kind-icon">Renderer</a>
@@ -210,74 +168,14 @@
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/startupsettings.html" class="tsd-kind-icon">Startup<wbr>Settings</a>
 					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#compilingprogram" class="tsd-kind-icon">Compiling<wbr>Program</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#shaderwithsource" class="tsd-kind-icon">Shader<wbr>With<wbr>Source</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#universalrenderingcontext" class="tsd-kind-icon">Universal<wbr>Rendering<wbr>Context</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#isenabled" class="tsd-kind-icon">is<wbr>Enabled</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#loadermat3" class="tsd-kind-icon">loader<wbr>Mat3</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#applyarrayplugins" class="tsd-kind-icon">apply<wbr>Array<wbr>Plugins</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#clamp" class="tsd-kind-icon">clamp</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#clamp01" class="tsd-kind-icon">clamp01</a>
-					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#compile" class="tsd-kind-icon">compile</a>
 					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#enablecontextlostsimulator" class="tsd-kind-icon">enable<wbr>Context<wbr>Lost<wbr>Simulator</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#enableextension" class="tsd-kind-icon">enable<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#exponentialdecay" class="tsd-kind-icon">exponential<wbr>Decay</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#getcombinations" class="tsd-kind-icon">get<wbr>Combinations</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#getuniversalrenderingcontext" class="tsd-kind-icon">get<wbr>Universal<wbr>Rendering<wbr>Context</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#last" class="tsd-kind-icon">last</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#loaduniform" class="tsd-kind-icon">load<wbr>Uniform</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#mix" class="tsd-kind-icon">mix</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#mstostring" class="tsd-kind-icon">ms<wbr>ToString</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#setindexalias" class="tsd-kind-icon">set<wbr>Index<wbr>Alias</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#tryenableextension" class="tsd-kind-icon">try<wbr>Enable<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#wait" class="tsd-kind-icon">wait</a>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#defaultruntimesettings" class="tsd-kind-icon">default<wbr>Runtime<wbr>Settings</a>
 					</li>
 					<li class=" tsd-kind-object-literal">
 						<a href="globals.html#defaultstartupsettings" class="tsd-kind-icon">default<wbr>Startup<wbr>Settings</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#settings" class="tsd-kind-icon">settings</a>
 					</li>
 				</ul>
 			</nav>
@@ -294,21 +192,18 @@
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-			</ul>
-			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>

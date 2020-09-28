@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Renderer | SDF-2D - v0.3.1</title>
-	<meta name="description" content="Documentation for SDF-2D - v0.3.1">
+	<title>Renderer | SDF-2D - v0.3.2</title>
+	<meta name="description" content="Documentation for SDF-2D - v0.3.2">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">SDF-2D - v0.3.1</a>
+					<a href="../index.html" class="title">SDF-2D - v0.3.2</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -62,19 +62,20 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>The main interface through which rendering can be achieved.</p>
+					</div>
+					<p>Multiple renderers are permitted on a single page.</p>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
 						<span class="target">Renderer</span>
 					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel">
-				<h3>Implemented by</h3>
-				<ul class="tsd-hierarchy">
-					<li><a href="../classes/contextawarerenderer.html" class="tsd-signature-type">ContextAwareRenderer</a></li>
-					<li><a href="../classes/rendererimplementation.html" class="tsd-signature-type">RendererImplementation</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -92,7 +93,7 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="renderer.html#adddrawable" class="tsd-kind-icon">add<wbr>Drawable</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="renderer.html#adddrawable" class="tsd-kind-icon">add<wbr>Drawable</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="renderer.html#autoscalequality" class="tsd-kind-icon">autoscale<wbr>Quality</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="renderer.html#destroy" class="tsd-kind-icon">destroy</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="renderer.html#renderdrawables" class="tsd-kind-icon">render<wbr>Drawables</a></li>
@@ -111,9 +112,14 @@
 					<div class="tsd-signature tsd-kind-icon">canvas<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">vec2</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/48490b3/src/graphics/rendering/renderer/renderer.ts#L6">graphics/rendering/renderer/renderer.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/49473bf/src/graphics/rendering/renderer/renderer.ts#L14">graphics/rendering/renderer/renderer.ts:14</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Get the actual resolution of the canvas.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="insights" class="tsd-anchor"></a>
@@ -121,9 +127,18 @@
 					<div class="tsd-signature tsd-kind-icon">insights<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/48490b3/src/graphics/rendering/renderer/renderer.ts#L8">graphics/rendering/renderer/renderer.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/49473bf/src/graphics/rendering/renderer/renderer.ts#L69">graphics/rendering/renderer/renderer.ts:69</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<dl class="tsd-comment-tags">
+							<dt>experimental</dt>
+							<dd><p>Debug information updated on each <code>renderDrawables</code> call.
+									Its scheme is not yet defined. The main purpose of this is
+								human debugging.</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="viewareasize" class="tsd-anchor"></a>
@@ -131,30 +146,51 @@
 					<div class="tsd-signature tsd-kind-icon">view<wbr>Area<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">vec2</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/48490b3/src/graphics/rendering/renderer/renderer.ts#L7">graphics/rendering/renderer/renderer.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/49473bf/src/graphics/rendering/renderer/renderer.ts#L21">graphics/rendering/renderer/renderer.ts:21</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Get the viewArea size set by the last <code>setViewArea</code>.</p>
+						</div>
+						<p>By default, <code>canvasSize</code> is used for the view area size.</p>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
 					<a name="adddrawable" class="tsd-anchor"></a>
 					<h3>add<wbr>Drawable</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Drawable<span class="tsd-signature-symbol">(</span>drawable<span class="tsd-signature-symbol">: </span><a href="../classes/drawable.html" class="tsd-signature-type">Drawable</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Drawable&lt;T&gt;<span class="tsd-signature-symbol">(</span>drawable<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/48490b3/src/graphics/rendering/renderer/renderer.ts#L12">graphics/rendering/renderer/renderer.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/49473bf/src/graphics/rendering/renderer/renderer.ts#L44">graphics/rendering/renderer/renderer.ts:44</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Schedule a drawable to be rendered during the next <code>renderDrawables</code> call.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="../classes/drawable.html" class="tsd-signature-type">Drawable</a></h4>
+								</li>
+							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>drawable: <a href="../classes/drawable.html" class="tsd-signature-type">Drawable</a></h5>
+									<h5>drawable: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Must be a subclass of drawable and its class must contain a
+										static descriptor property of type <a href="drawabledescriptor.html">DrawableDescriptor</a>.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -171,13 +207,24 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/48490b3/src/graphics/rendering/renderer/renderer.ts#L13">graphics/rendering/renderer/renderer.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/49473bf/src/graphics/rendering/renderer/renderer.ts#L79">graphics/rendering/renderer/renderer.ts:79</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>experimental</dt>
+									<dd><p>Scale the render scale for both the canvas and the SDF memoization based
+										on the current and historical FPS values.</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>deltaTime: <span class="tsd-signature-type">DOMHighResTimeStamp</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>since the last frame, in milliseconds.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -194,9 +241,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/48490b3/src/graphics/rendering/renderer/renderer.ts#L15">graphics/rendering/renderer/renderer.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/49473bf/src/graphics/rendering/renderer/renderer.ts#L60">graphics/rendering/renderer/renderer.ts:60</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Let go of every GPU resource held by the renderer.</p>
+								</div>
+								<p>It&#39;s up to the browser and driver whether these resources are actually freed.
+								Nonetheless, when a renderer is no longer needed, this method should be called.</p>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -211,9 +265,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/48490b3/src/graphics/rendering/renderer/renderer.ts#L14">graphics/rendering/renderer/renderer.ts:14</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/49473bf/src/graphics/rendering/renderer/renderer.ts#L52">graphics/rendering/renderer/renderer.ts:52</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Render every drawable added since the last <code>renderDrawables</code> call.</p>
+								</div>
+								<p>Resizing of framebuffers and the canvas also takes effect
+								when calling <code>renderDrawables</code>.</p>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -228,13 +289,20 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/48490b3/src/graphics/rendering/renderer/renderer.ts#L11">graphics/rendering/renderer/renderer.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/49473bf/src/graphics/rendering/renderer/renderer.ts#L36">graphics/rendering/renderer/renderer.ts:36</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Patch the current runtime settings with new values.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>overrides: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="runtimesettings.html" class="tsd-signature-type">RuntimeSettings</a><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -251,16 +319,28 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/48490b3/src/graphics/rendering/renderer/renderer.ts#L10">graphics/rendering/renderer/renderer.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/49473bf/src/graphics/rendering/renderer/renderer.ts#L30">graphics/rendering/renderer/renderer.ts:30</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Set the camera transformation.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>topLeft: <span class="tsd-signature-type">vec2</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>top (!) left. By default, equals to [0, canvasHeight].</p>
+									</div>
 								</li>
 								<li>
 									<h5>size: <span class="tsd-signature-type">vec2</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>need not be equal to the canvas size, though their aspect ratio
+										should be the same to avoid stretching.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -279,6 +359,27 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="../classes/circle.html" class="tsd-kind-icon">Circle</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/circlelight.html" class="tsd-kind-icon">Circle<wbr>Light</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/drawable.html" class="tsd-kind-icon">Drawable</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/flashlight.html" class="tsd-kind-icon">Flashlight</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/invertedtunnel.html" class="tsd-kind-icon">Inverted<wbr>Tunnel</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/tunnel.html" class="tsd-kind-icon">Tunnel</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="drawabledescriptor.html" class="tsd-kind-icon">Drawable<wbr>Descriptor</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
@@ -293,7 +394,7 @@
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="renderer.html#viewareasize" class="tsd-kind-icon">view<wbr>Area<wbr>Size</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
 								<a href="renderer.html#adddrawable" class="tsd-kind-icon">add<wbr>Drawable</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
@@ -315,6 +416,21 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface">
+						<a href="runtimesettings.html" class="tsd-kind-icon">Runtime<wbr>Settings</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="startupsettings.html" class="tsd-kind-icon">Startup<wbr>Settings</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#compile" class="tsd-kind-icon">compile</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="../globals.html#defaultruntimesettings" class="tsd-kind-icon">default<wbr>Runtime<wbr>Settings</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="../globals.html#defaultstartupsettings" class="tsd-kind-icon">default<wbr>Startup<wbr>Settings</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
@@ -330,21 +446,18 @@
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-			</ul>
-			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>
