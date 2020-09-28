@@ -15,7 +15,7 @@ export class UniformArrayAutoScalingProgram implements IProgram {
   }> = [];
 
   private current?: FragmentShaderOnlyProgram;
-  private descriptors?: Array<DrawableDescriptor>;
+  private descriptors!: Array<DrawableDescriptor>;
   private drawingRectangleBottomLeft = vec2.fromValues(0, 0);
   private drawingRectangleSize = vec2.fromValues(1, 1);
 
@@ -54,7 +54,7 @@ export class UniformArrayAutoScalingProgram implements IProgram {
   }
 
   public draw(uniforms: { [name: string]: any }): void {
-    const values = this.descriptors!.map((d) => {
+    const values = this.descriptors.map((d) => {
       const uniformNames = last(Object.entries(d.propertyUniformMapping));
       if (!uniformNames) {
         return 0;

@@ -11,6 +11,7 @@
   "includeVersion": true,
   "hideGenerator": true,
   "inputFiles": "src",
+  "favicon": "media/favicon.ico",
   "ignoreCompilerErrors": true,
   "listInvalidSymbolLinks": true,
   "readme": "documentation-readme.md"

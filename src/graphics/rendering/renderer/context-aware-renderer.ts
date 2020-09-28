@@ -8,9 +8,9 @@ import { RendererImplementation } from './renderer-implementation';
 
 /** @internal */
 export class ContextAwareRenderer implements Renderer {
-  private renderer?: RendererImplementation;
+  private renderer!: RendererImplementation;
   private isRendererReady = false;
-  private readyPromise?: Promise<void>;
+  private readyPromise!: Promise<void>;
   private runtimeOverrides: Partial<RuntimeSettings> = {};
   private ignoreWebGL2?: boolean;
   private previousViewAreaTopLeft?: vec2;
@@ -34,7 +34,7 @@ export class ContextAwareRenderer implements Renderer {
   }
 
   public get initializedPromise(): Promise<void> {
-    return this.readyPromise!;
+    return this.readyPromise;
   }
 
   private createRenderer() {
@@ -102,21 +102,21 @@ export class ContextAwareRenderer implements Renderer {
   }
 
   public get canvasSize(): vec2 {
-    return this.handle(() => this.renderer!.canvasSize, vec2.create());
+    return this.handle(() => this.renderer.canvasSize, vec2.create());
   }
 
   public get viewAreaSize(): vec2 {
-    return this.handle(() => this.renderer!.viewAreaSize, vec2.create());
+    return this.handle(() => this.renderer.viewAreaSize, vec2.create());
   }
 
   public get insights(): any {
-    return this.handle(() => this.renderer!.insights, {});
+    return this.handle(() => this.renderer.insights, {});
   }
 
   public setViewArea(topLeft: vec2, size: vec2): void {
     this.previousViewAreaTopLeft = topLeft;
     this.previousViewAreaSize = size;
-    return this.handle(() => this.renderer!.setViewArea(topLeft, size), undefined);
+    return this.handle(() => this.renderer.setViewArea(topLeft, size), undefined);
   }
 
   public setRuntimeSettings(overrides: Partial<RuntimeSettings>): void {
@@ -125,19 +125,19 @@ export class ContextAwareRenderer implements Renderer {
       ...overrides,
     };
 
-    return this.handle(() => this.renderer!.setRuntimeSettings(overrides), undefined);
+    return this.handle(() => this.renderer.setRuntimeSettings(overrides), undefined);
   }
 
   public addDrawable(drawable: Drawable): void {
-    return this.handle(() => this.renderer!.addDrawable(drawable), undefined);
+    return this.handle(() => this.renderer.addDrawable(drawable), undefined);
   }
 
   public autoscaleQuality(deltaTime: number): void {
-    return this.handle(() => this.renderer!.autoscaleQuality(deltaTime), undefined);
+    return this.handle(() => this.renderer.autoscaleQuality(deltaTime), undefined);
   }
 
   public renderDrawables(): void {
-    return this.handle(() => this.renderer!.renderDrawables(), undefined);
+    return this.handle(() => this.renderer.renderDrawables(), undefined);
   }
 
   public destroy(): void {
@@ -151,6 +151,6 @@ export class ContextAwareRenderer implements Renderer {
 
     this.isRendererReady = false;
 
-    this.handle(() => this.renderer!.destroy(), undefined);
+    this.handle(() => this.renderer.destroy(), undefined);
   }
 }
