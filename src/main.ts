@@ -69,5 +69,6 @@ export * from './drawables/lights/circle-light';
 export * from './drawables/lights/flashlight';
 export * from './drawables/shapes/circle';
 export * from './drawables/shapes/inverted-tunnel';
+export * from './drawables/shapes/rotated-rectangle';
 export * from './drawables/shapes/tunnel';
 export * from './graphics/rendering/renderer/renderer';

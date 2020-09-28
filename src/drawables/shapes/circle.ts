@@ -31,7 +31,7 @@ export class Circle extends Drawable {
     },
     uniformCountMacroName: 'CIRCLE_COUNT',
     shaderCombinationSteps: [0, 1, 2, 3, 8, 16],
-    empty: new Circle(vec2.fromValues(0, 0), 0),
+    empty: new Circle(vec2.create(), 0),
   };
 
   constructor(public center: vec2, public radius: number) {
