@@ -25,20 +25,21 @@
   },
   "license": "ISC",
   "scripts": {
-    "start": "shx rm -rf lib/* && webpack --mode development -w",
-    "build": "shx rm -rf lib/* && webpack --mode production"
+    "start": "rm -rf lib/* && webpack --mode development -w",
+    "build": "rm -rf lib/* docs/* && typedoc && webpack --mode production"
   },
   "main": "lib/main.js",
   "types": "lib/src/main.d.ts",
   "files": [
     "lib"
   ],
-  "sideEffects": false,
+  "sideEffects": [
+    "src/main.ts"
+  ],
   "dependencies": {
     "gl-matrix": "^3.3.0"
   },
   "devDependencies": {
-    "@types/gl-matrix": "^2.4.5",
     "@typescript-eslint/eslint-plugin": "^3.10.1",
     "@typescript-eslint/parser": "^3.10.1",
     "eslint": "^7.9.0",
@@ -48,11 +49,11 @@
     "eslint-plugin-unused-imports": "^0.1.3",
     "prettier": "^2.1.2",
     "raw-loader": "^4.0.1",
-    "shx": "^0.3.2",
     "terser-webpack-plugin": "^2.3.8",
     "ts-loader": "^8.0.3",
+    "typedoc": "^0.19.2",
     "typescript": "^3.9.7",
-    "webpack": "^4.44.1",
+    "webpack": "^4.44.2",
     "webpack-cli": "^3.3.11"
   }
 }

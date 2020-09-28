@@ -1,0 +1,17 @@
+{
+  "mode": "file",
+  "out": "docs",
+  "name": "SDF-2D",
+  "includeDeclarations": true,
+  "excludeExternals": true,
+  "excludeNotExported": true,
+  "excludePrivate": true,
+  "stripInternal": true,
+  "media": "media",
+  "includeVersion": true,
+  "hideGenerator": true,
+  "inputFiles": "src",
+  "ignoreCompilerErrors": true,
+  "listInvalidSymbolLinks": true,
+  "readme": "docs-source/README.md"
+}

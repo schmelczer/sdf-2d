@@ -1,7 +1,4 @@
-<h1>
-  <img src="static/logo-colored.svg" width="64" height="64" alt="SDF-2D logo" />
-  SDF-2D library
-</h1>
+# ![SDF-2D logo](media/logo-colored.svg) SDF-2D library
 
 A graphics library to enable the rendering of 2D signed distance fields (SDF-s) on web.
 
@@ -151,6 +148,6 @@ We'll be using the files and directory structure created in the [minimal example
 
 The result of the above instructions can also be found [in this repository](https://github.com/schmelczerandras/sdf-2d-more-complex-example) and the finished website is [available here](https://schmelczerandras.github.io/sdf-2d-more-complex-example/dist/index.html).
 
-## Real life example 
+## Real life example
 
 The source code for the [demo page](https://sdf2d.schmelczer.dev) of this library is available [here, on GitHub](https://github.com/schmelczerandras/sdf-2d-demo).
