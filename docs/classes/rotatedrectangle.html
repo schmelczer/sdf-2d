@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Circle | SDF-2D - v0.3.2</title>
+	<title>RotatedRectangle | SDF-2D - v0.3.2</title>
 	<meta name="description" content="Documentation for SDF-2D - v0.3.2">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -53,10 +53,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="circle.html">Circle</a>
+					<a href="rotatedrectangle.html">RotatedRectangle</a>
 				</li>
 			</ul>
-			<h1>Class Circle</h1>
+			<h1>Class RotatedRectangle</h1>
 		</div>
 	</div>
 </header>
@@ -74,7 +74,7 @@
 						<a href="drawable.html" class="tsd-signature-type">Drawable</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">Circle</span>
+								<span class="target">RotatedRectangle</span>
 							</li>
 						</ul>
 					</li>
@@ -87,28 +87,29 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="circle.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="rotatedrectangle.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="circle.html#center" class="tsd-kind-icon">center</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="circle.html#radius" class="tsd-kind-icon">radius</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="rotatedrectangle.html#center" class="tsd-kind-icon">center</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="rotatedrectangle.html#rotation" class="tsd-kind-icon">rotation</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="rotatedrectangle.html#size" class="tsd-kind-icon">size</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected"><a href="circle.html#getobjecttoserialize" class="tsd-kind-icon">get<wbr>Object<wbr>ToSerialize</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="circle.html#mindistance" class="tsd-kind-icon">min<wbr>Distance</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="circle.html#serializetouniforms" class="tsd-kind-icon">serialize<wbr>ToUniforms</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected"><a href="rotatedrectangle.html#getobjecttoserialize" class="tsd-kind-icon">get<wbr>Object<wbr>ToSerialize</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="rotatedrectangle.html#mindistance" class="tsd-kind-icon">min<wbr>Distance</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="rotatedrectangle.html#serializetouniforms" class="tsd-kind-icon">serialize<wbr>ToUniforms</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Object literals</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-object-literal tsd-parent-kind-class tsd-is-overwrite tsd-is-static"><a href="circle.html#descriptor" class="tsd-kind-icon">descriptor</a></li>
+								<li class="tsd-kind-object-literal tsd-parent-kind-class tsd-is-overwrite tsd-is-static"><a href="rotatedrectangle.html#descriptor" class="tsd-kind-icon">descriptor</a></li>
 							</ul>
 						</section>
 					</div>
@@ -120,13 +121,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Circle<span class="tsd-signature-symbol">(</span>center<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec2</span>, radius<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="circle.html" class="tsd-signature-type">Circle</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Rotated<wbr>Rectangle<span class="tsd-signature-symbol">(</span>center<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec2</span>, size<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec2</span>, rotation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="rotatedrectangle.html" class="tsd-signature-type">RotatedRectangle</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/circle.ts#L35">drawables/shapes/circle.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/rotated-rectangle.ts#L46">drawables/shapes/rotated-rectangle.ts:46</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -135,10 +136,13 @@
 									<h5>center: <span class="tsd-signature-type">vec2</span></h5>
 								</li>
 								<li>
-									<h5>radius: <span class="tsd-signature-type">number</span></h5>
+									<h5>size: <span class="tsd-signature-type">vec2</span></h5>
+								</li>
+								<li>
+									<h5>rotation: <span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="circle.html" class="tsd-signature-type">Circle</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="rotatedrectangle.html" class="tsd-signature-type">RotatedRectangle</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -151,17 +155,27 @@
 					<div class="tsd-signature tsd-kind-icon">center<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">vec2</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/circle.ts#L37">drawables/shapes/circle.ts:37</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/rotated-rectangle.ts#L48">drawables/shapes/rotated-rectangle.ts:48</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="radius" class="tsd-anchor"></a>
-					<h3>radius</h3>
-					<div class="tsd-signature tsd-kind-icon">radius<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="rotation" class="tsd-anchor"></a>
+					<h3>rotation</h3>
+					<div class="tsd-signature tsd-kind-icon">rotation<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/circle.ts#L37">drawables/shapes/circle.ts:37</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/rotated-rectangle.ts#L48">drawables/shapes/rotated-rectangle.ts:48</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="size" class="tsd-anchor"></a>
+					<h3>size</h3>
+					<div class="tsd-signature tsd-kind-icon">size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">vec2</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/rotated-rectangle.ts#L48">drawables/shapes/rotated-rectangle.ts:48</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -179,7 +193,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="drawable.html">Drawable</a>.<a href="drawable.html#getobjecttoserialize">getObjectToSerialize</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/circle.ts#L45">drawables/shapes/circle.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/rotated-rectangle.ts#L60">drawables/shapes/rotated-rectangle.ts:60</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -206,13 +220,20 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="drawable.html">Drawable</a>.<a href="drawable.html#mindistance">minDistance</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/circle.ts#L41">drawables/shapes/circle.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/rotated-rectangle.ts#L56">drawables/shapes/rotated-rectangle.ts:56</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>It is just an estimate by calculating a bounding circle</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>target: <span class="tsd-signature-type">vec2</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -259,16 +280,16 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="drawable.html">Drawable</a>.<a href="drawable.html#descriptor">descriptor</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/circle.ts#L9">drawables/shapes/circle.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/rotated-rectangle.ts#L9">drawables/shapes/rotated-rectangle.ts:9</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
 						<a name="descriptor.empty" class="tsd-anchor"></a>
 						<h3>empty</h3>
-						<div class="tsd-signature tsd-kind-icon">empty<span class="tsd-signature-symbol">:</span> <a href="circle.html" class="tsd-signature-type">Circle</a><span class="tsd-signature-symbol"> = new Circle(vec2.create(), 0)</span></div>
+						<div class="tsd-signature tsd-kind-icon">empty<span class="tsd-signature-symbol">:</span> <a href="rotatedrectangle.html" class="tsd-signature-type">RotatedRectangle</a><span class="tsd-signature-symbol"> = new RotatedRectangle(vec2.create(), vec2.create(), 0)</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/circle.ts#L34">drawables/shapes/circle.ts:34</a></li>
+								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/rotated-rectangle.ts#L45">drawables/shapes/rotated-rectangle.ts:45</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -278,17 +299,17 @@
 						<div class="tsd-signature tsd-kind-icon">shader<wbr>Combination<wbr>Steps<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [0, 1, 2, 3, 8, 16]</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/circle.ts#L33">drawables/shapes/circle.ts:33</a></li>
+								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/rotated-rectangle.ts#L44">drawables/shapes/rotated-rectangle.ts:44</a></li>
 							</ul>
 						</aside>
 					</section>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
 						<a name="descriptor.uniformcountmacroname" class="tsd-anchor"></a>
 						<h3>uniform<wbr>Count<wbr>Macro<wbr>Name</h3>
-						<div class="tsd-signature tsd-kind-icon">uniform<wbr>Count<wbr>Macro<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;CIRCLE_COUNT&quot;</span></div>
+						<div class="tsd-signature tsd-kind-icon">uniform<wbr>Count<wbr>Macro<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;ROTATED_RECTANGLE_COUNT&quot;</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/circle.ts#L32">drawables/shapes/circle.ts:32</a></li>
+								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/rotated-rectangle.ts#L43">drawables/shapes/rotated-rectangle.ts:43</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -298,26 +319,36 @@
 						<div class="tsd-signature tsd-kind-icon">property<wbr>Uniform<wbr>Mapping<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/circle.ts#L28">drawables/shapes/circle.ts:28</a></li>
+								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/rotated-rectangle.ts#L38">drawables/shapes/rotated-rectangle.ts:38</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-							<a name="descriptor.propertyuniformmapping.center-1" class="tsd-anchor"></a>
-							<h3>center</h3>
-							<div class="tsd-signature tsd-kind-icon">center<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;circleCenters&quot;</span></div>
+							<a name="descriptor.propertyuniformmapping.bottomcenter" class="tsd-anchor"></a>
+							<h3>bottom<wbr>Center</h3>
+							<div class="tsd-signature tsd-kind-icon">bottom<wbr>Center<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;rotatedRectangleBottomCenters&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/circle.ts#L29">drawables/shapes/circle.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/rotated-rectangle.ts#L40">drawables/shapes/rotated-rectangle.ts:40</a></li>
 								</ul>
 							</aside>
 						</section>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-							<a name="descriptor.propertyuniformmapping.radius-1" class="tsd-anchor"></a>
-							<h3>radius</h3>
-							<div class="tsd-signature tsd-kind-icon">radius<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;circleRadii&quot;</span></div>
+							<a name="descriptor.propertyuniformmapping.topcenter" class="tsd-anchor"></a>
+							<h3>top<wbr>Center</h3>
+							<div class="tsd-signature tsd-kind-icon">top<wbr>Center<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;rotatedRectangleTopCenters&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/circle.ts#L30">drawables/shapes/circle.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/rotated-rectangle.ts#L39">drawables/shapes/rotated-rectangle.ts:39</a></li>
+								</ul>
+							</aside>
+						</section>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+							<a name="descriptor.propertyuniformmapping.width" class="tsd-anchor"></a>
+							<h3>width</h3>
+							<div class="tsd-signature tsd-kind-icon">width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;rotatedRectangleWidths&quot;</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/rotated-rectangle.ts#L41">drawables/shapes/rotated-rectangle.ts:41</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -328,26 +359,26 @@
 						<div class="tsd-signature tsd-kind-icon">sdf<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/circle.ts#L10">drawables/shapes/circle.ts:10</a></li>
+								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/rotated-rectangle.ts#L10">drawables/shapes/rotated-rectangle.ts:10</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
 							<a name="descriptor.sdf.distancefunctionname" class="tsd-anchor"></a>
 							<h3>distance<wbr>Function<wbr>Name</h3>
-							<div class="tsd-signature tsd-kind-icon">distance<wbr>Function<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;circleMinDistance&quot;</span></div>
+							<div class="tsd-signature tsd-kind-icon">distance<wbr>Function<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;rotatedRectangleMinDistance&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/circle.ts#L26">drawables/shapes/circle.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/rotated-rectangle.ts#L36">drawables/shapes/rotated-rectangle.ts:36</a></li>
 								</ul>
 							</aside>
 						</section>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
 							<a name="descriptor.sdf.shader" class="tsd-anchor"></a>
 							<h3>shader</h3>
-							<div class="tsd-signature tsd-kind-icon">shader<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &#x60;uniform vec2 circleCenters[CIRCLE_COUNT];uniform float circleRadii[CIRCLE_COUNT];float circleMinDistance(vec2 target, out float colorIndex) {colorIndex &#x3D; 2.0;float minDistance &#x3D; 1000.0;for (int i &#x3D; 0; i &lt; CIRCLE_COUNT; i++) {float dist &#x3D; distance(circleCenters[i], target) - circleRadii[i];minDistance &#x3D; min(minDistance, dist);}return minDistance;}&#x60;</span></div>
+							<div class="tsd-signature tsd-kind-icon">shader<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &#x60;uniform vec2 rotatedRectangleTopCenters[ROTATED_RECTANGLE_COUNT];uniform vec2 rotatedRectangleBottomCenters[ROTATED_RECTANGLE_COUNT];uniform float rotatedRectangleWidths[ROTATED_RECTANGLE_COUNT];float rotatedRectangleMinDistance(vec2 target, out float colorIndex) {colorIndex &#x3D; 4.0;float minDistance &#x3D; 1000.0;for (int i &#x3D; 0; i &lt; ROTATED_RECTANGLE_COUNT; i++) {vec2 top &#x3D; rotatedRectangleTopCenters[i];vec2 bottom &#x3D; rotatedRectangleBottomCenters[i];float height &#x3D; length(bottom - top);vec2 d &#x3D; (bottom - top) / height;vec2 q &#x3D; (target - (top + bottom) * 0.5);q &#x3D; mat2(d.x, -d.y, d.y, d.x) * q;q &#x3D; abs(q) - vec2(height, rotatedRectangleWidths[i]) * 0.5;float dist &#x3D; length(max(q, 0.0)) + min(max(q.x, q.y), 0.0);minDistance &#x3D; min(minDistance, dist);}return minDistance;}&#x60;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/circle.ts#L11">drawables/shapes/circle.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0fed4f4/src/drawables/shapes/rotated-rectangle.ts#L12">drawables/shapes/rotated-rectangle.ts:12</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -365,36 +396,9 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class">
+					<li class=" tsd-kind-class">
 						<a href="circle.html" class="tsd-kind-icon">Circle</a>
-						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="circle.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="circle.html#center" class="tsd-kind-icon">center</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="circle.html#radius" class="tsd-kind-icon">radius</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
-								<a href="circle.html#getobjecttoserialize" class="tsd-kind-icon">get<wbr>Object<wbr>ToSerialize</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-								<a href="circle.html#mindistance" class="tsd-kind-icon">min<wbr>Distance</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="circle.html#serializetouniforms" class="tsd-kind-icon">serialize<wbr>ToUniforms</a>
-							</li>
-							<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
-								<a href="circle.html#descriptor" class="tsd-kind-icon">descriptor</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-class">
 						<a href="circlelight.html" class="tsd-kind-icon">Circle<wbr>Light</a>
 					</li>
@@ -407,9 +411,39 @@
 					<li class=" tsd-kind-class">
 						<a href="invertedtunnel.html" class="tsd-kind-icon">Inverted<wbr>Tunnel</a>
 					</li>
-					<li class=" tsd-kind-class">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class">
 						<a href="rotatedrectangle.html" class="tsd-kind-icon">Rotated<wbr>Rectangle</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="rotatedrectangle.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="rotatedrectangle.html#center" class="tsd-kind-icon">center</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="rotatedrectangle.html#rotation" class="tsd-kind-icon">rotation</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="rotatedrectangle.html#size" class="tsd-kind-icon">size</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
+								<a href="rotatedrectangle.html#getobjecttoserialize" class="tsd-kind-icon">get<wbr>Object<wbr>ToSerialize</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="rotatedrectangle.html#mindistance" class="tsd-kind-icon">min<wbr>Distance</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="rotatedrectangle.html#serializetouniforms" class="tsd-kind-icon">serialize<wbr>ToUniforms</a>
+							</li>
+							<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
+								<a href="rotatedrectangle.html#descriptor" class="tsd-kind-icon">descriptor</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-class">
 						<a href="tunnel.html" class="tsd-kind-icon">Tunnel</a>
 					</li>

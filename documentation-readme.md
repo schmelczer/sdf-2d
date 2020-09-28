@@ -19,6 +19,8 @@ The motivation behind this library and more in-depth information about the rende
 
 ## Extending drawables
 
+> Iñigo Quilez has some great [2D SDF-s](https://iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm)
+
 - Subclass [Drawable](classes/drawable.html)
 - Implement its abstract methods
 - Add a static property to your class called `descriptor` of type [DrawableDescriptors](interfaces/drawabledescriptor.html)
