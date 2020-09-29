@@ -139,10 +139,12 @@ export class RendererImplementation implements Renderer {
     await compiler.compilePrograms();
     await Promise.all(promises);
 
-    try {
-      this.stopwatch = new WebGlStopwatch(this.gl);
-    } catch {
-      // no problem
+    if (settings.enableStopwatch) {
+      try {
+        this.stopwatch = new WebGlStopwatch(this.gl);
+      } catch {
+        // no problem
+      }
     }
   }
 

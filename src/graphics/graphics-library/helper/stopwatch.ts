@@ -49,7 +49,6 @@ export class WebGlStopwatch {
       this.gl.QUERY_RESULT_AVAILABLE
     );
     const disjoint = this.gl.getParameter(this.timerExtension.GPU_DISJOINT_EXT);
-
     if (available && !disjoint) {
       this.resultsInNanoSeconds = this.gl.getQueryParameter(
         this.timerQuery!,
@@ -68,6 +67,10 @@ export class WebGlStopwatch {
 
   public get isRunning(): boolean {
     return this.state == StopwatchState.running;
+  }
+
+  public get isWaitingForResults(): boolean {
+    return this.state == StopwatchState.waitingForResults;
   }
 
   public get resultsInMilliSeconds(): number {

@@ -6,6 +6,14 @@
  */
 export interface StartupSettings {
   /**
+   * Creates a stopwatch used for measuring the GPU render time
+   * when its required extension is available.
+   *
+   * You should only have one renderer with enabled stopwatch.
+   */
+  enableStopwatch: boolean;
+
+  /**
    * The raytracing algorithm used for shadows requires a step count.
    * Sensible values for this are between 8 and 32.
    *
