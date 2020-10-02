@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Tunnel | SDF-2D - v0.3.5</title>
+	<title>MetaCircle | SDF-2D - v0.3.5</title>
 	<meta name="description" content="Documentation for SDF-2D - v0.3.5">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -53,10 +53,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="tunnel.html">Tunnel</a>
+					<a href="metacircle.html">MetaCircle</a>
 				</li>
 			</ul>
-			<h1>Class Tunnel</h1>
+			<h1>Class MetaCircle</h1>
 		</div>
 	</div>
 </header>
@@ -74,7 +74,7 @@
 						<a href="drawable.html" class="tsd-signature-type">Drawable</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">Tunnel</span>
+								<span class="target">MetaCircle</span>
 							</li>
 						</ul>
 					</li>
@@ -87,29 +87,27 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="tunnel.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="metacircle.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="tunnel.html#from" class="tsd-kind-icon">from</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="tunnel.html#fromradius" class="tsd-kind-icon">from<wbr>Radius</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="tunnel.html#to" class="tsd-kind-icon">to</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="tunnel.html#toradius" class="tsd-kind-icon">to<wbr>Radius</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="metacircle.html#center" class="tsd-kind-icon">center</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="metacircle.html#radius" class="tsd-kind-icon">radius</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected"><a href="tunnel.html#getobjecttoserialize" class="tsd-kind-icon">get<wbr>Object<wbr>ToSerialize</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="tunnel.html#mindistance" class="tsd-kind-icon">min<wbr>Distance</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected"><a href="metacircle.html#getobjecttoserialize" class="tsd-kind-icon">get<wbr>Object<wbr>ToSerialize</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="metacircle.html#mindistance" class="tsd-kind-icon">min<wbr>Distance</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Object literals</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-object-literal tsd-parent-kind-class tsd-is-overwrite tsd-is-static"><a href="tunnel.html#descriptor" class="tsd-kind-icon">descriptor</a></li>
+								<li class="tsd-kind-object-literal tsd-parent-kind-class tsd-is-overwrite tsd-is-static"><a href="metacircle.html#descriptor" class="tsd-kind-icon">descriptor</a></li>
 							</ul>
 						</section>
 					</div>
@@ -121,31 +119,25 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Tunnel<span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec2</span>, to<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec2</span>, fromRadius<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, toRadius<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="tunnel.html" class="tsd-signature-type">Tunnel</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Meta<wbr>Circle<span class="tsd-signature-symbol">(</span>center<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec2</span>, radius<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="metacircle.html" class="tsd-signature-type">MetaCircle</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/81eb022/src/drawables/shapes/tunnel.ts#L60">drawables/shapes/tunnel.ts:60</a></li>
+									<li>Defined in drawables/shapes/meta-circle.ts:36</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>from: <span class="tsd-signature-type">vec2</span></h5>
+									<h5>center: <span class="tsd-signature-type">vec2</span></h5>
 								</li>
 								<li>
-									<h5>to: <span class="tsd-signature-type">vec2</span></h5>
-								</li>
-								<li>
-									<h5>fromRadius: <span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li>
-									<h5>toRadius: <span class="tsd-signature-type">number</span></h5>
+									<h5>radius: <span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="tunnel.html" class="tsd-signature-type">Tunnel</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="metacircle.html" class="tsd-signature-type">MetaCircle</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -153,42 +145,22 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="from" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> from</h3>
-					<div class="tsd-signature tsd-kind-icon">from<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">vec2</span></div>
+					<a name="center" class="tsd-anchor"></a>
+					<h3>center</h3>
+					<div class="tsd-signature tsd-kind-icon">center<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">vec2</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/81eb022/src/drawables/shapes/tunnel.ts#L63">drawables/shapes/tunnel.ts:63</a></li>
+							<li>Defined in drawables/shapes/meta-circle.ts:38</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="fromradius" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> from<wbr>Radius</h3>
-					<div class="tsd-signature tsd-kind-icon">from<wbr>Radius<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="radius" class="tsd-anchor"></a>
+					<h3>radius</h3>
+					<div class="tsd-signature tsd-kind-icon">radius<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/81eb022/src/drawables/shapes/tunnel.ts#L65">drawables/shapes/tunnel.ts:65</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="to" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> to</h3>
-					<div class="tsd-signature tsd-kind-icon">to<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">vec2</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/81eb022/src/drawables/shapes/tunnel.ts#L64">drawables/shapes/tunnel.ts:64</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="toradius" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> to<wbr>Radius</h3>
-					<div class="tsd-signature tsd-kind-icon">to<wbr>Radius<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/81eb022/src/drawables/shapes/tunnel.ts#L66">drawables/shapes/tunnel.ts:66</a></li>
+							<li>Defined in drawables/shapes/meta-circle.ts:38</li>
 						</ul>
 					</aside>
 				</section>
@@ -206,7 +178,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="drawable.html">Drawable</a>.<a href="drawable.html#getobjecttoserialize">getObjectToSerialize</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/81eb022/src/drawables/shapes/tunnel.ts#L85">drawables/shapes/tunnel.ts:85</a></li>
+									<li>Defined in drawables/shapes/meta-circle.ts:46</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -233,7 +205,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="drawable.html">Drawable</a>.<a href="drawable.html#mindistance">minDistance</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/81eb022/src/drawables/shapes/tunnel.ts#L71">drawables/shapes/tunnel.ts:71</a></li>
+									<li>Defined in drawables/shapes/meta-circle.ts:42</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -256,36 +228,36 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="drawable.html">Drawable</a>.<a href="drawable.html#descriptor">descriptor</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/81eb022/src/drawables/shapes/tunnel.ts#L11">drawables/shapes/tunnel.ts:11</a></li>
+							<li>Defined in drawables/shapes/meta-circle.ts:9</li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
 						<a name="descriptor.empty" class="tsd-anchor"></a>
 						<h3>empty</h3>
-						<div class="tsd-signature tsd-kind-icon">empty<span class="tsd-signature-symbol">:</span> <a href="tunnel.html" class="tsd-signature-type">Tunnel</a><span class="tsd-signature-symbol"> = new Tunnel(vec2.fromValues(-100000, -100000),vec2.fromValues(-100000, -100000),0,0)</span></div>
+						<div class="tsd-signature tsd-kind-icon">empty<span class="tsd-signature-symbol">:</span> <a href="metacircle.html" class="tsd-signature-type">MetaCircle</a><span class="tsd-signature-symbol"> = new MetaCircle(vec2.fromValues(10000, 10000), -1000)</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/81eb022/src/drawables/shapes/tunnel.ts#L54">drawables/shapes/tunnel.ts:54</a></li>
+								<li>Defined in drawables/shapes/meta-circle.ts:35</li>
 							</ul>
 						</aside>
 					</section>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
 						<a name="descriptor.shadercombinationsteps" class="tsd-anchor"></a>
 						<h3>shader<wbr>Combination<wbr>Steps</h3>
-						<div class="tsd-signature tsd-kind-icon">shader<wbr>Combination<wbr>Steps<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [0, 1, 4, 16, 32]</span></div>
+						<div class="tsd-signature tsd-kind-icon">shader<wbr>Combination<wbr>Steps<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [0, 1, 2, 3, 8, 16]</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/81eb022/src/drawables/shapes/tunnel.ts#L53">drawables/shapes/tunnel.ts:53</a></li>
+								<li>Defined in drawables/shapes/meta-circle.ts:34</li>
 							</ul>
 						</aside>
 					</section>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
 						<a name="descriptor.uniformcountmacroname" class="tsd-anchor"></a>
 						<h3>uniform<wbr>Count<wbr>Macro<wbr>Name</h3>
-						<div class="tsd-signature tsd-kind-icon">uniform<wbr>Count<wbr>Macro<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;TUNNEL_COUNT&quot;</span></div>
+						<div class="tsd-signature tsd-kind-icon">uniform<wbr>Count<wbr>Macro<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;META_CIRCLE_COUNT&quot;</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/81eb022/src/drawables/shapes/tunnel.ts#L52">drawables/shapes/tunnel.ts:52</a></li>
+								<li>Defined in drawables/shapes/meta-circle.ts:33</li>
 							</ul>
 						</aside>
 					</section>
@@ -295,46 +267,26 @@
 						<div class="tsd-signature tsd-kind-icon">property<wbr>Uniform<wbr>Mapping<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/81eb022/src/drawables/shapes/tunnel.ts#L46">drawables/shapes/tunnel.ts:46</a></li>
+								<li>Defined in drawables/shapes/meta-circle.ts:29</li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-							<a name="descriptor.propertyuniformmapping.from-1" class="tsd-anchor"></a>
-							<h3>from</h3>
-							<div class="tsd-signature tsd-kind-icon">from<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;froms&quot;</span></div>
+							<a name="descriptor.propertyuniformmapping.center-1" class="tsd-anchor"></a>
+							<h3>center</h3>
+							<div class="tsd-signature tsd-kind-icon">center<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;metaCircleCenters&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/81eb022/src/drawables/shapes/tunnel.ts#L47">drawables/shapes/tunnel.ts:47</a></li>
+									<li>Defined in drawables/shapes/meta-circle.ts:30</li>
 								</ul>
 							</aside>
 						</section>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-							<a name="descriptor.propertyuniformmapping.fromradius-1" class="tsd-anchor"></a>
-							<h3>from<wbr>Radius</h3>
-							<div class="tsd-signature tsd-kind-icon">from<wbr>Radius<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;fromRadii&quot;</span></div>
+							<a name="descriptor.propertyuniformmapping.radius-1" class="tsd-anchor"></a>
+							<h3>radius</h3>
+							<div class="tsd-signature tsd-kind-icon">radius<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;metaCircleRadii&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/81eb022/src/drawables/shapes/tunnel.ts#L49">drawables/shapes/tunnel.ts:49</a></li>
-								</ul>
-							</aside>
-						</section>
-						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-							<a name="descriptor.propertyuniformmapping.tofromdelta" class="tsd-anchor"></a>
-							<h3>to<wbr>From<wbr>Delta</h3>
-							<div class="tsd-signature tsd-kind-icon">to<wbr>From<wbr>Delta<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;toFromDeltas&quot;</span></div>
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/81eb022/src/drawables/shapes/tunnel.ts#L48">drawables/shapes/tunnel.ts:48</a></li>
-								</ul>
-							</aside>
-						</section>
-						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-							<a name="descriptor.propertyuniformmapping.toradius-1" class="tsd-anchor"></a>
-							<h3>to<wbr>Radius</h3>
-							<div class="tsd-signature tsd-kind-icon">to<wbr>Radius<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;toRadii&quot;</span></div>
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/81eb022/src/drawables/shapes/tunnel.ts#L50">drawables/shapes/tunnel.ts:50</a></li>
+									<li>Defined in drawables/shapes/meta-circle.ts:31</li>
 								</ul>
 							</aside>
 						</section>
@@ -345,26 +297,26 @@
 						<div class="tsd-signature tsd-kind-icon">sdf<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/81eb022/src/drawables/shapes/tunnel.ts#L12">drawables/shapes/tunnel.ts:12</a></li>
+								<li>Defined in drawables/shapes/meta-circle.ts:10</li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
 							<a name="descriptor.sdf.distancefunctionname" class="tsd-anchor"></a>
 							<h3>distance<wbr>Function<wbr>Name</h3>
-							<div class="tsd-signature tsd-kind-icon">distance<wbr>Function<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;tunnelMinDistance&quot;</span></div>
+							<div class="tsd-signature tsd-kind-icon">distance<wbr>Function<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;metaCircleMinDistance&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/81eb022/src/drawables/shapes/tunnel.ts#L44">drawables/shapes/tunnel.ts:44</a></li>
+									<li>Defined in drawables/shapes/meta-circle.ts:27</li>
 								</ul>
 							</aside>
 						</section>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
 							<a name="descriptor.sdf.shader" class="tsd-anchor"></a>
 							<h3>shader</h3>
-							<div class="tsd-signature tsd-kind-icon">shader<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &#x60;uniform vec2 froms[TUNNEL_COUNT];uniform vec2 toFromDeltas[TUNNEL_COUNT];uniform float fromRadii[TUNNEL_COUNT];uniform float toRadii[TUNNEL_COUNT];float tunnelMinDistance(vec2 target, out float colorIndex) {colorIndex &#x3D; 1.0;float minDistance &#x3D; 1000.0;for (int i &#x3D; 0; i &lt; TUNNEL_COUNT; i++) {vec2 targetFromDelta &#x3D; target - froms[i];float h &#x3D; clamp(dot(targetFromDelta, toFromDeltas[i])/ dot(toFromDeltas[i], toFromDeltas[i]),0.0, 1.0);float currentDistance &#x3D; -mix(fromRadii[i], toRadii[i], h) + distance(targetFromDelta, toFromDeltas[i] * h);minDistance &#x3D; min(minDistance, currentDistance);}return minDistance;}&#x60;</span></div>
+							<div class="tsd-signature tsd-kind-icon">shader<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &#x60;uniform vec2 metaCircleCenters[META_CIRCLE_COUNT];uniform float metaCircleRadii[META_CIRCLE_COUNT];const float k &#x3D; 32.0;float metaCircleMinDistance(vec2 target, out float colorIndex) {colorIndex &#x3D; 5.0;float res &#x3D; 0.0;for (int i &#x3D; 0; i &lt; META_CIRCLE_COUNT; i++) {float dist &#x3D; distance(metaCircleCenters[i], target) - metaCircleRadii[i];res +&#x3D; exp2(-k * dist);}return -log2(res) / k;}&#x60;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/81eb022/src/drawables/shapes/tunnel.ts#L13">drawables/shapes/tunnel.ts:13</a></li>
+									<li>Defined in drawables/shapes/meta-circle.ts:11</li>
 								</ul>
 							</aside>
 						</section>
@@ -392,47 +344,44 @@
 						<a href="drawable.html" class="tsd-kind-icon">Drawable</a>
 					</li>
 					<li class=" tsd-kind-class">
+						<a href="droplet.html" class="tsd-kind-icon">Droplet</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="flashlight.html" class="tsd-kind-icon">Flashlight</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="invertedtunnel.html" class="tsd-kind-icon">Inverted<wbr>Tunnel</a>
 					</li>
-					<li class=" tsd-kind-class">
-						<a href="rotatedrectangle.html" class="tsd-kind-icon">Rotated<wbr>Rectangle</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="tunnel.html" class="tsd-kind-icon">Tunnel</a>
+						<a href="metacircle.html" class="tsd-kind-icon">Meta<wbr>Circle</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="tunnel.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="metacircle.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="tunnel.html#from" class="tsd-kind-icon">from</a>
+								<a href="metacircle.html#center" class="tsd-kind-icon">center</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="tunnel.html#fromradius" class="tsd-kind-icon">from<wbr>Radius</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="tunnel.html#to" class="tsd-kind-icon">to</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="tunnel.html#toradius" class="tsd-kind-icon">to<wbr>Radius</a>
+								<a href="metacircle.html#radius" class="tsd-kind-icon">radius</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
-								<a href="tunnel.html#getobjecttoserialize" class="tsd-kind-icon">get<wbr>Object<wbr>ToSerialize</a>
+								<a href="metacircle.html#getobjecttoserialize" class="tsd-kind-icon">get<wbr>Object<wbr>ToSerialize</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-								<a href="tunnel.html#mindistance" class="tsd-kind-icon">min<wbr>Distance</a>
+								<a href="metacircle.html#mindistance" class="tsd-kind-icon">min<wbr>Distance</a>
 							</li>
 							<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
-								<a href="tunnel.html#descriptor" class="tsd-kind-icon">descriptor</a>
+								<a href="metacircle.html#descriptor" class="tsd-kind-icon">descriptor</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class">
+						<a href="rotatedrectangle.html" class="tsd-kind-icon">Rotated<wbr>Rectangle</a>
+					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/drawabledescriptor.html" class="tsd-kind-icon">Drawable<wbr>Descriptor</a>
 					</li>

@@ -7,20 +7,20 @@ import { DrawableDescriptor } from '../drawable-descriptor';
 /**
  * @category Drawable
  */
-export class Tunnel extends Drawable {
+export class Droplet extends Drawable {
   public static descriptor: DrawableDescriptor = {
     sdf: {
       shader: `
-        uniform vec2 froms[TUNNEL_COUNT];
-        uniform vec2 toFromDeltas[TUNNEL_COUNT];
-        uniform float fromRadii[TUNNEL_COUNT];
-        uniform float toRadii[TUNNEL_COUNT];
+        uniform vec2 froms[DROPLET_COUNT];
+        uniform vec2 toFromDeltas[DROPLET_COUNT];
+        uniform float fromRadii[DROPLET_COUNT];
+        uniform float toRadii[DROPLET_COUNT];
 
-        float tunnelMinDistance(vec2 target, out float colorIndex) {
+        float dropletMinDistance(vec2 target, out float colorIndex) {
           colorIndex = 1.0;
 
           float minDistance = 1000.0;
-          for (int i = 0; i < TUNNEL_COUNT; i++) {
+          for (int i = 0; i < DROPLET_COUNT; i++) {
             vec2 targetFromDelta = target - froms[i];
             
             float h = clamp(
@@ -41,7 +41,7 @@ export class Tunnel extends Drawable {
           return minDistance;
         }
       `,
-      distanceFunctionName: 'tunnelMinDistance',
+      distanceFunctionName: 'dropletMinDistance',
     },
     propertyUniformMapping: {
       from: 'froms',
@@ -49,9 +49,9 @@ export class Tunnel extends Drawable {
       fromRadius: 'fromRadii',
       toRadius: 'toRadii',
     },
-    uniformCountMacroName: 'TUNNEL_COUNT',
+    uniformCountMacroName: 'DROPLET_COUNT',
     shaderCombinationSteps: [0, 1, 4, 16, 32],
-    empty: new Tunnel(
+    empty: new Droplet(
       vec2.fromValues(-100000, -100000),
       vec2.fromValues(-100000, -100000),
       0,

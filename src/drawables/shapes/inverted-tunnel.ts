@@ -21,6 +21,7 @@ export class InvertedTunnel extends Drawable {
 
           float minDistance = 1000.0;
           for (int i = 0; i < INVERTED_TUNNEL_COUNT; i++) {
+            
             vec2 targetFromDelta = target - froms[i];
 
             float h = clamp(
