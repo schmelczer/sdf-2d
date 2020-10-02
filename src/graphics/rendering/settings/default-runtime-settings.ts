@@ -5,7 +5,7 @@ import { RuntimeSettings } from './runtime-settings';
  * Contains the default values used for [[RuntimeSettings]].
  */
 export const defaultRuntimeSettings: RuntimeSettings = {
-  enableHighDpiRendering: true,
+  enableHighDpiRendering: false,
   tileMultiplier: 8,
   isWorldInverted: false,
   lightCutoffDistance: 400,

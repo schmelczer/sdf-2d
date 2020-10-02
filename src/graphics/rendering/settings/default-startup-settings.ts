@@ -7,5 +7,5 @@ export const defaultStartupSettings: StartupSettings = {
   shadowTraceCount: 16,
   paletteSize: 256,
   ignoreWebGL2: false,
-  enableStopwatch: true,
+  enableStopwatch: false,
 };

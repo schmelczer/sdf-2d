@@ -31,6 +31,8 @@ export class UniformArrayAutoScalingProgram implements IProgram {
 
     const promises: Array<Promise<void>> = [];
 
+    this.checkDescriptorValidity(descriptors);
+
     for (const combination of getCombinations(
       descriptors.map((o) => o.shaderCombinationSteps)
     )) {
@@ -46,6 +48,19 @@ export class UniformArrayAutoScalingProgram implements IProgram {
     }
 
     await Promise.all(promises);
+  }
+
+  private checkDescriptorValidity(descriptors: Array<DrawableDescriptor>) {
+    const descriptorsWithoutZero = descriptors.filter(
+      (d) => !d.shaderCombinationSteps.includes(0)
+    );
+    if (descriptorsWithoutZero.length > 0) {
+      throw new Error(
+        `Descriptors must contain a '0' step. Count macros for the offending descriptors: ${descriptorsWithoutZero.map(
+          (d) => d.uniformCountMacroName
+        )}`
+      );
+    }
   }
 
   public setDrawingRectangleUV(bottomLeft: vec2, size: vec2) {

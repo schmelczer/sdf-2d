@@ -33,6 +33,7 @@ export abstract class Drawable {
    */
   protected abstract getObjectToSerialize(transform2d: mat2d, transform1d: number): any;
 
+  /** @internal */
   public serializeToUniforms(
     uniforms: any,
     transform2d: mat2d,

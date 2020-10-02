@@ -52,6 +52,8 @@ export interface DrawableDescriptor {
    *
    * For each step, a shader will be generated. And at runtime the closes matching
    * shader will be used to render a given part of the scene.
+   *
+   * Must contain 0 as a value.
    */
   shaderCombinationSteps: Array<number>;
 
