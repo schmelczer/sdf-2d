@@ -63,7 +63,11 @@ float shadowTransparency(float startingDistance, float lightCenterDistance, vec2
     in vec2 flashlightActualDirections[FLASHLIGHT_COUNT];
 
     float intensityInDirection(vec2 lightDirection, vec2 targetDirection) {
-        return smoothstep(0.0, 1.0, 10.0 * max(0.0, dot(targetDirection, lightDirection) - 0.9));
+        return smoothstep(
+            0.0,
+            1.0,
+            10.0 * max(0.0, dot(targetDirection, -lightDirection) - 0.9)
+        );
     }
 
     vec3 colorInPosition(int lightIndex, vec2 positionDirection, out float lightCenterDistance) {
@@ -84,7 +88,7 @@ void main() {
     vec3 colorAtPosition = rgbaColorAtPosition.rgb;
 
     vec3 lighting = ambientLight;
-    vec3 lightingInside = lighting * INTENSITY_INSIDE_RATIO;
+    vec3 lightingInside = lighting;
     
     #ifdef CIRCLE_LIGHT_COUNT
     #if CIRCLE_LIGHT_COUNT > 0
@@ -107,12 +111,12 @@ void main() {
     #ifdef FLASHLIGHT_COUNT
     #if FLASHLIGHT_COUNT > 0
     for (int i = 0; i < FLASHLIGHT_COUNT; i++) {
-        vec2 originalDirection = normalize(flashlightDirections[i]);
+        vec2 originalDirection = normalize(flashlightActualDirections[i]);
 
         float lightCenterDistance;
         vec3 lightColorAtPosition = colorInPosition(i, originalDirection, lightCenterDistance);
         
-        vec2 direction = originalDirection / squareToAspectRatioTimes2
+        vec2 direction = originalDirection / squareToAspectRatioTimes2;
 
         if (length(lightColorAtPosition) < 0.0) {
             continue;
@@ -130,7 +134,7 @@ void main() {
     #endif
 
     vec3 outsideColor = backgroundColor.rgb * lighting;
-    vec3 insideColor = colorAtPosition * lightingInside;
+    vec3 insideColor = colorAtPosition * lightingInside * INTENSITY_INSIDE_RATIO;
 
     float edge = clamp(startingDistance / shadingNdcPixelSize, 0.0, 1.0);
     vec3 antialiasedColor = mix(insideColor, outsideColor, edge);

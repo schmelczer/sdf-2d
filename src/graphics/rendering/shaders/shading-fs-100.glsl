@@ -54,7 +54,11 @@ float shadowTransparency(float startingDistance, float lightCenterDistance, vec2
     varying vec2 flashlightActualDirections[FLASHLIGHT_COUNT];
 
     float intensityInDirection(vec2 lightDirection, vec2 targetDirection) {
-        return smoothstep(0.0, 1.0, 10.0 * max(0.0, dot(targetDirection, lightDirection) - 0.9));
+        return smoothstep(
+            0.0,
+            1.0,
+            10.0 * max(0.0, dot(targetDirection, -lightDirection) - 0.9)
+        );
     }
 #endif
 #endif
@@ -92,15 +96,16 @@ void main() {
     #ifdef FLASHLIGHT_COUNT
     #if FLASHLIGHT_COUNT > 0
     for (int i = 0; i < FLASHLIGHT_COUNT; i++) {
-        vec2 originalDirection = normalize(flashlightDirections[i]);
+        vec2 originalDirection = normalize(flashlightActualDirections[i]);
 
-        vec3 lightColorAtPosition = colorInPosition(i, originalDirection, lightCenterDistance);
-        float lightCenterDistance = intensityInDirection(flashlightDirections[i], positionDirection) 
-            * flashlightColors[lightIndex] / pow(
+        float lightCenterDistance = distance(flashlightCenters[i], position);
+
+        vec3 lightColorAtPosition = intensityInDirection(flashlightDirections[i], originalDirection) 
+            * flashlightColors[i] / pow(
                 lightCenterDistance / flashlightIntensities[i] + 1.0, 2.0
             );
 
-        vec2 direction = originalDirection / squareToAspectRatioTimes2
+        vec2 direction = originalDirection / squareToAspectRatioTimes2;
 
         if (length(lightColorAtPosition) < 0.0) {
             continue;

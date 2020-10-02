@@ -19,7 +19,7 @@ export class Flashlight extends LightDrawable {
       vec2.fromValues(0, 0),
       vec3.fromValues(0, 0, 0),
       0,
-      vec2.fromValues(0, 0)
+      vec2.fromValues(1, 0)
     ),
   };
 
@@ -35,7 +35,7 @@ export class Flashlight extends LightDrawable {
   protected getObjectToSerialize(transform2d: mat2d, transform1d: number): any {
     return {
       ...super.getObjectToSerialize(transform2d, transform1d),
-      direction: this.direction,
+      direction: vec2.normalize(vec2.create(), this.direction),
     };
   }
 }
