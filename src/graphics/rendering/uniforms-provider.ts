@@ -5,6 +5,7 @@ import { UniversalRenderingContext } from '../graphics-library/universal-renderi
 export class UniformsProvider {
   public ambientLight!: vec3;
   public _backgroundColor!: vec4;
+  public textures: { [textureName: string]: number } = {};
 
   private scaleWorldLengthToNDC = 1;
   private transformWorldToNDC = mat2d.create();
@@ -18,6 +19,7 @@ export class UniformsProvider {
   public getUniforms(uniforms: any): any {
     return {
       ...uniforms,
+      ...this.textures,
       ambientLight: this.ambientLight,
       backgroundColor: this._backgroundColor,
       uvToWorld: this.uvToWorld,
@@ -79,7 +81,11 @@ export class UniformsProvider {
   }
 
   public screenToWorldPosition(screenPosition: vec2): vec2 {
-    const resolution = vec2.fromValues(this.gl.canvas.width, this.gl.canvas.height);
+    const { width, height } = (this.gl
+      .canvas as HTMLCanvasElement).getBoundingClientRect();
+
+    const position = vec2.fromValues(screenPosition.x, height - screenPosition.y);
+    const resolution = vec2.fromValues(width, height);
 
     const transform = mat2d.fromTranslation(mat2d.create(), this.viewAreaBottomLeft);
 
@@ -90,6 +96,6 @@ export class UniformsProvider {
     );
     mat2d.translate(transform, transform, vec2.fromValues(0.5, 0.5));
 
-    return vec2.transformMat2d(vec2.create(), screenPosition, transform);
+    return vec2.transformMat2d(vec2.create(), position, transform);
   }
 }

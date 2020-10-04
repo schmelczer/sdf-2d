@@ -6,6 +6,8 @@ import { DrawableDescriptor } from '../drawable-descriptor';
 
 /**
  * @category Drawable
+ *
+ * Providing a noise texture is required for this drawable.
  */
 export class InvertedTunnel extends Drawable {
   public static descriptor: DrawableDescriptor = {
@@ -16,6 +18,24 @@ export class InvertedTunnel extends Drawable {
         uniform float fromRadii[INVERTED_TUNNEL_COUNT];
         uniform float toRadii[INVERTED_TUNNEL_COUNT];
 
+        uniform sampler2D noiseTexture;
+
+        #ifdef WEBGL2_IS_AVAILABLE
+          float myTerrain(float h) {
+            return texture(
+              noiseTexture, 
+              vec2(h, 0.5)
+            )[0] - 0.5;
+          }
+        #else
+          float myTerrain(float h) {
+            return texture2D(
+              noiseTexture, 
+              vec2(h, 0.5)
+            )[0] - 0.5;
+          }
+        #endif
+
         float invertedTunnelMinDistance(vec2 target, out float colorIndex) {
           colorIndex = 3.0;
 
@@ -24,17 +44,16 @@ export class InvertedTunnel extends Drawable {
             
             vec2 targetFromDelta = target - froms[i];
 
-            float h = clamp(
-                dot(targetFromDelta, toFromDeltas[i])
-              / dot(toFromDeltas[i], toFromDeltas[i]),
-              0.0, 1.0
-            );
+            float h = dot(targetFromDelta, toFromDeltas[i])
+              / dot(toFromDeltas[i], toFromDeltas[i]);
+
+            float clampedH = clamp(h, 0.0, 1.0);
 
             float currentDistance = -mix(
-              fromRadii[i], toRadii[i], h
+              fromRadii[i], toRadii[i], clampedH
             ) + distance(
-              targetFromDelta, toFromDeltas[i] * h
-            );
+              targetFromDelta, toFromDeltas[i] * clampedH
+            ) - myTerrain(h) / 12.0;
 
             minDistance = min(minDistance, currentDistance);
           }
@@ -53,7 +72,12 @@ export class InvertedTunnel extends Drawable {
     },
     uniformCountMacroName: 'INVERTED_TUNNEL_COUNT',
     shaderCombinationSteps: [0, 1, 4, 16, 32],
-    empty: new InvertedTunnel(vec2.fromValues(0, 0), vec2.fromValues(0, 0), 0, 0),
+    empty: new InvertedTunnel(
+      vec2.fromValues(10000, 10000),
+      vec2.fromValues(10000, 10000),
+      0,
+      0
+    ),
   };
 
   constructor(

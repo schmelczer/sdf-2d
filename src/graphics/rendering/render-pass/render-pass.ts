@@ -8,20 +8,21 @@ import { UniversalRenderingContext } from '../../graphics-library/universal-rend
 export abstract class RenderPass {
   protected program: UniformArrayAutoScalingProgram;
 
-  constructor(gl: UniversalRenderingContext, protected frame: FrameBuffer) {
+  constructor(
+    protected readonly gl: UniversalRenderingContext,
+    protected frame: FrameBuffer
+  ) {
     this.program = new UniformArrayAutoScalingProgram(gl);
   }
 
   public async initialize(
     shaderSources: [string, string],
     descriptors: Array<DrawableDescriptor>,
-    substitutions: { [name: string]: any } = {},
-    compiler: ParallelCompiler
+    compiler: ParallelCompiler,
+    substitutions: { [name: string]: any } = {}
   ): Promise<void> {
-    await this.program.initialize(shaderSources, descriptors, substitutions, compiler);
+    await this.program.initialize(shaderSources, descriptors, compiler, substitutions);
   }
-
-  public abstract render(commonUniforms: any, inputTexture?: WebGLTexture): void;
 
   public destroy(): void {
     this.frame.destroy();

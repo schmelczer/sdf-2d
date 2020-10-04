@@ -6,8 +6,10 @@ import { msToString } from '../../../helper/ms-to-string';
 import { DefaultFrameBuffer } from '../../graphics-library/frame-buffer/default-frame-buffer';
 import { IntermediateFrameBuffer } from '../../graphics-library/frame-buffer/intermediate-frame-buffer';
 import { WebGlStopwatch } from '../../graphics-library/helper/stopwatch';
-import { PaletteTexture } from '../../graphics-library/palette-texture';
 import { ParallelCompiler } from '../../graphics-library/parallel-compiler';
+import { PaletteTexture } from '../../graphics-library/texture/palette-texture';
+import { Texture } from '../../graphics-library/texture/texture';
+import { TextureWithOptions } from '../../graphics-library/texture/texture-options';
 import {
   getUniversalRenderingContext,
   UniversalRenderingContext,
@@ -43,6 +45,8 @@ export class RendererImplementation implements Renderer {
   private palette!: PaletteTexture;
   private autoscaler: FpsAutoscaler;
 
+  private textures: Array<Texture> = [];
+
   private applyRuntimeSettings: {
     [key in keyof RuntimeSettings]: (value: any) => void;
   } = {
@@ -53,6 +57,26 @@ export class RendererImplementation implements Renderer {
     tileMultiplier: (v) => (this.distancePass.tileMultiplier = v),
     isWorldInverted: (v) => (this.distancePass.isWorldInverted = v),
     backgroundColor: (v) => (this.uniformsProvider.backgroundColor = v),
+    textures: (v: { [textureName: string]: TexImageSource | TextureWithOptions }) => {
+      this.textures.forEach((t) => t.destroy());
+      this.textures = [];
+
+      let id = 2;
+      for (const key in v) {
+        this.uniformsProvider.textures[key] = id;
+        let texture: Texture;
+
+        if (Object.prototype.hasOwnProperty.call(v[key], 'source')) {
+          texture = new Texture(this.gl, id++, (v[key] as TextureWithOptions).overrides);
+          texture.setImage((v[key] as TextureWithOptions).source);
+        } else {
+          texture = new Texture(this.gl, id++);
+          texture.setImage(v[key] as TexImageSource);
+        }
+
+        this.textures.push(texture);
+      }
+    },
     ambientLight: (v) => (this.uniformsProvider.ambientLight = v),
     lightCutoffDistance: (v) => (this.lightsPass.lightCutoffDistance = v),
     colorPalette: (v) => this.palette.setPalette(v),
@@ -108,7 +132,6 @@ export class RendererImplementation implements Renderer {
     this.setRuntimeSettings(defaultRuntimeSettings);
 
     const promises: Array<Promise<void>> = [];
-
     const compiler = new ParallelCompiler(this.gl);
 
     promises.push(
@@ -117,10 +140,10 @@ export class RendererImplementation implements Renderer {
           ? [distanceVertexShader, distanceFragmentShader]
           : [distanceVertexShader100, distanceFragmentShader100],
         this.descriptors.filter(RendererImplementation.hasSdf),
+        compiler,
         {
           paletteSize: settings.paletteSize,
-        },
-        compiler
+        }
       )
     );
     promises.push(
@@ -129,10 +152,10 @@ export class RendererImplementation implements Renderer {
           ? [lightsVertexShader, lightsFragmentShader]
           : [lightsVertexShader100, lightsFragmentShader100],
         this.descriptors.filter((d) => !RendererImplementation.hasSdf(d)),
+        compiler,
         {
           shadowTraceCount: settings.shadowTraceCount.toString(),
-        },
-        compiler
+        }
       )
     );
 
@@ -219,19 +242,23 @@ export class RendererImplementation implements Renderer {
       shadingNdcPixelSize: 2 / Math.max(...this.distanceFieldFrameBuffer.getSize()),
     };
 
-    this.distancePass.render(this.uniformsProvider.getUniforms(common));
+    this.distancePass.render(this.uniformsProvider.getUniforms(common), ...this.textures);
 
     this.gl.enable(this.gl.BLEND);
     this.lightsPass.render(
       this.uniformsProvider.getUniforms(common),
       this.distanceFieldFrameBuffer.colorTexture,
-      this.palette.colorTexture
+      [this.palette]
     );
     this.gl.disable(this.gl.BLEND);
 
     if (this.stopwatch?.isRunning) {
       this.stopwatch?.stop();
     }
+  }
+
+  public displayToWorldCoordinates(displayCoordinates: vec2): vec2 {
+    return this.uniformsProvider.screenToWorldPosition(displayCoordinates);
   }
 
   public setViewArea(topLeft: vec2, size: vec2) {

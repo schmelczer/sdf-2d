@@ -1,5 +1,6 @@
 import { vec2 } from 'gl-matrix';
 import { Drawable } from '../../../drawables/drawable';
+import { Texture } from '../../graphics-library/texture/texture';
 import { Insights } from '../insights';
 import { RenderPass } from './render-pass';
 
@@ -14,7 +15,7 @@ export class DistanceRenderPass extends RenderPass {
     this.drawables.push(drawable);
   }
 
-  public render(commonUniforms: any, ...inputTextures: Array<WebGLTexture>) {
+  public render(commonUniforms: any, ...inputTextures: Array<Texture>) {
     this.frame.bindAndClear(inputTextures);
 
     const stepsInUV = 1 / this.tileMultiplier;

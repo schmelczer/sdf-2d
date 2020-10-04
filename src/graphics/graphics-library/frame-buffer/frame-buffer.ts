@@ -1,4 +1,5 @@
 import { vec2 } from 'gl-matrix';
+import { Texture } from '../texture/texture';
 import { UniversalRenderingContext } from '../universal-rendering-context';
 
 /** @internal */
@@ -13,13 +14,10 @@ export abstract class FrameBuffer {
 
   constructor(protected readonly gl: UniversalRenderingContext) {}
 
-  public bindAndClear(inputTextures: Array<WebGLTexture>) {
+  public bindAndClear(inputTextures: Array<Texture>) {
     this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, this.frameBuffer);
 
-    inputTextures.forEach((t, i) => {
-      this.gl.activeTexture(this.gl.TEXTURE0 + i);
-      this.gl.bindTexture(this.gl.TEXTURE_2D, t);
-    });
+    inputTextures.forEach((t) => t.bind());
 
     this.gl.viewport(0, 0, this.size.x, this.size.y);
   }

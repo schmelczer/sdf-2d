@@ -6,6 +6,8 @@ uniform float maxMinDistance;
 uniform float distanceNdcPixelSize;
 in vec2 position;
 
+#define WEBGL2_IS_AVAILABLE
+
 {macroDefinitions}
 
 {declarations}

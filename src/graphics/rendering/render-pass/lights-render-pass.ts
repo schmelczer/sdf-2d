@@ -1,6 +1,7 @@
 import { vec2 } from 'gl-matrix';
 import { LightDrawable } from '../../../drawables/lights/light-drawable';
 import { clamp01 } from '../../../helper/clamp';
+import { Texture } from '../../graphics-library/texture/texture';
 import { Insights } from '../insights';
 import { RenderPass } from './render-pass';
 
@@ -13,7 +14,14 @@ export class LightsRenderPass extends RenderPass {
     this.drawables.push(drawable);
   }
 
-  public render(commonUniforms: any, ...inputTextures: Array<WebGLTexture>) {
+  public render(
+    commonUniforms: any,
+    distanceTexture: WebGLTexture,
+    inputTextures: Array<Texture>
+  ) {
+    this.gl.activeTexture(this.gl.TEXTURE0);
+    this.gl.bindTexture(this.gl.TEXTURE_2D, distanceTexture);
+
     this.frame.bindAndClear(inputTextures);
 
     const tileCenterWorldCoordinates = vec2.transformMat2d(

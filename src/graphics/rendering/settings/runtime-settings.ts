@@ -1,4 +1,5 @@
 import { vec3, vec4 } from 'gl-matrix';
+import { TextureWithOptions } from '../../graphics-library/texture/texture-options';
 
 /**
  * Interface for a configuration object containing the settings
@@ -51,6 +52,18 @@ export interface RuntimeSettings {
    * Can have transparency.
    */
   colorPalette: Array<vec3 | vec4>;
+
+  /**
+   * It is possible to use your own textures in your SDF definitions.
+   *
+   * The keys of the object should be the name used to reference them in the GLSL code,
+   * and the values should be the textures themselves or a TextureWithOptions specifying
+   * the texture's [[TextureOptions]].
+   * It can be a canvas, img element, Image and so on.
+   */
+  textures: {
+    [textureName: string]: TexImageSource | TextureWithOptions;
+  };
 
   /**
    * A light affecting every pixel (even the ones inside objects).

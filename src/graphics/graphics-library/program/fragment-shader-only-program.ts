@@ -16,10 +16,10 @@ export class FragmentShaderOnlyProgram extends Program {
 
   public async initialize(
     sources: [string, string],
-    substitutions: { [name: string]: string },
-    compiler: ParallelCompiler
+    compiler: ParallelCompiler,
+    substitutions: { [name: string]: string } = {}
   ): Promise<void> {
-    await super.initialize(sources, substitutions, compiler);
+    await super.initialize(sources, compiler, substitutions);
     this.prepareScreenQuad('vertexPosition');
   }
 
@@ -32,7 +32,7 @@ export class FragmentShaderOnlyProgram extends Program {
     }
   }
 
-  public draw(uniforms: { [name: string]: any }) {
+  public draw(uniforms: { [name: string]: any } = {}) {
     super.draw(uniforms);
     this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4);
   }

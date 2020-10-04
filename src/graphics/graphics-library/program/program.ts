@@ -20,8 +20,8 @@ export default abstract class Program implements IProgram {
 
   public async initialize(
     [vertexShaderSource, fragmentShaderSource]: [string, string],
-    substitutions: { [name: string]: string },
-    compiler: ParallelCompiler
+    compiler: ParallelCompiler,
+    substitutions: { [name: string]: string } = {}
   ): Promise<void> {
     substitutions = { ...substitutions };
 

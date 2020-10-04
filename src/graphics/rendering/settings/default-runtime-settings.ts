@@ -12,4 +12,5 @@ export const defaultRuntimeSettings: RuntimeSettings = {
   backgroundColor: vec4.fromValues(1, 1, 1, 1),
   colorPalette: [],
   ambientLight: vec3.fromValues(0.25, 0.15, 0.25),
+  textures: {},
 };

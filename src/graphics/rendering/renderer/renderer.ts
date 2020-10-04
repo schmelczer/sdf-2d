@@ -30,6 +30,18 @@ export interface Renderer {
   setViewArea(topLeft: vec2, size: vec2): void;
 
   /**
+   * Return the world coordinates from a pixel's position.
+   *
+   * The view area coordinates are also given in world coordinates.
+   *
+   * Useful for picking.
+   *
+   * @param displayCoordinates The origin is in the display's top left corner.
+   * Just as in mouse events' clientX and clientY.
+   */
+  displayToWorldCoordinates(displayCoordinates: vec2): vec2;
+
+  /**
    * Patch the current runtime settings with new values.
    * @param overrides
    */

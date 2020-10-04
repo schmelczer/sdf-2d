@@ -72,4 +72,6 @@ export * from './drawables/shapes/droplet';
 export * from './drawables/shapes/inverted-tunnel';
 export * from './drawables/shapes/meta-circle';
 export * from './drawables/shapes/rotated-rectangle';
+export * from './graphics/graphics-library/texture/texture-options';
+export * from './graphics/rendering/renderer/noise-renderer';
 export * from './graphics/rendering/renderer/renderer';
