@@ -59,6 +59,7 @@ float shadowTransparency(float startingDistance, float lightCenterDistance, vec2
     uniform float flashlightIntensities[FLASHLIGHT_COUNT];
     uniform vec3 flashlightColors[FLASHLIGHT_COUNT];
     uniform vec2 flashlightDirections[FLASHLIGHT_COUNT];
+    uniform float flashlightStartCutoffs[FLASHLIGHT_COUNT];
 
     in vec2 flashlightActualDirections[FLASHLIGHT_COUNT];
 
@@ -114,8 +115,16 @@ void main() {
         vec2 originalDirection = normalize(flashlightActualDirections[i]);
 
         float lightCenterDistance;
-        vec3 lightColorAtPosition = colorInPosition(i, originalDirection, lightCenterDistance);
+        vec3 lightColorAtPosition = colorInPosition(
+            i,
+            originalDirection,
+            lightCenterDistance
+        );
         
+        if (lightCenterDistance < flashlightStartCutoffs[i]) {
+            continue;
+        }
+
         vec2 direction = originalDirection / squareToAspectRatioTimes2;
 
         if (length(lightColorAtPosition) < 0.0) {

@@ -12,6 +12,7 @@ export class Flashlight extends LightDrawable {
       color: 'flashlightColors',
       intensity: 'flashlightIntensities',
       direction: 'flashlightDirections',
+      startCutoff: 'flashlightStartCutoffs',
     },
     uniformCountMacroName: 'FLASHLIGHT_COUNT',
     shaderCombinationSteps: [0, 1, 2, 4],
@@ -27,7 +28,8 @@ export class Flashlight extends LightDrawable {
     center: vec2,
     color: vec3,
     intensity: number,
-    public direction: vec2
+    public direction: vec2,
+    public startCutoff = 0
   ) {
     super(center, color, intensity);
   }
@@ -36,6 +38,7 @@ export class Flashlight extends LightDrawable {
     return {
       ...super.getObjectToSerialize(transform2d, transform1d),
       direction: vec2.normalize(vec2.create(), this.direction),
+      startCutoff: this.startCutoff * transform1d,
     };
   }
 }
