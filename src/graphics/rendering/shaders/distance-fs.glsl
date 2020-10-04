@@ -13,16 +13,12 @@ in vec2 position;
 out vec2 fragmentColor;
 
 void main() {
-    float minDistance = abs(maxMinDistance);
+    float minDistance = maxMinDistance;
     float color = 0.0;
 
     float objectMinDistance, objectColor;
 
     {functionCalls}
-
-    #ifndef NOT_EMPTY
-    minDistance = maxMinDistance;
-    #endif
 
     fragmentColor = vec2(minDistance, color);
 }

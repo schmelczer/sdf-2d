@@ -24,8 +24,8 @@ export class UniformArrayAutoScalingProgram implements IProgram {
   public async initialize(
     shaderSources: [string, string],
     descriptors: Array<DrawableDescriptor>,
-    substitutions: { [name: string]: any },
-    compiler: ParallelCompiler
+    compiler: ParallelCompiler,
+    substitutions: { [name: string]: any } = {}
   ): Promise<void> {
     this.descriptors = descriptors;
 
@@ -118,7 +118,7 @@ export class UniformArrayAutoScalingProgram implements IProgram {
     };
 
     const program = new FragmentShaderOnlyProgram(this.gl);
-    await program.initialize(shaderSources, processedSubstitutions, compiler);
+    await program.initialize(shaderSources, compiler, processedSubstitutions);
 
     this.programs.push({
       program,
@@ -161,10 +161,6 @@ export class UniformArrayAutoScalingProgram implements IProgram {
         }
 
         return `
-          #ifndef NOT_EMPTY
-          #define NOT_EMPTY
-          #endif
-
           objectMinDistance = ${
             descriptors[i].sdf!.distanceFunctionName
           }(position, objectColor);
@@ -179,7 +175,12 @@ export class UniformArrayAutoScalingProgram implements IProgram {
             }
           );
 
-          minDistance = min(minDistance, objectMinDistance);
+          ${
+            descriptors[i].sdf?.isInverted
+              ? 'minDistance = max(minDistance, objectMinDistance);'
+              : 'minDistance = min(minDistance, objectMinDistance);'
+          }
+         
         `;
       })
       .join('\n');
