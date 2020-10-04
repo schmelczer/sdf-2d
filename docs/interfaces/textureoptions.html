@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>StartupSettings | SDF-2D - v0.4.0</title>
+	<title>TextureOptions | SDF-2D - v0.4.0</title>
 	<meta name="description" content="Documentation for SDF-2D - v0.4.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -53,30 +53,21 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="startupsettings.html">StartupSettings</a>
+					<a href="textureoptions.html">TextureOptions</a>
 				</li>
 			</ul>
-			<h1>Interface StartupSettings</h1>
+			<h1>Interface TextureOptions</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Interface for a configuration object containing the settings
-						that need to be given before shader compilation.</p>
-					</div>
-					<p>The default values for StartupSettings can be found in <a href="../globals.html#defaultstartupsettings">defaultStartupSettings</a>.</p>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">StartupSettings</span>
+						<span class="target">TextureOptions</span>
 					</li>
 				</ul>
 			</section>
@@ -87,10 +78,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="startupsettings.html#enablestopwatch" class="tsd-kind-icon">enable<wbr>Stopwatch</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="startupsettings.html#ignorewebgl2" class="tsd-kind-icon">ignore<wbr>WebGL2</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="startupsettings.html#palettesize" class="tsd-kind-icon">palette<wbr>Size</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="startupsettings.html#shadowtracecount" class="tsd-kind-icon">shadow<wbr>Trace<wbr>Count</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="textureoptions.html#maxfilter" class="tsd-kind-icon">max<wbr>Filter</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="textureoptions.html#minfilter" class="tsd-kind-icon">min<wbr>Filter</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="textureoptions.html#wraps" class="tsd-kind-icon">wrapS</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="textureoptions.html#wrapt" class="tsd-kind-icon">wrapT</a></li>
 							</ul>
 						</section>
 					</div>
@@ -99,74 +90,44 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="enablestopwatch" class="tsd-anchor"></a>
-					<h3>enable<wbr>Stopwatch</h3>
-					<div class="tsd-signature tsd-kind-icon">enable<wbr>Stopwatch<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<a name="maxfilter" class="tsd-anchor"></a>
+					<h3>max<wbr>Filter</h3>
+					<div class="tsd-signature tsd-kind-icon">max<wbr>Filter<span class="tsd-signature-symbol">:</span> <a href="../enums/filteringoptions.html" class="tsd-signature-type">FilteringOptions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/7bfad87/src/graphics/rendering/settings/startup-settings.ts#L14">graphics/rendering/settings/startup-settings.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/7bfad87/src/graphics/graphics-library/texture/texture-options.ts#L16">graphics/graphics-library/texture/texture-options.ts:16</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Creates a stopwatch used for measuring the GPU render time
-							when its required extension is available.</p>
-						</div>
-						<p>You should only have one renderer with enabled stopwatch.</p>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="ignorewebgl2" class="tsd-anchor"></a>
-					<h3>ignore<wbr>WebGL2</h3>
-					<div class="tsd-signature tsd-kind-icon">ignore<wbr>WebGL2<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<a name="minfilter" class="tsd-anchor"></a>
+					<h3>min<wbr>Filter</h3>
+					<div class="tsd-signature tsd-kind-icon">min<wbr>Filter<span class="tsd-signature-symbol">:</span> <a href="../enums/filteringoptions.html" class="tsd-signature-type">FilteringOptions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/7bfad87/src/graphics/rendering/settings/startup-settings.ts#L40">graphics/rendering/settings/startup-settings.ts:40</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/7bfad87/src/graphics/graphics-library/texture/texture-options.ts#L15">graphics/graphics-library/texture/texture-options.ts:15</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>When set to <code>true</code>, rendering will fall back to WebGL
-							even when WebGL2 is present.</p>
-						</div>
-						<p>Useful for testing compatibility.</p>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="palettesize" class="tsd-anchor"></a>
-					<h3>palette<wbr>Size</h3>
-					<div class="tsd-signature tsd-kind-icon">palette<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="wraps" class="tsd-anchor"></a>
+					<h3>wrapS</h3>
+					<div class="tsd-signature tsd-kind-icon">wrapS<span class="tsd-signature-symbol">:</span> <a href="../enums/wrapoptions.html" class="tsd-signature-type">WrapOptions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/7bfad87/src/graphics/rendering/settings/startup-settings.ts#L32">graphics/rendering/settings/startup-settings.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/7bfad87/src/graphics/graphics-library/texture/texture-options.ts#L13">graphics/graphics-library/texture/texture-options.ts:13</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Gives the number of possible object colors for the scene.</p>
-						</div>
-						<p>When using WebGL, only 256 different colors can be used.
-							On WebGL2, its value should not be larger than 4096 for
-						maintaining compatibility with low-end devices.</p>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="shadowtracecount" class="tsd-anchor"></a>
-					<h3>shadow<wbr>Trace<wbr>Count</h3>
-					<div class="tsd-signature tsd-kind-icon">shadow<wbr>Trace<wbr>Count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="wrapt" class="tsd-anchor"></a>
+					<h3>wrapT</h3>
+					<div class="tsd-signature tsd-kind-icon">wrapT<span class="tsd-signature-symbol">:</span> <a href="../enums/wrapoptions.html" class="tsd-signature-type">WrapOptions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/7bfad87/src/graphics/rendering/settings/startup-settings.ts#L23">graphics/rendering/settings/startup-settings.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/7bfad87/src/graphics/graphics-library/texture/texture-options.ts#L14">graphics/graphics-library/texture/texture-options.ts:14</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The raytracing algorithm used for shadows requires a step count.
-							Sensible values for this are between 8 and 32.</p>
-						</div>
-						<p>The higher the number, the harder the shadows will get.
-						Some ambient occlusion like effects can be visible on lower trace counts.</p>
-					</div>
 				</section>
 			</section>
 		</div>
@@ -219,30 +180,30 @@
 					<li class=" tsd-kind-interface">
 						<a href="runtimesettings.html" class="tsd-kind-icon">Runtime<wbr>Settings</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="startupsettings.html" class="tsd-kind-icon">Startup<wbr>Settings</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="startupsettings.html" class="tsd-kind-icon">Startup<wbr>Settings</a>
+						<a href="textureoptions.html" class="tsd-kind-icon">Texture<wbr>Options</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="startupsettings.html#enablestopwatch" class="tsd-kind-icon">enable<wbr>Stopwatch</a>
+								<a href="textureoptions.html#maxfilter" class="tsd-kind-icon">max<wbr>Filter</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="startupsettings.html#ignorewebgl2" class="tsd-kind-icon">ignore<wbr>WebGL2</a>
+								<a href="textureoptions.html#minfilter" class="tsd-kind-icon">min<wbr>Filter</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="startupsettings.html#palettesize" class="tsd-kind-icon">palette<wbr>Size</a>
+								<a href="textureoptions.html#wraps" class="tsd-kind-icon">wrapS</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="startupsettings.html#shadowtracecount" class="tsd-kind-icon">shadow<wbr>Trace<wbr>Count</a>
+								<a href="textureoptions.html#wrapt" class="tsd-kind-icon">wrapT</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface">
-						<a href="textureoptions.html" class="tsd-kind-icon">Texture<wbr>Options</a>
-					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#texturewithoptions" class="tsd-kind-icon">Texture<wbr>With<wbr>Options</a>
 					</li>
