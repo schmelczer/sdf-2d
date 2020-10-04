@@ -22,7 +22,7 @@ float terrain(float x) {
         result += sin(2.0 * pi * x * frequency - 2.0 * pi * noise(float(i) * 200.0)) * amplitude;
         frequency *= 1.5;
         amplitude /= 1.2;
-  }
+    }
 
     return result;
 }

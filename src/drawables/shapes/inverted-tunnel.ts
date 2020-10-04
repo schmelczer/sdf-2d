@@ -23,14 +23,14 @@ export class InvertedTunnel extends Drawable {
         #ifdef WEBGL2_IS_AVAILABLE
           float myTerrain(float h) {
             return texture(
-              noiseTexture, 
+              noiseTexture,
               vec2(h, 0.5)
             )[0] - 0.5;
           }
         #else
           float myTerrain(float h) {
             return texture2D(
-              noiseTexture, 
+              noiseTexture,
               vec2(h, 0.5)
             )[0] - 0.5;
           }
