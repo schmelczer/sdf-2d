@@ -80,7 +80,12 @@ export class UniformArrayAutoScalingProgram implements IProgram {
 
     const closest = this.programs.find((p) => p.values.every((v, i) => v >= values[i]));
 
-    this.current = (closest ? closest : last(this.programs))?.program;
+    if (closest) {
+      this.current = closest.program;
+    } else {
+      console.warn(`Not found compiled shader for this many objects ${values}`);
+      this.current = last(this.programs)?.program;
+    }
 
     if (closest) {
       this.descriptors!.map((d, i) => {
