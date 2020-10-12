@@ -30,7 +30,7 @@ float getDistance(in vec2 target) {
 
 float shadowTransparency(float startingDistance, float lightCenterDistance, vec2 direction) {
     float rayLength = startingDistance;
-    for (int j = 0; j < SHADOW_TRACE_COUNT; j++) {
+    for (int i = 0; i < SHADOW_TRACE_COUNT; i++) {
         rayLength += max(0.0, getDistance(uvCoordinates + direction * rayLength));
     }
     return min(1.0, pow(rayLength / lightCenterDistance, 0.3));
@@ -103,7 +103,7 @@ void main() {
             lightCenterDistance, 
             direction
         );
-
+          
         lightingInside += lightColorAtPosition;
     }
     #endif
