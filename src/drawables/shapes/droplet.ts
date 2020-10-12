@@ -51,12 +51,7 @@ export class Droplet extends Drawable {
     },
     uniformCountMacroName: 'DROPLET_COUNT',
     shaderCombinationSteps: [0, 1, 4, 16, 32],
-    empty: new Droplet(
-      vec2.fromValues(-100000, -100000),
-      vec2.fromValues(-100000, -100000),
-      0,
-      0
-    ),
+    empty: new Droplet(vec2.create(), vec2.create(), 0, 0),
   };
 
   constructor(

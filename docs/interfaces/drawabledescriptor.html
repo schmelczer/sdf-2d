@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>DrawableDescriptor | SDF-2D - v0.4.0</title>
-	<meta name="description" content="Documentation for SDF-2D - v0.4.0">
+	<title>DrawableDescriptor | SDF-2D - v0.4.1</title>
+	<meta name="description" content="Documentation for SDF-2D - v0.4.1">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 	<link rel="icon" href="../favicon.ico" />
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">SDF-2D - v0.4.0</a>
+					<a href="../index.html" class="title">SDF-2D - v0.4.1</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -90,6 +90,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="drawabledescriptor.html#empty" class="tsd-kind-icon">empty</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="drawabledescriptor.html#objectcountscaler" class="tsd-kind-icon">object<wbr>Count<wbr>Scaler</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="drawabledescriptor.html#propertyuniformmapping" class="tsd-kind-icon">property<wbr>Uniform<wbr>Mapping</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="drawabledescriptor.html#sdf" class="tsd-kind-icon">sdf</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="drawabledescriptor.html#shadercombinationsteps" class="tsd-kind-icon">shader<wbr>Combination<wbr>Steps</a></li>
@@ -107,7 +108,7 @@
 					<div class="tsd-signature tsd-kind-icon">empty<span class="tsd-signature-symbol">:</span> <a href="../classes/drawable.html" class="tsd-signature-type">Drawable</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/7bfad87/src/drawables/drawable-descriptor.ts#L64">drawables/drawable-descriptor.ts:64</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/drawables/drawable-descriptor.ts#L73">drawables/drawable-descriptor.ts:73</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -118,12 +119,29 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="objectcountscaler" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> object<wbr>Count<wbr>Scaler</h3>
+					<div class="tsd-signature tsd-kind-icon">object<wbr>Count<wbr>Scaler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/drawables/drawable-descriptor.ts#L57">drawables/drawable-descriptor.ts:57</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Calculating the number of objects to be drawn is done using the following pseudo-formula:</p>
+						</div>
+						<p>objectCountScaler * propertyUniformMapping[0].length</p>
+						<p>By default, its value is 1</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="propertyuniformmapping" class="tsd-anchor"></a>
 					<h3>property<wbr>Uniform<wbr>Mapping</h3>
 					<div class="tsd-signature tsd-kind-icon">property<wbr>Uniform<wbr>Mapping<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/7bfad87/src/drawables/drawable-descriptor.ts#L17">drawables/drawable-descriptor.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/drawables/drawable-descriptor.ts#L17">drawables/drawable-descriptor.ts:17</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -147,7 +165,7 @@
 					<div class="tsd-signature tsd-kind-icon">sdf<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">{ </span>distanceFunctionName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>isInverted<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">; </span>shader<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/7bfad87/src/drawables/drawable-descriptor.ts#L28">drawables/drawable-descriptor.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/drawables/drawable-descriptor.ts#L28">drawables/drawable-descriptor.ts:28</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -162,7 +180,7 @@
 					<div class="tsd-signature tsd-kind-icon">shader<wbr>Combination<wbr>Steps<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/7bfad87/src/drawables/drawable-descriptor.ts#L58">drawables/drawable-descriptor.ts:58</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/drawables/drawable-descriptor.ts#L67">drawables/drawable-descriptor.ts:67</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -180,7 +198,7 @@
 					<div class="tsd-signature tsd-kind-icon">uniform<wbr>Count<wbr>Macro<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/7bfad87/src/drawables/drawable-descriptor.ts#L23">drawables/drawable-descriptor.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/drawables/drawable-descriptor.ts#L23">drawables/drawable-descriptor.ts:23</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -241,6 +259,9 @@
 								<a href="drawabledescriptor.html#empty" class="tsd-kind-icon">empty</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="drawabledescriptor.html#objectcountscaler" class="tsd-kind-icon">object<wbr>Count<wbr>Scaler</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="drawabledescriptor.html#propertyuniformmapping" class="tsd-kind-icon">property<wbr>Uniform<wbr>Mapping</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
@@ -270,6 +291,9 @@
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#texturewithoptions" class="tsd-kind-icon">Texture<wbr>With<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#polygonfactory" class="tsd-kind-icon">Polygon<wbr>Factory</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="../globals.html#compile" class="tsd-kind-icon">compile</a>

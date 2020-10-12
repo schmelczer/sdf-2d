@@ -239,7 +239,7 @@ export class RendererImplementation implements Renderer {
       palette: 1,
 
       distanceNdcPixelSize: 2 / Math.max(...this.distanceFieldFrameBuffer.getSize()),
-      shadingNdcPixelSize: 2 / Math.max(...this.distanceFieldFrameBuffer.getSize()),
+      shadingNdcPixelSize: 2 / Math.max(...this.lightingFrameBuffer.getSize()),
     };
 
     this.distancePass.render(this.uniformsProvider.getUniforms(common), ...this.textures);

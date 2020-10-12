@@ -75,7 +75,8 @@ export class UniformArrayAutoScalingProgram implements IProgram {
         return 0;
       }
       const uniformName = uniformNames[1];
-      return uniforms[uniformName] ? uniforms[uniformName].length : 0;
+      const scaler = d.objectCountScaler === undefined ? 1 : d.objectCountScaler;
+      return uniforms[uniformName] ? scaler * uniforms[uniformName].length : 0;
     });
 
     const closest = this.programs.find((p) => p.values.every((v, i) => v >= values[i]));
@@ -91,7 +92,11 @@ export class UniformArrayAutoScalingProgram implements IProgram {
       this.descriptors!.map((d, i) => {
         const difference = closest.values[i] - values[i];
         for (let i = 0; i < difference; i++) {
-          d.empty.serializeToUniforms(uniforms, mat2d.create(), 0);
+          d.empty.serializeToUniforms(
+            uniforms,
+            mat2d.fromTranslation(mat2d.create(), vec2.fromValues(-10000, -10000)),
+            0
+          );
         }
       });
     }
@@ -171,12 +176,12 @@ export class UniformArrayAutoScalingProgram implements IProgram {
           }(position, objectColor);
 
           color = mix(
-            objectColor / {paletteSize}, 
-            color, 
+            objectColor / {paletteSize},
+            color,
             ${
               descriptors[i].sdf?.isInverted
                 ? `step(-distanceNdcPixelSize, -objectMinDistance)`
-                : `step(1.0 * distanceNdcPixelSize, objectMinDistance)`
+                : `step(distanceNdcPixelSize, objectMinDistance)`
             }
           );
 
