@@ -21,14 +21,14 @@ export class InvertedTunnel extends Drawable {
         uniform sampler2D noiseTexture;
 
         #ifdef WEBGL2_IS_AVAILABLE
-          float myTerrain(float h) {
+          float invertedTunnelTerrain(float h) {
             return texture(
               noiseTexture, 
               vec2(h, 0.5)
             )[0] - 0.5;
           }
         #else
-          float myTerrain(float h) {
+          float invertedTunnelTerrain(float h) {
             return texture2D(
               noiseTexture, 
               vec2(h, 0.5)
@@ -39,7 +39,7 @@ export class InvertedTunnel extends Drawable {
         float invertedTunnelMinDistance(vec2 target, out float colorIndex) {
           colorIndex = 3.0;
 
-          float minDistance = 1000.0;
+          float minDistance = -1000.0;
           for (int i = 0; i < INVERTED_TUNNEL_COUNT; i++) {
             
             vec2 targetFromDelta = target - froms[i];
@@ -53,12 +53,12 @@ export class InvertedTunnel extends Drawable {
               fromRadii[i], toRadii[i], clampedH
             ) + distance(
               targetFromDelta, toFromDeltas[i] * clampedH
-            ) - myTerrain(h) / 12.0;
+            ) - invertedTunnelTerrain(h) / 12.0;
 
-            minDistance = min(minDistance, currentDistance);
+            minDistance = max(minDistance, -currentDistance);
           }
 
-          return -minDistance;
+          return minDistance;
         }
       `,
       isInverted: true,
@@ -72,12 +72,7 @@ export class InvertedTunnel extends Drawable {
     },
     uniformCountMacroName: 'INVERTED_TUNNEL_COUNT',
     shaderCombinationSteps: [0, 1, 4, 16, 32],
-    empty: new InvertedTunnel(
-      vec2.fromValues(10000, 10000),
-      vec2.fromValues(10000, 10000),
-      0,
-      0
-    ),
+    empty: new InvertedTunnel(vec2.create(), vec2.create(), 0, 0),
   };
 
   constructor(

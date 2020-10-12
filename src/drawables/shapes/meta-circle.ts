@@ -32,7 +32,7 @@ export class MetaCircle extends Drawable {
     },
     uniformCountMacroName: 'META_CIRCLE_COUNT',
     shaderCombinationSteps: [0, 1, 2, 3, 8, 16],
-    empty: new MetaCircle(vec2.fromValues(10000, 10000), -1000),
+    empty: new MetaCircle(vec2.create(), 0),
   };
 
   constructor(public center: vec2, public radius: number) {

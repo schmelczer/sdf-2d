@@ -16,12 +16,7 @@ export class Flashlight extends LightDrawable {
     },
     uniformCountMacroName: 'FLASHLIGHT_COUNT',
     shaderCombinationSteps: [0, 1, 2, 4],
-    empty: new Flashlight(
-      vec2.fromValues(0, 0),
-      vec3.fromValues(0, 0, 0),
-      0,
-      vec2.fromValues(1, 0)
-    ),
+    empty: new Flashlight(vec2.create(), vec3.create(), 0, vec2.create()),
   };
 
   public constructor(

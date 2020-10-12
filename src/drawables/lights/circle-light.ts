@@ -14,7 +14,7 @@ export class CircleLight extends LightDrawable {
     },
     uniformCountMacroName: 'CIRCLE_LIGHT_COUNT',
     shaderCombinationSteps: [0, 1, 2, 4, 8, 16],
-    empty: new CircleLight(vec2.fromValues(0, 0), vec3.fromValues(0, 0, 0), 0),
+    empty: new CircleLight(vec2.create(), vec3.create(), 0),
   };
 
   constructor(center: vec2, color: vec3, intensity: number) {

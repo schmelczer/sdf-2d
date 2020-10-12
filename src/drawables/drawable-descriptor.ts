@@ -48,6 +48,15 @@ export interface DrawableDescriptor {
   };
 
   /**
+   * Calculating the number of objects to be drawn is done using the following pseudo-formula:
+   *
+   * objectCountScaler * propertyUniformMapping[0].length
+   *
+   * By default, its value is 1
+   */
+  objectCountScaler?: number;
+
+  /**
    * Number of possible drawables around each tile.
    *
    * For each step, a shader will be generated. And at runtime the closes matching
