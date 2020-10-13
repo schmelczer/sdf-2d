@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Drawable | SDF-2D - v0.5.0</title>
+	<title>MetaCircleBase | SDF-2D - v0.5.0</title>
 	<meta name="description" content="Documentation for SDF-2D - v0.5.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -53,10 +53,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="drawable.html">Drawable</a>
+					<a href="metacirclebase.html">MetaCircleBase</a>
 				</li>
 			</ul>
-			<h1>Class Drawable</h1>
+			<h1>Class MetaCircleBase</h1>
 		</div>
 	</div>
 </header>
@@ -65,20 +65,18 @@
 		<div class="col-8 col-content">
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Base class of every drawable object.</p>
-					</div>
-					<p>To create your own drawables, you need to subclass from this.</p>
-					<blockquote>
-						<p>Although lights are also subclasses of Drawable, you cannot create your own light sources.</p>
-					</blockquote>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Drawable</span>
+						<span class="tsd-signature-type">EmptyDrawable</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">MetaCircleBase</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -87,106 +85,142 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
+							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="drawable.html#descriptor" class="tsd-kind-icon">descriptor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="metacirclebase.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="metacirclebase.html#center" class="tsd-kind-icon">center</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="metacirclebase.html#radius" class="tsd-kind-icon">radius</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-static"><a href="metacirclebase.html#descriptor" class="tsd-kind-icon">descriptor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="drawable.html#getobjecttoserialize" class="tsd-kind-icon">get<wbr>Object<wbr>ToSerialize</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="drawable.html#mindistance" class="tsd-kind-icon">min<wbr>Distance</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected"><a href="metacirclebase.html#getobjecttoserialize" class="tsd-kind-icon">get<wbr>Object<wbr>ToSerialize</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="metacirclebase.html#mindistance" class="tsd-kind-icon">min<wbr>Distance</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="descriptor" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> descriptor</h3>
-					<div class="tsd-signature tsd-kind-icon">descriptor<span class="tsd-signature-symbol">:</span> <a href="../interfaces/drawabledescriptor.html" class="tsd-signature-type">DrawableDescriptor</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/drawables/drawable.ts#L15">drawables/drawable.ts:15</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>This should be defined in inherited classes.</p>
-						</div>
-					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-					<a name="getobjecttoserialize" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> <span class="tsd-flag ts-flagAbstract">Abstract</span> get<wbr>Object<wbr>ToSerialize</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Object<wbr>ToSerialize<span class="tsd-signature-symbol">(</span>transform2d<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">mat2d</span>, transform1d<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Meta<wbr>Circle<wbr>Base<span class="tsd-signature-symbol">(</span>center<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec2</span>, radius<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="metacirclebase.html" class="tsd-signature-type">MetaCircleBase</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/drawables/drawable.ts#L34">drawables/drawable.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/drawables/shapes/meta-circle-factory.ts#L9">drawables/shapes/meta-circle-factory.ts:9</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Return the values that should be given to the shaders through uniform inputs.</p>
-								</div>
-							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>center: <span class="tsd-signature-type">vec2</span></h5>
+								</li>
+								<li>
+									<h5>radius: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="metacirclebase.html" class="tsd-signature-type">MetaCircleBase</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="center" class="tsd-anchor"></a>
+					<h3>center</h3>
+					<div class="tsd-signature tsd-kind-icon">center<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">vec2</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/drawables/shapes/meta-circle-factory.ts#L10">drawables/shapes/meta-circle-factory.ts:10</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="radius" class="tsd-anchor"></a>
+					<h3>radius</h3>
+					<div class="tsd-signature tsd-kind-icon">radius<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/drawables/shapes/meta-circle-factory.ts#L10">drawables/shapes/meta-circle-factory.ts:10</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-static">
+					<a name="descriptor" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> descriptor</h3>
+					<div class="tsd-signature tsd-kind-icon">descriptor<span class="tsd-signature-symbol">:</span> <a href="../interfaces/drawabledescriptor.html" class="tsd-signature-type">DrawableDescriptor</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from EmptyDrawable.descriptor</p>
+						<p>Overrides <a href="drawable.html">Drawable</a>.<a href="drawable.html#descriptor">descriptor</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/drawables/empty-drawable.ts#L9">drawables/empty-drawable.ts:9</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected">
+					<a name="getobjecttoserialize" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> get<wbr>Object<wbr>ToSerialize</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Object<wbr>ToSerialize<span class="tsd-signature-symbol">(</span>transform2d<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">mat2d</span>, transform1d<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from EmptyDrawable.getObjectToSerialize</p>
+								<p>Overrides <a href="drawable.html">Drawable</a>.<a href="drawable.html#getobjecttoserialize">getObjectToSerialize</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/drawables/empty-drawable.ts#L15">drawables/empty-drawable.ts:15</a></li>
+								</ul>
+							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>transform2d: <span class="tsd-signature-type">mat2d</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>position-like properties should be transformed by this matrix
-										before being returned.</p>
-									</div>
 								</li>
 								<li>
 									<h5>transform1d: <span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>scalar properties should be transformed by this number
-										before being returned.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 					<a name="mindistance" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> min<wbr>Distance</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<h3>min<wbr>Distance</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">min<wbr>Distance<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from EmptyDrawable.minDistance</p>
+								<p>Overrides <a href="drawable.html">Drawable</a>.<a href="drawable.html#mindistance">minDistance</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/drawables/drawable.ts#L24">drawables/drawable.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/drawables/empty-drawable.ts#L11">drawables/empty-drawable.ts:11</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>The lower bound of the distance between the target and the object.</p>
-								</div>
-								<p>It can return 0 by default, the only consequence of this, is a reduced performance.
-								Because this object won&#39;t benefit from tile-based rendering.</p>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>target: <span class="tsd-signature-type">vec2</span></h5>
-									<div class="tsd-comment tsd-typography">
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -217,24 +251,9 @@
 					<li class=" tsd-kind-class">
 						<a href="circlelight.html" class="tsd-kind-icon">Circle<wbr>Light</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class">
+					<li class=" tsd-kind-class">
 						<a href="drawable.html" class="tsd-kind-icon">Drawable</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="drawable.html#descriptor" class="tsd-kind-icon">descriptor</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-								<a href="drawable.html#getobjecttoserialize" class="tsd-kind-icon">get<wbr>Object<wbr>ToSerialize</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="drawable.html#mindistance" class="tsd-kind-icon">min<wbr>Distance</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-class">
 						<a href="dropletbase.html" class="tsd-kind-icon">Droplet<wbr>Base</a>
 					</li>
@@ -244,9 +263,33 @@
 					<li class=" tsd-kind-class">
 						<a href="invertedtunnelbase.html" class="tsd-kind-icon">Inverted<wbr>Tunnel<wbr>Base</a>
 					</li>
-					<li class=" tsd-kind-class">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class">
 						<a href="metacirclebase.html" class="tsd-kind-icon">Meta<wbr>Circle<wbr>Base</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="metacirclebase.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="metacirclebase.html#center" class="tsd-kind-icon">center</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="metacirclebase.html#radius" class="tsd-kind-icon">radius</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-static">
+								<a href="metacirclebase.html#descriptor" class="tsd-kind-icon">descriptor</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected">
+								<a href="metacirclebase.html#getobjecttoserialize" class="tsd-kind-icon">get<wbr>Object<wbr>ToSerialize</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+								<a href="metacirclebase.html#mindistance" class="tsd-kind-icon">min<wbr>Distance</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-class">
 						<a href="polygonbase.html" class="tsd-kind-icon">Polygon<wbr>Base</a>
 					</li>

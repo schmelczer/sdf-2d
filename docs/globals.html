@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>SDF-2D - v0.4.1</title>
-	<meta name="description" content="Documentation for SDF-2D - v0.4.1">
+	<title>SDF-2D - v0.5.0</title>
+	<meta name="description" content="Documentation for SDF-2D - v0.5.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
 	<link rel="icon" href="favicon.ico" />
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">SDF-2D - v0.4.1</a>
+					<a href="index.html" class="title">SDF-2D - v0.5.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -53,7 +53,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1>SDF-2D - v0.4.1</h1>
+			<h1>SDF-2D - v0.5.0</h1>
 		</div>
 	</div>
 </header>
@@ -74,17 +74,14 @@
 						<section class="tsd-index-section ">
 							<h3>Drawable Classes</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-class"><a href="classes/circle.html" class="tsd-kind-icon">Circle</a></li>
+								<li class="tsd-kind-class"><a href="classes/circlebase.html" class="tsd-kind-icon">Circle<wbr>Base</a></li>
 								<li class="tsd-kind-class"><a href="classes/circlelight.html" class="tsd-kind-icon">Circle<wbr>Light</a></li>
-								<li class="tsd-kind-class"><a href="classes/droplet.html" class="tsd-kind-icon">Droplet</a></li>
+								<li class="tsd-kind-class"><a href="classes/dropletbase.html" class="tsd-kind-icon">Droplet<wbr>Base</a></li>
 								<li class="tsd-kind-class"><a href="classes/flashlight.html" class="tsd-kind-icon">Flashlight</a></li>
-								<li class="tsd-kind-class"><a href="classes/metacircle.html" class="tsd-kind-icon">Meta<wbr>Circle</a></li>
-								<li class="tsd-kind-class"><a href="classes/rotatedrectangle.html" class="tsd-kind-icon">Rotated<wbr>Rectangle</a></li>
-							</ul>
-							<h3>Drawable
-							Providing a noise texture is required for this drawable. Classes</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-class"><a href="classes/invertedtunnel.html" class="tsd-kind-icon">Inverted<wbr>Tunnel</a></li>
+								<li class="tsd-kind-class"><a href="classes/invertedtunnelbase.html" class="tsd-kind-icon">Inverted<wbr>Tunnel<wbr>Base</a></li>
+								<li class="tsd-kind-class"><a href="classes/metacirclebase.html" class="tsd-kind-icon">Meta<wbr>Circle<wbr>Base</a></li>
+								<li class="tsd-kind-class"><a href="classes/polygonbase.html" class="tsd-kind-icon">Polygon<wbr>Base</a></li>
+								<li class="tsd-kind-class"><a href="classes/rotatedrectanglebase.html" class="tsd-kind-icon">Rotated<wbr>Rectangle<wbr>Base</a></li>
 							</ul>
 							<h3>Other Classes</h3>
 							<ul class="tsd-index-list">
@@ -95,6 +92,7 @@
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-interface"><a href="interfaces/drawabledescriptor.html" class="tsd-kind-icon">Drawable<wbr>Descriptor</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/noisypolygonbase.html" class="tsd-kind-icon">Noisy<wbr>Polygon<wbr>Base</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/renderer.html" class="tsd-kind-icon">Renderer</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/runtimesettings.html" class="tsd-kind-icon">Runtime<wbr>Settings</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/startupsettings.html" class="tsd-kind-icon">Startup<wbr>Settings</a></li>
@@ -108,9 +106,24 @@
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
+							<h3>Color Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function"><a href="globals.html#hex" class="tsd-kind-icon">hex</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#hsl" class="tsd-kind-icon">hsl</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#rgb" class="tsd-kind-icon">rgb</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#rgb255" class="tsd-kind-icon">rgb255</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#rgba" class="tsd-kind-icon">rgba</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#rgba255" class="tsd-kind-icon">rgba255</a></li>
+							</ul>
 							<h3>Drawable Functions</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-function"><a href="globals.html#circlefactory" class="tsd-kind-icon">Circle<wbr>Factory</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#dropletfactory" class="tsd-kind-icon">Droplet<wbr>Factory</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#invertedtunnelfactory" class="tsd-kind-icon">Inverted<wbr>Tunnel<wbr>Factory</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#metacirclefactory" class="tsd-kind-icon">Meta<wbr>Circle<wbr>Factory</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#noisypolygonfactory" class="tsd-kind-icon">Noisy<wbr>Polygon<wbr>Factory</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#polygonfactory" class="tsd-kind-icon">Polygon<wbr>Factory</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#rotatedrectanglefactory" class="tsd-kind-icon">Rotated<wbr>Rectangle<wbr>Factory</a></li>
 							</ul>
 							<h3>Other Functions</h3>
 							<ul class="tsd-index-list">
@@ -136,7 +149,7 @@
 					<div class="tsd-signature tsd-kind-icon">Texture<wbr>With<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>overrides<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="interfaces/textureoptions.html" class="tsd-signature-type">TextureOptions</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>source<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TexImageSource</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/graphics-library/texture/texture-options.ts#L19">graphics/graphics-library/texture/texture-options.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/graphics-library/texture/texture-options.ts#L27">graphics/graphics-library/texture/texture-options.ts:27</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -153,18 +166,417 @@
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Drawable Functions</h2>
+				<h2>Color Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="polygonfactory" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> Polygon<wbr>Factory</h3>
+					<a name="hex" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> hex</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">Polygon<wbr>Factory<span class="tsd-signature-symbol">(</span>vertexCount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>constructor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>descriptor<span class="tsd-signature-symbol">: </span><a href="interfaces/drawabledescriptor.html" class="tsd-signature-type">DrawableDescriptor</a><span class="tsd-signature-symbol"> }</span></li>
+						<li class="tsd-signature tsd-kind-icon">hex<span class="tsd-signature-symbol">(</span>hex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec3</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/drawables/shapes/polygon-factory.ts#L9">drawables/shapes/polygon-factory.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/helper/colors/hex.ts#L14">helper/colors/hex.ts:14</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return a color given in a hexadecimal form as a vec3.</p>
+								</div>
+								<p>A hexadecimal color with (#ff0000) or without (ff0000)
+								a leading hashmark.</p>
+								<p>source: <a href="https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb">https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb</a></p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>hex: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">vec3</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="hsl" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> hsl</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">hsl<span class="tsd-signature-symbol">(</span>hue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, saturation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, lightness<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec3</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/helper/colors/hsl.ts#L15">helper/colors/hsl.ts:15</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return a color contained in a vec3.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>hue: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Should be between 0 and 360</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>saturation: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Should be between 0 and 100</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>lightness: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Should be between 0 and 100</p>
+											<p>source: <a href="https://stackoverflow.com/questions/2353211/hsl-to-rgb-color-conversion">https://stackoverflow.com/questions/2353211/hsl-to-rgb-color-conversion</a></p>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">vec3</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="rgb" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> rgb</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">rgb<span class="tsd-signature-symbol">(</span>r<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, g<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec3</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/helper/colors/rgb.ts#L12">helper/colors/rgb.ts:12</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return a color contained in a vec3.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>r: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Should be between 0 and 1</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>g: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Should be between 0 and 1</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>b: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Should be between 0 and 1</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">vec3</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="rgb255" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> rgb255</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">rgb255<span class="tsd-signature-symbol">(</span>r<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, g<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec3</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/helper/colors/rgb255.ts#L12">helper/colors/rgb255.ts:12</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return a color contained in a vec3.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>r: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Should be between 0 and 255</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>g: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Should be between 0 and 255</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>b: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Should be between 0 and 255</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">vec3</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="rgba" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> rgba</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">rgba<span class="tsd-signature-symbol">(</span>r<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, g<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec4</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/helper/colors/rgba.ts#L13">helper/colors/rgba.ts:13</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return a color with transparency contained in a vec4.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>r: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Should be between 0 and 1</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>g: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Should be between 0 and 1</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>b: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Should be between 0 and 1</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>a: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Should be between 0 and 1</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">vec4</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="rgba255" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> rgba255</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">rgba255<span class="tsd-signature-symbol">(</span>r<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, g<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec4</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/helper/colors/rgba255.ts#L13">helper/colors/rgba255.ts:13</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return a color with transparency contained in a vec4.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>r: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Should be between 0 and 255</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>g: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Should be between 0 and 255</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>b: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Should be between 0 and 255</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>a: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Should be between 0 and 255</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">vec4</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Drawable Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="circlefactory" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Circle<wbr>Factory</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">Circle<wbr>Factory<span class="tsd-signature-symbol">(</span>color<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">vec4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">typeof </span><a href="classes/circlebase.html" class="tsd-signature-type">CircleBase</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/drawables/shapes/circle-factory.ts#L18">drawables/shapes/circle-factory.ts:18</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>color: <span class="tsd-signature-type">vec3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">vec4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">typeof </span><a href="classes/circlebase.html" class="tsd-signature-type">CircleBase</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="dropletfactory" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Droplet<wbr>Factory</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">Droplet<wbr>Factory<span class="tsd-signature-symbol">(</span>color<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">vec4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">typeof </span><a href="classes/dropletbase.html" class="tsd-signature-type">DropletBase</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/drawables/shapes/droplet-factory.ts#L25">drawables/shapes/droplet-factory.ts:25</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>color: <span class="tsd-signature-type">vec3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">vec4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">typeof </span><a href="classes/dropletbase.html" class="tsd-signature-type">DropletBase</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="invertedtunnelfactory" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Inverted<wbr>Tunnel<wbr>Factory</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">Inverted<wbr>Tunnel<wbr>Factory<span class="tsd-signature-symbol">(</span>color<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">vec4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">typeof </span><a href="classes/invertedtunnelbase.html" class="tsd-signature-type">InvertedTunnelBase</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/drawables/shapes/inverted-tunnel-factory.ts#L27">drawables/shapes/inverted-tunnel-factory.ts:27</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Providing a noise texture is required for this drawable.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>color: <span class="tsd-signature-type">vec3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">vec4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">typeof </span><a href="classes/invertedtunnelbase.html" class="tsd-signature-type">InvertedTunnelBase</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="metacirclefactory" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Meta<wbr>Circle<wbr>Factory</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">Meta<wbr>Circle<wbr>Factory<span class="tsd-signature-symbol">(</span>color<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">vec4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">typeof </span><a href="classes/metacirclebase.html" class="tsd-signature-type">MetaCircleBase</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/drawables/shapes/meta-circle-factory.ts#L18">drawables/shapes/meta-circle-factory.ts:18</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>color: <span class="tsd-signature-type">vec3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">vec4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">typeof </span><a href="classes/metacirclebase.html" class="tsd-signature-type">MetaCircleBase</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="noisypolygonfactory" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Noisy<wbr>Polygon<wbr>Factory</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">Noisy<wbr>Polygon<wbr>Factory<span class="tsd-signature-symbol">(</span>vertexCount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, colorIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">PolygonBase</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/noisypolygonbase.html" class="tsd-signature-type">NoisyPolygonBase</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/drawables/shapes/noisy-polygon-factory.ts#L12">drawables/shapes/noisy-polygon-factory.ts:12</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -174,35 +586,64 @@
 								<li>
 									<h5>vertexCount: <span class="tsd-signature-type">number</span></h5>
 								</li>
+								<li>
+									<h5>colorIndex: <span class="tsd-signature-type">number</span></h5>
+								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>constructor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>descriptor<span class="tsd-signature-symbol">: </span><a href="interfaces/drawabledescriptor.html" class="tsd-signature-type">DrawableDescriptor</a><span class="tsd-signature-symbol"> }</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">PolygonBase</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/noisypolygonbase.html" class="tsd-signature-type">NoisyPolygonBase</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="polygonfactory" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Polygon<wbr>Factory</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">Polygon<wbr>Factory<span class="tsd-signature-symbol">(</span>vertexCount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, colorIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">typeof </span><a href="classes/polygonbase.html" class="tsd-signature-type">PolygonBase</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/drawables/shapes/polygon-factory.ts#L19">drawables/shapes/polygon-factory.ts:19</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
-								<li class="tsd-parameter">
-									<h5>constructor<span class="tsd-signature-symbol">: </span>function</h5>
-									<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-type-literal">
-										<li class="tsd-signature tsd-kind-icon">new __type<span class="tsd-signature-symbol">(</span>vertices<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">vec2</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="classes/drawable.html" class="tsd-signature-type">Drawable</a></li>
-									</ul>
-									<ul class="tsd-descriptions">
-										<li class="tsd-description">
-											<aside class="tsd-sources">
-												<ul>
-													<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/drawables/shapes/polygon-factory.ts#L11">drawables/shapes/polygon-factory.ts:11</a></li>
-												</ul>
-											</aside>
-											<h4 class="tsd-parameters-title">Parameters</h4>
-											<ul class="tsd-parameters">
-												<li>
-													<h5>vertices: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">vec2</span><span class="tsd-signature-symbol">&gt;</span></h5>
-												</li>
-											</ul>
-											<h4 class="tsd-returns-title">Returns <a href="classes/drawable.html" class="tsd-signature-type">Drawable</a></h4>
-										</li>
-									</ul>
+								<li>
+									<h5>vertexCount: <span class="tsd-signature-type">number</span></h5>
 								</li>
-								<li class="tsd-parameter">
-									<h5>descriptor<span class="tsd-signature-symbol">: </span><a href="interfaces/drawabledescriptor.html" class="tsd-signature-type">DrawableDescriptor</a></h5>
+								<li>
+									<h5>colorIndex: <span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">typeof </span><a href="classes/polygonbase.html" class="tsd-signature-type">PolygonBase</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="rotatedrectanglefactory" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Rotated<wbr>Rectangle<wbr>Factory</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">Rotated<wbr>Rectangle<wbr>Factory<span class="tsd-signature-symbol">(</span>color<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">vec4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">typeof </span><a href="classes/rotatedrectanglebase.html" class="tsd-signature-type">RotatedRectangleBase</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/drawables/shapes/rotated-rectangle-factory.ts#L18">drawables/shapes/rotated-rectangle-factory.ts:18</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>color: <span class="tsd-signature-type">vec3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">vec4</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">typeof </span><a href="classes/rotatedrectanglebase.html" class="tsd-signature-type">RotatedRectangleBase</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -219,7 +660,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/main.ts#L54">main.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/main.ts#L55">main.ts:55</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -234,9 +675,10 @@
 								<p>The descriptors of every to-be-drawn objects are required before creating the renderer,
 								allowing the compiler to only create the shaders that will actually be used.</p>
 								<p>Example usage:</p>
-								<pre><code class="language-js"> <span class="hljs-keyword">import</span> { compile, Circle, CircleLight } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;sdf-2d&#x27;</span>;
+								<pre><code class="language-js"> <span class="hljs-keyword">import</span> { compile, hsl, CircleFactory, CircleLight } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;sdf-2d&#x27;</span>;
 
  <span class="hljs-keyword">const</span> canvas = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;canvas&#x27;</span>);
+ <span class="hljs-keyword">const</span> Circle = CircleFactory(hsl(<span class="hljs-number">30</span>, <span class="hljs-number">66</span>, <span class="hljs-number">50</span>));
  <span class="hljs-keyword">const</span> renderer = <span class="hljs-keyword">await</span> compile(canvas, [Circle.descriptor, CircleLight.descriptor]);</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -275,12 +717,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/renderer/noise-renderer.ts#L20">graphics/rendering/renderer/noise-renderer.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/rendering/renderer/noise-renderer.ts#L20">graphics/rendering/renderer/noise-renderer.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Create a renderer, draw a (1D) noise texture with it,
+									<p>Create a renderer, draw a 2D noise texture with it,
 										then destroy the used resources, while returning the generated texture
 									in the form of a canvas.</p>
 								</div>
@@ -299,7 +741,7 @@
 									<h5>scale: <span class="tsd-signature-type">number</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
-											<p>A starting value can be 60</p>
+											<p>A starting value can be 15</p>
 										</div>
 									</div>
 								</li>
@@ -307,7 +749,7 @@
 									<h5>amplitude: <span class="tsd-signature-type">number</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
-											<p>A starting value can be 0.125</p>
+											<p>A starting value can be 1</p>
 										</div>
 									</div>
 								</li>
@@ -333,7 +775,7 @@
 					<div class="tsd-signature tsd-kind-icon">default<wbr>Runtime<wbr>Settings<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/settings/default-runtime-settings.ts#L7">graphics/rendering/settings/default-runtime-settings.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/rendering/settings/default-runtime-settings.ts#L7">graphics/rendering/settings/default-runtime-settings.ts:7</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -347,17 +789,7 @@
 						<div class="tsd-signature tsd-kind-icon">ambient<wbr>Light<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">vec3</span><span class="tsd-signature-symbol"> = vec3.fromValues(0.25, 0.15, 0.25)</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/settings/default-runtime-settings.ts#L14">graphics/rendering/settings/default-runtime-settings.ts:14</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-						<a name="defaultruntimesettings.backgroundcolor" class="tsd-anchor"></a>
-						<h3>background<wbr>Color</h3>
-						<div class="tsd-signature tsd-kind-icon">background<wbr>Color<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">vec4</span><span class="tsd-signature-symbol"> = vec4.fromValues(1, 1, 1, 1)</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/settings/default-runtime-settings.ts#L12">graphics/rendering/settings/default-runtime-settings.ts:12</a></li>
+								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/rendering/settings/default-runtime-settings.ts#L13">graphics/rendering/settings/default-runtime-settings.ts:13</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -367,7 +799,7 @@
 						<div class="tsd-signature tsd-kind-icon">color<wbr>Palette<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/settings/default-runtime-settings.ts#L13">graphics/rendering/settings/default-runtime-settings.ts:13</a></li>
+								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/rendering/settings/default-runtime-settings.ts#L12">graphics/rendering/settings/default-runtime-settings.ts:12</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -377,7 +809,7 @@
 						<div class="tsd-signature tsd-kind-icon">enable<wbr>High<wbr>Dpi<wbr>Rendering<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> = false</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/settings/default-runtime-settings.ts#L8">graphics/rendering/settings/default-runtime-settings.ts:8</a></li>
+								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/rendering/settings/default-runtime-settings.ts#L8">graphics/rendering/settings/default-runtime-settings.ts:8</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -387,7 +819,7 @@
 						<div class="tsd-signature tsd-kind-icon">is<wbr>World<wbr>Inverted<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> = false</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/settings/default-runtime-settings.ts#L10">graphics/rendering/settings/default-runtime-settings.ts:10</a></li>
+								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/rendering/settings/default-runtime-settings.ts#L10">graphics/rendering/settings/default-runtime-settings.ts:10</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -397,7 +829,7 @@
 						<div class="tsd-signature tsd-kind-icon">light<wbr>Cutoff<wbr>Distance<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 400</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/settings/default-runtime-settings.ts#L11">graphics/rendering/settings/default-runtime-settings.ts:11</a></li>
+								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/rendering/settings/default-runtime-settings.ts#L11">graphics/rendering/settings/default-runtime-settings.ts:11</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -407,7 +839,7 @@
 						<div class="tsd-signature tsd-kind-icon">textures<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/settings/default-runtime-settings.ts#L15">graphics/rendering/settings/default-runtime-settings.ts:15</a></li>
+								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/rendering/settings/default-runtime-settings.ts#L14">graphics/rendering/settings/default-runtime-settings.ts:14</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-type-declaration">
@@ -422,7 +854,7 @@
 						<div class="tsd-signature tsd-kind-icon">tile<wbr>Multiplier<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 8</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/settings/default-runtime-settings.ts#L9">graphics/rendering/settings/default-runtime-settings.ts:9</a></li>
+								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/rendering/settings/default-runtime-settings.ts#L9">graphics/rendering/settings/default-runtime-settings.ts:9</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -433,7 +865,7 @@
 					<div class="tsd-signature tsd-kind-icon">default<wbr>Startup<wbr>Settings<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/settings/default-startup-settings.ts#L6">graphics/rendering/settings/default-startup-settings.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/rendering/settings/default-startup-settings.ts#L7">graphics/rendering/settings/default-startup-settings.ts:7</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -442,12 +874,22 @@
 						</div>
 					</div>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="defaultstartupsettings.backgroundcolor" class="tsd-anchor"></a>
+						<h3>background<wbr>Color</h3>
+						<div class="tsd-signature tsd-kind-icon">background<wbr>Color<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">vec4</span><span class="tsd-signature-symbol"> = vec4.fromValues(1, 1, 1, 1)</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/rendering/settings/default-startup-settings.ts#L11">graphics/rendering/settings/default-startup-settings.ts:11</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
 						<a name="defaultstartupsettings.enablestopwatch" class="tsd-anchor"></a>
 						<h3>enable<wbr>Stopwatch</h3>
 						<div class="tsd-signature tsd-kind-icon">enable<wbr>Stopwatch<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> = false</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/settings/default-startup-settings.ts#L10">graphics/rendering/settings/default-startup-settings.ts:10</a></li>
+								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/rendering/settings/default-startup-settings.ts#L12">graphics/rendering/settings/default-startup-settings.ts:12</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -457,7 +899,7 @@
 						<div class="tsd-signature tsd-kind-icon">ignore<wbr>WebGL2<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> = false</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/settings/default-startup-settings.ts#L9">graphics/rendering/settings/default-startup-settings.ts:9</a></li>
+								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/rendering/settings/default-startup-settings.ts#L10">graphics/rendering/settings/default-startup-settings.ts:10</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -467,7 +909,7 @@
 						<div class="tsd-signature tsd-kind-icon">palette<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 256</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/settings/default-startup-settings.ts#L8">graphics/rendering/settings/default-startup-settings.ts:8</a></li>
+								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/rendering/settings/default-startup-settings.ts#L9">graphics/rendering/settings/default-startup-settings.ts:9</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -477,7 +919,7 @@
 						<div class="tsd-signature tsd-kind-icon">shadow<wbr>Trace<wbr>Count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 16</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/settings/default-startup-settings.ts#L7">graphics/rendering/settings/default-startup-settings.ts:7</a></li>
+								<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/rendering/settings/default-startup-settings.ts#L8">graphics/rendering/settings/default-startup-settings.ts:8</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -501,7 +943,7 @@
 						<a href="enums/wrapoptions.html" class="tsd-kind-icon">Wrap<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/circle.html" class="tsd-kind-icon">Circle</a>
+						<a href="classes/circlebase.html" class="tsd-kind-icon">Circle<wbr>Base</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/circlelight.html" class="tsd-kind-icon">Circle<wbr>Light</a>
@@ -510,22 +952,28 @@
 						<a href="classes/drawable.html" class="tsd-kind-icon">Drawable</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/droplet.html" class="tsd-kind-icon">Droplet</a>
+						<a href="classes/dropletbase.html" class="tsd-kind-icon">Droplet<wbr>Base</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/flashlight.html" class="tsd-kind-icon">Flashlight</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/invertedtunnel.html" class="tsd-kind-icon">Inverted<wbr>Tunnel</a>
+						<a href="classes/invertedtunnelbase.html" class="tsd-kind-icon">Inverted<wbr>Tunnel<wbr>Base</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/metacircle.html" class="tsd-kind-icon">Meta<wbr>Circle</a>
+						<a href="classes/metacirclebase.html" class="tsd-kind-icon">Meta<wbr>Circle<wbr>Base</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/rotatedrectangle.html" class="tsd-kind-icon">Rotated<wbr>Rectangle</a>
+						<a href="classes/polygonbase.html" class="tsd-kind-icon">Polygon<wbr>Base</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rotatedrectanglebase.html" class="tsd-kind-icon">Rotated<wbr>Rectangle<wbr>Base</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/drawabledescriptor.html" class="tsd-kind-icon">Drawable<wbr>Descriptor</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/noisypolygonbase.html" class="tsd-kind-icon">Noisy<wbr>Polygon<wbr>Base</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/renderer.html" class="tsd-kind-icon">Renderer</a>
@@ -543,13 +991,49 @@
 						<a href="globals.html#texturewithoptions" class="tsd-kind-icon">Texture<wbr>With<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="globals.html#circlefactory" class="tsd-kind-icon">Circle<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#dropletfactory" class="tsd-kind-icon">Droplet<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#invertedtunnelfactory" class="tsd-kind-icon">Inverted<wbr>Tunnel<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#metacirclefactory" class="tsd-kind-icon">Meta<wbr>Circle<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#noisypolygonfactory" class="tsd-kind-icon">Noisy<wbr>Polygon<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="globals.html#polygonfactory" class="tsd-kind-icon">Polygon<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rotatedrectanglefactory" class="tsd-kind-icon">Rotated<wbr>Rectangle<wbr>Factory</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#compile" class="tsd-kind-icon">compile</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="globals.html#hex" class="tsd-kind-icon">hex</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#hsl" class="tsd-kind-icon">hsl</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="globals.html#rendernoise" class="tsd-kind-icon">render<wbr>Noise</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rgb" class="tsd-kind-icon">rgb</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rgb255" class="tsd-kind-icon">rgb255</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rgba" class="tsd-kind-icon">rgba</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rgba255" class="tsd-kind-icon">rgba255</a>
 					</li>
 					<li class=" tsd-kind-object-literal">
 						<a href="globals.html#defaultruntimesettings" class="tsd-kind-icon">default<wbr>Runtime<wbr>Settings</a>

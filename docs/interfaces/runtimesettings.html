@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>RuntimeSettings | SDF-2D - v0.4.1</title>
-	<meta name="description" content="Documentation for SDF-2D - v0.4.1">
+	<title>RuntimeSettings | SDF-2D - v0.5.0</title>
+	<meta name="description" content="Documentation for SDF-2D - v0.5.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 	<link rel="icon" href="../favicon.ico" />
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">SDF-2D - v0.4.1</a>
+					<a href="../index.html" class="title">SDF-2D - v0.5.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -88,7 +88,6 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="runtimesettings.html#ambientlight" class="tsd-kind-icon">ambient<wbr>Light</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="runtimesettings.html#backgroundcolor" class="tsd-kind-icon">background<wbr>Color</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="runtimesettings.html#colorpalette" class="tsd-kind-icon">color<wbr>Palette</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="runtimesettings.html#enablehighdpirendering" class="tsd-kind-icon">enable<wbr>High<wbr>Dpi<wbr>Rendering</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="runtimesettings.html#isworldinverted" class="tsd-kind-icon">is<wbr>World<wbr>Inverted</a></li>
@@ -108,7 +107,7 @@
 					<div class="tsd-signature tsd-kind-icon">ambient<wbr>Light<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">vec3</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/settings/runtime-settings.ts#L71">graphics/rendering/settings/runtime-settings.ts:71</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/rendering/settings/runtime-settings.ts#L66">graphics/rendering/settings/runtime-settings.ts:66</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -118,27 +117,12 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="backgroundcolor" class="tsd-anchor"></a>
-					<h3>background<wbr>Color</h3>
-					<div class="tsd-signature tsd-kind-icon">background<wbr>Color<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">vec3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">vec4</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/settings/runtime-settings.ts#L44">graphics/rendering/settings/runtime-settings.ts:44</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The default background color of the scene, can have transparency.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="colorpalette" class="tsd-anchor"></a>
 					<h3>color<wbr>Palette</h3>
 					<div class="tsd-signature tsd-kind-icon">color<wbr>Palette<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">vec3</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">vec4</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/settings/runtime-settings.ts#L54">graphics/rendering/settings/runtime-settings.ts:54</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/rendering/settings/runtime-settings.ts#L49">graphics/rendering/settings/runtime-settings.ts:49</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -147,7 +131,7 @@
 						</div>
 						<p>The possible colors for the objects. Each color is referenced by its index in the
 						palette.</p>
-						<p>Can have transparency.</p>
+						<p>Can have transparency, but only if WebGL2 support is enabled.</p>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -156,7 +140,7 @@
 					<div class="tsd-signature tsd-kind-icon">enable<wbr>High<wbr>Dpi<wbr>Rendering<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/settings/runtime-settings.ts#L14">graphics/rendering/settings/runtime-settings.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/rendering/settings/runtime-settings.ts#L14">graphics/rendering/settings/runtime-settings.ts:14</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -171,7 +155,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>World<wbr>Inverted<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/settings/runtime-settings.ts#L33">graphics/rendering/settings/runtime-settings.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/rendering/settings/runtime-settings.ts#L33">graphics/rendering/settings/runtime-settings.ts:33</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -188,7 +172,7 @@
 					<div class="tsd-signature tsd-kind-icon">light<wbr>Cutoff<wbr>Distance<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/settings/runtime-settings.ts#L39">graphics/rendering/settings/runtime-settings.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/rendering/settings/runtime-settings.ts#L39">graphics/rendering/settings/runtime-settings.ts:39</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -204,7 +188,7 @@
 					<div class="tsd-signature tsd-kind-icon">textures<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/settings/runtime-settings.ts#L64">graphics/rendering/settings/runtime-settings.ts:64</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/rendering/settings/runtime-settings.ts#L59">graphics/rendering/settings/runtime-settings.ts:59</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -231,7 +215,7 @@
 					<div class="tsd-signature tsd-kind-icon">tile<wbr>Multiplier<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/cdcac35/src/graphics/rendering/settings/runtime-settings.ts#L26">graphics/rendering/settings/runtime-settings.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/0cca5d9/src/graphics/rendering/settings/runtime-settings.ts#L26">graphics/rendering/settings/runtime-settings.ts:26</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -265,7 +249,7 @@
 						<a href="../enums/wrapoptions.html" class="tsd-kind-icon">Wrap<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/circle.html" class="tsd-kind-icon">Circle</a>
+						<a href="../classes/circlebase.html" class="tsd-kind-icon">Circle<wbr>Base</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/circlelight.html" class="tsd-kind-icon">Circle<wbr>Light</a>
@@ -274,22 +258,28 @@
 						<a href="../classes/drawable.html" class="tsd-kind-icon">Drawable</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/droplet.html" class="tsd-kind-icon">Droplet</a>
+						<a href="../classes/dropletbase.html" class="tsd-kind-icon">Droplet<wbr>Base</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/flashlight.html" class="tsd-kind-icon">Flashlight</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/invertedtunnel.html" class="tsd-kind-icon">Inverted<wbr>Tunnel</a>
+						<a href="../classes/invertedtunnelbase.html" class="tsd-kind-icon">Inverted<wbr>Tunnel<wbr>Base</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/metacircle.html" class="tsd-kind-icon">Meta<wbr>Circle</a>
+						<a href="../classes/metacirclebase.html" class="tsd-kind-icon">Meta<wbr>Circle<wbr>Base</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/rotatedrectangle.html" class="tsd-kind-icon">Rotated<wbr>Rectangle</a>
+						<a href="../classes/polygonbase.html" class="tsd-kind-icon">Polygon<wbr>Base</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/rotatedrectanglebase.html" class="tsd-kind-icon">Rotated<wbr>Rectangle<wbr>Base</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="drawabledescriptor.html" class="tsd-kind-icon">Drawable<wbr>Descriptor</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="noisypolygonbase.html" class="tsd-kind-icon">Noisy<wbr>Polygon<wbr>Base</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="renderer.html" class="tsd-kind-icon">Renderer</a>
@@ -301,9 +291,6 @@
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="runtimesettings.html#ambientlight" class="tsd-kind-icon">ambient<wbr>Light</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="runtimesettings.html#backgroundcolor" class="tsd-kind-icon">background<wbr>Color</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="runtimesettings.html#colorpalette" class="tsd-kind-icon">color<wbr>Palette</a>
@@ -337,13 +324,49 @@
 						<a href="../globals.html#texturewithoptions" class="tsd-kind-icon">Texture<wbr>With<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="../globals.html#circlefactory" class="tsd-kind-icon">Circle<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#dropletfactory" class="tsd-kind-icon">Droplet<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#invertedtunnelfactory" class="tsd-kind-icon">Inverted<wbr>Tunnel<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#metacirclefactory" class="tsd-kind-icon">Meta<wbr>Circle<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#noisypolygonfactory" class="tsd-kind-icon">Noisy<wbr>Polygon<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="../globals.html#polygonfactory" class="tsd-kind-icon">Polygon<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#rotatedrectanglefactory" class="tsd-kind-icon">Rotated<wbr>Rectangle<wbr>Factory</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="../globals.html#compile" class="tsd-kind-icon">compile</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="../globals.html#hex" class="tsd-kind-icon">hex</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#hsl" class="tsd-kind-icon">hsl</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="../globals.html#rendernoise" class="tsd-kind-icon">render<wbr>Noise</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#rgb" class="tsd-kind-icon">rgb</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#rgb255" class="tsd-kind-icon">rgb255</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#rgba" class="tsd-kind-icon">rgba</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#rgba255" class="tsd-kind-icon">rgba255</a>
 					</li>
 					<li class=" tsd-kind-object-literal">
 						<a href="../globals.html#defaultruntimesettings" class="tsd-kind-icon">default<wbr>Runtime<wbr>Settings</a>
