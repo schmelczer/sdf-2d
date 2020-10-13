@@ -23,7 +23,7 @@ const settings = {
       finalRenderScale: 1.0,
     },
     {
-      distanceRenderScale: 1.0,
+      distanceRenderScale: 0.5,
       finalRenderScale: 1.0,
     },
   ],

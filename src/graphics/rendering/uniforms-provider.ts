@@ -1,10 +1,9 @@
-import { mat2d, vec2, vec3, vec4 } from 'gl-matrix';
+import { mat2d, vec2, vec3 } from 'gl-matrix';
 import { UniversalRenderingContext } from '../graphics-library/universal-rendering-context';
 
 /** @internal */
 export class UniformsProvider {
   public ambientLight!: vec3;
-  public _backgroundColor!: vec4;
   public textures: { [textureName: string]: number } = {};
 
   private scaleWorldLengthToNDC = 1;
@@ -21,7 +20,6 @@ export class UniformsProvider {
       ...uniforms,
       ...this.textures,
       ambientLight: this.ambientLight,
-      backgroundColor: this._backgroundColor,
       uvToWorld: this.uvToWorld,
       worldAreaInView: this.worldAreaInView,
       squareToAspectRatio: this.squareToAspectRatio,
@@ -29,14 +27,6 @@ export class UniformsProvider {
       scaleWorldLengthToNDC: this.scaleWorldLengthToNDC,
       transformWorldToNDC: this.transformWorldToNDC,
     };
-  }
-
-  public set backgroundColor(value: vec3 | vec4) {
-    if (value.length === 3) {
-      this.backgroundColor = vec4.fromValues(value[0], value[1], value[2], 1);
-    } else {
-      this._backgroundColor = value as vec4;
-    }
   }
 
   public getViewArea(): vec2 {

@@ -1,3 +1,5 @@
+import { vec3, vec4 } from 'gl-matrix';
+
 /**
  * Interface for a configuration object containing the settings
  * that need to be given before shader compilation.
@@ -30,6 +32,11 @@ export interface StartupSettings {
    * maintaining compatibility with low-end devices.
    */
   paletteSize: number;
+
+  /**
+   * The default background color of the scene, can have transparency on every platform.
+   */
+  backgroundColor: vec3 | vec4;
 
   /**
    * When set to `true`, rendering will fall back to WebGL

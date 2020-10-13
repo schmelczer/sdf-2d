@@ -39,17 +39,12 @@ export interface RuntimeSettings {
   lightCutoffDistance: number;
 
   /**
-   * The default background color of the scene, can have transparency.
-   */
-  backgroundColor: vec3 | vec4;
-
-  /**
    * Its length should be less than the one specified in [[StartupSettings]].paletteSize.
    *
    * The possible colors for the objects. Each color is referenced by its index in the
    * palette.
    *
-   * Can have transparency.
+   * Can have transparency, but only if WebGL2 support is enabled.
    */
   colorPalette: Array<vec3 | vec4>;
 

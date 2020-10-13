@@ -1,4 +1,3 @@
-import { UniversalRenderingContext } from '../universal-rendering-context';
 import { FilteringOptions, TextureOptions, WrapOptions } from './texture-options';
 
 /**
@@ -8,10 +7,17 @@ export class Texture {
   protected texture: WebGLTexture;
 
   constructor(
-    protected readonly gl: UniversalRenderingContext,
+    protected readonly gl: WebGLRenderingContext | WebGL2RenderingContext,
     private textureUnitId: number,
     textureOptionOverrides: Partial<TextureOptions> = {}
   ) {
+    this.texture = gl.createTexture()!;
+
+    this.bind();
+    this.setTextureOptions(textureOptionOverrides);
+  }
+
+  public setTextureOptions(textureOptionOverrides: Partial<TextureOptions> = {}) {
     const defaultTextureOptions: TextureOptions = {
       wrapS: WrapOptions.CLAMP_TO_EDGE,
       wrapT: WrapOptions.CLAMP_TO_EDGE,
@@ -24,14 +30,28 @@ export class Texture {
       ...textureOptionOverrides,
     };
 
-    this.texture = gl.createTexture()!;
-
     this.bind();
 
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl[textureOptions.wrapS]);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl[textureOptions.wrapT]);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl[textureOptions.minFilter]);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl[textureOptions.maxFilter]);
+    this.gl.texParameteri(
+      this.gl.TEXTURE_2D,
+      this.gl.TEXTURE_WRAP_S,
+      this.gl[textureOptions.wrapS]
+    );
+    this.gl.texParameteri(
+      this.gl.TEXTURE_2D,
+      this.gl.TEXTURE_WRAP_T,
+      this.gl[textureOptions.wrapT]
+    );
+    this.gl.texParameteri(
+      this.gl.TEXTURE_2D,
+      this.gl.TEXTURE_MIN_FILTER,
+      this.gl[textureOptions.minFilter]
+    );
+    this.gl.texParameteri(
+      this.gl.TEXTURE_2D,
+      this.gl.TEXTURE_MAG_FILTER,
+      this.gl[textureOptions.maxFilter]
+    );
   }
 
   public get colorTexture(): WebGLTexture {

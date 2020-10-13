@@ -40,9 +40,10 @@ applyArrayPlugins();
  * Example usage:
  *
  * ```js
- *  import { compile, Circle, CircleLight } from 'sdf-2d';
+ *  import { compile, hsl, CircleFactory, CircleLight } from 'sdf-2d';
  *
  *  const canvas = document.querySelector('canvas');
+ *  const Circle = CircleFactory(hsl(30, 66, 50));
  *  const renderer = await compile(canvas, [Circle.descriptor, CircleLight.descriptor]);
  * ```
  *
@@ -67,12 +68,19 @@ export * from './drawables/drawable';
 export * from './drawables/drawable-descriptor';
 export * from './drawables/lights/circle-light';
 export * from './drawables/lights/flashlight';
-export * from './drawables/shapes/circle';
-export * from './drawables/shapes/droplet';
+export * from './drawables/shapes/circle-factory';
+export * from './drawables/shapes/droplet-factory';
+export * from './drawables/shapes/inverted-tunnel-factory';
+export * from './drawables/shapes/meta-circle-factory';
+export * from './drawables/shapes/noisy-polygon-factory';
 export * from './drawables/shapes/polygon-factory';
-export * from './drawables/shapes/inverted-tunnel';
-export * from './drawables/shapes/meta-circle';
-export * from './drawables/shapes/rotated-rectangle';
+export * from './drawables/shapes/rotated-rectangle-factory';
 export * from './graphics/graphics-library/texture/texture-options';
 export * from './graphics/rendering/renderer/noise-renderer';
 export * from './graphics/rendering/renderer/renderer';
+export * from './helper/colors/hex';
+export * from './helper/colors/hsl';
+export * from './helper/colors/rgb';
+export * from './helper/colors/rgb255';
+export * from './helper/colors/rgba';
+export * from './helper/colors/rgba255';

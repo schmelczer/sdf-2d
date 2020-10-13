@@ -174,9 +174,9 @@ export class UniformArrayAutoScalingProgram implements IProgram {
           objectMinDistance = ${
             descriptors[i].sdf!.distanceFunctionName
           }(position, objectColor);
-
+          
           color = mix(
-            objectColor / {paletteSize},
+            objectColor,
             color,
             ${
               descriptors[i].sdf?.isInverted

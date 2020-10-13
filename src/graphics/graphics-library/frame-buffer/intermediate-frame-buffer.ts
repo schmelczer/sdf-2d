@@ -1,33 +1,23 @@
-import { enableExtension } from '../helper/enable-extension';
+import { ColorTexture } from '../texture/color-texture';
+import { DistanceTexture } from '../texture/distance-texture';
+import { Texture } from '../texture/texture';
 import { UniversalRenderingContext } from '../universal-rendering-context';
 import { FrameBuffer } from './frame-buffer';
 
 /** @internal */
 export class IntermediateFrameBuffer extends FrameBuffer {
-  private frameTexture: WebGLTexture;
-  private floatEnabled = false;
-  private floatLinearEnabled = false;
+  private distanceTexture?: DistanceTexture;
+  private colorTexture: ColorTexture;
 
   constructor(gl: UniversalRenderingContext) {
     super(gl);
 
-    try {
-      enableExtension(gl, 'EXT_color_buffer_float');
-      this.floatEnabled = true;
+    this.colorTexture = new ColorTexture(gl);
 
-      enableExtension(gl, 'OES_texture_float_linear');
-      this.floatLinearEnabled = true;
-    } catch {
-      // it's okay
+    if (gl.isWebGL2) {
+      this.distanceTexture = new DistanceTexture(gl);
     }
 
-    // can only return null on lost context
-    gl.activeTexture(gl.TEXTURE0);
-
-    this.frameTexture = this.gl.createTexture()!;
-    this.configureTexture();
-
-    // can only return null on lost context
     this.frameBuffer = this.gl.createFramebuffer()!;
     this.configureFrameBuffer();
 
@@ -35,74 +25,48 @@ export class IntermediateFrameBuffer extends FrameBuffer {
   }
 
   public destroy(): void {
-    this.gl.deleteTexture(this.frameTexture);
+    if (this.distanceTexture) {
+      this.gl.deleteTexture(this.distanceTexture);
+    }
+    this.gl.deleteTexture(this.colorTexture);
+    this.gl.deleteFramebuffer(this.frameBuffer);
   }
 
-  public get colorTexture(): WebGLTexture {
-    return this.frameTexture;
+  public get textures(): Array<Texture> {
+    return this.distanceTexture
+      ? [this.distanceTexture, this.colorTexture]
+      : [this.colorTexture];
   }
 
   public setSize(): boolean {
     const hasChanged = super.setSize();
 
     if (hasChanged) {
-      this.bind();
-
-      this.gl.texImage2D(
-        this.gl.TEXTURE_2D,
-        0,
-        this.floatEnabled ? this.gl.RG16F : this.gl.RGB,
-        this.size.x,
-        this.size.y,
-        0,
-        this.floatEnabled ? this.gl.RG : this.gl.RGB,
-        this.floatEnabled ? this.gl.FLOAT : this.gl.UNSIGNED_BYTE,
-        null
-      );
+      this.colorTexture.setSize(this.size);
+      this.distanceTexture?.setSize(this.size);
     }
 
     return hasChanged;
   }
 
-  private bind() {
-    this.gl.activeTexture(this.gl.TEXTURE0);
-    this.gl.bindTexture(this.gl.TEXTURE_2D, this.frameTexture);
-  }
-
-  private configureTexture() {
-    this.bind();
-
-    this.gl.texParameteri(
-      this.gl.TEXTURE_2D,
-      this.gl.TEXTURE_MAG_FILTER,
-      this.floatLinearEnabled ? this.gl.LINEAR : this.gl.NEAREST
-    );
-    this.gl.texParameteri(
-      this.gl.TEXTURE_2D,
-      this.gl.TEXTURE_MIN_FILTER,
-      this.floatLinearEnabled ? this.gl.LINEAR : this.gl.NEAREST
-    );
-    this.gl.texParameteri(
-      this.gl.TEXTURE_2D,
-      this.gl.TEXTURE_WRAP_S,
-      this.gl.CLAMP_TO_EDGE
-    );
-    this.gl.texParameteri(
-      this.gl.TEXTURE_2D,
-      this.gl.TEXTURE_WRAP_T,
-      this.gl.CLAMP_TO_EDGE
-    );
-  }
-
   private configureFrameBuffer() {
     this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, this.frameBuffer);
-    const attachmentPoint = this.gl.COLOR_ATTACHMENT0;
     this.gl.framebufferTexture2D(
       this.gl.FRAMEBUFFER,
-      attachmentPoint,
+      this.gl.COLOR_ATTACHMENT0,
       this.gl.TEXTURE_2D,
-      this.frameTexture,
+      this.colorTexture.colorTexture,
       0
     );
+
+    if (this.gl.isWebGL2) {
+      this.gl.framebufferTexture2D(
+        this.gl.FRAMEBUFFER,
+        this.gl.COLOR_ATTACHMENT1,
+        this.gl.TEXTURE_2D,
+        this.distanceTexture!.colorTexture,
+        0
+      );
+    }
   }
 }

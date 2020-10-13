@@ -10,22 +10,20 @@ precision lowp float;
 uniform float shadingNdcPixelSize;
 uniform vec2 squareToAspectRatioTimes2;
 uniform vec3 ambientLight;
-uniform vec4 backgroundColor;
 
-uniform sampler2D distanceTexture;
-uniform sampler2D palette;
+uniform sampler2D colorTexture;
 
 varying vec2 position;
 varying vec2 uvCoordinates;
 
 float getDistance(in vec2 target, out vec4 color) {
-    vec4 values = texture2D(distanceTexture, target);
-    color = texture2D(palette, vec2(values[1], 0.0));
-    return values[0] / 8.0;
+    vec4 values = texture2D(colorTexture, target);
+    color = vec4(values.rgb, 1.0);
+    return values[3] / 8.0;
 }
 
 float getDistance(in vec2 target) {
-    return texture2D(distanceTexture, target)[0] / 8.0;
+    return texture2D(colorTexture, target)[3] / 8.0;
 }
 
 float shadowTransparency(float startingDistance, float lightCenterDistance, vec2 direction) {
@@ -122,13 +120,13 @@ void main() {
     #endif
     #endif
 
-    vec3 outsideColor = backgroundColor.rgb * lighting;
+    vec3 outsideColor = {backgroundColor}.rgb * lighting;
     vec3 insideColor = colorAtPosition * lightingInside;
 
     float edge = clamp(startingDistance / shadingNdcPixelSize, 0.0, 1.0);
     vec3 antialiasedColor = mix(insideColor, outsideColor, edge);
     gl_FragColor = vec4(
         antialiasedColor,
-        mix(rgbaColorAtPosition.a, backgroundColor.a, step(0.0, startingDistance))
+        rgbaColorAtPosition.a
     );
 }

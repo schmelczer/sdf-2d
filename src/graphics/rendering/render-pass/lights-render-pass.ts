@@ -14,14 +14,7 @@ export class LightsRenderPass extends RenderPass {
     this.drawables.push(drawable);
   }
 
-  public render(
-    commonUniforms: any,
-    distanceTexture: WebGLTexture,
-    inputTextures: Array<Texture>
-  ) {
-    this.gl.activeTexture(this.gl.TEXTURE0);
-    this.gl.bindTexture(this.gl.TEXTURE_2D, distanceTexture);
-
+  public render(commonUniforms: any, inputTextures: Array<Texture>) {
     this.frame.bindAndClear(inputTextures);
 
     const tileCenterWorldCoordinates = vec2.transformMat2d(

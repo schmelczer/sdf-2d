@@ -4,8 +4,10 @@ import { Texture } from './texture';
 
 /** @internal */
 export class PaletteTexture extends Texture {
+  public static readonly textureUnitId = 2;
+
   constructor(gl: UniversalRenderingContext, private readonly paletteSize: number) {
-    super(gl, 1);
+    super(gl, PaletteTexture.textureUnitId);
   }
 
   public setPalette(colors: Array<vec3 | vec4>) {

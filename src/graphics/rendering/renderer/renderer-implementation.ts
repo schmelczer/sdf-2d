@@ -2,11 +2,14 @@ import { vec2 } from 'gl-matrix';
 import { Drawable } from '../../../drawables/drawable';
 import { DrawableDescriptor } from '../../../drawables/drawable-descriptor';
 import { LightDrawable } from '../../../drawables/lights/light-drawable';
+import { colorToString } from '../../../helper/color-to-string';
 import { msToString } from '../../../helper/ms-to-string';
 import { DefaultFrameBuffer } from '../../graphics-library/frame-buffer/default-frame-buffer';
 import { IntermediateFrameBuffer } from '../../graphics-library/frame-buffer/intermediate-frame-buffer';
 import { WebGlStopwatch } from '../../graphics-library/helper/stopwatch';
 import { ParallelCompiler } from '../../graphics-library/parallel-compiler';
+import { ColorTexture } from '../../graphics-library/texture/color-texture';
+import { DistanceTexture } from '../../graphics-library/texture/distance-texture';
 import { PaletteTexture } from '../../graphics-library/texture/palette-texture';
 import { Texture } from '../../graphics-library/texture/texture';
 import { TextureWithOptions } from '../../graphics-library/texture/texture-options';
@@ -56,12 +59,11 @@ export class RendererImplementation implements Renderer {
     },
     tileMultiplier: (v) => (this.distancePass.tileMultiplier = v),
     isWorldInverted: (v) => (this.distancePass.isWorldInverted = v),
-    backgroundColor: (v) => (this.uniformsProvider.backgroundColor = v),
     textures: (v: { [textureName: string]: TexImageSource | TextureWithOptions }) => {
       this.textures.forEach((t) => t.destroy());
       this.textures = [];
 
-      let id = 2;
+      let id = 3;
       for (const key in v) {
         this.uniformsProvider.textures[key] = id;
         let texture: Texture;
@@ -113,8 +115,6 @@ export class RendererImplementation implements Renderer {
       vec2.fromValues(canvas.clientWidth, canvas.clientHeight)
     );
 
-    this.queryPrecisions();
-
     this.autoscaler = new FpsAutoscaler({
       distanceRenderScale: (v) =>
         (this.distanceFieldFrameBuffer.renderScale = v as number),
@@ -143,6 +143,7 @@ export class RendererImplementation implements Renderer {
         compiler,
         {
           paletteSize: settings.paletteSize,
+          backgroundColor: colorToString(settings.backgroundColor),
         }
       )
     );
@@ -155,6 +156,7 @@ export class RendererImplementation implements Renderer {
         compiler,
         {
           shadowTraceCount: settings.shadowTraceCount.toString(),
+          backgroundColor: colorToString(settings.backgroundColor),
         }
       )
     );
@@ -162,7 +164,7 @@ export class RendererImplementation implements Renderer {
     await compiler.compilePrograms();
     await Promise.all(promises);
 
-    if (settings.enableStopwatch) {
+    if (settings.enableStopwatch && this.gl.isWebGL2) {
       try {
         this.stopwatch = new WebGlStopwatch(this.gl);
       } catch {
@@ -177,30 +179,6 @@ export class RendererImplementation implements Renderer {
 
   private static hasSdf(descriptor: DrawableDescriptor) {
     return Object.prototype.hasOwnProperty.call(descriptor, 'sdf');
-  }
-
-  private queryPrecisions() {
-    const precisionToObject = (shader: GLenum, precision: GLenum) => {
-      const toExponent = (v: number): string => `2^${v}`;
-      const p = this.gl.getShaderPrecisionFormat(shader, precision)!;
-      return {
-        range: `[${toExponent(p.rangeMin)}, ${toExponent(p.rangeMax)}]`,
-        precision: toExponent(p.precision),
-      };
-    };
-
-    Insights.setValue('precisions', {
-      'vertex shader': {
-        'low float': precisionToObject(this.gl.VERTEX_SHADER, this.gl.LOW_FLOAT),
-        'medium float': precisionToObject(this.gl.VERTEX_SHADER, this.gl.MEDIUM_FLOAT),
-        'high float': precisionToObject(this.gl.VERTEX_SHADER, this.gl.HIGH_FLOAT),
-      },
-      'fragment shader': {
-        'low float': precisionToObject(this.gl.FRAGMENT_SHADER, this.gl.LOW_FLOAT),
-        'medium float': precisionToObject(this.gl.FRAGMENT_SHADER, this.gl.MEDIUM_FLOAT),
-        'high float': precisionToObject(this.gl.FRAGMENT_SHADER, this.gl.HIGH_FLOAT),
-      },
-    });
   }
 
   public addDrawable(drawable: Drawable): void {
@@ -235,20 +213,23 @@ export class RendererImplementation implements Renderer {
 
     const common = {
       // texture units
-      distanceTexture: 0,
-      palette: 1,
+      distanceTexture: DistanceTexture.textureUnitId,
+      colorTexture: ColorTexture.textureUnitId,
+      palette: PaletteTexture.textureUnitId,
 
       distanceNdcPixelSize: 2 / Math.max(...this.distanceFieldFrameBuffer.getSize()),
       shadingNdcPixelSize: 2 / Math.max(...this.lightingFrameBuffer.getSize()),
     };
 
-    this.distancePass.render(this.uniformsProvider.getUniforms(common), ...this.textures);
+    this.distancePass.render(this.uniformsProvider.getUniforms(common), [
+      this.palette,
+      ...this.textures,
+    ]);
 
     this.gl.enable(this.gl.BLEND);
     this.lightsPass.render(
       this.uniformsProvider.getUniforms(common),
-      this.distanceFieldFrameBuffer.colorTexture,
-      [this.palette]
+      this.distanceFieldFrameBuffer.textures
     );
     this.gl.disable(this.gl.BLEND);
 

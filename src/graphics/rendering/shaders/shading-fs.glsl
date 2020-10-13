@@ -8,23 +8,21 @@ precision lowp float;
 {macroDefinitions}
 
 uniform float shadingNdcPixelSize;
+uniform float distanceNdcPixelSize;
 uniform vec2 squareToAspectRatioTimes2;
 uniform vec3 ambientLight;
-uniform vec4 backgroundColor;
 
 uniform sampler2D distanceTexture;
-uniform sampler2D palette;
+uniform sampler2D colorTexture;
 
 in vec2 position;
 in vec2 uvCoordinates;
 
-float getDistance(in vec2 target, out vec4 color) {
-    vec4 values = texture(distanceTexture, target);
-    color = texture(palette, vec2(values[1], 0.0));
-    return values[0];
+vec4 getColor(vec2 target) {
+    return texture(colorTexture, target);
 }
 
-float getDistance(in vec2 target) {
+float getDistance(vec2 target) {
     return texture(distanceTexture, target)[0];
 }
 
@@ -83,13 +81,14 @@ float shadowTransparency(float startingDistance, float lightCenterDistance, vec2
 
 out vec4 fragmentColor;
 void main() {
-    vec4 rgbaColorAtPosition;
-    float startingDistance = getDistance(uvCoordinates, rgbaColorAtPosition);
-
+    vec4 rgbaColorAtPosition = getColor(uvCoordinates);
     vec3 colorAtPosition = rgbaColorAtPosition.rgb;
 
+    float startingDistance = getDistance(uvCoordinates);
+
+
     vec3 lighting = ambientLight;
-    vec3 lightingInside = lighting;
+    vec3 lightingInside = ambientLight;
     
     #ifdef CIRCLE_LIGHT_COUNT
     #if CIRCLE_LIGHT_COUNT > 0
@@ -142,13 +141,13 @@ void main() {
     #endif
     #endif
 
-    vec3 outsideColor = backgroundColor.rgb * lighting;
+    vec3 outsideColor = {backgroundColor}.rgb * lighting;
     vec3 insideColor = colorAtPosition * lightingInside * INTENSITY_INSIDE_RATIO;
-
+    
     float edge = clamp(startingDistance / shadingNdcPixelSize, 0.0, 1.0);
     vec3 antialiasedColor = mix(insideColor, outsideColor, edge);
     fragmentColor = vec4(
         antialiasedColor,
-        mix(rgbaColorAtPosition.a, backgroundColor.a, step(0.0, startingDistance))
+        rgbaColorAtPosition.a
     );
 }
