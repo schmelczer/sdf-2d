@@ -1,8 +1,10 @@
 # ![SDF-2D logo](media/logo-colored.svg) SDF-2D library
 
-A graphics library to enable the real-time rendering of 2D signed distance fields on web.
+A graphics library to enable the real-time rendering of 2D signed distance fields on the web.
 
-![screenshot taken on a PC](media/screenshot.png)
+![screenshot of a bumpy tunnel taken on version (v0.5.0)](media/tunnels-screenshot.png)
+
+![screenshot of a merging circles taken on version (v0.5.0)](media/circles-screenshot.png)
 
 ## Links
 
@@ -26,7 +28,7 @@ A graphics library to enable the real-time rendering of 2D signed distance field
   - Context lost is handled with automatic restoration
   - Can be used without thinking of the GPU _(although for stunning results it, should be kept in mind)_
 
-![screenshots](media/mobile-screenshots.png)
+![three screenshots from mobiles (v0.3.0)](media/mobile-screenshots.png)
 
 > Three separate screenshots taken on a mobile device
 
@@ -39,20 +41,23 @@ npm install sdf-2d --save-dev
 ## Use
 
 ```js
-import { compile, Circle, CircleLight } from 'sdf-2d';
+import { compile, CircleFactory, hsl, CircleLight } from 'sdf-2d';
 
 const main = async () => {
+  const Circle = CircleFactory(hsl(30, 66, 50));
   const canvas = document.querySelector('canvas');
+
   const renderer = await compile(canvas, [Circle.descriptor, CircleLight.descriptor]);
 
   renderer.addDrawable(new Circle([200, 200], 50));
   renderer.addDrawable(new CircleLight([500, 300], [1, 0.5, 0], 0.5));
-
   renderer.renderDrawables();
 };
 
 main();
 ```
+
+> A commented version of the above code can be found [in this repo](https://github.com/schmelczerandras/sdf-2d-minimal-example).
 
 ## Examples
 
