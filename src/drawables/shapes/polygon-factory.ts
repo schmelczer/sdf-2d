@@ -2,14 +2,25 @@ import { mat2d, vec2 } from 'gl-matrix';
 import { clamp01 } from '../../helper/clamp';
 import { Drawable } from '../drawable';
 import { DrawableDescriptor } from '../drawable-descriptor';
+import { EmptyDrawable } from '../empty-drawable';
+
+/**
+ * @category Drawable
+ */
+export class PolygonBase extends EmptyDrawable {
+  constructor(public vertices: Array<vec2>) {
+    super();
+  }
+}
 
 /**
  * @category Drawable
  */
 export const PolygonFactory = (
-  vertexCount: number
-): { new (vertices: Array<vec2>): Drawable; descriptor: DrawableDescriptor } => {
-  class Polygon extends Drawable {
+  vertexCount: number,
+  colorIndex: number
+): typeof PolygonBase => {
+  class Polygon extends PolygonBase {
     public static descriptor: DrawableDescriptor = {
       sdf: {
         shader: `
@@ -30,8 +41,9 @@ export const PolygonFactory = (
             );
           }
 
-          float polygon${vertexCount}MinDistance(vec2 target, out float colorIndex) {
-            colorIndex = 1.0;
+          float polygon${vertexCount}MinDistance(vec2 target, out vec4 color) {
+            color = readFromPalette(${colorIndex});
+
             float minDistance = 100.0;
 
             for (int j = 0; j < POLGYON${vertexCount}_COUNT; j++) {
@@ -54,7 +66,6 @@ export const PolygonFactory = (
               }
 
               vec2 ds = polygon${vertexCount}LineDistance(target, vb, startEnd);
-              
               bvec3 cond = bvec3(target.y >= vb.y, target.y < startEnd.y, ds.y > 0.0);
               if (all(cond) || all(not(cond))) {
                 s *= -1.0;
@@ -78,8 +89,8 @@ export const PolygonFactory = (
       empty: new Polygon(new Array(vertexCount).fill(vec2.create())),
     };
 
-    constructor(public vertices: Array<vec2>) {
-      super();
+    constructor(vertices: Array<vec2>) {
+      super(vertices);
 
       if (vertices.length > vertexCount) {
         throw new Error(

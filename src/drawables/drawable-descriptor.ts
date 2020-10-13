@@ -7,7 +7,7 @@ import { Drawable } from './drawable';
  * Each [[Drawable]] must have a static property of this type, called descriptor.
  *
  * For more information on how to create your own DrawableDescriptor-s, look at the
- * code of [[Circle]] or [[InvertedTunnel]].
+ * code of [[CircleFactory]] or [[InvertedTunnelFactory]].
  */
 export interface DrawableDescriptor {
   /**
