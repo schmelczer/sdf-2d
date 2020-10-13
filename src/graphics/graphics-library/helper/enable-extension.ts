@@ -1,9 +1,8 @@
 import { Insights } from '../../rendering/insights';
-import { UniversalRenderingContext } from '../universal-rendering-context';
 
 /** @internal */
 export const tryEnableExtension = (
-  gl: UniversalRenderingContext,
+  gl: WebGL2RenderingContext | WebGLRenderingContext,
   name: string
 ): any | null => {
   let extension = null;
@@ -17,7 +16,10 @@ export const tryEnableExtension = (
 };
 
 /** @internal */
-export const enableExtension = (gl: UniversalRenderingContext, name: string): any => {
+export const enableExtension = (
+  gl: WebGL2RenderingContext | WebGLRenderingContext,
+  name: string
+): any => {
   const extension = tryEnableExtension(gl, name);
 
   if (extension === null) {

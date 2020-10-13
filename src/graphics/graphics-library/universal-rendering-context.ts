@@ -1,8 +1,9 @@
 import { Insights } from '../rendering/insights';
 
 /** @internal */
-export type UniversalRenderingContext = WebGL2RenderingContext &
-  WebGLRenderingContext & { isWebGL2: boolean };
+export type UniversalRenderingContext =
+  | (WebGL2RenderingContext & { isWebGL2: true })
+  | (WebGLRenderingContext & { isWebGL2: false });
 
 /** @internal */
 export const getUniversalRenderingContext = (
@@ -43,14 +44,14 @@ export const getUniversalRenderingContext = (
 
   const contextLostHandler = {
     get: function (target: UniversalRenderingContext, prop: string) {
-      if (isDestroyed || target.isContextLost()) {
-        isDestroyed = true;
-        throw new Error('Context lost');
-      }
-
       const value = (target as any)[prop];
 
       if (typeof value === 'function') {
+        if (isDestroyed || target.isContextLost()) {
+          isDestroyed = true;
+          throw new Error('Context lost');
+        }
+
         return value.bind(target);
       }
 

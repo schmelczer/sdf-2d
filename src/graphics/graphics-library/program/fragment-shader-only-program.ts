@@ -63,7 +63,6 @@ export class FragmentShaderOnlyProgram extends Program {
     );
 
     if (this.gl.isWebGL2) {
-      // can only return null on lost context
       this.vao = this.gl.createVertexArray()!;
       this.gl.bindVertexArray(this.vao!);
     } else {

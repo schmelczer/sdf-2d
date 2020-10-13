@@ -1,4 +1,3 @@
-import { UniversalRenderingContext } from '../universal-rendering-context';
 import { enableExtension } from './enable-extension';
 
 /** @internal */
@@ -16,7 +15,7 @@ export class WebGlStopwatch {
   private timerExtension: any;
   private timerQuery?: WebGLQuery;
 
-  constructor(private readonly gl: UniversalRenderingContext) {
+  constructor(private readonly gl: WebGL2RenderingContext) {
     this.timerExtension = enableExtension(gl, 'EXT_disjoint_timer_query_webgl2');
   }
 
