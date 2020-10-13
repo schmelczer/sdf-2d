@@ -86,7 +86,6 @@ void main() {
 
     float startingDistance = getDistance(uvCoordinates);
 
-
     vec3 lighting = ambientLight;
     vec3 lightingInside = ambientLight;
     

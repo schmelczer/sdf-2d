@@ -68,7 +68,7 @@ void main() {
     vec3 colorAtPosition = rgbaColorAtPosition.rgb;
 
     vec3 lighting = ambientLight;
-    vec3 lightingInside = lighting * INTENSITY_INSIDE_RATIO;
+    vec3 lightingInside = ambientLight;
 
     #ifdef CIRCLE_LIGHT_COUNT
     #if CIRCLE_LIGHT_COUNT > 0
@@ -121,7 +121,7 @@ void main() {
     #endif
 
     vec3 outsideColor = {backgroundColor}.rgb * lighting;
-    vec3 insideColor = colorAtPosition * lightingInside;
+    vec3 insideColor = colorAtPosition * lightingInside * INTENSITY_INSIDE_RATIO;
 
     float edge = clamp(startingDistance / shadingNdcPixelSize, 0.0, 1.0);
     vec3 antialiasedColor = mix(insideColor, outsideColor, edge);
