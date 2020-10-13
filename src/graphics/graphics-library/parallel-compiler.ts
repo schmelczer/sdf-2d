@@ -1,3 +1,4 @@
+import { numberToGlslFloat } from '../../helper/number-to-glsl-float';
 import { wait } from '../../helper/wait';
 import { Insights } from '../rendering/insights';
 import { tryEnableExtension } from './helper/enable-extension';
@@ -33,7 +34,6 @@ export class ParallelCompiler {
     let resolvePromise: ((program: WebGLProgram) => void) | null = null;
     const promise = new Promise<WebGLProgram>((r) => (resolvePromise = r));
 
-    // can only return null on lost context
     const program = this.gl.createProgram()!;
 
     const vertexShader = this.compileShader(
@@ -85,11 +85,10 @@ export class ParallelCompiler {
       processedSource = processedSource.replace(/{(.+)}/gm, (_, name: string): string => {
         replaceHappened = true;
         const value = substitutions[name];
-        return Number.isInteger(value) ? `${value}.0` : value;
+        return numberToGlslFloat(value);
       });
     } while (replaceHappened);
 
-    // can only return null on lost context
     const shader = this.gl.createShader(type)!;
 
     this.gl.shaderSource(shader, processedSource);
