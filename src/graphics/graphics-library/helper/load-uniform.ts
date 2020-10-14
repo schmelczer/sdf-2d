@@ -11,6 +11,30 @@ const converters: Map<
 > = new Map();
 converters.set(WebGLRenderingContext.SAMPLER_2D, (gl, v, l) => gl.uniform1i(l, v));
 
+converters.set(WebGLRenderingContext.INT, (gl, v: number | Array<number>, l) => {
+  if (v instanceof Array) {
+    if (v.length == 0) {
+      return;
+    }
+
+    gl.uniform1iv(l, new Int32Array(v));
+  } else {
+    gl.uniform1i(l, v);
+  }
+});
+
+converters.set(WebGLRenderingContext.BOOL, (gl, v: boolean | Array<boolean>, l) => {
+  if (v instanceof Array) {
+    if (v.length == 0) {
+      return;
+    }
+
+    gl.uniform1iv(l, new Int32Array(v.map((b) => +b)));
+  } else {
+    gl.uniform1i(l, +v);
+  }
+});
+
 converters.set(
   WebGLRenderingContext.FLOAT,
   (gl, v: number | Array<number> | Float32Array, l) => {
@@ -105,9 +129,6 @@ converters.set(WebGLRenderingContext.FLOAT_MAT3, (gl, v, l) => {
     );
   }
 });
-
-converters.set(WebGLRenderingContext.BOOL, (gl, v: number, l) => gl.uniform1i(l, v));
-converters.set(WebGLRenderingContext.INT, (gl, v: number, l) => gl.uniform1i(l, v));
 
 /** @internal */
 export const loadUniform = (
