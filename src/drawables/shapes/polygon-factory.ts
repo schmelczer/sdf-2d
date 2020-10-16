@@ -1,5 +1,6 @@
-import { mat2d, vec2 } from 'gl-matrix';
+import { mat2d, vec2, vec3, vec4 } from 'gl-matrix';
 import { clamp01 } from '../../helper/clamp';
+import { codeForColorAccess } from '../../helper/code-for-color-access';
 import { Drawable } from '../drawable';
 import { DrawableDescriptor } from '../drawable-descriptor';
 import { EmptyDrawable } from '../empty-drawable';
@@ -18,7 +19,7 @@ export class PolygonBase extends EmptyDrawable {
  */
 export const PolygonFactory = (
   vertexCount: number,
-  colorIndex: number
+  color: vec3 | vec4 | number
 ): typeof PolygonBase => {
   class Polygon extends PolygonBase {
     public static descriptor: DrawableDescriptor = {
@@ -42,7 +43,7 @@ export const PolygonFactory = (
           }
 
           float polygon${vertexCount}MinDistance(vec2 target, out vec4 color) {
-            color = readFromPalette(${colorIndex});
+            color = ${codeForColorAccess(color)};
 
             float minDistance = 100.0;
 

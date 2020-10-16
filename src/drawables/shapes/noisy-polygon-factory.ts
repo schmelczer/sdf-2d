@@ -1,4 +1,5 @@
-import { mat2d, vec2 } from 'gl-matrix';
+import { mat2d, vec2, vec3, vec4 } from 'gl-matrix';
+import { codeForColorAccess } from '../../helper/code-for-color-access';
 import { Drawable } from '../drawable';
 import { DrawableDescriptor } from '../drawable-descriptor';
 import { PolygonBase, PolygonFactory } from './polygon-factory';
@@ -11,9 +12,9 @@ interface NoisyPolygonBase extends PolygonBase {
  */
 export const NoisyPolygonFactory = (
   vertexCount: number,
-  colorIndex: number
+  color: vec3 | vec4 | number
 ): typeof PolygonBase & NoisyPolygonBase => {
-  class NoisyPolygon extends PolygonFactory(vertexCount, colorIndex) {
+  class NoisyPolygon extends PolygonFactory(vertexCount, color) {
     public static descriptor: DrawableDescriptor = {
       sdf: {
         shader: `
@@ -50,7 +51,7 @@ export const NoisyPolygonFactory = (
           }
 
           float noisyPolygon${vertexCount}MinDistance(vec2 target, out vec4 color) {
-            color = readFromPalette(${colorIndex});
+            color = ${codeForColorAccess(color)};
 
             float minDistance = 100.0;
 
@@ -100,12 +101,11 @@ export const NoisyPolygonFactory = (
         distanceFunctionName: `noisyPolygon${vertexCount}MinDistance`,
       },
       propertyUniformMapping: {
-        vertices: `noisyPolygon${vertexCount}Vertices`,
         length: `noisyPolygon${vertexCount}Lengths`,
         random: `noisyPolygon${vertexCount}Randoms`,
         center: `noisyPolygon${vertexCount}Centers`,
+        vertices: `noisyPolygon${vertexCount}Vertices`,
       },
-      objectCountScaler: 1 / vertexCount,
       uniformCountMacroName: `NOISY_POLGYON${vertexCount}_COUNT`,
       shaderCombinationSteps: [0, 1, 2, 3, 8, 16],
       empty: (new NoisyPolygon(

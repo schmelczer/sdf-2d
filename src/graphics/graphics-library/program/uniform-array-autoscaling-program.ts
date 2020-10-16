@@ -70,7 +70,7 @@ export class UniformArrayAutoScalingProgram implements IProgram {
 
   public draw(uniforms: { [name: string]: any }): void {
     const values = this.descriptors.map((d) => {
-      const uniformNames = last(Object.entries(d.propertyUniformMapping));
+      const uniformNames = Object.entries(d.propertyUniformMapping)[0];
       if (!uniformNames) {
         return 0;
       }
