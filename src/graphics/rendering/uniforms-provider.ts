@@ -71,21 +71,28 @@ export class UniformsProvider {
   }
 
   public screenToWorldPosition(screenPosition: vec2): vec2 {
+    const transform = this.calculateScreenToWorldTransformation();
+    return vec2.transformMat2d(vec2.create(), screenPosition, transform);
+  }
+
+  public worldToDisplayCoordinates(worldCoordinates: vec2): vec2 {
+    const transform = this.calculateScreenToWorldTransformation();
+    mat2d.invert(transform, transform);
+    return vec2.transformMat2d(vec2.create(), worldCoordinates, transform);
+  }
+
+  private calculateScreenToWorldTransformation(): mat2d {
     const { width, height } = (this.gl
       .canvas as HTMLCanvasElement).getBoundingClientRect();
-
-    const position = vec2.fromValues(screenPosition.x, height - screenPosition.y);
     const resolution = vec2.fromValues(width, height);
 
     const transform = mat2d.fromTranslation(mat2d.create(), this.viewAreaBottomLeft);
-
     mat2d.scale(
       transform,
       transform,
       vec2.divide(vec2.create(), this.worldAreaInView, resolution)
     );
-    mat2d.translate(transform, transform, vec2.fromValues(0.5, 0.5));
-
-    return vec2.transformMat2d(vec2.create(), position, transform);
+    mat2d.translate(transform, transform, vec2.fromValues(0.5, height - 0.5));
+    return mat2d.scale(transform, transform, vec2.fromValues(1, -1));
   }
 }

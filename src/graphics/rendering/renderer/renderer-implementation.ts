@@ -242,6 +242,10 @@ export class RendererImplementation implements Renderer {
     return this.uniformsProvider.screenToWorldPosition(displayCoordinates);
   }
 
+  public worldToDisplayCoordinates(worldCoordinates: vec2): vec2 {
+    return this.uniformsProvider.worldToDisplayCoordinates(worldCoordinates);
+  }
+
   public setViewArea(topLeft: vec2, size: vec2) {
     this.uniformsProvider.setViewArea(topLeft, size);
   }

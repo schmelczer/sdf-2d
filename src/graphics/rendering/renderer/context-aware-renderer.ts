@@ -143,6 +143,13 @@ export class ContextAwareRenderer implements Renderer {
     );
   }
 
+  public worldToDisplayCoordinates(worldCoordinates: vec2): vec2 {
+    return this.handle(
+      () => this.renderer.worldToDisplayCoordinates(worldCoordinates),
+      vec2.create()
+    );
+  }
+
   public renderDrawables(): void {
     return this.handle(() => this.renderer.renderDrawables(), undefined);
   }

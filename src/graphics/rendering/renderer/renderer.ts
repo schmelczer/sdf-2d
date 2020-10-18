@@ -30,7 +30,8 @@ export interface Renderer {
   setViewArea(topLeft: vec2, size: vec2): void;
 
   /**
-   * Return the world coordinates from a pixel's position.
+   * The inverse of `worldToDisplayCoordinates`, returns the world coordinates
+   * from a pixel's position.
    *
    * The view area coordinates are also given in world coordinates.
    *
@@ -40,6 +41,17 @@ export interface Renderer {
    * Just as in mouse events' clientX and clientY.
    */
   displayToWorldCoordinates(displayCoordinates: vec2): vec2;
+
+  /**
+   * The inverse of `displayToWorldCoordinates`, returns the screen space position
+   * of a point given in world space cooridnates.
+   *
+   * While the origin for worldCoordinates resides in the bottom-left corner,
+   * the origin of the returned display coordinates is placed in the top left.
+   *
+   * @param worldCoordinates Coordinates used when drawing objects.
+   */
+  worldToDisplayCoordinates(worldCoordinates: vec2): vec2;
 
   /**
    * Patch the current runtime settings with new values.
