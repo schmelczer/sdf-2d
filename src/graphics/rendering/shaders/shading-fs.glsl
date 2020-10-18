@@ -40,8 +40,6 @@ float shadowTransparency(float startingDistance, float lightCenterDistance, vec2
     uniform float circleLightIntensities[CIRCLE_LIGHT_COUNT];
     uniform vec3 circleLightColors[CIRCLE_LIGHT_COUNT];
 
-    in vec2 circleLightDirections[CIRCLE_LIGHT_COUNT];
-
     vec3 colorInPosition(int lightIndex, out float lightCenterDistance) {
         lightCenterDistance = distance(circleLightCenters[lightIndex], position);
         return circleLightColors[lightIndex] / pow(
@@ -58,8 +56,6 @@ float shadowTransparency(float startingDistance, float lightCenterDistance, vec2
     uniform vec3 flashlightColors[FLASHLIGHT_COUNT];
     uniform vec2 flashlightDirections[FLASHLIGHT_COUNT];
     uniform float flashlightStartCutoffs[FLASHLIGHT_COUNT];
-
-    in vec2 flashlightActualDirections[FLASHLIGHT_COUNT];
 
     float intensityInDirection(vec2 lightDirection, vec2 targetDirection) {
         return smoothstep(
@@ -95,7 +91,7 @@ void main() {
         float lightCenterDistance;
         vec3 lightColorAtPosition = colorInPosition(i, lightCenterDistance);
 
-        vec2 direction = normalize(circleLightDirections[i]) / squareToAspectRatioTimes2;
+        vec2 direction = normalize(circleLightCenters[i] - position) / squareToAspectRatioTimes2;
         lighting += lightColorAtPosition * shadowTransparency(
             startingDistance, 
             lightCenterDistance, 
@@ -110,7 +106,7 @@ void main() {
     #ifdef FLASHLIGHT_COUNT
     #if FLASHLIGHT_COUNT > 0
     for (int i = 0; i < FLASHLIGHT_COUNT; i++) {
-        vec2 originalDirection = normalize(flashlightActualDirections[i]);
+        vec2 originalDirection = normalize(flashlightCenters[i] - position);
 
         float lightCenterDistance;
         vec3 lightColorAtPosition = colorInPosition(
