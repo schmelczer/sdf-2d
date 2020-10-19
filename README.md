@@ -70,3 +70,8 @@ For further examples, please visit the following repositories:
 ## Documentation
 
 For more technical details, please consult the documentation available in the repository and at [schmelczerandras.github.io/sdf-2d/](https://schmelczerandras.github.io/sdf-2d/).
+
+## Plans
+
+- Automatic tile multiplier scaling
+- Non-uniform tile sizes based on scene density
