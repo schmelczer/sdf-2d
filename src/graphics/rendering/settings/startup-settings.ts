@@ -25,6 +25,14 @@ export interface StartupSettings {
   shadowTraceCount: number;
 
   /**
+   * The illumination is multiplied by this constant where
+   * the distance field is negative (i.e. inside objects).
+   *
+   * Should be between 0 and 1, but other values are also permitted.
+   */
+  lightPenetrationRatio: number;
+
+  /**
    * Gives the number of possible object colors for the scene.
    *
    * When using WebGL, only 256 different colors can be used.

@@ -9,5 +9,6 @@ export const defaultStartupSettings: StartupSettings = {
   paletteSize: 256,
   ignoreWebGL2: false,
   backgroundColor: vec4.fromValues(1, 1, 1, 1),
+  lightPenetrationRatio: 0.75,
   enableStopwatch: false,
 };

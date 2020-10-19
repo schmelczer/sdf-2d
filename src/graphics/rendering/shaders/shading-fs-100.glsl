@@ -2,7 +2,7 @@
 
 precision lowp float;
 
-#define INTENSITY_INSIDE_RATIO 0.5
+#define INTENSITY_INSIDE_RATIO {intensityInsideRatio}
 #define SHADOW_TRACE_COUNT {shadowTraceCount}
 
 {macroDefinitions}
