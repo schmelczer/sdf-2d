@@ -2,7 +2,6 @@ import { vec2 } from 'gl-matrix';
 import { LightDrawable } from '../../../drawables/lights/light-drawable';
 import { clamp01 } from '../../../helper/clamp';
 import { Texture } from '../../graphics-library/texture/texture';
-import { Insights } from '../insights';
 import { RenderPass } from './render-pass';
 
 /** @internal */
@@ -50,10 +49,7 @@ export class LightsRenderPass extends RenderPass {
 
     this.program.draw(commonUniforms);
 
-    Insights.setValue(
-      ['render pass', 'lights', 'rendered drawables'],
-      drawablesNearTile.length
-    );
+    this.gl.insights.renderPasses.lights.drawnDrawableCount = drawablesNearTile.length;
 
     this.drawables = [];
   }

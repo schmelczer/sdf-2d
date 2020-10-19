@@ -1,7 +1,6 @@
 import { vec2 } from 'gl-matrix';
 import { Drawable } from '../../../drawables/drawable';
 import { Texture } from '../../graphics-library/texture/texture';
-import { Insights } from '../insights';
 import { RenderPass } from './render-pass';
 
 /** @internal */
@@ -74,18 +73,10 @@ export class DistanceRenderPass extends RenderPass {
       }
     }
 
-    Insights.setValue(
-      ['render pass', 'distance', 'all drawables'],
-      this.drawables.length
-    );
-    Insights.setValue(
-      ['render pass', 'distance', 'tile count'],
-      this.tileMultiplier ** 2
-    );
-    Insights.setValue(
-      ['render pass', 'distance', 'rendered drawables'],
-      drawnDrawablesCount / this.tileMultiplier ** 2
-    );
+    this.gl.insights.renderPasses.distance.drawableCount = this.drawables.length;
+    this.gl.insights.renderPasses.distance.drawnDrawableCount =
+      drawnDrawablesCount / this.tileMultiplier ** 2;
+    this.gl.insights.renderPasses.distance.tileCount = this.tileMultiplier ** 2;
 
     this.drawables = [];
   }

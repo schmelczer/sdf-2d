@@ -1,6 +1,5 @@
 import { numberToGlslFloat } from '../../helper/number-to-glsl-float';
 import { wait } from '../../helper/wait';
-import { Insights } from '../rendering/insights';
 import { tryEnableExtension } from './helper/enable-extension';
 import { UniversalRenderingContext } from './universal-rendering-context';
 
@@ -60,11 +59,10 @@ export class ParallelCompiler {
     return promise;
   }
 
-  @Insights.measure('compile programs')
   public async compilePrograms(): Promise<void> {
     this.programs.forEach((p) => this.gl.linkProgram(p.program));
 
-    Insights.setValue('program count', this.programs.length);
+    this.gl.insights.programCount = this.programs.length;
 
     while (this.programs.length > 0) {
       this.resolveFinishedPrograms();

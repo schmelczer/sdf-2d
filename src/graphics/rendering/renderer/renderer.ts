@@ -1,6 +1,7 @@
 import { vec2 } from 'gl-matrix';
 import { Drawable } from '../../../drawables/drawable';
 import { RuntimeSettings } from '../settings/runtime-settings';
+import { RendererInfo } from './renderer-info';
 
 /**
  * The main interface through which rendering can be achieved.
@@ -84,21 +85,12 @@ export interface Renderer {
   destroy(): void;
 
   /**
-   * @experimental
+   * Get useful information about the hardware and the SDF2D renderer.
    *
-   * Debug information updated on each `renderDrawables` call.
-   * Its scheme is not yet defined. The main purpose of this is
-   * human debugging.
+   * Its sheme is subject to change.
+   *
+   * During context lost it might be null.
+   *
    */
-  readonly insights: any;
-
-  /**
-   * @experimental
-   *
-   * Scale the render scale for both the canvas and the SDF memoization based
-   * on the current and historical FPS values.
-   *
-   * @param deltaTime since the last frame, in milliseconds.
-   */
-  autoscaleQuality(deltaTime: DOMHighResTimeStamp): void;
+  readonly insights: RendererInfo | null;
 }

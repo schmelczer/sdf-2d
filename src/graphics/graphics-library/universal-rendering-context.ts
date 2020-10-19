@@ -1,9 +1,10 @@
-import { Insights } from '../rendering/insights';
+import { RendererInfo } from '../rendering/renderer/renderer-info';
 
 /** @internal */
-export type UniversalRenderingContext =
+export type UniversalRenderingContext = (
   | (WebGL2RenderingContext & { isWebGL2: true })
-  | (WebGLRenderingContext & { isWebGL2: false });
+  | (WebGLRenderingContext & { isWebGL2: false })
+) & { insights: RendererInfo };
 
 /** @internal */
 export const getUniversalRenderingContext = (
@@ -31,7 +32,14 @@ export const getUniversalRenderingContext = (
     result.isWebGL2 = false;
   }
 
-  Insights.setValue('using WebGL2', result.isWebGL2);
+  result.insights = {
+    isWebGL2: result.isWebGL2,
+    extensions: {},
+    renderPasses: {
+      distance: {},
+      lights: {},
+    },
+  };
 
   let isDestroyed = false;
 

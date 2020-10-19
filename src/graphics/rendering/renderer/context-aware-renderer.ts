@@ -5,6 +5,7 @@ import { RuntimeSettings } from '../settings/runtime-settings';
 import { StartupSettings } from '../settings/startup-settings';
 import { Renderer } from './renderer';
 import { RendererImplementation } from './renderer-implementation';
+import { RendererInfo } from './renderer-info';
 
 /** @internal */
 export class ContextAwareRenderer implements Renderer {
@@ -109,8 +110,8 @@ export class ContextAwareRenderer implements Renderer {
     return this.handle(() => this.renderer.viewAreaSize, vec2.create());
   }
 
-  public get insights(): any {
-    return this.handle(() => this.renderer.insights, {});
+  public get insights(): RendererInfo | null {
+    return this.handle(() => this.renderer.insights, null);
   }
 
   public setViewArea(topLeft: vec2, size: vec2): void {
@@ -130,10 +131,6 @@ export class ContextAwareRenderer implements Renderer {
 
   public addDrawable(drawable: Drawable): void {
     return this.handle(() => this.renderer.addDrawable(drawable), undefined);
-  }
-
-  public autoscaleQuality(deltaTime: number): void {
-    return this.handle(() => this.renderer.autoscaleQuality(deltaTime), undefined);
   }
 
   public displayToWorldCoordinates(displayCoordinates: vec2): vec2 {
