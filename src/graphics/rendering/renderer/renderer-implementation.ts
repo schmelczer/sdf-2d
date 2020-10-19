@@ -3,9 +3,9 @@ import { Drawable } from '../../../drawables/drawable';
 import { DrawableDescriptor } from '../../../drawables/drawable-descriptor';
 import { LightDrawable } from '../../../drawables/lights/light-drawable';
 import { colorToString } from '../../../helper/color-to-string';
-import { msToString } from '../../../helper/ms-to-string';
 import { DefaultFrameBuffer } from '../../graphics-library/frame-buffer/default-frame-buffer';
 import { IntermediateFrameBuffer } from '../../graphics-library/frame-buffer/intermediate-frame-buffer';
+import { getHardwareInfo } from '../../graphics-library/helper/get-hardware-info';
 import { WebGlStopwatch } from '../../graphics-library/helper/stopwatch';
 import { ParallelCompiler } from '../../graphics-library/parallel-compiler';
 import { ColorTexture } from '../../graphics-library/texture/color-texture';
@@ -17,8 +17,6 @@ import {
   getUniversalRenderingContext,
   UniversalRenderingContext,
 } from '../../graphics-library/universal-rendering-context';
-import { FpsAutoscaler } from '../fps-autoscaler';
-import { Insights } from '../insights';
 import { DistanceRenderPass } from '../render-pass/distance-render-pass';
 import { LightsRenderPass } from '../render-pass/lights-render-pass';
 import { defaultRuntimeSettings } from '../settings/default-runtime-settings';
@@ -35,6 +33,7 @@ import lightsVertexShader100 from '../shaders/shading-vs-100.glsl';
 import lightsVertexShader from '../shaders/shading-vs.glsl';
 import { UniformsProvider } from '../uniforms-provider';
 import { Renderer } from './renderer';
+import { RendererInfo } from './renderer-info';
 
 /** @internal */
 export class RendererImplementation implements Renderer {
@@ -46,7 +45,6 @@ export class RendererImplementation implements Renderer {
   private lightingFrameBuffer: DefaultFrameBuffer;
   private lightsPass: LightsRenderPass;
   private palette!: PaletteTexture;
-  private autoscaler: FpsAutoscaler;
 
   private textures: Array<Texture> = [];
 
@@ -59,26 +57,15 @@ export class RendererImplementation implements Renderer {
     },
     tileMultiplier: (v) => (this.distancePass.tileMultiplier = v),
     isWorldInverted: (v) => (this.distancePass.isWorldInverted = v),
-    textures: (v: { [textureName: string]: TexImageSource | TextureWithOptions }) => {
-      this.textures.forEach((t) => t.destroy());
-      this.textures = [];
-
-      let id = 3;
-      for (const key in v) {
-        this.uniformsProvider.textures[key] = id;
-        let texture: Texture;
-
-        if (Object.prototype.hasOwnProperty.call(v[key], 'source')) {
-          texture = new Texture(this.gl, id++, (v[key] as TextureWithOptions).overrides);
-          texture.setImage((v[key] as TextureWithOptions).source);
-        } else {
-          texture = new Texture(this.gl, id++);
-          texture.setImage(v[key] as TexImageSource);
-        }
-
-        this.textures.push(texture);
-      }
+    distanceRenderScale: (v) => {
+      this.distanceFieldFrameBuffer.renderScale = v;
+      this.gl.insights.renderPasses.distance.renderScale = v;
     },
+    lightsRenderScale: (v) => {
+      this.lightingFrameBuffer.renderScale = v;
+      this.gl.insights.renderPasses.lights.renderScale = v;
+    },
+    textures: this.setTextures.bind(this),
     ambientLight: (v) => (this.uniformsProvider.ambientLight = v),
     lightCutoffDistance: (v) => (this.lightsPass.lightCutoffDistance = v),
     colorPalette: (v) => this.palette.setPalette(v),
@@ -115,11 +102,9 @@ export class RendererImplementation implements Renderer {
       vec2.fromValues(canvas.clientWidth, canvas.clientHeight)
     );
 
-    this.autoscaler = new FpsAutoscaler({
-      distanceRenderScale: (v) =>
-        (this.distanceFieldFrameBuffer.renderScale = v as number),
-      finalRenderScale: (v) => (this.lightingFrameBuffer.renderScale = v as number),
-    });
+    const hardwareInfo = getHardwareInfo(this.gl);
+    this.gl.insights.renderer = hardwareInfo?.renderer;
+    this.gl.insights.vendor = hardwareInfo?.vendor;
   }
 
   public async initialize(settingsOverrides: Partial<StartupSettings>): Promise<void> {
@@ -156,6 +141,7 @@ export class RendererImplementation implements Renderer {
         compiler,
         {
           shadowTraceCount: settings.shadowTraceCount.toString(),
+          intensityInsideRatio: settings.lightPenetrationRatio,
           backgroundColor: colorToString(settings.backgroundColor),
         }
       )
@@ -173,8 +159,29 @@ export class RendererImplementation implements Renderer {
     }
   }
 
-  public get insights(): any {
-    return Insights.values;
+  public get insights(): RendererInfo {
+    return this.gl.insights;
+  }
+
+  private setTextures(v: { [textureName: string]: TexImageSource | TextureWithOptions }) {
+    this.textures.forEach((t) => t.destroy());
+    this.textures = [];
+
+    let id = 3;
+    for (const key in v) {
+      this.uniformsProvider.textures[key] = id;
+      let texture: Texture;
+
+      if (Object.prototype.hasOwnProperty.call(v[key], 'source')) {
+        texture = new Texture(this.gl, id++, (v[key] as TextureWithOptions).overrides);
+        texture.setImage((v[key] as TextureWithOptions).source);
+      } else {
+        texture = new Texture(this.gl, id++);
+        texture.setImage(v[key] as TexImageSource);
+      }
+
+      this.textures.push(texture);
+    }
   }
 
   private static hasSdf(descriptor: DrawableDescriptor) {
@@ -191,20 +198,13 @@ export class RendererImplementation implements Renderer {
     }
   }
 
-  public autoscaleQuality(deltaTime: DOMHighResTimeStamp) {
-    this.autoscaler.autoscale(deltaTime);
-  }
-
   public renderDrawables() {
     if (this.stopwatch) {
       if (this.stopwatch.isReady) {
         this.stopwatch.start();
       } else {
         this.stopwatch.tryGetResults();
-        Insights.setValue(
-          'GPU render time',
-          msToString(this.stopwatch.resultsInMilliSeconds)
-        );
+        this.gl.insights.gpuRenderTimeInMilliseconds = this.stopwatch.resultsInMilliSeconds;
       }
     }
 
@@ -255,7 +255,8 @@ export class RendererImplementation implements Renderer {
   }
 
   public get canvasSize(): vec2 {
-    return vec2.fromValues(this.canvas.clientWidth, this.canvas.clientHeight);
+    const { width, height } = this.canvas.getBoundingClientRect();
+    return vec2.fromValues(width, height);
   }
 
   public destroy(): void {
