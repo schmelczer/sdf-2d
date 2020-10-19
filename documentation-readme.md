@@ -10,12 +10,17 @@ The motivation behind this library and more in-depth information about the rende
 - [More complex example](https://github.com/schmelczerandras/sdf-2d-more-complex-example)
 - [Source code of the demo](https://github.com/schmelczerandras/sdf-2d-demo)
 
-## Usage
+## Usage (1st option)
 
 - To start using cutting-edge 2D graphics, first you have get a renderer instance. This is possible by calling the [compile function](globals.html#compile).
   - For this, some [DrawableDescriptors](interfaces/drawabledescriptor.html) has to be provided.
   - Optionally, default compile settings can overridden using [StartupSettings](interfaces/startupsettings.html).
 - After acquiring a renderer, the drawing of objects can be started through the [Renderer](interfaces/renderer.html) interface.
+
+## Usage (2nd option)
+
+If you're planning on creating animated content, use the [runAnimation function](globals.html#run-animation) function to spare yourself from writing boilerplate code.
+Further documentation on its usage is available in its [documentation](globals.html#run-animation).
 
 ## Extending drawables
 
