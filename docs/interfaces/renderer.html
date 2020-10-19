@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Renderer | SDF-2D - v0.5.3</title>
-	<meta name="description" content="Documentation for SDF-2D - v0.5.3">
+	<title>Renderer | SDF-2D - v0.6.0</title>
+	<meta name="description" content="Documentation for SDF-2D - v0.6.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 	<link rel="icon" href="../favicon.ico" />
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">SDF-2D - v0.5.3</a>
+					<a href="../index.html" class="title">SDF-2D - v0.6.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -95,12 +95,12 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="renderer.html#adddrawable" class="tsd-kind-icon">add<wbr>Drawable</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="renderer.html#autoscalequality" class="tsd-kind-icon">autoscale<wbr>Quality</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="renderer.html#destroy" class="tsd-kind-icon">destroy</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="renderer.html#displaytoworldcoordinates" class="tsd-kind-icon">display<wbr>ToWorld<wbr>Coordinates</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="renderer.html#renderdrawables" class="tsd-kind-icon">render<wbr>Drawables</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="renderer.html#setruntimesettings" class="tsd-kind-icon">set<wbr>Runtime<wbr>Settings</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="renderer.html#setviewarea" class="tsd-kind-icon">set<wbr>View<wbr>Area</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="renderer.html#worldtodisplaycoordinates" class="tsd-kind-icon">world<wbr>ToDisplay<wbr>Coordinates</a></li>
 							</ul>
 						</section>
 					</div>
@@ -114,7 +114,7 @@
 					<div class="tsd-signature tsd-kind-icon">canvas<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">vec2</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/fbd85a6/src/graphics/rendering/renderer/renderer.ts#L14">graphics/rendering/renderer/renderer.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/06dfd59/src/graphics/rendering/renderer/renderer.ts#L15">graphics/rendering/renderer/renderer.ts:15</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -126,20 +126,18 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="insights" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> insights</h3>
-					<div class="tsd-signature tsd-kind-icon">insights<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<div class="tsd-signature tsd-kind-icon">insights<span class="tsd-signature-symbol">:</span> <a href="rendererinfo.html" class="tsd-signature-type">RendererInfo</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/fbd85a6/src/graphics/rendering/renderer/renderer.ts#L81">graphics/rendering/renderer/renderer.ts:81</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/06dfd59/src/graphics/rendering/renderer/renderer.ts#L95">graphics/rendering/renderer/renderer.ts:95</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
-						<dl class="tsd-comment-tags">
-							<dt>experimental</dt>
-							<dd><p>Debug information updated on each <code>renderDrawables</code> call.
-									Its scheme is not yet defined. The main purpose of this is
-								human debugging.</p>
-							</dd>
-						</dl>
+						<div class="lead">
+							<p>Get useful information about the hardware and the SDF2D renderer.</p>
+						</div>
+						<p>Its sheme is subject to change.</p>
+						<p>During context lost it might be null.</p>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -148,7 +146,7 @@
 					<div class="tsd-signature tsd-kind-icon">view<wbr>Area<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">vec2</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/fbd85a6/src/graphics/rendering/renderer/renderer.ts#L21">graphics/rendering/renderer/renderer.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/06dfd59/src/graphics/rendering/renderer/renderer.ts#L22">graphics/rendering/renderer/renderer.ts:22</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -171,7 +169,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/fbd85a6/src/graphics/rendering/renderer/renderer.ts#L56">graphics/rendering/renderer/renderer.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/06dfd59/src/graphics/rendering/renderer/renderer.ts#L69">graphics/rendering/renderer/renderer.ts:69</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -200,40 +198,6 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="autoscalequality" class="tsd-anchor"></a>
-					<h3>autoscale<wbr>Quality</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">autoscale<wbr>Quality<span class="tsd-signature-symbol">(</span>deltaTime<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DOMHighResTimeStamp</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/fbd85a6/src/graphics/rendering/renderer/renderer.ts#L91">graphics/rendering/renderer/renderer.ts:91</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>experimental</dt>
-									<dd><p>Scale the render scale for both the canvas and the SDF memoization based
-										on the current and historical FPS values.</p>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>deltaTime: <span class="tsd-signature-type">DOMHighResTimeStamp</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>since the last frame, in milliseconds.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
 					<a name="destroy" class="tsd-anchor"></a>
 					<h3>destroy</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -243,7 +207,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/fbd85a6/src/graphics/rendering/renderer/renderer.ts#L72">graphics/rendering/renderer/renderer.ts:72</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/06dfd59/src/graphics/rendering/renderer/renderer.ts#L85">graphics/rendering/renderer/renderer.ts:85</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -267,12 +231,13 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/fbd85a6/src/graphics/rendering/renderer/renderer.ts#L42">graphics/rendering/renderer/renderer.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/06dfd59/src/graphics/rendering/renderer/renderer.ts#L44">graphics/rendering/renderer/renderer.ts:44</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Return the world coordinates from a pixel&#39;s position.</p>
+									<p>The inverse of <code>worldToDisplayCoordinates</code>, returns the world coordinates
+									from a pixel&#39;s position.</p>
 								</div>
 								<p>The view area coordinates are also given in world coordinates.</p>
 								<p>Useful for picking.</p>
@@ -301,7 +266,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/fbd85a6/src/graphics/rendering/renderer/renderer.ts#L64">graphics/rendering/renderer/renderer.ts:64</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/06dfd59/src/graphics/rendering/renderer/renderer.ts#L77">graphics/rendering/renderer/renderer.ts:77</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -325,7 +290,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/fbd85a6/src/graphics/rendering/renderer/renderer.ts#L48">graphics/rendering/renderer/renderer.ts:48</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/06dfd59/src/graphics/rendering/renderer/renderer.ts#L61">graphics/rendering/renderer/renderer.ts:61</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -355,7 +320,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/fbd85a6/src/graphics/rendering/renderer/renderer.ts#L30">graphics/rendering/renderer/renderer.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/06dfd59/src/graphics/rendering/renderer/renderer.ts#L31">graphics/rendering/renderer/renderer.ts:31</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -383,6 +348,40 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="worldtodisplaycoordinates" class="tsd-anchor"></a>
+					<h3>world<wbr>ToDisplay<wbr>Coordinates</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">world<wbr>ToDisplay<wbr>Coordinates<span class="tsd-signature-symbol">(</span>worldCoordinates<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec2</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/06dfd59/src/graphics/rendering/renderer/renderer.ts#L55">graphics/rendering/renderer/renderer.ts:55</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The inverse of <code>displayToWorldCoordinates</code>, returns the screen space position
+									of a point given in world space cooridnates.</p>
+								</div>
+								<p>While the origin for worldCoordinates resides in the bottom-left corner,
+								the origin of the returned display coordinates is placed in the top left.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>worldCoordinates: <span class="tsd-signature-type">vec2</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Coordinates used when drawing objects.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">vec2</span></h4>
+						</li>
+					</ul>
+				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -395,45 +394,6 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-enum">
-						<a href="../enums/filteringoptions.html" class="tsd-kind-icon">Filtering<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-enum">
-						<a href="../enums/wrapoptions.html" class="tsd-kind-icon">Wrap<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/circlebase.html" class="tsd-kind-icon">Circle<wbr>Base</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/circlelight.html" class="tsd-kind-icon">Circle<wbr>Light</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/drawable.html" class="tsd-kind-icon">Drawable</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/dropletbase.html" class="tsd-kind-icon">Droplet<wbr>Base</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/flashlight.html" class="tsd-kind-icon">Flashlight</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/invertedtunnelbase.html" class="tsd-kind-icon">Inverted<wbr>Tunnel<wbr>Base</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/metacirclebase.html" class="tsd-kind-icon">Meta<wbr>Circle<wbr>Base</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/polygonbase.html" class="tsd-kind-icon">Polygon<wbr>Base</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/rotatedrectanglebase.html" class="tsd-kind-icon">Rotated<wbr>Rectangle<wbr>Base</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="drawabledescriptor.html" class="tsd-kind-icon">Drawable<wbr>Descriptor</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="noisypolygonbase.html" class="tsd-kind-icon">Noisy<wbr>Polygon<wbr>Base</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
@@ -452,9 +412,6 @@
 								<a href="renderer.html#adddrawable" class="tsd-kind-icon">add<wbr>Drawable</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="renderer.html#autoscalequality" class="tsd-kind-icon">autoscale<wbr>Quality</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="renderer.html#destroy" class="tsd-kind-icon">destroy</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
@@ -469,73 +426,13 @@
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="renderer.html#setviewarea" class="tsd-kind-icon">set<wbr>View<wbr>Area</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="renderer.html#worldtodisplaycoordinates" class="tsd-kind-icon">world<wbr>ToDisplay<wbr>Coordinates</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface">
-						<a href="runtimesettings.html" class="tsd-kind-icon">Runtime<wbr>Settings</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="startupsettings.html" class="tsd-kind-icon">Startup<wbr>Settings</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="textureoptions.html" class="tsd-kind-icon">Texture<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="../globals.html#texturewithoptions" class="tsd-kind-icon">Texture<wbr>With<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#circlefactory" class="tsd-kind-icon">Circle<wbr>Factory</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#dropletfactory" class="tsd-kind-icon">Droplet<wbr>Factory</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#invertedtunnelfactory" class="tsd-kind-icon">Inverted<wbr>Tunnel<wbr>Factory</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#metacirclefactory" class="tsd-kind-icon">Meta<wbr>Circle<wbr>Factory</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#noisypolygonfactory" class="tsd-kind-icon">Noisy<wbr>Polygon<wbr>Factory</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#polygonfactory" class="tsd-kind-icon">Polygon<wbr>Factory</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#rotatedrectanglefactory" class="tsd-kind-icon">Rotated<wbr>Rectangle<wbr>Factory</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#compile" class="tsd-kind-icon">compile</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#hex" class="tsd-kind-icon">hex</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#hsl" class="tsd-kind-icon">hsl</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#rendernoise" class="tsd-kind-icon">render<wbr>Noise</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#rgb" class="tsd-kind-icon">rgb</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#rgb255" class="tsd-kind-icon">rgb255</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#rgba" class="tsd-kind-icon">rgba</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#rgba255" class="tsd-kind-icon">rgba255</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="../globals.html#defaultruntimesettings" class="tsd-kind-icon">default<wbr>Runtime<wbr>Settings</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="../globals.html#defaultstartupsettings" class="tsd-kind-icon">default<wbr>Startup<wbr>Settings</a>
-					</li>
 				</ul>
 			</nav>
 		</div>

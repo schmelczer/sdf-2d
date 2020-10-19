@@ -7,7 +7,6 @@
     "target": "es5",
     "esModuleInterop": true,
     "strict": true,
-    "experimentalDecorators": true,
     "downlevelIteration": true,
     "moduleResolution": "Node",
     "module": "es6",
