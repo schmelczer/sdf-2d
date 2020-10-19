@@ -9,6 +9,8 @@ export const defaultRuntimeSettings: RuntimeSettings = {
   tileMultiplier: 8,
   isWorldInverted: false,
   lightCutoffDistance: 400,
+  distanceRenderScale: 0.5,
+  lightsRenderScale: 1,
   colorPalette: [],
   ambientLight: vec3.fromValues(0.25, 0.15, 0.25),
   textures: {},

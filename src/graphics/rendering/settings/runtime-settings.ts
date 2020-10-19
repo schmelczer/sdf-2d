@@ -49,6 +49,23 @@ export interface RuntimeSettings {
   colorPalette: Array<vec3 | vec4>;
 
   /**
+   * The resolution of the distance field rendering will be scaled up or down with this value.
+   *
+   * Because of interpolation, this can be set much lower than the `lightsRenderScale`, while
+   * maintaining closely the same perceived quality.
+   *
+   * Setting this is a great way to balance quality and performance.
+   */
+  distanceRenderScale: number;
+
+  /**
+   * The resolution of the final frame will be scaled by this value.
+   *
+   * Setting this is a great way to balance quality and performance.
+   */
+  lightsRenderScale: number;
+
+  /**
    * It is possible to use your own textures in your SDF definitions.
    *
    * The keys of the object should be the name used to reference them in the GLSL code,
