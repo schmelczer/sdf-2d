@@ -19,8 +19,8 @@ The motivation behind this library and more in-depth information about the rende
 
 ## Usage (2nd option)
 
-If you're planning on creating animated content, use the [runAnimation function](globals.html#run-animation) function to spare yourself from writing boilerplate code.
-Further documentation on its usage is available in its [documentation](globals.html#run-animation).
+If you're planning on creating animated content, use the [runAnimation function](globals.html#runanimation) to spare yourself from writing boilerplate code.
+Further documentation on its usage is available in its [documentation](globals.html#runanimation).
 
 ## Extending drawables
 

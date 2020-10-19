@@ -1,6 +1,9 @@
 import { UniversalRenderingContext } from '../universal-rendering-context';
 import { tryEnableExtension } from './enable-extension';
 
+/**
+ * @internal
+ */
 export const getHardwareInfo = (
   gl: UniversalRenderingContext
 ): { vendor: string; renderer: string } | null => {

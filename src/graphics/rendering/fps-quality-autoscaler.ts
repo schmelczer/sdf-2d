@@ -1,3 +1,4 @@
+import { clamp } from '../../helper/clamp';
 import { Renderer } from './renderer/renderer';
 
 /**
@@ -15,7 +16,7 @@ import { Renderer } from './renderer/renderer';
  */
 export class FpsQualityAutoscaler {
   private readonly maxAdjusmentRateInMilliseconds = 10000;
-  private readonly adjusmentRateIncrease = 1.3;
+  private readonly adjusmentRateIncrease = 2;
   private adjusmentRateInMilliseconds = 500;
   private fps = 0;
 
@@ -62,17 +63,17 @@ export class FpsQualityAutoscaler {
   private lightsScale = 1;
 
   private adjustQuality() {
-    console.log(this.distanceScale, this.lightsScale);
     if (this.fps >= this.fpsTarget + this.fpsHysteresis) {
-      this.renderer.setRuntimeSettings({
-        distanceRenderScale: this.distanceScale += 0.1,
-        lightsRenderScale: this.lightsScale += 0.1,
-      });
+      this.distanceScale = clamp(this.distanceScale + 0.1, 0.2, 1);
+      this.lightsScale = clamp(this.lightsScale + 0.1, 0.2, 1);
     } else if (this.fps <= this.fpsTarget + this.fpsHysteresis) {
-      this.renderer.setRuntimeSettings({
-        distanceRenderScale: this.distanceScale *= 0.7,
-        lightsRenderScale: this.lightsScale *= 0.7,
-      });
+      this.distanceScale = clamp(this.distanceScale / 2, 0.2, 1);
+      this.lightsScale = clamp(this.lightsScale / 2, 0.2, 1);
     }
+
+    this.renderer.setRuntimeSettings({
+      distanceRenderScale: this.distanceScale,
+      lightsRenderScale: this.lightsScale,
+    });
   }
 }
