@@ -7,6 +7,7 @@ import { PolygonBase, PolygonFactory } from './polygon-factory';
 interface NoisyPolygonBase extends PolygonBase {
   randomOffset: number;
 }
+
 /**
  * @category Drawable
  */

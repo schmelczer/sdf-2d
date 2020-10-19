@@ -28,7 +28,7 @@ export abstract class FrameBuffer {
 
   public setSize(): boolean {
     const realToCssPixels =
-      (this.enableHighDpiRendering ? window.devicePixelRatio : 1) * this.renderScale;
+      (this.enableHighDpiRendering ? devicePixelRatio : 1) * this.renderScale;
 
     const canvasWidth = (this.gl.canvas as HTMLCanvasElement).clientWidth;
     const canvasHeight = (this.gl.canvas as HTMLCanvasElement).clientHeight;
