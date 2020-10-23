@@ -63,7 +63,10 @@ export const NoisyPolygonFactory = (
               vec2 center = noisyPolygon${vertexCount}Centers[j];
               float l = noisyPolygon${vertexCount}Lengths[j];
               float randomOffset = noisyPolygon${vertexCount}Randoms[j];
-              vec2 targetTangent = normalize(target - center);
+              vec2 targetCenterDelta = target - center;
+              float targetDistance = length(targetCenterDelta);
+              vec2 targetTangent = targetCenterDelta / clamp(targetDistance, 0.01, 1000.0);
+              
               vec2 noisyTarget = target - (
                 targetTangent * myTerrain(vec2(
                   l * abs(atan(targetTangent.y, targetTangent.x)),
