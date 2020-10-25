@@ -14,6 +14,11 @@ declare global {
     y: T;
   }
 
+  interface ReadonlyArray<T> {
+    x: T;
+    y: T;
+  }
+
   interface Float32Array {
     x: number;
     y: number;

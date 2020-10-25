@@ -1,5 +1,5 @@
-import { mat2d, vec2, vec3 } from 'gl-matrix';
-import { UniversalRenderingContext } from '../graphics-library/universal-rendering-context';
+import { mat2d, ReadonlyVec2, vec2, vec3 } from 'gl-matrix';
+import { Renderer } from './renderer/renderer';
 
 /** @internal */
 export class UniformsProvider {
@@ -9,11 +9,13 @@ export class UniformsProvider {
   private scaleWorldLengthToNDC = 1;
   private transformWorldToNDC = mat2d.create();
   private viewAreaBottomLeft = vec2.create();
-  private worldAreaInView = vec2.create();
+  private worldAreaInView: ReadonlyVec2 = vec2.create();
   private squareToAspectRatio = vec2.create();
   private uvToWorld = mat2d.create();
+  private screenToWorldTransformation = mat2d.create();
+  private worldToScreenTransformation = mat2d.create();
 
-  public constructor(private readonly gl: UniversalRenderingContext) {}
+  public constructor(private readonly renderer: Renderer) {}
 
   public getUniforms(uniforms: any): any {
     return {
@@ -29,11 +31,11 @@ export class UniformsProvider {
     };
   }
 
-  public getViewArea(): vec2 {
+  public getViewArea(): ReadonlyVec2 {
     return this.worldAreaInView;
   }
 
-  public setViewArea(topLeft: vec2, size: vec2) {
+  public setViewArea(topLeft: ReadonlyVec2, size: ReadonlyVec2) {
     this.worldAreaInView = size;
 
     // world coordinates
@@ -68,31 +70,43 @@ export class UniformsProvider {
 
     this.uvToWorld = mat2d.fromTranslation(mat2d.create(), this.viewAreaBottomLeft);
     mat2d.scale(this.uvToWorld, this.uvToWorld, this.worldAreaInView);
+
+    this.calculateScreenToWorldTransformations();
   }
 
-  public screenToWorldPosition(screenPosition: vec2): vec2 {
-    const transform = this.calculateScreenToWorldTransformation();
-    return vec2.transformMat2d(vec2.create(), screenPosition, transform);
+  public screenToWorldPosition(screenPosition: ReadonlyVec2): vec2 {
+    return vec2.transformMat2d(
+      vec2.create(),
+      screenPosition,
+      this.screenToWorldTransformation
+    );
   }
 
-  public worldToDisplayCoordinates(worldCoordinates: vec2): vec2 {
-    const transform = this.calculateScreenToWorldTransformation();
-    mat2d.invert(transform, transform);
-    return vec2.transformMat2d(vec2.create(), worldCoordinates, transform);
+  public worldToDisplayCoordinates(worldCoordinates: ReadonlyVec2): vec2 {
+    return vec2.transformMat2d(
+      vec2.create(),
+      worldCoordinates,
+      this.worldToScreenTransformation
+    );
   }
 
-  private calculateScreenToWorldTransformation(): mat2d {
-    const { width, height } = (this.gl
-      .canvas as HTMLCanvasElement).getBoundingClientRect();
+  public calculateScreenToWorldTransformations() {
+    const width = this.renderer.canvasSize.x;
+    const height = this.renderer.canvasSize.y;
     const resolution = vec2.fromValues(width, height);
 
-    const transform = mat2d.fromTranslation(mat2d.create(), this.viewAreaBottomLeft);
+    const transform = mat2d.fromTranslation(
+      this.screenToWorldTransformation,
+      this.viewAreaBottomLeft
+    );
     mat2d.scale(
       transform,
       transform,
       vec2.divide(vec2.create(), this.worldAreaInView, resolution)
     );
     mat2d.translate(transform, transform, vec2.fromValues(0.5, height - 0.5));
-    return mat2d.scale(transform, transform, vec2.fromValues(1, -1));
+    mat2d.scale(transform, transform, vec2.fromValues(1, -1));
+
+    mat2d.invert(this.worldToScreenTransformation, this.screenToWorldTransformation);
   }
 }

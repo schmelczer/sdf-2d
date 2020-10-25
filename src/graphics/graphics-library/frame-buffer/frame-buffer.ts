@@ -1,4 +1,4 @@
-import { vec2 } from 'gl-matrix';
+import { ReadonlyVec2, vec2 } from 'gl-matrix';
 import { Texture } from '../texture/texture';
 import { UniversalRenderingContext } from '../universal-rendering-context';
 
@@ -26,15 +26,12 @@ export abstract class FrameBuffer {
     this.gl.deleteFramebuffer(this.frameBuffer);
   }
 
-  public setSize(): boolean {
+  public setSize(canvasSize: ReadonlyVec2): boolean {
     const realToCssPixels =
       (this.enableHighDpiRendering ? devicePixelRatio : 1) * this.renderScale;
 
-    const canvasWidth = (this.gl.canvas as HTMLCanvasElement).clientWidth;
-    const canvasHeight = (this.gl.canvas as HTMLCanvasElement).clientHeight;
-
-    const displayWidth = Math.floor(canvasWidth * realToCssPixels);
-    const displayHeight = Math.floor(canvasHeight * realToCssPixels);
+    const displayWidth = Math.floor(canvasSize.x * realToCssPixels);
+    const displayHeight = Math.floor(canvasSize.y * realToCssPixels);
 
     const oldSize = vec2.clone(this.getSize());
     this.size = vec2.fromValues(displayWidth, displayHeight);

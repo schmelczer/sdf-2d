@@ -1,4 +1,5 @@
-import { vec2 } from 'gl-matrix';
+import { ReadonlyVec2, vec2 } from 'gl-matrix';
+import ResizeObserver from 'resize-observer-polyfill';
 import { Drawable } from '../../../drawables/drawable';
 import { DrawableDescriptor } from '../../../drawables/drawable-descriptor';
 import { LightDrawable } from '../../../drawables/lights/light-drawable';
@@ -38,15 +39,16 @@ import { RendererInfo } from './renderer-info';
 /** @internal */
 export class RendererImplementation implements Renderer {
   private readonly gl: UniversalRenderingContext;
+  private readonly uniformsProvider: UniformsProvider;
+  private readonly distanceFieldFrameBuffer: IntermediateFrameBuffer;
+  private readonly distancePass: DistanceRenderPass;
+  private readonly lightingFrameBuffer: DefaultFrameBuffer;
+  private readonly lightsPass: LightsRenderPass;
   private stopwatch?: WebGlStopwatch;
-  private uniformsProvider: UniformsProvider;
-  private distanceFieldFrameBuffer: IntermediateFrameBuffer;
-  private distancePass: DistanceRenderPass;
-  private lightingFrameBuffer: DefaultFrameBuffer;
-  private lightsPass: LightsRenderPass;
-  private palette!: PaletteTexture;
-
   private textures: Array<Texture> = [];
+  private palette!: PaletteTexture;
+  private _canvasSize = vec2.create();
+  private canvasResizeObserver!: ResizeObserver;
 
   private applyRuntimeSettings: {
     [key in keyof RuntimeSettings]: (value: any) => void;
@@ -78,8 +80,8 @@ export class RendererImplementation implements Renderer {
   }
 
   constructor(
-    private canvas: HTMLCanvasElement,
-    private descriptors: Array<DrawableDescriptor>,
+    private readonly canvas: HTMLCanvasElement,
+    private readonly descriptors: Array<DrawableDescriptor>,
     ignoreWebGL2?: boolean
   ) {
     this.gl = getUniversalRenderingContext(
@@ -89,22 +91,36 @@ export class RendererImplementation implements Renderer {
 
     this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE);
 
-    this.distanceFieldFrameBuffer = new IntermediateFrameBuffer(this.gl);
-    this.lightingFrameBuffer = new DefaultFrameBuffer(this.gl);
+    this.applyCanvasResizeObserver();
+
+    this.distanceFieldFrameBuffer = new IntermediateFrameBuffer(this.gl, this.canvasSize);
+    this.lightingFrameBuffer = new DefaultFrameBuffer(this.gl, this.canvasSize);
 
     this.distancePass = new DistanceRenderPass(this.gl, this.distanceFieldFrameBuffer);
     this.lightsPass = new LightsRenderPass(this.gl, this.lightingFrameBuffer);
 
-    this.uniformsProvider = new UniformsProvider(this.gl);
+    this.uniformsProvider = new UniformsProvider(this);
 
     this.setViewArea(
-      vec2.fromValues(0, canvas.clientHeight),
-      vec2.fromValues(canvas.clientWidth, canvas.clientHeight)
+      vec2.fromValues(0, this.canvasSize.y),
+      vec2.fromValues(this.canvasSize.x, this.canvasSize.y)
     );
 
     const hardwareInfo = getHardwareInfo(this.gl);
     this.gl.insights.renderer = hardwareInfo?.renderer;
     this.gl.insights.vendor = hardwareInfo?.vendor;
+  }
+
+  private applyCanvasResizeObserver() {
+    this.canvasResizeObserver = new ResizeObserver((e) => {
+      const entry = e[0];
+      this._canvasSize = vec2.fromValues(
+        entry.contentRect.width,
+        entry.contentRect.height
+      );
+      this.uniformsProvider.calculateScreenToWorldTransformations();
+    });
+    this.canvasResizeObserver.observe(this.canvas);
   }
 
   public async initialize(settingsOverrides: Partial<StartupSettings>): Promise<void> {
@@ -208,8 +224,8 @@ export class RendererImplementation implements Renderer {
       }
     }
 
-    this.distanceFieldFrameBuffer.setSize();
-    this.lightingFrameBuffer.setSize();
+    this.distanceFieldFrameBuffer.setSize(this.canvasSize);
+    this.lightingFrameBuffer.setSize(this.canvasSize);
 
     const common = {
       // texture units
@@ -238,28 +254,28 @@ export class RendererImplementation implements Renderer {
     }
   }
 
-  public displayToWorldCoordinates(displayCoordinates: vec2): vec2 {
+  public displayToWorldCoordinates(displayCoordinates: ReadonlyVec2): vec2 {
     return this.uniformsProvider.screenToWorldPosition(displayCoordinates);
   }
 
-  public worldToDisplayCoordinates(worldCoordinates: vec2): vec2 {
+  public worldToDisplayCoordinates(worldCoordinates: ReadonlyVec2): vec2 {
     return this.uniformsProvider.worldToDisplayCoordinates(worldCoordinates);
   }
 
-  public setViewArea(topLeft: vec2, size: vec2) {
+  public setViewArea(topLeft: ReadonlyVec2, size: ReadonlyVec2) {
     this.uniformsProvider.setViewArea(topLeft, size);
   }
 
-  public get viewAreaSize(): vec2 {
+  public get viewAreaSize(): ReadonlyVec2 {
     return this.uniformsProvider.getViewArea();
   }
 
-  public get canvasSize(): vec2 {
-    const { width, height } = this.canvas.getBoundingClientRect();
-    return vec2.fromValues(width, height);
+  public get canvasSize(): ReadonlyVec2 {
+    return this._canvasSize;
   }
 
   public destroy(): void {
+    this.canvasResizeObserver.disconnect();
     this.distancePass.destroy();
     this.lightsPass.destroy();
     this.palette.destroy();

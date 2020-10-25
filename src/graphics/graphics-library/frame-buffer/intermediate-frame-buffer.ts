@@ -1,3 +1,4 @@
+import { ReadonlyVec2 } from 'gl-matrix';
 import { ColorTexture } from '../texture/color-texture';
 import { DistanceTexture } from '../texture/distance-texture';
 import { Texture } from '../texture/texture';
@@ -9,7 +10,7 @@ export class IntermediateFrameBuffer extends FrameBuffer {
   private distanceTexture?: DistanceTexture;
   private colorTexture: ColorTexture;
 
-  constructor(gl: UniversalRenderingContext) {
+  constructor(gl: UniversalRenderingContext, canvasSize: ReadonlyVec2) {
     super(gl);
 
     this.colorTexture = new ColorTexture(gl);
@@ -21,7 +22,7 @@ export class IntermediateFrameBuffer extends FrameBuffer {
     this.frameBuffer = this.gl.createFramebuffer()!;
     this.configureFrameBuffer();
 
-    this.setSize();
+    this.setSize(canvasSize);
   }
 
   public destroy(): void {
@@ -38,8 +39,8 @@ export class IntermediateFrameBuffer extends FrameBuffer {
       : [this.colorTexture];
   }
 
-  public setSize(): boolean {
-    const hasChanged = super.setSize();
+  public setSize(canvasSize: ReadonlyVec2): boolean {
+    const hasChanged = super.setSize(canvasSize);
 
     if (hasChanged) {
       this.colorTexture.setSize(this.size);

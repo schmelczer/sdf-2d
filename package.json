@@ -1,6 +1,6 @@
 {
   "name": "sdf-2d",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Graphics framework for efficiently rendering 2D signed distance fields.",
   "keywords": [
     "webgl",
@@ -27,6 +27,11 @@
     "url": "git://github.com/schmelczerandras/sdf-2d.git"
   },
   "license": "ISC",
+  "exports": {
+    ".": {
+      "import": "./dist/main.js"
+    }
+  },
   "scripts": {
     "start": "rm -rf lib/* && webpack --mode development -w",
     "build": "rm -rf lib/* docs/* && typedoc && webpack --mode production"
@@ -40,7 +45,8 @@
     "src/main.ts"
   ],
   "dependencies": {
-    "gl-matrix": "^3.3.0"
+    "gl-matrix": "^3.3.0",
+    "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^3.10.1",

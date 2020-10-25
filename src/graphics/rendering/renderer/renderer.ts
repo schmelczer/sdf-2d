@@ -1,4 +1,4 @@
-import { vec2 } from 'gl-matrix';
+import { ReadonlyVec2, vec2 } from 'gl-matrix';
 import { Drawable } from '../../../drawables/drawable';
 import { RuntimeSettings } from '../settings/runtime-settings';
 import { RendererInfo } from './renderer-info';
@@ -10,16 +10,18 @@ import { RendererInfo } from './renderer-info';
  */
 export interface Renderer {
   /**
-   * Get the actual resolution of the canvas.
+   * Get the actual resolution of the canvas without triggering a reflow.
+   *
+   * A ResizeObserver is utilised fot achieving this.
    */
-  readonly canvasSize: vec2;
+  readonly canvasSize: ReadonlyVec2;
 
   /**
    * Get the viewArea size set by the last `setViewArea`.
    *
    * By default, `canvasSize` is used for the view area size.
    */
-  readonly viewAreaSize: vec2;
+  readonly viewAreaSize: ReadonlyVec2;
 
   /**
    * Set the camera transformation.
@@ -28,7 +30,7 @@ export interface Renderer {
    * @param size need not be equal to the canvas size, though their aspect ratio
    * should be the same to avoid stretching.
    */
-  setViewArea(topLeft: vec2, size: vec2): void;
+  setViewArea(topLeft: ReadonlyVec2, size: ReadonlyVec2): void;
 
   /**
    * The inverse of `worldToDisplayCoordinates`, returns the world coordinates
@@ -41,7 +43,7 @@ export interface Renderer {
    * @param displayCoordinates The origin is in the display's top left corner.
    * Just as in mouse events' clientX and clientY.
    */
-  displayToWorldCoordinates(displayCoordinates: vec2): vec2;
+  displayToWorldCoordinates(displayCoordinates: ReadonlyVec2): vec2;
 
   /**
    * The inverse of `displayToWorldCoordinates`, returns the screen space position
@@ -52,7 +54,7 @@ export interface Renderer {
    *
    * @param worldCoordinates Coordinates used when drawing objects.
    */
-  worldToDisplayCoordinates(worldCoordinates: vec2): vec2;
+  worldToDisplayCoordinates(worldCoordinates: ReadonlyVec2): vec2;
 
   /**
    * Patch the current runtime settings with new values.

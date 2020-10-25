@@ -1,4 +1,4 @@
-import { vec2 } from 'gl-matrix';
+import { ReadonlyVec2, vec2 } from 'gl-matrix';
 import { Drawable } from '../../../drawables/drawable';
 import { DrawableDescriptor } from '../../../drawables/drawable-descriptor';
 import { RuntimeSettings } from '../settings/runtime-settings';
@@ -14,8 +14,8 @@ export class ContextAwareRenderer implements Renderer {
   private readyPromise!: Promise<void>;
   private runtimeOverrides: Partial<RuntimeSettings> = {};
   private ignoreWebGL2?: boolean;
-  private previousViewAreaTopLeft?: vec2;
-  private previousViewAreaSize?: vec2;
+  private previousViewAreaTopLeft?: ReadonlyVec2;
+  private previousViewAreaSize?: ReadonlyVec2;
 
   private contextRestoredHandler = this.handleContextRestored.bind(this);
   private contextLostHandler = this.handleContextLost.bind(this);
@@ -102,11 +102,11 @@ export class ContextAwareRenderer implements Renderer {
     }
   }
 
-  public get canvasSize(): vec2 {
+  public get canvasSize(): ReadonlyVec2 {
     return this.handle(() => this.renderer.canvasSize, vec2.create());
   }
 
-  public get viewAreaSize(): vec2 {
+  public get viewAreaSize(): ReadonlyVec2 {
     return this.handle(() => this.renderer.viewAreaSize, vec2.create());
   }
 
@@ -114,7 +114,7 @@ export class ContextAwareRenderer implements Renderer {
     return this.handle(() => this.renderer.insights, null);
   }
 
-  public setViewArea(topLeft: vec2, size: vec2): void {
+  public setViewArea(topLeft: ReadonlyVec2, size: ReadonlyVec2): void {
     this.previousViewAreaTopLeft = topLeft;
     this.previousViewAreaSize = size;
     return this.handle(() => this.renderer.setViewArea(topLeft, size), undefined);
@@ -133,14 +133,14 @@ export class ContextAwareRenderer implements Renderer {
     return this.handle(() => this.renderer.addDrawable(drawable), undefined);
   }
 
-  public displayToWorldCoordinates(displayCoordinates: vec2): vec2 {
+  public displayToWorldCoordinates(displayCoordinates: ReadonlyVec2): vec2 {
     return this.handle(
       () => this.renderer.displayToWorldCoordinates(displayCoordinates),
       vec2.create()
     );
   }
 
-  public worldToDisplayCoordinates(worldCoordinates: vec2): vec2 {
+  public worldToDisplayCoordinates(worldCoordinates: ReadonlyVec2): vec2 {
     return this.handle(
       () => this.renderer.worldToDisplayCoordinates(worldCoordinates),
       vec2.create()
@@ -159,9 +159,7 @@ export class ContextAwareRenderer implements Renderer {
     );
 
     this.canvas.removeEventListener('webglcontextlost', this.contextLostHandler, false);
-
     this.isRendererReady = false;
-
     this.handle(() => this.renderer.destroy(), undefined);
   }
 }
