@@ -25,6 +25,7 @@ module.exports = {
   },
   externals: {
     'gl-matrix': 'gl-matrix',
+    'resize-observer-polyfill': 'resize-observer-polyfill',
   },
   optimization: {
     minimize: true,
