@@ -47,7 +47,7 @@ export class RendererImplementation implements Renderer {
   private stopwatch?: WebGlStopwatch;
   private textures: Array<Texture> = [];
   private palette!: PaletteTexture;
-  private _canvasSize = vec2.create();
+  private _canvasSize = vec2.fromValues(1, 1);
   private canvasResizeObserver!: ResizeObserver;
 
   private applyRuntimeSettings: {
