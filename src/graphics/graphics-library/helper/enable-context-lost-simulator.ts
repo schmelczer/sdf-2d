@@ -18,13 +18,13 @@ export const enableContextLostSimulator = (canvas: HTMLCanvasElement) => {
     ext.loseContext();
     console.info(formatLog('context-lost-simulator', 'lost'));
 
-    const restoreTimeout = Math.random() * 500;
+    const restoreTimeout = Math.random() * 1500;
     setTimeout(() => {
       ext.restoreContext();
       console.info(formatLog('context-lost-simulator', 'restored'));
     }, restoreTimeout);
 
-    setTimeout(() => simulateContextLost(), restoreTimeout + Math.random() * 500);
+    setTimeout(() => simulateContextLost(), restoreTimeout + Math.random() * 1500);
   };
 
   setTimeout(simulateContextLost, 1000);
