@@ -1,3 +1,4 @@
+import { formatLog } from '../../helper/format-log';
 import { numberToGlslFloat } from '../../helper/number-to-glsl-float';
 import { wait } from '../../helper/wait';
 import { tryEnableExtension } from './helper/enable-extension';
@@ -138,9 +139,12 @@ export class ParallelCompiler {
         const line = Number.parseInt(match[1]);
         const error = match[2];
         console.error(
-          `Error: ${error}\nSource (line ${line}):\n${
-            shader.source.split('\n')[line - 1]
-          }`
+          formatLog(
+            'parallel-compiler',
+            `Error: ${error}\nSource (line ${line}):\n${
+              shader.source.split('\n')[line - 1]
+            }`
+          )
         );
       }
       throw new Error('Error while compiling shader');

@@ -42,6 +42,13 @@ export interface StartupSettings {
   paletteSize: number;
 
   /**
+   * Many context lost event will be simulated when enabled.
+   *
+   * Useful for testing.
+   */
+  enableContextLostSimulator: boolean;
+
+  /**
    * The default background color of the scene, can have transparency on every platform.
    */
   backgroundColor: vec3 | vec4;

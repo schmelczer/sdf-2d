@@ -11,4 +11,5 @@ export const defaultStartupSettings: StartupSettings = {
   backgroundColor: vec4.fromValues(1, 1, 1, 1),
   lightPenetrationRatio: 0.75,
   enableStopwatch: false,
+  enableContextLostSimulator: false,
 };

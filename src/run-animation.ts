@@ -1,3 +1,4 @@
+import { enableContextLostSimulator } from './graphics/graphics-library/helper/enable-context-lost-simulator';
 import { FpsQualityAutoscaler } from './graphics/rendering/fps-quality-autoscaler';
 import { ContextAwareRenderer } from './graphics/rendering/renderer/context-aware-renderer';
 import { RuntimeSettings } from './graphics/rendering/settings/runtime-settings';
@@ -53,6 +54,9 @@ export async function runAnimation(
   startupSettingOverrides: Partial<StartupSettings> = {},
   initialRuntimeSettingOverrides: Partial<RuntimeSettings> = {}
 ): Promise<void> {
+  if (startupSettingOverrides.enableContextLostSimulator) {
+    enableContextLostSimulator(canvas);
+  }
   const renderer = new ContextAwareRenderer(canvas, descriptors, startupSettingOverrides);
 
   const deltaTimeCalculator = new DeltaTimeCalculator();

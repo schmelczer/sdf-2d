@@ -1,3 +1,4 @@
+import { enableContextLostSimulator } from './graphics/graphics-library/helper/enable-context-lost-simulator';
 import { ContextAwareRenderer } from './graphics/rendering/renderer/context-aware-renderer';
 import { StartupSettings } from './graphics/rendering/settings/startup-settings';
 import { DrawableDescriptor, Renderer } from './main';
@@ -31,6 +32,9 @@ export async function compile(
   descriptors: Array<DrawableDescriptor>,
   settingsOverrides: Partial<StartupSettings> = {}
 ): Promise<Renderer> {
+  if (settingsOverrides.enableContextLostSimulator) {
+    enableContextLostSimulator(canvas);
+  }
   const renderer = new ContextAwareRenderer(canvas, descriptors, settingsOverrides);
   await renderer.initializedPromise;
   return renderer;

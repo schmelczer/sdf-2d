@@ -1,6 +1,7 @@
 import { ReadonlyVec2, vec2 } from 'gl-matrix';
 import { Drawable } from '../../../drawables/drawable';
 import { DrawableDescriptor } from '../../../drawables/drawable-descriptor';
+import { formatLog } from '../../../helper/format-log';
 import { RuntimeSettings } from '../settings/runtime-settings';
 import { StartupSettings } from '../settings/startup-settings';
 import { Renderer } from './renderer';
@@ -51,7 +52,6 @@ export class ContextAwareRenderer implements Renderer {
       if (!e.message.includes('Context lost')) {
         throw e;
       }
-      console.warn(e.message);
     }
   }
 
@@ -63,7 +63,6 @@ export class ContextAwareRenderer implements Renderer {
       if (!e.message.includes('Context lost')) {
         throw e;
       }
-      console.warn(e.message);
     }
 
     this.setRuntimeSettings(this.runtimeOverrides);
@@ -75,13 +74,12 @@ export class ContextAwareRenderer implements Renderer {
   private handleContextLost(event: Event) {
     this.isRendererReady = false;
     event.preventDefault();
-    console.warn('Context lost');
+    console.warn(formatLog('context-aware-renderer', 'Context lost'));
   }
 
   private handleContextRestored(event: Event) {
     event.preventDefault();
-    console.info('Context restored');
-
+    console.info(formatLog('context-aware-renderer', 'Context restored'));
     this.createRenderer();
   }
 
@@ -92,7 +90,6 @@ export class ContextAwareRenderer implements Renderer {
       } catch (e) {
         if (e.message.includes('Context lost')) {
           this.isRendererReady = false;
-          console.warn(e.message);
           return defaultValue;
         }
         throw e;

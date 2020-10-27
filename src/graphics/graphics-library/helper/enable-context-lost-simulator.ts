@@ -1,3 +1,5 @@
+import { formatLog } from '../../../helper/format-log';
+
 /** @internal */
 let isEnabled = false;
 
@@ -14,12 +16,12 @@ export const enableContextLostSimulator = (canvas: HTMLCanvasElement) => {
 
   const simulateContextLost = () => {
     ext.loseContext();
-    console.log('lost');
+    console.info(formatLog('context-lost-simulator', 'lost'));
 
     const restoreTimeout = Math.random() * 500;
     setTimeout(() => {
       ext.restoreContext();
-      console.log('restored');
+      console.info(formatLog('context-lost-simulator', 'restored'));
     }, restoreTimeout);
 
     setTimeout(() => simulateContextLost(), restoreTimeout + Math.random() * 500);
