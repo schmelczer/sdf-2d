@@ -3,6 +3,8 @@ import { Drawable } from './drawable';
 import { DrawableDescriptor } from './drawable-descriptor';
 
 /**
+ * Required for specifying the correct TS types.
+ *
  * @internal
  */
 export class EmptyDrawable extends Drawable {

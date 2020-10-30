@@ -9,13 +9,13 @@ import randomVertex from '../shaders/random-vs.glsl';
 
 /**
  * Create a renderer, draw a 2D noise texture with it,
- * then destroy the used resources, while returning the generated texture
- * in the form of a canvas.
+ * then destroy the used resources,
+ * while returning the generated texture in the form of a canvas.
  *
- * @param textureSize The resolution of the end result.
+ * @param textureSize The resolution of the end result
  * @param scale A starting value can be 15
  * @param amplitude A starting value can be 1
- * @param ignoreWebGL2 Ignore WebGL2, even when its available.
+ * @param ignoreWebGL2 Ignore WebGL2, even when it's available
  */
 export const renderNoise = async (
   textureSize: vec2,
@@ -39,7 +39,6 @@ export const renderNoise = async (
   await compiler.compilePrograms();
   await pogramPromise;
 
-  program.bind();
   program.draw({
     scale,
     amplitude,
