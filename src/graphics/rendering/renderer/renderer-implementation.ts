@@ -6,6 +6,7 @@ import { LightDrawable } from '../../../drawables/lights/light-drawable';
 import { colorToString } from '../../../helper/color-to-string';
 import { DefaultFrameBuffer } from '../../graphics-library/frame-buffer/default-frame-buffer';
 import { IntermediateFrameBuffer } from '../../graphics-library/frame-buffer/intermediate-frame-buffer';
+import { enableExtension } from '../../graphics-library/helper/enable-extension';
 import { getHardwareInfo } from '../../graphics-library/helper/get-hardware-info';
 import { WebGlStopwatch } from '../../graphics-library/helper/stopwatch';
 import { ParallelCompiler } from '../../graphics-library/parallel-compiler';
@@ -77,7 +78,9 @@ export class RendererImplementation implements Renderer {
 
   setRuntimeSettings(overrides: Partial<RuntimeSettings>): void {
     Object.entries(overrides).forEach(([k, v]) => {
-      this.applyRuntimeSettings[k as keyof RuntimeSettings](v);
+      if (k in this.applyRuntimeSettings) {
+        this.applyRuntimeSettings[k as keyof RuntimeSettings](v);
+      }
     });
   }
 
@@ -287,8 +290,12 @@ export class RendererImplementation implements Renderer {
 
   public destroy(): void {
     this.canvasResizeObserver.disconnect();
+
     this.distancePass.destroy();
     this.lightsPass.destroy();
     this.palette.destroy();
+
+    const ext = enableExtension(this.gl, 'WEBGL_lose_context');
+    ext.loseContext();
   }
 }

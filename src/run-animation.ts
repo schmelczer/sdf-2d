@@ -51,18 +51,17 @@ export async function runAnimation(
     currentTimeInMilliseconds: DOMHighResTimeStamp,
     deltaTimeInMilliseconds: DOMHighResTimeStamp
   ) => boolean,
-  startupSettingOverrides: Partial<StartupSettings> = {},
-  initialRuntimeSettingOverrides: Partial<RuntimeSettings> = {}
+  settings: Partial<StartupSettings & RuntimeSettings> = {}
 ): Promise<void> {
-  if (startupSettingOverrides.enableContextLostSimulator) {
+  if (settings.enableContextLostSimulator) {
     enableContextLostSimulator(canvas);
   }
-  const renderer = new ContextAwareRenderer(canvas, descriptors, startupSettingOverrides);
+  const renderer = new ContextAwareRenderer(canvas, descriptors, settings);
 
   const deltaTimeCalculator = new DeltaTimeCalculator();
   let triggerIsOver: () => void;
   const isOver = new Promise((resolve) => (triggerIsOver = resolve));
-  renderer.setRuntimeSettings(initialRuntimeSettingOverrides);
+  renderer.setRuntimeSettings(settings);
   const autoscaler = new FpsQualityAutoscaler(renderer);
 
   await renderer.initializedPromise;
