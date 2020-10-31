@@ -39,6 +39,15 @@ export class IntermediateFrameBuffer extends FrameBuffer {
       : [this.colorTexture];
   }
 
+  public invalidate() {
+    if (this.gl.isWebGL2) {
+      this.gl.invalidateFramebuffer(this.gl.FRAMEBUFFER, [
+        this.gl.COLOR_ATTACHMENT0,
+        this.gl.COLOR_ATTACHMENT1,
+      ]);
+    }
+  }
+
   public setSize(canvasSize: ReadonlyVec2): boolean {
     const hasChanged = super.setSize(canvasSize);
 

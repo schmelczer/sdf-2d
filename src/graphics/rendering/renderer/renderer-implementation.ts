@@ -258,6 +258,8 @@ export class RendererImplementation implements Renderer {
     );
     this.gl.disable(this.gl.BLEND);
 
+    this.distanceFieldFrameBuffer.invalidate();
+
     if (this.stopwatch?.isRunning) {
       this.stopwatch?.stop();
     }
