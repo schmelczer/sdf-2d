@@ -46,6 +46,8 @@ export const getUniversalRenderingContext = (
 
   result.insights = {
     isWebGL2: result.isWebGL2,
+    // @ts-ignore: injected by webpack
+    sdf2dVersion: __VERSION__,
     extensions: {},
     renderPasses: {
       distance: {},

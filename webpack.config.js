@@ -1,5 +1,6 @@
 const path = require('path');
 const TerserJSPlugin = require('terser-webpack-plugin');
+const webpack = require('webpack');
 
 const PATHS = {
   entryPoint: path.resolve(__dirname, 'src/main.ts'),
@@ -27,6 +28,11 @@ module.exports = {
     'gl-matrix': 'gl-matrix',
     'resize-observer-polyfill': 'resize-observer-polyfill',
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      __VERSION__: JSON.stringify(require('./package.json').version),
+    }),
+  ],
   optimization: {
     minimize: true,
     usedExports: true,

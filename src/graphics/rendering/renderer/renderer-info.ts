@@ -2,6 +2,7 @@ export interface RendererInfo {
   isWebGL2: boolean;
   vendor?: string;
   renderer?: string;
+  sdf2dVersion?: string;
   extensions: { [name: string]: boolean };
   floatInterpolationEnabled?: boolean;
   programCount?: number;
