@@ -41,7 +41,9 @@ export class IntermediateFrameBuffer extends FrameBuffer {
 
   public invalidate() {
     if (this.gl.isWebGL2) {
-      this.gl.invalidateFramebuffer(this.gl.FRAMEBUFFER, [
+      this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, this.frameBuffer);
+
+      this.gl.invalidateFramebuffer(this.gl.READ_FRAMEBUFFER, [
         this.gl.COLOR_ATTACHMENT0,
         this.gl.COLOR_ATTACHMENT1,
       ]);
