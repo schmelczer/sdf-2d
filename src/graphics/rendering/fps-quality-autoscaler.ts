@@ -20,7 +20,7 @@ export class FpsQualityAutoscaler {
   private adjusmentRateInMilliseconds = 500;
   private fps = 0;
 
-  public fpsTarget = 50;
+  public static fpsTarget = 30;
   public fpsHysteresis = 5;
 
   constructor(private readonly renderer: Renderer) {}
@@ -59,17 +59,20 @@ export class FpsQualityAutoscaler {
     this.fps = 1000 / ninetiethPercentile;
   }
 
-  private distanceScale = 0.5;
+  private distanceScale = 0.33;
   private lightsScale = 1;
 
   private adjustQuality() {
-    if (this.fps >= this.fpsTarget + this.fpsHysteresis) {
-      this.distanceScale = clamp(this.distanceScale + 0.1, 0.2, 1);
-      this.lightsScale = clamp(this.lightsScale + 0.1, 0.2, 1);
-    } else if (this.fps <= this.fpsTarget + this.fpsHysteresis) {
-      this.distanceScale = clamp(this.distanceScale / 2, 0.2, 1);
-      this.lightsScale = clamp(this.lightsScale / 2, 0.2, 1);
+    if (this.fps >= FpsQualityAutoscaler.fpsTarget + this.fpsHysteresis) {
+      this.distanceScale = this.distanceScale + 0.1;
+      this.lightsScale = this.lightsScale + 0.1;
+    } else if (this.fps <= FpsQualityAutoscaler.fpsTarget + this.fpsHysteresis) {
+      this.distanceScale = this.distanceScale / 1.5;
+      this.lightsScale = this.lightsScale / 1.5;
     }
+
+    this.distanceScale = clamp(this.distanceScale, 0.1, 1);
+    this.lightsScale = clamp(this.lightsScale, 0.2, 1);
 
     this.renderer.setRuntimeSettings({
       distanceRenderScale: this.distanceScale,
