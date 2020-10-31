@@ -2,6 +2,8 @@
 
 precision lowp float;
 
+#define FLOAT_LINEAR_ENABLED {floatLinearEnabled}
+
 uniform float maxMinDistance;
 uniform float distanceNdcPixelSize;
 in vec2 position;
@@ -28,6 +30,11 @@ void main() {
 
     {functionCalls}
 
-    distanceValue = minDistance;
+      #if FLOAT_LINEAR_ENABLED
+        distanceValue = minDistance;
+      #else
+        distanceValue = minDistance * 8.0;
+      #endif
+
     fragmentColor = color;
 }

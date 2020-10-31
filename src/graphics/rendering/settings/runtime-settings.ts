@@ -66,6 +66,14 @@ export interface RuntimeSettings {
   lightsRenderScale: number;
 
   /**
+   * Set the extent of the motion blur.
+   *
+   * The values must be between 0 and 1. Where 0 means no motion blur,
+   * and values just below 1 mean an extreme amount of motion blur.
+   */
+  motionBlur: number;
+
+  /**
    * It is possible to use your own textures in your SDF definitions.
    *
    * The keys of the object should be the name used to reference them in the GLSL code,

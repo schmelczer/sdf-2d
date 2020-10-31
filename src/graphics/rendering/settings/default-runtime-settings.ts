@@ -12,6 +12,7 @@ export const defaultRuntimeSettings: RuntimeSettings = {
   distanceRenderScale: 0.5,
   lightsRenderScale: 1,
   colorPalette: [],
+  motionBlur: 0.3,
   ambientLight: vec3.fromValues(0.25, 0.15, 0.25),
   textures: {},
 };

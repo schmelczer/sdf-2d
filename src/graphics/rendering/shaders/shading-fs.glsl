@@ -4,6 +4,7 @@ precision lowp float;
 
 #define INTENSITY_INSIDE_RATIO {intensityInsideRatio}
 #define SHADOW_TRACE_COUNT {shadowTraceCount}
+#define FLOAT_LINEAR_ENABLED {floatLinearEnabled}
 
 {macroDefinitions}
 
@@ -23,7 +24,11 @@ vec4 getColor(vec2 target) {
 }
 
 float getDistance(vec2 target) {
+  #if FLOAT_LINEAR_ENABLED
     return texture(distanceTexture, target)[0];
+  #else
+    return texture(distanceTexture, target)[0] / 8.0;
+  #endif
 }
 
 float shadowTransparency(float startingDistance, float lightCenterDistance, vec2 direction) {

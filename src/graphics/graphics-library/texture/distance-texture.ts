@@ -18,8 +18,8 @@ export class DistanceTexture extends Texture {
 
     const bufferFloatExtension = tryEnableExtension(gl, 'EXT_color_buffer_float');
     const floatLinearExtension = tryEnableExtension(gl, 'OES_texture_float_linear');
-    this.floatLinearEnabled = !!bufferFloatExtension && !!floatLinearExtension;
 
+    this.floatLinearEnabled = !!bufferFloatExtension && !!floatLinearExtension;
     gl.insights.floatInterpolationEnabled = this.floatLinearEnabled;
   }
 

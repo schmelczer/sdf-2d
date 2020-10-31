@@ -47,7 +47,8 @@ export class RendererImplementation implements Renderer {
   private stopwatch?: WebGlStopwatch;
   private textures: Array<Texture> = [];
   private palette!: PaletteTexture;
-  private _canvasSize = vec2.fromValues(1, 1);
+  private _canvasSize: vec2;
+  private blendFactor!: number;
   private canvasResizeObserver!: ResizeObserver;
 
   private applyRuntimeSettings: {
@@ -63,6 +64,7 @@ export class RendererImplementation implements Renderer {
       this.distanceFieldFrameBuffer.renderScale = v;
       this.gl.insights.renderPasses.distance.renderScale = v;
     },
+    motionBlur: (v) => (this.blendFactor = 1 - v),
     lightsRenderScale: (v) => {
       this.lightingFrameBuffer.renderScale = v;
       this.gl.insights.renderPasses.lights.renderScale = v;
@@ -89,7 +91,10 @@ export class RendererImplementation implements Renderer {
       ignoreWebGL2 !== undefined ? ignoreWebGL2 : defaultStartupSettings.ignoreWebGL2
     );
 
-    this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE);
+    this.gl.blendFunc(this.gl.CONSTANT_COLOR, this.gl.ONE_MINUS_CONSTANT_COLOR);
+
+    const { width, height } = canvas.getBoundingClientRect();
+    this._canvasSize = vec2.fromValues(width, height);
 
     this.applyCanvasResizeObserver();
 
@@ -144,6 +149,7 @@ export class RendererImplementation implements Renderer {
         compiler,
         {
           paletteSize: settings.paletteSize,
+          floatLinearEnabled: this.gl.insights.floatInterpolationEnabled ? '1' : '0',
           backgroundColor: colorToString(settings.backgroundColor),
         }
       )
@@ -158,6 +164,7 @@ export class RendererImplementation implements Renderer {
         {
           shadowTraceCount: settings.shadowTraceCount.toString(),
           intensityInsideRatio: settings.lightPenetrationRatio,
+          floatLinearEnabled: this.gl.insights.floatInterpolationEnabled ? '1' : '0',
           backgroundColor: colorToString(settings.backgroundColor),
         }
       )
@@ -225,7 +232,7 @@ export class RendererImplementation implements Renderer {
     }
 
     this.distanceFieldFrameBuffer.setSize(this.canvasSize);
-    this.lightingFrameBuffer.setSize(this.canvasSize);
+    const sizeChanged = this.lightingFrameBuffer.setSize(this.canvasSize);
 
     const common = {
       // texture units
@@ -243,6 +250,8 @@ export class RendererImplementation implements Renderer {
     ]);
 
     this.gl.enable(this.gl.BLEND);
+    const q = sizeChanged ? 1 : this.blendFactor;
+    this.gl.blendColor(q, q, q, 1);
     this.lightsPass.render(
       this.uniformsProvider.getUniforms(common),
       this.distanceFieldFrameBuffer.textures
