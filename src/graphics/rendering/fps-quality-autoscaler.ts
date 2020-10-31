@@ -66,8 +66,8 @@ export class FpsQualityAutoscaler {
     if (this.fps >= FpsQualityAutoscaler.fpsTarget + this.fpsHysteresis) {
       this.distanceScale = this.distanceScale + 0.1;
       this.lightsScale = this.lightsScale + 0.1;
-    } else if (this.fps <= FpsQualityAutoscaler.fpsTarget + this.fpsHysteresis) {
-      this.distanceScale = this.distanceScale / 1.5;
+    } else if (this.fps <= FpsQualityAutoscaler.fpsTarget - this.fpsHysteresis) {
+      this.distanceScale = this.distanceScale / 1.25;
       this.lightsScale = this.lightsScale / 1.5;
     }
 
