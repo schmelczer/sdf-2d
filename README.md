@@ -2,9 +2,9 @@
 
 A graphics library to enable the real-time rendering of 2D signed distance fields on the web.
 
-![screenshot of a bumpy tunnel taken on version (v0.5.0)](media/tunnels-screenshot.png)
+![screenshot of a bumpy tunnel](media/tunnels-screenshot.png)
 
-![screenshot of a merging circles taken on version (v0.5.0)](media/circles-screenshot.png)
+![screenshot of a merging circles](media/circles-screenshot.png)
 
 ## Links
 
@@ -28,7 +28,7 @@ A graphics library to enable the real-time rendering of 2D signed distance field
   - Context lost is handled with automatic restoration
   - Can be used without thinking of the GPU _(although for stunning results it, should be kept in mind)_
 
-![three screenshots from mobiles (v0.3.0)](media/mobile-screenshots.png)
+![three screenshots from mobiles](media/mobile-screenshots.png)
 
 > Three separate screenshots taken on a mobile device
 
