@@ -5,7 +5,7 @@ import { rgb255 } from './rgb255';
  * Return a color given in a hexadecimal form as a vec3.
  *
  * @param hex A hexadecimal color with (#ff0000) or without (ff0000)
- * a leading hashmark.
+ * a leading hash mark.
  *
  * source: https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
  *

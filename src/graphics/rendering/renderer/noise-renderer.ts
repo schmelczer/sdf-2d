@@ -31,13 +31,13 @@ export const renderNoise = async (
   const program = new FragmentShaderOnlyProgram(gl);
   const compiler = new ParallelCompiler(gl);
 
-  const pogramPromise = program.initialize(
+  const programPromise = program.initialize(
     gl.isWebGL2 ? [randomVertex, randomFragment] : [randomVertex100, randomFragment100],
     compiler
   );
 
   await compiler.compilePrograms();
-  await pogramPromise;
+  await programPromise;
 
   program.draw({
     scale,

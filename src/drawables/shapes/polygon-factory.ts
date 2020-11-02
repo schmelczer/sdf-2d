@@ -25,7 +25,7 @@ export const PolygonFactory = (
     public static descriptor: DrawableDescriptor = {
       sdf: {
         shader: `
-          uniform vec2 polygon${vertexCount}Vertices[POLGYON${vertexCount}_COUNT * ${vertexCount}];
+          uniform vec2 polygon${vertexCount}Vertices[POLYGON${vertexCount}_COUNT * ${vertexCount}];
 
           vec2 polygon${vertexCount}LineDistance(vec2 target, vec2 from, vec2 to) {
             vec2 targetFromDelta = target - from;
@@ -47,7 +47,7 @@ export const PolygonFactory = (
 
             float minDistance = 100.0;
 
-            for (int j = 0; j < POLGYON${vertexCount}_COUNT; j++) {
+            for (int j = 0; j < POLYGON${vertexCount}_COUNT; j++) {
               vec2 startEnd = polygon${vertexCount}Vertices[j * ${vertexCount}];
               vec2 vb = startEnd;
 
@@ -85,7 +85,7 @@ export const PolygonFactory = (
         vertices: `polygon${vertexCount}Vertices`,
       },
       objectCountScaler: 1 / vertexCount,
-      uniformCountMacroName: `POLGYON${vertexCount}_COUNT`,
+      uniformCountMacroName: `POLYGON${vertexCount}_COUNT`,
       shaderCombinationSteps: [0, 1, 2, 3, 8, 16],
       empty: new Polygon(new Array(vertexCount).fill(vec2.create())),
     };
@@ -147,7 +147,7 @@ export const PolygonFactory = (
         : this.vertices;
     }
 
-    protected getObjectToSerialize(transform2d: mat2d, transform1d: number): any {
+    protected getObjectToSerialize(transform2d: mat2d, _: number): any {
       return {
         vertices: this.actualVertices.map((v) =>
           vec2.transformMat2d(vec2.create(), v, transform2d)

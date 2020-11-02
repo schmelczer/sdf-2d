@@ -47,7 +47,7 @@ export interface Renderer {
 
   /**
    * The inverse of `displayToWorldCoordinates`, returns the screen space position
-   * of a point given in world space cooridnates.
+   * of a point given in world space coordinates.
    *
    * While the origin for worldCoordinates resides in the bottom-left corner,
    * the origin of the returned display coordinates is placed in the top left.
@@ -89,10 +89,9 @@ export interface Renderer {
   /**
    * Get useful information about the hardware and the SDF2D renderer.
    *
-   * Its sheme is subject to change.
+   * Its scheme is subject to change.
    *
    * During context lost it might be null.
-   *
    */
   readonly insights: RendererInfo | null;
 }

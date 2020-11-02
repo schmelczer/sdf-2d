@@ -73,7 +73,7 @@ export class WebGlStopwatch {
     return this.state == StopwatchState.waitingForResults;
   }
 
-  public get resultsInMilliSeconds(): number {
+  public get resultsInMilliseconds(): number {
     return this.resultsInNanoSeconds! / 1000 / 1000;
   }
 }

@@ -230,7 +230,7 @@ export class RendererImplementation implements Renderer {
         this.stopwatch.start();
       } else {
         this.stopwatch.tryGetResults();
-        this.gl.insights.gpuRenderTimeInMilliseconds = this.stopwatch.resultsInMilliSeconds;
+        this.gl.insights.gpuRenderTimeInMilliseconds = this.stopwatch.resultsInMilliseconds;
       }
     }
 

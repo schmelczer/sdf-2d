@@ -15,9 +15,9 @@ import { Renderer } from './renderer/renderer';
  * ```
  */
 export class FpsQualityAutoscaler {
-  private readonly maxAdjusmentRateInMilliseconds = 10000;
-  private readonly adjusmentRateIncrease = 2;
-  private adjusmentRateInMilliseconds = 500;
+  private readonly maxAdjustmentRateInMilliseconds = 10000;
+  private readonly adjustmentRateIncrease = 2;
+  private adjustmentRateInMilliseconds = 500;
   private fps = 0;
 
   public static fpsTarget = 30;
@@ -39,12 +39,12 @@ export class FpsQualityAutoscaler {
   public addDeltaTime(deltaTimeInMilliseconds: DOMHighResTimeStamp) {
     this.deltaTimes.push(deltaTimeInMilliseconds);
     this.deltaTimeSinceLastAdjustment += deltaTimeInMilliseconds;
-    if (this.deltaTimeSinceLastAdjustment > this.adjusmentRateInMilliseconds) {
+    if (this.deltaTimeSinceLastAdjustment > this.adjustmentRateInMilliseconds) {
       this.calculateFPS();
       this.adjustQuality();
-      this.adjusmentRateInMilliseconds = Math.min(
-        this.maxAdjusmentRateInMilliseconds,
-        this.adjusmentRateInMilliseconds * this.adjusmentRateIncrease
+      this.adjustmentRateInMilliseconds = Math.min(
+        this.maxAdjustmentRateInMilliseconds,
+        this.adjustmentRateInMilliseconds * this.adjustmentRateIncrease
       );
       this.deltaTimeSinceLastAdjustment = 0;
     }

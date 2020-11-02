@@ -19,10 +19,10 @@ export const NoisyPolygonFactory = (
     public static descriptor: DrawableDescriptor = {
       sdf: {
         shader: `
-          uniform vec2 noisyPolygon${vertexCount}Vertices[NOISY_POLGYON${vertexCount}_COUNT * ${vertexCount}];
-          uniform vec2 noisyPolygon${vertexCount}Centers[NOISY_POLGYON${vertexCount}_COUNT];
-          uniform float noisyPolygon${vertexCount}Lengths[NOISY_POLGYON${vertexCount}_COUNT];
-          uniform float noisyPolygon${vertexCount}Randoms[NOISY_POLGYON${vertexCount}_COUNT];
+          uniform vec2 noisyPolygon${vertexCount}Vertices[NOISY_POLYGON${vertexCount}_COUNT * ${vertexCount}];
+          uniform vec2 noisyPolygon${vertexCount}Centers[NOISY_POLYGON${vertexCount}_COUNT];
+          uniform float noisyPolygon${vertexCount}Lengths[NOISY_POLYGON${vertexCount}_COUNT];
+          uniform float noisyPolygon${vertexCount}Randoms[NOISY_POLYGON${vertexCount}_COUNT];
 
           uniform sampler2D noiseTexture;
 
@@ -56,7 +56,7 @@ export const NoisyPolygonFactory = (
 
             float minDistance = 100.0;
 
-            for (int j = 0; j < NOISY_POLGYON${vertexCount}_COUNT; j++) {
+            for (int j = 0; j < NOISY_POLYGON${vertexCount}_COUNT; j++) {
               vec2 startEnd = noisyPolygon${vertexCount}Vertices[j * ${vertexCount}];
               vec2 vb = startEnd;
 
@@ -110,7 +110,7 @@ export const NoisyPolygonFactory = (
         center: `noisyPolygon${vertexCount}Centers`,
         vertices: `noisyPolygon${vertexCount}Vertices`,
       },
-      uniformCountMacroName: `NOISY_POLGYON${vertexCount}_COUNT`,
+      uniformCountMacroName: `NOISY_POLYGON${vertexCount}_COUNT`,
       shaderCombinationSteps: [0, 1, 2, 3, 8, 16],
       empty: (new NoisyPolygon(
         new Array(vertexCount).fill(vec2.create())
@@ -123,7 +123,7 @@ export const NoisyPolygonFactory = (
       super(vertices);
     }
 
-    protected getObjectToSerialize(transform2d: mat2d, transform1d: number): any {
+    protected getObjectToSerialize(transform2d: mat2d, _: number): any {
       const transformedVertices = (this as any).actualVertices.map((v: vec2) =>
         vec2.transformMat2d(vec2.create(), v, transform2d)
       );
