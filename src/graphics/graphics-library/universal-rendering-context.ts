@@ -15,7 +15,6 @@ export const getUniversalRenderingContext = (
     alpha: true,
     antialias: false,
     depth: false,
-    desynchronized: true,
     preserveDrawingBuffer: true,
     powerPreference: 'high-performance',
   };

@@ -234,7 +234,7 @@ export class RendererImplementation implements Renderer {
       }
     }
 
-    const distanceSizeChanged = this.distanceFieldFrameBuffer.setSize(this.canvasSize);
+    this.distanceFieldFrameBuffer.setSize(this.canvasSize);
     const lightsSizeChanged = this.lightingFrameBuffer.setSize(this.canvasSize);
 
     const common = {
@@ -252,7 +252,7 @@ export class RendererImplementation implements Renderer {
       ...this.textures,
     ]);
 
-    if (!distanceSizeChanged && !lightsSizeChanged) {
+    if (!lightsSizeChanged) {
       this.gl.enable(this.gl.BLEND);
       this.gl.blendColor(this.blendFactor, this.blendFactor, this.blendFactor, 1);
     }
@@ -261,6 +261,7 @@ export class RendererImplementation implements Renderer {
       this.uniformsProvider.getUniforms(common),
       this.distanceFieldFrameBuffer.textures
     );
+
     this.gl.disable(this.gl.BLEND);
 
     this.distanceFieldFrameBuffer.invalidate();
