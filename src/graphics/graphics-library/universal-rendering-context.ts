@@ -1,4 +1,5 @@
 import { RendererInfo } from '../rendering/renderer/renderer-info';
+import { ContextLostException } from './context-lost-exception';
 
 /** @internal */
 export type UniversalRenderingContext = (
@@ -70,7 +71,7 @@ export const getUniversalRenderingContext = (
       if (typeof value === 'function') {
         if (isDestroyed || target.isContextLost()) {
           isDestroyed = true;
-          throw new Error('Context lost');
+          throw new ContextLostException();
         }
 
         return value.bind(target);

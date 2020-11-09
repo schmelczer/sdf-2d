@@ -2,6 +2,7 @@ import { ReadonlyVec2, vec2 } from 'gl-matrix';
 import { Drawable } from '../../../drawables/drawable';
 import { DrawableDescriptor } from '../../../drawables/drawable-descriptor';
 import { formatLog } from '../../../helper/format-log';
+import { ContextLostException } from '../../graphics-library/context-lost-exception';
 import { RuntimeSettings } from '../settings/runtime-settings';
 import { StartupSettings } from '../settings/startup-settings';
 import { Renderer } from './renderer';
@@ -40,31 +41,27 @@ export class ContextAwareRenderer implements Renderer {
   }
 
   private createRenderer() {
-    try {
-      this.renderer = new RendererImplementation(
-        this.canvas,
-        this.descriptors,
-        this.ignoreWebGL2
-      );
-      this.readyPromise = this.renderer.initialize(this.settingsOverrides);
-      this.waitForRenderer();
-    } catch (e) {
-      if (!e.message.includes('Context lost')) {
-        throw e;
-      }
-    }
+    this.renderer = new RendererImplementation(
+      this.canvas,
+      this.descriptors,
+      this.ignoreWebGL2
+    );
+    this.readyPromise = this.renderer.initialize(this.settingsOverrides);
+    this.waitForRenderer();
   }
 
   private async waitForRenderer() {
     try {
       await this.readyPromise;
-      this.isRendererReady = true;
     } catch (e) {
-      if (!e.message.includes('Context lost')) {
-        throw e;
+      if (e instanceof ContextLostException) {
+        this.createRenderer();
+        return;
       }
+      throw e;
     }
 
+    this.isRendererReady = true;
     this.setRuntimeSettings(this.runtimeOverrides);
     if (this.previousViewAreaTopLeft && this.previousViewAreaSize) {
       this.setViewArea(this.previousViewAreaTopLeft, this.previousViewAreaSize);
@@ -88,7 +85,7 @@ export class ContextAwareRenderer implements Renderer {
       try {
         return f();
       } catch (e) {
-        if (e.message.includes('Context lost')) {
+        if (e instanceof ContextLostException) {
           this.isRendererReady = false;
           return defaultValue;
         }
@@ -100,11 +97,14 @@ export class ContextAwareRenderer implements Renderer {
   }
 
   public get canvasSize(): ReadonlyVec2 {
-    return this.handle(() => this.renderer.canvasSize, vec2.create());
+    return this.handle(() => this.renderer.canvasSize, vec2.fromValues(1, 1));
   }
 
   public get viewAreaSize(): ReadonlyVec2 {
-    return this.handle(() => this.renderer.viewAreaSize, vec2.create());
+    return this.handle(
+      () => this.renderer.viewAreaSize,
+      this.previousViewAreaSize ?? vec2.fromValues(1, 1)
+    );
   }
 
   public get insights(): RendererInfo | null {
