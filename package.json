@@ -34,7 +34,8 @@
   },
   "scripts": {
     "start": "rm -rf lib/* && webpack --mode development -w",
-    "build": "rm -rf lib/* docs/* && typedoc && webpack --mode production"
+    "build": "rm -rf lib/* docs/* && typedoc && webpack --mode production",
+    "lint": "eslint src/**/*.{js,ts,json} --fix && prettier --write src/**/*.{js,ts,json}"
   },
   "main": "lib/main.js",
   "types": "lib/src/main.d.ts",
@@ -64,6 +65,7 @@
     "typedoc-plugin-extras": "^1.1.6",
     "typescript": "^3.9.7",
     "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.11",
+    "eslint-plugin-json-format": "^2.0.1"
   }
 }
