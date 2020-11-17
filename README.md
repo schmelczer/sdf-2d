@@ -4,13 +4,14 @@ A graphics library to enable the real-time rendering of 2D signed distance field
 
 ![screenshot of a bumpy tunnel](media/tunnels-screenshot.png)
 
-![screenshot of a merging circles](media/circles-screenshot.png)
+![screenshot of merging circles](media/circles-screenshot.png)
 
 ## Links
 
-- [View it in action](https://sdf2d.schmelczer.dev)
+- [View it in action (demos)](https://sdf2d.schmelczer.dev)
+- [View it in action (video game)](https://decla.red)
 - [Documentation](https://schmelczerandras.github.io/sdf-2d/)
-- [In depth information](https://github.com/schmelczerandras/sdf-2d/blob/master/media/sdf-2d.pdf)
+- [In-depth information](https://github.com/schmelczerandras/sdf-2d/blob/master/media/sdf-2d.pdf)
 
 ## Features
 
@@ -28,9 +29,9 @@ A graphics library to enable the real-time rendering of 2D signed distance field
   - Context lost is handled with automatic restoration
   - Can be used without thinking of the GPU _(although for stunning results it, should be kept in mind)_
 
-![three screenshots from mobiles](media/mobile-screenshots.png)
+![four screenshots from mobiles](media/mobile-screenshots.png)
 
-> Three separate screenshots taken on a mobile device
+> Four separate screenshots taken on a mobile device
 
 ## Install
 
@@ -63,9 +64,10 @@ main();
 
 For further examples, please visit the following repositories:
 
-- [Minimal example using Webpack](https://github.com/schmelczerandras/sdf-2d-minimal-example)
+- [Minimal example (using Webpack)](https://github.com/schmelczerandras/sdf-2d-minimal-example)
 - [More complex example](https://github.com/schmelczerandras/sdf-2d-minimal-example)
 - [Source for the demo page](https://github.com/schmelczerandras/sdf-2d-demo)
+- [Source for decla.red, the multiplayer game](https://github.com/schmelczerandras/decla.red)
 
 ## Documentation
 
