@@ -1,8 +1,11 @@
-import { mat3, vec2, vec3, vec4 } from 'gl-matrix';
+import { mat3, mat4, vec2, vec3, vec4 } from 'gl-matrix';
 import { UniversalRenderingContext } from '../universal-rendering-context';
 
 /** @internal */
 const loaderMat3 = mat3.create();
+
+/** @internal */
+const loaderMat4 = mat4.create();
 
 /** @internal */
 const converters: Map<
@@ -105,10 +108,10 @@ converters.set(
       const result = new Float32Array(v.length * 4);
 
       for (let i = 0; i < v.length; i++) {
-        result[3 * i] = (v[i] as Array<number>)[0];
-        result[3 * i + 1] = (v[i] as Array<number>)[1];
-        result[3 * i + 2] = (v[i] as Array<number>)[2];
-        result[3 * i + 3] = (v[i] as Array<number>)[3];
+        result[4 * i] = (v[i] as Array<number>)[0];
+        result[4 * i + 1] = (v[i] as Array<number>)[1];
+        result[4 * i + 2] = (v[i] as Array<number>)[2];
+        result[4 * i + 3] = (v[i] as Array<number>)[3];
       }
 
       gl.uniform4fv(l, result);
@@ -120,13 +123,29 @@ converters.set(
 
 converters.set(WebGLRenderingContext.FLOAT_MAT3, (gl, v, l) => {
   if (gl.isWebGL2) {
-    gl.uniformMatrix3fv(l, true, mat3.fromMat2d(loaderMat3, v));
+    if (v.length < 9) {
+      gl.uniformMatrix3fv(l, true, mat3.fromMat2d(loaderMat3, v));
+    } else {
+      gl.uniformMatrix3fv(l, true, v);
+    }
   } else {
-    gl.uniformMatrix3fv(
-      l,
-      false,
-      mat3.transpose(mat3.create(), mat3.fromMat2d(loaderMat3, v))
-    );
+    if (v.length < 9) {
+      gl.uniformMatrix3fv(
+        l,
+        false,
+        mat3.transpose(loaderMat3, mat3.fromMat2d(loaderMat3, v))
+      );
+    } else {
+      gl.uniformMatrix3fv(l, false, mat3.transpose(loaderMat3, v));
+    }
+  }
+});
+
+converters.set(WebGLRenderingContext.FLOAT_MAT4, (gl, v, l) => {
+  if (gl.isWebGL2) {
+    gl.uniformMatrix4fv(l, true, v);
+  } else {
+    gl.uniformMatrix4fv(l, false, mat4.transpose(loaderMat4, v));
   }
 });
 
