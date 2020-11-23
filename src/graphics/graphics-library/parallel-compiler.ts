@@ -17,13 +17,11 @@ type ShaderWithSource = WebGLShader & { source: string };
 
 /** @internal */
 export class ParallelCompiler {
-  private extension?: any;
-  private gl: UniversalRenderingContext;
+  private parallelCompileExtension?: any;
   private programs: Array<CompilingProgram> = [];
 
-  public constructor(gl: UniversalRenderingContext) {
-    this.gl = gl;
-    this.extension = tryEnableExtension(gl, 'KHR_parallel_shader_compile');
+  public constructor(private readonly gl: UniversalRenderingContext) {
+    this.parallelCompileExtension = tryEnableExtension(gl, 'KHR_parallel_shader_compile');
   }
 
   public createProgram(
@@ -105,8 +103,11 @@ export class ParallelCompiler {
 
     this.programs.forEach((p) => {
       if (
-        !this.extension ||
-        this.gl.getProgramParameter(p.program, this.extension.COMPLETION_STATUS_KHR)
+        !this.parallelCompileExtension ||
+        this.gl.getProgramParameter(
+          p.program,
+          this.parallelCompileExtension.COMPLETION_STATUS_KHR
+        )
       ) {
         this.checkProgram(p);
         done.push(p);

@@ -14,7 +14,7 @@ export abstract class FrameBuffer {
 
   constructor(protected readonly gl: UniversalRenderingContext) {}
 
-  public bindAndClear(inputTextures: Array<Texture>) {
+  public bindAndClear(inputTextures: Array<Texture> = []) {
     this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, this.frameBuffer);
 
     inputTextures.forEach((t) => t.bind());

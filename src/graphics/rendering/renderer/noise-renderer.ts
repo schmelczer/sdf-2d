@@ -1,4 +1,5 @@
-import { vec2 } from 'gl-matrix';
+import { ReadonlyVec2 } from 'gl-matrix';
+import { DefaultFrameBuffer } from '../../graphics-library/frame-buffer/default-frame-buffer';
 import { ParallelCompiler } from '../../graphics-library/parallel-compiler';
 import { FragmentShaderOnlyProgram } from '../../graphics-library/program/fragment-shader-only-program';
 import { getUniversalRenderingContext } from '../../graphics-library/universal-rendering-context';
@@ -18,16 +19,15 @@ import randomVertex from '../shaders/random-vs.glsl';
  * @param ignoreWebGL2 Ignore WebGL2, even when it's available
  */
 export const renderNoise = async (
-  textureSize: vec2,
+  textureSize: ReadonlyVec2,
   scale: number,
   amplitude: number,
   ignoreWebGL2 = false
 ): Promise<HTMLCanvasElement> => {
   const canvas = document.createElement('canvas');
-  canvas.width = textureSize.x;
-  canvas.height = textureSize.y;
-
   const gl = getUniversalRenderingContext(canvas, ignoreWebGL2);
+
+  const frameBuffer = new DefaultFrameBuffer(gl, textureSize);
   const program = new FragmentShaderOnlyProgram(gl);
   const compiler = new ParallelCompiler(gl);
 
@@ -39,11 +39,13 @@ export const renderNoise = async (
   await compiler.compilePrograms();
   await programPromise;
 
+  frameBuffer.bindAndClear();
   program.draw({
     scale,
     amplitude,
   });
 
+  frameBuffer.destroy();
   program.destroy();
 
   return canvas;
