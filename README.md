@@ -11,7 +11,7 @@ A graphics library to enable the real-time rendering of 2D signed distance field
 - [View it in action (demos)](https://sdf2d.schmelczer.dev)
 - [View it in action (video game)](https://decla.red)
 - [Documentation](https://schmelczerandras.github.io/sdf-2d/)
-- [In-depth information](https://github.com/schmelczerandras/sdf-2d/blob/master/media/sdf-2d.pdf)
+- [In-depth information](https://github.com/schmelczerandras/sdf-2d/blob/master/media/thesis-andras-schmelczer.pdf)
 
 ## Features
 

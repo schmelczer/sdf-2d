@@ -1,6 +1,6 @@
 # ![SDF-2D logo](media/logo-colored.svg) Documentation
 
-The motivation behind this library and more in-depth information about the rendering techniques utilised can be found in [this technical report](media/sdf-2d.pdf).
+The motivation behind this library and more in-depth information about the rendering techniques utilised can be found in [my thesis](media/thesis-andras-schmelczer.pdf).
 
 ## Links
 
