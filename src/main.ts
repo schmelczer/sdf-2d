@@ -33,6 +33,7 @@ export * from './drawables/drawable-descriptor';
 export * from './drawables/lights/circle-light';
 export * from './drawables/lights/flashlight';
 export * from './drawables/shapes/circle-factory';
+export * from './drawables/shapes/hexagon-factory';
 export * from './drawables/shapes/colorful-circle';
 export * from './drawables/shapes/droplet-factory';
 export * from './drawables/shapes/inverted-tunnel-factory';
