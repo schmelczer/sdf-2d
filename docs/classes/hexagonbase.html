@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>NoisyPolygonBase | SDF-2D - v0.7.6</title>
+	<title>HexagonBase | SDF-2D - v0.7.6</title>
 	<meta name="description" content="Documentation for SDF-2D - v0.7.6">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -53,24 +53,28 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="noisypolygonbase.html">NoisyPolygonBase</a>
+					<a href="hexagonbase.html">HexagonBase</a>
 				</li>
 			</ul>
-			<h1>Interface NoisyPolygonBase</h1>
+			<h1>Class HexagonBase</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="../classes/polygonbase.html" class="tsd-signature-type">PolygonBase</a>
+						<span class="tsd-signature-type">EmptyDrawable</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">NoisyPolygonBase</span>
+								<span class="target">HexagonBase</span>
 							</li>
 						</ul>
 					</li>
@@ -80,86 +84,88 @@
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section tsd-is-inherited">
+						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-interface tsd-is-inherited"><a href="noisypolygonbase.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="hexagonbase.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="noisypolygonbase.html#randomoffset" class="tsd-kind-icon">random<wbr>Offset</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="noisypolygonbase.html#vertices" class="tsd-kind-icon">vertices</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited tsd-is-static"><a href="noisypolygonbase.html#descriptor" class="tsd-kind-icon">descriptor</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="hexagonbase.html#center" class="tsd-kind-icon">center</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="hexagonbase.html#radius" class="tsd-kind-icon">radius</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-static"><a href="hexagonbase.html#descriptor" class="tsd-kind-icon">descriptor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited tsd-is-protected"><a href="noisypolygonbase.html#getobjecttoserialize" class="tsd-kind-icon">get<wbr>Object<wbr>ToSerialize</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="noisypolygonbase.html#mindistance" class="tsd-kind-icon">min<wbr>Distance</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected"><a href="hexagonbase.html#getobjecttoserialize" class="tsd-kind-icon">get<wbr>Object<wbr>ToSerialize</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="hexagonbase.html#mindistance" class="tsd-kind-icon">min<wbr>Distance</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-interface tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Noisy<wbr>Polygon<wbr>Base<span class="tsd-signature-symbol">(</span>vertices<span class="tsd-signature-symbol">: </span><a href="__global.array.html" class="tsd-signature-type">Array</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">vec2</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="noisypolygonbase.html" class="tsd-signature-type">NoisyPolygonBase</a></li>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Hexagon<wbr>Base<span class="tsd-signature-symbol">(</span>center<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec2</span>, radius<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="hexagonbase.html" class="tsd-signature-type">HexagonBase</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="../classes/polygonbase.html">PolygonBase</a>.<a href="../classes/polygonbase.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/21eb0a3/src/drawables/shapes/polygon-factory.ts#L11">drawables/shapes/polygon-factory.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/21eb0a3/src/drawables/shapes/hexagon-factory.ts#L9">drawables/shapes/hexagon-factory.ts:9</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>vertices: <a href="__global.array.html" class="tsd-signature-type">Array</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">vec2</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>center: <span class="tsd-signature-type">vec2</span></h5>
+								</li>
+								<li>
+									<h5>radius: <span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="noisypolygonbase.html" class="tsd-signature-type">NoisyPolygonBase</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="hexagonbase.html" class="tsd-signature-type">HexagonBase</a></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="randomoffset" class="tsd-anchor"></a>
-					<h3>random<wbr>Offset</h3>
-					<div class="tsd-signature tsd-kind-icon">random<wbr>Offset<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="center" class="tsd-anchor"></a>
+					<h3>center</h3>
+					<div class="tsd-signature tsd-kind-icon">center<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">vec2</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/21eb0a3/src/drawables/shapes/noisy-polygon-factory.ts#L8">drawables/shapes/noisy-polygon-factory.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/21eb0a3/src/drawables/shapes/hexagon-factory.ts#L10">drawables/shapes/hexagon-factory.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="vertices" class="tsd-anchor"></a>
-					<h3>vertices</h3>
-					<div class="tsd-signature tsd-kind-icon">vertices<span class="tsd-signature-symbol">:</span> <a href="__global.array.html" class="tsd-signature-type">Array</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">vec2</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="radius" class="tsd-anchor"></a>
+					<h3>radius</h3>
+					<div class="tsd-signature tsd-kind-icon">radius<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/21eb0a3/src/drawables/shapes/polygon-factory.ts#L12">drawables/shapes/polygon-factory.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/21eb0a3/src/drawables/shapes/hexagon-factory.ts#L10">drawables/shapes/hexagon-factory.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited tsd-is-static">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-static">
 					<a name="descriptor" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> descriptor</h3>
-					<div class="tsd-signature tsd-kind-icon">descriptor<span class="tsd-signature-symbol">:</span> <a href="drawabledescriptor.html" class="tsd-signature-type">DrawableDescriptor</a></div>
+					<div class="tsd-signature tsd-kind-icon">descriptor<span class="tsd-signature-symbol">:</span> <a href="../interfaces/drawabledescriptor.html" class="tsd-signature-type">DrawableDescriptor</a></div>
 					<aside class="tsd-sources">
 						<p>Inherited from EmptyDrawable.descriptor</p>
-						<p>Overrides <a href="../classes/drawable.html">Drawable</a>.<a href="../classes/drawable.html#descriptor">descriptor</a></p>
+						<p>Overrides <a href="drawable.html">Drawable</a>.<a href="drawable.html#descriptor">descriptor</a></p>
 						<ul>
 							<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/21eb0a3/src/drawables/empty-drawable.ts#L11">drawables/empty-drawable.ts:11</a></li>
 						</ul>
@@ -168,17 +174,17 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited tsd-is-protected">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected">
 					<a name="getobjecttoserialize" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> get<wbr>Object<wbr>ToSerialize</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited tsd-is-protected">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected">
 						<li class="tsd-signature tsd-kind-icon">get<wbr>Object<wbr>ToSerialize<span class="tsd-signature-symbol">(</span>transform2d<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">mat2d</span>, transform1d<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from EmptyDrawable.getObjectToSerialize</p>
-								<p>Overrides <a href="../classes/drawable.html">Drawable</a>.<a href="../classes/drawable.html#getobjecttoserialize">getObjectToSerialize</a></p>
+								<p>Overrides <a href="drawable.html">Drawable</a>.<a href="drawable.html#getobjecttoserialize">getObjectToSerialize</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/21eb0a3/src/drawables/empty-drawable.ts#L19">drawables/empty-drawable.ts:19</a></li>
 								</ul>
@@ -196,17 +202,17 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 					<a name="mindistance" class="tsd-anchor"></a>
 					<h3>min<wbr>Distance</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">min<wbr>Distance<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">vec2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from EmptyDrawable.minDistance</p>
-								<p>Overrides <a href="../classes/drawable.html">Drawable</a>.<a href="../classes/drawable.html#mindistance">minDistance</a></p>
+								<p>Overrides <a href="drawable.html">Drawable</a>.<a href="drawable.html#mindistance">minDistance</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/schmelczerandras/sdf-2d/blob/21eb0a3/src/drawables/empty-drawable.ts#L14">drawables/empty-drawable.ts:14</a></li>
 								</ul>
@@ -235,26 +241,26 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface">
-						<a href="noisypolygonbase.html" class="tsd-kind-icon">Noisy<wbr>Polygon<wbr>Base</a>
+					<li class="current tsd-kind-class">
+						<a href="hexagonbase.html" class="tsd-kind-icon">Hexagon<wbr>Base</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-interface tsd-is-inherited">
-								<a href="noisypolygonbase.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="hexagonbase.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="noisypolygonbase.html#randomoffset" class="tsd-kind-icon">random<wbr>Offset</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="hexagonbase.html#center" class="tsd-kind-icon">center</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="noisypolygonbase.html#vertices" class="tsd-kind-icon">vertices</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="hexagonbase.html#radius" class="tsd-kind-icon">radius</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited tsd-is-static">
-								<a href="noisypolygonbase.html#descriptor" class="tsd-kind-icon">descriptor</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-static">
+								<a href="hexagonbase.html#descriptor" class="tsd-kind-icon">descriptor</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited tsd-is-protected">
-								<a href="noisypolygonbase.html#getobjecttoserialize" class="tsd-kind-icon">get<wbr>Object<wbr>ToSerialize</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected">
+								<a href="hexagonbase.html#getobjecttoserialize" class="tsd-kind-icon">get<wbr>Object<wbr>ToSerialize</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
-								<a href="noisypolygonbase.html#mindistance" class="tsd-kind-icon">min<wbr>Distance</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+								<a href="hexagonbase.html#mindistance" class="tsd-kind-icon">min<wbr>Distance</a>
 							</li>
 						</ul>
 					</li>
