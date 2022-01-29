@@ -1,6 +1,6 @@
 {
   "name": "sdf-2d",
-  "version": "0.7.5",
+  "version": "0.7.6",
   "description": "Graphics framework for efficiently rendering 2D signed distance fields.",
   "keywords": [
     "webgl",
