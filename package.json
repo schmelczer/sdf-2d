@@ -29,7 +29,7 @@
   "license": "ISC",
   "exports": {
     ".": {
-      "import": "./dist/main.js"
+      "import": "./lib/main.js"
     }
   },
   "scripts": {
