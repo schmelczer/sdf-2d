@@ -34,7 +34,7 @@
   },
   "scripts": {
     "start": "rm -rf lib/* && webpack --mode development -w",
-    "build": "rm -rf lib/* docs/* && typedoc && webpack --mode production",
+    "build": "rm -rf lib/* docs/* && npx typedoc && webpack --mode production",
     "lint": "eslint src/**/*.{js,ts,json} --fix && prettier --write src/**/*.{js,ts,json}"
   },
   "main": "lib/main.js",
