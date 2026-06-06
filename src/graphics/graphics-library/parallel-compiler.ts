@@ -135,7 +135,7 @@ export class ParallelCompiler {
   private prettyPrintErrorsIfThereAreAny(shader: ShaderWithSource) {
     try {
       this.checkShader(shader);
-    } catch (e) {
+    } catch (e: any) {
       for (const match of e.toString().matchAll(/ERROR: 0:(\d+): (.*)$/gm)) {
         const line = Number.parseInt(match[1]);
         const error = match[2];

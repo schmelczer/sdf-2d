@@ -1,18 +1,15 @@
 {
-  "mode": "file",
   "out": "docs",
   "name": "SDF-2D",
-  "includeDeclarations": true,
+  "entryPoints": ["src"],
+  "entryPointStrategy": "expand",
   "excludeExternals": true,
-  "excludeNotExported": true,
   "excludePrivate": true,
-  "stripInternal": true,
-  "media": "media",
+  "excludeInternal": true,
   "includeVersion": true,
   "hideGenerator": true,
-  "inputFiles": "src",
+  "readme": "documentation-readme.md",
   "favicon": "media/favicon.ico",
-  "ignoreCompilerErrors": true,
-  "listInvalidSymbolLinks": true,
-  "readme": "documentation-readme.md"
+  "skipErrorChecking": true,
+  "plugin": ["typedoc-plugin-extras"]
 }

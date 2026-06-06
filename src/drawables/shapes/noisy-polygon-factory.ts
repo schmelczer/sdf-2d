@@ -112,9 +112,9 @@ export const NoisyPolygonFactory = (
       },
       uniformCountMacroName: `NOISY_POLYGON${vertexCount}_COUNT`,
       shaderCombinationSteps: [0, 1, 2, 3, 8, 16],
-      empty: (new NoisyPolygon(
+      empty: new NoisyPolygon(
         new Array(vertexCount).fill(vec2.create())
-      ) as unknown) as Drawable,
+      ) as unknown as Drawable,
     };
 
     public randomOffset = 0;

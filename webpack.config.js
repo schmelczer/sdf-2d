@@ -38,7 +38,6 @@ module.exports = {
     usedExports: true,
     minimizer: [
       new TerserJSPlugin({
-        sourceMap: true,
         test: /\.js$/i,
       }),
     ],

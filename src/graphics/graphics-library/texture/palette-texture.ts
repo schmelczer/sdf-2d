@@ -6,7 +6,10 @@ import { Texture } from './texture';
 export class PaletteTexture extends Texture {
   public static readonly textureUnitId = 2;
 
-  constructor(gl: UniversalRenderingContext, private readonly paletteSize: number) {
+  constructor(
+    gl: UniversalRenderingContext,
+    private readonly paletteSize: number
+  ) {
     super(gl, PaletteTexture.textureUnitId);
   }
 

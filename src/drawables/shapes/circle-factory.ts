@@ -7,7 +7,10 @@ import { EmptyDrawable } from '../empty-drawable';
  * @category Drawable
  */
 class CircleBase extends EmptyDrawable {
-  constructor(public center: vec2, public radius: number) {
+  constructor(
+    public center: vec2,
+    public radius: number
+  ) {
     super();
   }
 }

@@ -23,6 +23,11 @@ declare global {
     x: number;
     y: number;
   }
+
+  interface Iterable<T> {
+    x: T;
+    y: T;
+  }
 }
 
 applyArrayPlugins();

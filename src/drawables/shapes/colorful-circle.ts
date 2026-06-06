@@ -35,7 +35,11 @@ export class ColorfulCircle extends Drawable {
     empty: new ColorfulCircle(vec2.create(), 0, 0),
   };
 
-  constructor(public center: vec2, public radius: number, public colorIndex: number) {
+  constructor(
+    public center: vec2,
+    public radius: number,
+    public colorIndex: number
+  ) {
     super();
   }
 

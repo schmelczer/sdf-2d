@@ -7,7 +7,11 @@ import { EmptyDrawable } from '../empty-drawable';
  * @category Drawable
  */
 class RotatedRectangleBase extends EmptyDrawable {
-  constructor(public center: vec2, public size: vec2, public rotation: number) {
+  constructor(
+    public center: vec2,
+    public size: vec2,
+    public rotation: number
+  ) {
     super();
   }
 }

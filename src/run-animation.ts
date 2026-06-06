@@ -60,7 +60,7 @@ export async function runAnimation(
 
   const deltaTimeCalculator = new DeltaTimeCalculator();
   let triggerIsOver: () => void;
-  const isOver = new Promise((resolve) => (triggerIsOver = resolve));
+  const isOver = new Promise<void>((resolve) => (triggerIsOver = resolve));
   renderer.setRuntimeSettings(settings);
   const autoscaler = new FpsQualityAutoscaler(renderer);
 

@@ -8,7 +8,10 @@ import { numberToGlslFloat } from '../../helper/number-to-glsl-float';
  * @category Drawable
  */
 class MetaCircleBase extends EmptyDrawable {
-  constructor(public center: vec2, public radius: number) {
+  constructor(
+    public center: vec2,
+    public radius: number
+  ) {
     super();
   }
 }
