@@ -24,16 +24,25 @@ export const NoisyPolygonFactory = (
           uniform float noisyPolygon${vertexCount}Lengths[NOISY_POLYGON${vertexCount}_COUNT];
           uniform float noisyPolygon${vertexCount}Randoms[NOISY_POLYGON${vertexCount}_COUNT];
 
-          uniform sampler2D noiseTexture;
+          // Other drawables (and other vertex-count variants of this one)
+          // share these declarations; the include guards keep the combined
+          // shader from declaring them twice.
+          #ifndef NOISE_TEXTURE_DECLARED
+          #define NOISE_TEXTURE_DECLARED
+            uniform sampler2D noiseTexture;
+          #endif
 
-          #ifdef WEBGL2_IS_AVAILABLE
-            float myTerrain(vec2 h) {
-              return texture(noiseTexture, h)[0] - 0.5;
-            }
-          #else
-            float myTerrain(vec2 h) {
-              return texture2D(noiseTexture, h)[0] - 0.5;
-            }
+          #ifndef MY_TERRAIN_DECLARED
+          #define MY_TERRAIN_DECLARED
+            #ifdef WEBGL2_IS_AVAILABLE
+              float myTerrain(vec2 h) {
+                return texture(noiseTexture, h)[0] - 0.5;
+              }
+            #else
+              float myTerrain(vec2 h) {
+                return texture2D(noiseTexture, h)[0] - 0.5;
+              }
+            #endif
           #endif
 
           vec2 noisyPolygon${vertexCount}LineDistance(vec2 target, vec2 from, vec2 to) {

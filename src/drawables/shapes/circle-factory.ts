@@ -15,6 +15,10 @@ class CircleBase extends EmptyDrawable {
   }
 }
 
+// Suffixing the GLSL names with a per-factory-invocation id lets multiple
+// circle types (e.g. different colors) coexist in one compiled shader.
+let _id = 0;
+
 /**
  * @category Drawable
  */
@@ -23,27 +27,27 @@ export const CircleFactory = (color: vec3 | vec4 | number): typeof CircleBase =>
     public static descriptor: DrawableDescriptor = {
       sdf: {
         shader: `
-            uniform vec2 circleCenters[CIRCLE_COUNT];
-            uniform float circleRadii[CIRCLE_COUNT];
-  
-            float circleMinDistance(vec2 target, out vec4 color) {
+            uniform vec2 circleCenters${_id}[CIRCLE_COUNT${_id}];
+            uniform float circleRadii${_id}[CIRCLE_COUNT${_id}];
+
+            float circleMinDistance${_id}(vec2 target, out vec4 color) {
               color = ${codeForColorAccess(color)};
               float minDistance = 1000.0;
-              for (int i = 0; i < CIRCLE_COUNT; i++) {
-                float dist = distance(circleCenters[i], target) - circleRadii[i];
+              for (int i = 0; i < CIRCLE_COUNT${_id}; i++) {
+                float dist = distance(circleCenters${_id}[i], target) - circleRadii${_id}[i];
                 minDistance = min(minDistance, dist);
               }
-  
+
               return minDistance;
             }
           `,
-        distanceFunctionName: 'circleMinDistance',
+        distanceFunctionName: `circleMinDistance${_id}`,
       },
       propertyUniformMapping: {
-        center: 'circleCenters',
-        radius: 'circleRadii',
+        center: `circleCenters${_id}`,
+        radius: `circleRadii${_id}`,
       },
-      uniformCountMacroName: 'CIRCLE_COUNT',
+      uniformCountMacroName: `CIRCLE_COUNT${_id}`,
       shaderCombinationSteps: [0, 1, 2, 3, 8, 16],
       empty: new Circle(vec2.create(), 0),
     };
@@ -59,6 +63,8 @@ export const CircleFactory = (color: vec3 | vec4 | number): typeof CircleBase =>
       };
     }
   }
+
+  _id++;
 
   return Circle;
 };

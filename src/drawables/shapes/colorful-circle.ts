@@ -10,7 +10,7 @@ export class ColorfulCircle extends Drawable {
             uniform float colorfulCircleRadii[COLORFUL_CIRCLE_COUNT];
             uniform int colorfulCircleColorIndex[COLORFUL_CIRCLE_COUNT];
   
-            float circleMinDistance(vec2 target, out vec4 color) {
+            float colorfulCircleMinDistance(vec2 target, out vec4 color) {
               float minDistance = 1000.0;
               for (int i = 0; i < COLORFUL_CIRCLE_COUNT; i++) {
                 float dist = distance(colorfulCircleCenters[i], target) - colorfulCircleRadii[i];
@@ -23,7 +23,7 @@ export class ColorfulCircle extends Drawable {
               return minDistance;
             }
           `,
-      distanceFunctionName: 'circleMinDistance',
+      distanceFunctionName: 'colorfulCircleMinDistance',
     },
     propertyUniformMapping: {
       center: 'colorfulCircleCenters',

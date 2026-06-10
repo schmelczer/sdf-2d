@@ -36,7 +36,12 @@ export const InvertedTunnelFactory = (
         uniform float fromRadii[INVERTED_TUNNEL_COUNT];
         uniform float toRadii[INVERTED_TUNNEL_COUNT];
 
-        uniform sampler2D noiseTexture;
+        // Other drawables share this declaration; the include guard keeps
+        // the combined shader from declaring it twice.
+        #ifndef NOISE_TEXTURE_DECLARED
+        #define NOISE_TEXTURE_DECLARED
+          uniform sampler2D noiseTexture;
+        #endif
 
         #ifdef WEBGL2_IS_AVAILABLE
           float invertedTunnelTerrain(float h) {
