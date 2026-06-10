@@ -42,6 +42,8 @@ import { DrawableDescriptor, Renderer } from './main';
  * return value must be given.
  * @param startupSettingOverrides Sensible defaults are provided, but these can be overridden.
  * @param initialRuntimeSettingOverrides Sensible defaults are provided, but these can be overridden.
+ * Set `enableAutoscaler` to `false` to keep the render scales exactly as configured
+ * instead of letting the FPS-based autoscaler adjust them.
  */
 export async function runAnimation(
   canvas: HTMLCanvasElement,
@@ -51,7 +53,9 @@ export async function runAnimation(
     currentTimeInMilliseconds: DOMHighResTimeStamp,
     deltaTimeInMilliseconds: DOMHighResTimeStamp
   ) => boolean,
-  settings: Partial<StartupSettings & RuntimeSettings> = {}
+  settings: Partial<StartupSettings & RuntimeSettings> & {
+    enableAutoscaler?: boolean;
+  } = {}
 ): Promise<void> {
   if (settings.enableContextLostSimulator) {
     enableContextLostSimulator(canvas);
@@ -62,7 +66,11 @@ export async function runAnimation(
   let triggerIsOver: () => void;
   const isOver = new Promise<void>((resolve) => (triggerIsOver = resolve));
   renderer.setRuntimeSettings(settings);
-  const autoscaler = new FpsQualityAutoscaler(renderer);
+  const autoscaler = new FpsQualityAutoscaler(renderer, {
+    distanceRenderScale: settings.distanceRenderScale,
+    lightsRenderScale: settings.lightsRenderScale,
+  });
+  autoscaler.scalingEnabled = settings.enableAutoscaler !== false;
 
   await renderer.initializedPromise;
 
