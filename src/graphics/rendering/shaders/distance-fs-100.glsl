@@ -24,5 +24,5 @@ void main() {
 
     {functionCalls}
     
-    gl_FragColor = vec4(color.rgb, minDistance * 8.0);
+    gl_FragColor = vec4(color.rgb, minDistance * 8.0 + 0.125);
 }

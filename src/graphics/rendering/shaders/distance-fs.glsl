@@ -33,7 +33,7 @@ void main() {
       #if FLOAT_LINEAR_ENABLED
         distanceValue = minDistance;
       #else
-        distanceValue = minDistance * 8.0;
+        distanceValue = minDistance * 8.0 + 0.125;
       #endif
 
     fragmentColor = color;
