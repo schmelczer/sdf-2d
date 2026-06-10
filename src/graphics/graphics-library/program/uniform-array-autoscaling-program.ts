@@ -9,6 +9,11 @@ import { IProgram } from './i-program';
 
 /** @internal */
 export class UniformArrayAutoScalingProgram implements IProgram {
+  private static readonly farAwayTransform = mat2d.fromTranslation(
+    mat2d.create(),
+    vec2.fromValues(-10000, -10000)
+  );
+
   private programs: Array<{
     program: FragmentShaderOnlyProgram;
     values: Array<number>;
@@ -94,7 +99,7 @@ export class UniformArrayAutoScalingProgram implements IProgram {
         for (let i = 0; i < difference; i++) {
           d.empty.serializeToUniforms(
             uniforms,
-            mat2d.fromTranslation(mat2d.create(), vec2.fromValues(-10000, -10000)),
+            UniformArrayAutoScalingProgram.farAwayTransform,
             0
           );
         }
