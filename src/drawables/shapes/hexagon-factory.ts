@@ -15,6 +15,8 @@ class HexagonBase extends EmptyDrawable {
   }
 }
 
+let _id = 0;
+
 /**
  * @category Drawable
  */
@@ -23,16 +25,16 @@ export const HexagonFactory = (color: vec3 | vec4 | number): typeof HexagonBase 
     public static descriptor: DrawableDescriptor = {
       sdf: {
         shader: `
-            uniform vec2 hexagonCenters[HEXAGON_COUNT];
-            uniform float hexagonSize[HEXAGON_COUNT];
+            uniform vec2 hexagonCenters${_id}[HEXAGON_COUNT${_id}];
+            uniform float hexagonSize${_id}[HEXAGON_COUNT${_id}];
   
-            float hexagonMinDistance(vec2 target, out vec4 color) {
+            float hexagonMinDistance${_id}(vec2 target, out vec4 color) {
               color = ${codeForColorAccess(color)};
               float minDistance = 1000.0;
-              for (int i = 0; i < HEXAGON_COUNT; i++) {
+              for (int i = 0; i < HEXAGON_COUNT${_id}; i++) {
                 const vec3 k = vec3(-0.866025404,0.5,0.577350269);
-                float r = hexagonSize[i];
-                vec2 p = abs(target - hexagonCenters[i]);
+                float r = hexagonSize${_id}[i];
+                vec2 p = abs(target - hexagonCenters${_id}[i]);
                 float cosa = 0.8660;
                 float sina = 0.5;
                 p = vec2(cosa * p.x - sina * p.y, sina * p.x + cosa * p.y);
@@ -45,13 +47,13 @@ export const HexagonFactory = (color: vec3 | vec4 | number): typeof HexagonBase 
               return minDistance;
             }
           `,
-        distanceFunctionName: 'hexagonMinDistance',
+        distanceFunctionName: `hexagonMinDistance${_id}`,
       },
       propertyUniformMapping: {
-        center: 'hexagonCenters',
-        radius: 'hexagonSize',
+        center: `hexagonCenters${_id}`,
+        radius: `hexagonSize${_id}`,
       },
-      uniformCountMacroName: 'HEXAGON_COUNT',
+      uniformCountMacroName: `HEXAGON_COUNT${_id}`,
       shaderCombinationSteps: [0, 1, 2, 3, 8, 16],
       empty: new Hexagon(vec2.create(), 0),
     };
@@ -67,6 +69,8 @@ export const HexagonFactory = (color: vec3 | vec4 | number): typeof HexagonBase 
       };
     }
   }
+
+  _id++;
 
   return Hexagon;
 };

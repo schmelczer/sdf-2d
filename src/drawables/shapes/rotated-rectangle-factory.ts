@@ -16,6 +16,8 @@ class RotatedRectangleBase extends EmptyDrawable {
   }
 }
 
+let _id = 0;
+
 /**
  * @category Drawable
  */
@@ -27,23 +29,23 @@ export const RotatedRectangleFactory = (
       sdf: {
         // Source: https://iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm
         shader: `
-          uniform vec2 rotatedRectangleTopCenters[ROTATED_RECTANGLE_COUNT];
-          uniform vec2 rotatedRectangleBottomCenters[ROTATED_RECTANGLE_COUNT];
-          uniform float rotatedRectangleWidths[ROTATED_RECTANGLE_COUNT];
+          uniform vec2 rotatedRectangleTopCenters${_id}[ROTATED_RECTANGLE_COUNT${_id}];
+          uniform vec2 rotatedRectangleBottomCenters${_id}[ROTATED_RECTANGLE_COUNT${_id}];
+          uniform float rotatedRectangleWidths${_id}[ROTATED_RECTANGLE_COUNT${_id}];
 
-          float rotatedRectangleMinDistance(vec2 target, out vec4 color) {
+          float rotatedRectangleMinDistance${_id}(vec2 target, out vec4 color) {
             color = ${codeForColorAccess(color)};
 
             float minDistance = 1000.0;
-            for (int i = 0; i < ROTATED_RECTANGLE_COUNT; i++) {
-              vec2 top = rotatedRectangleTopCenters[i];
-              vec2 bottom = rotatedRectangleBottomCenters[i];
+            for (int i = 0; i < ROTATED_RECTANGLE_COUNT${_id}; i++) {
+              vec2 top = rotatedRectangleTopCenters${_id}[i];
+              vec2 bottom = rotatedRectangleBottomCenters${_id}[i];
               float height = length(bottom - top);
               vec2 d = height > 0.00000001 ? (bottom - top) / height : vec2(0.0, 1.0);
 
               vec2 q = (target - (top + bottom) * 0.5);
               q = mat2(d.x, -d.y, d.y, d.x) * q;
-              q = abs(q) - vec2(height, rotatedRectangleWidths[i]) * 0.5;
+              q = abs(q) - vec2(height, rotatedRectangleWidths${_id}[i]) * 0.5;
               float dist = length(max(q, 0.0)) + min(max(q.x, q.y), 0.0);
               minDistance = min(minDistance, dist);
             }
@@ -51,20 +53,20 @@ export const RotatedRectangleFactory = (
             return minDistance;
           }
         `,
-        distanceFunctionName: 'rotatedRectangleMinDistance',
+        distanceFunctionName: `rotatedRectangleMinDistance${_id}`,
       },
       propertyUniformMapping: {
-        topCenter: 'rotatedRectangleTopCenters',
-        bottomCenter: 'rotatedRectangleBottomCenters',
-        width: 'rotatedRectangleWidths',
+        topCenter: `rotatedRectangleTopCenters${_id}`,
+        bottomCenter: `rotatedRectangleBottomCenters${_id}`,
+        width: `rotatedRectangleWidths${_id}`,
       },
-      uniformCountMacroName: 'ROTATED_RECTANGLE_COUNT',
+      uniformCountMacroName: `ROTATED_RECTANGLE_COUNT${_id}`,
       shaderCombinationSteps: [0, 1, 2, 3, 8, 16],
       empty: new RotatedRectangle(vec2.create(), vec2.create(), 0),
     };
 
     /**
-     * It is just an estimate by calculating a bounding circle
+     * This is only an estimate, computed from a bounding circle.
      * @param target
      */
     public minDistance(target: vec2): number {
@@ -90,6 +92,8 @@ export const RotatedRectangleFactory = (
       };
     }
   }
+
+  _id++;
 
   return RotatedRectangle;
 };

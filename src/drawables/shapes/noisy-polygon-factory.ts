@@ -8,6 +8,8 @@ interface NoisyPolygonBase extends PolygonBase {
   randomOffset: number;
 }
 
+let _id = 0;
+
 /**
  * @category Drawable
  */
@@ -19,10 +21,10 @@ export const NoisyPolygonFactory = (
     public static descriptor: DrawableDescriptor = {
       sdf: {
         shader: `
-          uniform vec2 noisyPolygon${vertexCount}Vertices[NOISY_POLYGON${vertexCount}_COUNT * ${vertexCount}];
-          uniform vec2 noisyPolygon${vertexCount}Centers[NOISY_POLYGON${vertexCount}_COUNT];
-          uniform float noisyPolygon${vertexCount}Lengths[NOISY_POLYGON${vertexCount}_COUNT];
-          uniform float noisyPolygon${vertexCount}Randoms[NOISY_POLYGON${vertexCount}_COUNT];
+          uniform vec2 noisyPolygon${vertexCount}Vertices${_id}[NOISY_POLYGON${vertexCount}_COUNT${_id} * ${vertexCount}];
+          uniform vec2 noisyPolygon${vertexCount}Centers${_id}[NOISY_POLYGON${vertexCount}_COUNT${_id}];
+          uniform float noisyPolygon${vertexCount}Lengths${_id}[NOISY_POLYGON${vertexCount}_COUNT${_id}];
+          uniform float noisyPolygon${vertexCount}Randoms${_id}[NOISY_POLYGON${vertexCount}_COUNT${_id}];
 
           // Other drawables (and other vertex-count variants of this one)
           // share these declarations; the include guards keep the combined
@@ -45,7 +47,7 @@ export const NoisyPolygonFactory = (
             #endif
           #endif
 
-          vec2 noisyPolygon${vertexCount}LineDistance(vec2 target, vec2 from, vec2 to) {
+          vec2 noisyPolygon${vertexCount}LineDistance${_id}(vec2 target, vec2 from, vec2 to) {
             vec2 targetFromDelta = target - from;
             vec2 toFromDelta = to - from;
             float h = clamp(
@@ -61,18 +63,18 @@ export const NoisyPolygonFactory = (
             );
           }
 
-          float noisyPolygon${vertexCount}MinDistance(vec2 target, out vec4 color) {
+          float noisyPolygon${vertexCount}MinDistance${_id}(vec2 target, out vec4 color) {
             color = ${codeForColorAccess(color)};
 
             float minDistance = 100.0;
 
-            for (int j = 0; j < NOISY_POLYGON${vertexCount}_COUNT; j++) {
-              vec2 startEnd = noisyPolygon${vertexCount}Vertices[j * ${vertexCount}];
+            for (int j = 0; j < NOISY_POLYGON${vertexCount}_COUNT${_id}; j++) {
+              vec2 startEnd = noisyPolygon${vertexCount}Vertices${_id}[j * ${vertexCount}];
               vec2 vb = startEnd;
 
-              vec2 center = noisyPolygon${vertexCount}Centers[j];
-              float l = noisyPolygon${vertexCount}Lengths[j];
-              float randomOffset = noisyPolygon${vertexCount}Randoms[j];
+              vec2 center = noisyPolygon${vertexCount}Centers${_id}[j];
+              float l = noisyPolygon${vertexCount}Lengths${_id}[j];
+              float randomOffset = noisyPolygon${vertexCount}Randoms${_id}[j];
               vec2 targetCenterDelta = target - center;
               float targetDistance = length(targetCenterDelta);
               vec2 targetTangent = targetCenterDelta / clamp(targetDistance, 0.01, 1000.0);
@@ -88,8 +90,8 @@ export const NoisyPolygonFactory = (
               float s = 1.0;
               for (int k = 1; k < ${vertexCount}; k++) {
                 vec2 va = vb;
-                vb = noisyPolygon${vertexCount}Vertices[j * ${vertexCount} + k];
-                vec2 ds = noisyPolygon${vertexCount}LineDistance(noisyTarget, va, vb);
+                vb = noisyPolygon${vertexCount}Vertices${_id}[j * ${vertexCount} + k];
+                vec2 ds = noisyPolygon${vertexCount}LineDistance${_id}(noisyTarget, va, vb);
 
                 bvec3 cond = bvec3(noisyTarget.y >= va.y, noisyTarget.y < vb.y, ds.y > 0.0);
                 if (all(cond) || all(not(cond))) {
@@ -99,7 +101,7 @@ export const NoisyPolygonFactory = (
                 d = min(d, ds.x);
               }
 
-              vec2 ds = noisyPolygon${vertexCount}LineDistance(noisyTarget, vb, startEnd);
+              vec2 ds = noisyPolygon${vertexCount}LineDistance${_id}(noisyTarget, vb, startEnd);
               bvec3 cond = bvec3(noisyTarget.y >= vb.y, noisyTarget.y < startEnd.y, ds.y > 0.0);
               if (all(cond) || all(not(cond))) {
                 s *= -1.0;
@@ -112,15 +114,15 @@ export const NoisyPolygonFactory = (
             return minDistance;
           }
         `,
-        distanceFunctionName: `noisyPolygon${vertexCount}MinDistance`,
+        distanceFunctionName: `noisyPolygon${vertexCount}MinDistance${_id}`,
       },
       propertyUniformMapping: {
-        length: `noisyPolygon${vertexCount}Lengths`,
-        random: `noisyPolygon${vertexCount}Randoms`,
-        center: `noisyPolygon${vertexCount}Centers`,
-        vertices: `noisyPolygon${vertexCount}Vertices`,
+        length: `noisyPolygon${vertexCount}Lengths${_id}`,
+        random: `noisyPolygon${vertexCount}Randoms${_id}`,
+        center: `noisyPolygon${vertexCount}Centers${_id}`,
+        vertices: `noisyPolygon${vertexCount}Vertices${_id}`,
       },
-      uniformCountMacroName: `NOISY_POLYGON${vertexCount}_COUNT`,
+      uniformCountMacroName: `NOISY_POLYGON${vertexCount}_COUNT${_id}`,
       shaderCombinationSteps: [0, 1, 2, 3, 8, 16],
       empty: new NoisyPolygon(
         new Array(vertexCount).fill(vec2.create())
@@ -182,6 +184,8 @@ export const NoisyPolygonFactory = (
       });
     }
   }
+
+  _id++;
 
   return NoisyPolygon as any;
 };

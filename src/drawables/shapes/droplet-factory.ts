@@ -19,6 +19,8 @@ class DropletBase extends EmptyDrawable {
   }
 }
 
+let _id = 0;
+
 /**
  * @category Drawable
  */
@@ -27,28 +29,28 @@ export const DropletFactory = (color: vec3 | vec4 | number): typeof DropletBase 
     public static descriptor: DrawableDescriptor = {
       sdf: {
         shader: `
-        uniform vec2 froms[DROPLET_COUNT];
-        uniform vec2 toFromDeltas[DROPLET_COUNT];
-        uniform float fromRadii[DROPLET_COUNT];
-        uniform float toRadii[DROPLET_COUNT];
+        uniform vec2 dropletFroms${_id}[DROPLET_COUNT${_id}];
+        uniform vec2 dropletToFromDeltas${_id}[DROPLET_COUNT${_id}];
+        uniform float dropletFromRadii${_id}[DROPLET_COUNT${_id}];
+        uniform float dropletToRadii${_id}[DROPLET_COUNT${_id}];
 
-        float dropletMinDistance(vec2 target, out vec4 color) {
+        float dropletMinDistance${_id}(vec2 target, out vec4 color) {
           color = ${codeForColorAccess(color)};
 
           float minDistance = 1000.0;
-          for (int i = 0; i < DROPLET_COUNT; i++) {
-            vec2 targetFromDelta = target - froms[i];
+          for (int i = 0; i < DROPLET_COUNT${_id}; i++) {
+            vec2 targetFromDelta = target - dropletFroms${_id}[i];
             
             float h = clamp(
-                dot(targetFromDelta, toFromDeltas[i])
-              / max(dot(toFromDeltas[i], toFromDeltas[i]), 0.00000001),
+                dot(targetFromDelta, dropletToFromDeltas${_id}[i])
+              / max(dot(dropletToFromDeltas${_id}[i], dropletToFromDeltas${_id}[i]), 0.00000001),
               0.0, 1.0
             );
 
             float currentDistance = -mix(
-              fromRadii[i], toRadii[i], h
+              dropletFromRadii${_id}[i], dropletToRadii${_id}[i], h
             ) + distance(
-              targetFromDelta, toFromDeltas[i] * h
+              targetFromDelta, dropletToFromDeltas${_id}[i] * h
             );
 
             minDistance = min(minDistance, currentDistance);
@@ -57,15 +59,15 @@ export const DropletFactory = (color: vec3 | vec4 | number): typeof DropletBase 
           return minDistance;
         }
       `,
-        distanceFunctionName: 'dropletMinDistance',
+        distanceFunctionName: `dropletMinDistance${_id}`,
       },
       propertyUniformMapping: {
-        from: 'froms',
-        toFromDelta: 'toFromDeltas',
-        fromRadius: 'fromRadii',
-        toRadius: 'toRadii',
+        from: `dropletFroms${_id}`,
+        toFromDelta: `dropletToFromDeltas${_id}`,
+        fromRadius: `dropletFromRadii${_id}`,
+        toRadius: `dropletToRadii${_id}`,
       },
-      uniformCountMacroName: 'DROPLET_COUNT',
+      uniformCountMacroName: `DROPLET_COUNT${_id}`,
       shaderCombinationSteps: [0, 1, 4, 16, 32],
       empty: new Droplet(vec2.create(), vec2.create(), 0, 0),
     };
@@ -95,6 +97,8 @@ export const DropletFactory = (color: vec3 | vec4 | number): typeof DropletBase 
       };
     }
   }
+
+  _id++;
 
   return Droplet;
 };

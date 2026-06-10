@@ -19,6 +19,8 @@ class InvertedTunnelBase extends EmptyDrawable {
   }
 }
 
+let _id = 0;
+
 /**
  * Providing a noise texture is required for this drawable.
  *
@@ -31,10 +33,10 @@ export const InvertedTunnelFactory = (
     public static descriptor: DrawableDescriptor = {
       sdf: {
         shader: `
-        uniform vec2 froms[INVERTED_TUNNEL_COUNT];
-        uniform vec2 toFromDeltas[INVERTED_TUNNEL_COUNT];
-        uniform float fromRadii[INVERTED_TUNNEL_COUNT];
-        uniform float toRadii[INVERTED_TUNNEL_COUNT];
+        uniform vec2 invertedTunnelFroms${_id}[INVERTED_TUNNEL_COUNT${_id}];
+        uniform vec2 invertedTunnelToFromDeltas${_id}[INVERTED_TUNNEL_COUNT${_id}];
+        uniform float invertedTunnelFromRadii${_id}[INVERTED_TUNNEL_COUNT${_id}];
+        uniform float invertedTunnelToRadii${_id}[INVERTED_TUNNEL_COUNT${_id}];
 
         // Other drawables share this declaration; the include guard keeps
         // the combined shader from declaring it twice.
@@ -43,39 +45,44 @@ export const InvertedTunnelFactory = (
           uniform sampler2D noiseTexture;
         #endif
 
-        #ifdef WEBGL2_IS_AVAILABLE
-          float invertedTunnelTerrain(float h) {
-            return texture(
-              noiseTexture,
-              vec2(h, 0.5)
-            )[0] - 0.5;
-          }
-        #else
-          float invertedTunnelTerrain(float h) {
-            return texture2D(
-              noiseTexture,
-              vec2(h, 0.5)
-            )[0] - 0.5;
-          }
+        // Shared between every inverted-tunnel variant; the include guard
+        // keeps the combined shader from defining it twice.
+        #ifndef INVERTED_TUNNEL_TERRAIN_DECLARED
+        #define INVERTED_TUNNEL_TERRAIN_DECLARED
+          #ifdef WEBGL2_IS_AVAILABLE
+            float invertedTunnelTerrain(float h) {
+              return texture(
+                noiseTexture,
+                vec2(h, 0.5)
+              )[0] - 0.5;
+            }
+          #else
+            float invertedTunnelTerrain(float h) {
+              return texture2D(
+                noiseTexture,
+                vec2(h, 0.5)
+              )[0] - 0.5;
+            }
+          #endif
         #endif
 
-        float invertedTunnelMinDistance(vec2 target, out vec4 color) {
+        float invertedTunnelMinDistance${_id}(vec2 target, out vec4 color) {
           color = ${codeForColorAccess(color)};
 
           float minDistance = -1000.0;
-          for (int i = 0; i < INVERTED_TUNNEL_COUNT; i++) {
+          for (int i = 0; i < INVERTED_TUNNEL_COUNT${_id}; i++) {
             
-            vec2 targetFromDelta = target - froms[i];
+            vec2 targetFromDelta = target - invertedTunnelFroms${_id}[i];
 
-            float h = dot(targetFromDelta, toFromDeltas[i])
-              / max(dot(toFromDeltas[i], toFromDeltas[i]), 0.00000001);
+            float h = dot(targetFromDelta, invertedTunnelToFromDeltas${_id}[i])
+              / max(dot(invertedTunnelToFromDeltas${_id}[i], invertedTunnelToFromDeltas${_id}[i]), 0.00000001);
 
             float clampedH = clamp(h, 0.0, 1.0);
 
             float currentDistance = -mix(
-              fromRadii[i], toRadii[i], clampedH
+              invertedTunnelFromRadii${_id}[i], invertedTunnelToRadii${_id}[i], clampedH
             ) + distance(
-              targetFromDelta, toFromDeltas[i] * clampedH
+              targetFromDelta, invertedTunnelToFromDeltas${_id}[i] * clampedH
             ) - invertedTunnelTerrain(h) / 12.0;
 
             minDistance = max(minDistance, -currentDistance);
@@ -85,15 +92,15 @@ export const InvertedTunnelFactory = (
         }
       `,
         isInverted: true,
-        distanceFunctionName: 'invertedTunnelMinDistance',
+        distanceFunctionName: `invertedTunnelMinDistance${_id}`,
       },
       propertyUniformMapping: {
-        from: 'froms',
-        toFromDelta: 'toFromDeltas',
-        fromRadius: 'fromRadii',
-        toRadius: 'toRadii',
+        from: `invertedTunnelFroms${_id}`,
+        toFromDelta: `invertedTunnelToFromDeltas${_id}`,
+        fromRadius: `invertedTunnelFromRadii${_id}`,
+        toRadius: `invertedTunnelToRadii${_id}`,
       },
-      uniformCountMacroName: 'INVERTED_TUNNEL_COUNT',
+      uniformCountMacroName: `INVERTED_TUNNEL_COUNT${_id}`,
       shaderCombinationSteps: [0, 1, 4, 16, 32],
       empty: new InvertedTunnel(vec2.create(), vec2.create(), 0, 0),
     };
@@ -123,6 +130,8 @@ export const InvertedTunnelFactory = (
       };
     }
   }
+
+  _id++;
 
   return InvertedTunnel;
 };

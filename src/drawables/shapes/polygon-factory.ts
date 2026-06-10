@@ -14,6 +14,8 @@ export class PolygonBase extends EmptyDrawable {
   }
 }
 
+let _id = 0;
+
 /**
  * @category Drawable
  */
@@ -25,9 +27,9 @@ export const PolygonFactory = (
     public static descriptor: DrawableDescriptor = {
       sdf: {
         shader: `
-          uniform vec2 polygon${vertexCount}Vertices[POLYGON${vertexCount}_COUNT * ${vertexCount}];
+          uniform vec2 polygon${vertexCount}Vertices${_id}[POLYGON${vertexCount}_COUNT${_id} * ${vertexCount}];
 
-          vec2 polygon${vertexCount}LineDistance(vec2 target, vec2 from, vec2 to) {
+          vec2 polygon${vertexCount}LineDistance${_id}(vec2 target, vec2 from, vec2 to) {
             vec2 targetFromDelta = target - from;
             vec2 toFromDelta = to - from;
             float h = clamp(
@@ -43,21 +45,21 @@ export const PolygonFactory = (
             );
           }
 
-          float polygon${vertexCount}MinDistance(vec2 target, out vec4 color) {
+          float polygon${vertexCount}MinDistance${_id}(vec2 target, out vec4 color) {
             color = ${codeForColorAccess(color)};
 
             float minDistance = 100.0;
 
-            for (int j = 0; j < POLYGON${vertexCount}_COUNT; j++) {
-              vec2 startEnd = polygon${vertexCount}Vertices[j * ${vertexCount}];
+            for (int j = 0; j < POLYGON${vertexCount}_COUNT${_id}; j++) {
+              vec2 startEnd = polygon${vertexCount}Vertices${_id}[j * ${vertexCount}];
               vec2 vb = startEnd;
 
               float d = 10000.0;
               float s = 1.0;
               for (int k = 1; k < ${vertexCount}; k++) {
                 vec2 va = vb;
-                vb = polygon${vertexCount}Vertices[j * ${vertexCount} + k];
-                vec2 ds = polygon${vertexCount}LineDistance(target, va, vb);
+                vb = polygon${vertexCount}Vertices${_id}[j * ${vertexCount} + k];
+                vec2 ds = polygon${vertexCount}LineDistance${_id}(target, va, vb);
 
                 bvec3 cond = bvec3(target.y >= va.y, target.y < vb.y, ds.y > 0.0);
                 if (all(cond) || all(not(cond))) {
@@ -67,7 +69,7 @@ export const PolygonFactory = (
                 d = min(d, ds.x);
               }
 
-              vec2 ds = polygon${vertexCount}LineDistance(target, vb, startEnd);
+              vec2 ds = polygon${vertexCount}LineDistance${_id}(target, vb, startEnd);
               bvec3 cond = bvec3(target.y >= vb.y, target.y < startEnd.y, ds.y > 0.0);
               if (all(cond) || all(not(cond))) {
                 s *= -1.0;
@@ -80,13 +82,13 @@ export const PolygonFactory = (
             return minDistance;
           }
         `,
-        distanceFunctionName: `polygon${vertexCount}MinDistance`,
+        distanceFunctionName: `polygon${vertexCount}MinDistance${_id}`,
       },
       propertyUniformMapping: {
-        vertices: `polygon${vertexCount}Vertices`,
+        vertices: `polygon${vertexCount}Vertices${_id}`,
       },
       objectCountScaler: 1 / vertexCount,
-      uniformCountMacroName: `POLYGON${vertexCount}_COUNT`,
+      uniformCountMacroName: `POLYGON${vertexCount}_COUNT${_id}`,
       shaderCombinationSteps: [0, 1, 2, 3, 8, 16],
       empty: new Polygon(new Array(vertexCount).fill(vec2.create())),
     };
@@ -146,9 +148,9 @@ export const PolygonFactory = (
     private get actualVertices(): Array<vec2> {
       return this.vertices.length < vertexCount
         ? ([
-            ...this.vertices,
-            ...new Array(vertexCount - this.vertices.length).fill(this.vertices[0]),
-          ] as Array<vec2>)
+          ...this.vertices,
+          ...new Array(vertexCount - this.vertices.length).fill(this.vertices[0]),
+        ] as Array<vec2>)
         : this.vertices;
     }
 
@@ -177,6 +179,8 @@ export const PolygonFactory = (
       });
     }
   }
+
+  _id++;
 
   return Polygon;
 };

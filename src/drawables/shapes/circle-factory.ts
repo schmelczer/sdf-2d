@@ -15,8 +15,6 @@ class CircleBase extends EmptyDrawable {
   }
 }
 
-// Suffixing the GLSL names with a per-factory-invocation id lets multiple
-// circle types (e.g. different colors) coexist in one compiled shader.
 let _id = 0;
 
 /**
