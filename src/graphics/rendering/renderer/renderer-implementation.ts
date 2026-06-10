@@ -194,6 +194,7 @@ export class RendererImplementation implements Renderer {
   private setTextures(v: { [textureName: string]: TexImageSource | TextureWithOptions }) {
     this.textures.forEach((t) => t.destroy());
     this.textures = [];
+    this.uniformsProvider.textures = {};
 
     let id = 3;
     for (const key in v) {

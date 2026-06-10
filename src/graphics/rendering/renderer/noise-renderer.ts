@@ -1,5 +1,6 @@
 import { ReadonlyVec2 } from 'gl-matrix';
 import { DefaultFrameBuffer } from '../../graphics-library/frame-buffer/default-frame-buffer';
+import { tryEnableExtension } from '../../graphics-library/helper/enable-extension';
 import { ParallelCompiler } from '../../graphics-library/parallel-compiler';
 import { FragmentShaderOnlyProgram } from '../../graphics-library/program/fragment-shader-only-program';
 import { getUniversalRenderingContext } from '../../graphics-library/universal-rendering-context';
@@ -48,5 +49,12 @@ export const renderNoise = async (
   frameBuffer.destroy();
   program.destroy();
 
-  return canvas;
+  const result = document.createElement('canvas');
+  result.width = canvas.width;
+  result.height = canvas.height;
+  result.getContext('2d')!.drawImage(canvas, 0, 0);
+
+  tryEnableExtension(gl, 'WEBGL_lose_context')?.loseContext();
+
+  return result;
 };
