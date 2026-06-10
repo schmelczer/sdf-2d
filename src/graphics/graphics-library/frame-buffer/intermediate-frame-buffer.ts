@@ -26,10 +26,8 @@ export class IntermediateFrameBuffer extends FrameBuffer {
   }
 
   public destroy(): void {
-    if (this.distanceTexture) {
-      this.gl.deleteTexture(this.distanceTexture);
-    }
-    this.gl.deleteTexture(this.colorTexture);
+    this.distanceTexture?.destroy();
+    this.colorTexture.destroy();
     this.gl.deleteFramebuffer(this.frameBuffer);
   }
 
