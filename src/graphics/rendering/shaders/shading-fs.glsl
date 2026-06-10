@@ -33,16 +33,19 @@ float getDistance(vec2 target) {
   #if FLOAT_LINEAR_ENABLED
     return texture(distanceTexture, target)[0];
   #else
-    return texture(distanceTexture, target)[0] / 8.0;
+    return (texture(distanceTexture, target)[0] - 0.125) / 8.0;
   #endif
 }
 
 float shadowTransparency(float startingDistance, float lightCenterDistance, vec2 direction) {
-    float rayLength = startingDistance;
+    float rayLength = max(0.0, startingDistance);
     for (int i = 0; i < SHADOW_TRACE_COUNT; i++) {
+        if (rayLength >= lightCenterDistance) {
+            break;
+        }
         rayLength += max(0.0, getDistance(uvCoordinates + direction * rayLength));
     }
-    return min(1.0, pow(rayLength / lightCenterDistance, 0.3));
+    return min(1.0, pow(rayLength / max(lightCenterDistance, 0.00000001), 0.3));
 }
 
 #ifdef CIRCLE_LIGHT_COUNT
@@ -117,6 +120,10 @@ void main() {
         float lightCenterDistance;
         vec3 lightColorAtPosition = colorInPosition(i, lightCenterDistance);
 
+        if (dot(lightColorAtPosition, lightColorAtPosition) < 0.000001) {
+            continue;
+        }
+
         vec2 direction = normalize(circleLightCenters[i] - position) / squareToAspectRatioTimes2;
         vec3 shadowed = lightColorAtPosition * shadowTransparency(
             startingDistance,
@@ -148,11 +155,11 @@ void main() {
             continue;
         }
 
-        vec2 direction = originalDirection / squareToAspectRatioTimes2;
-
-        if (length(lightColorAtPosition) < 0.0) {
+        if (dot(lightColorAtPosition, lightColorAtPosition) < 0.000001) {
             continue;
         }
+
+        vec2 direction = originalDirection / squareToAspectRatioTimes2;
 
         vec3 shadowed = lightColorAtPosition * shadowTransparency(
             startingDistance,
@@ -175,7 +182,7 @@ void main() {
     vec3 outsideColor = {backgroundColor}.rgb * lighting;
     vec3 insideColor = colorAtPosition * lightingInside * INTENSITY_INSIDE_RATIO;
     
-    float edge = clamp(startingDistance / shadingNdcPixelSize, 0.0, 1.0);
+    float edge = clamp(startingDistance / shadingNdcPixelSize + 0.5, 0.0, 1.0);
     vec3 antialiasedColor = mix(insideColor, outsideColor, edge);
     fragmentColor = vec4(
         antialiasedColor + ditherNoise() * ditherStrength / 255.0,

@@ -28,19 +28,22 @@ varying vec2 uvCoordinates;
 float getDistance(in vec2 target, out vec4 color) {
     vec4 values = texture2D(colorTexture, target);
     color = vec4(values.rgb, 1.0);
-    return values[3] / 8.0;
+    return (values[3] - 0.125) / 8.0;
 }
 
 float getDistance(in vec2 target) {
-    return texture2D(colorTexture, target)[3] / 8.0;
+    return (texture2D(colorTexture, target)[3] - 0.125) / 8.0;
 }
 
 float shadowTransparency(float startingDistance, float lightCenterDistance, vec2 direction) {
-    float rayLength = startingDistance;
+    float rayLength = max(0.0, startingDistance);
     for (int j = 0; j < SHADOW_TRACE_COUNT; j++) {
+        if (rayLength >= lightCenterDistance) {
+            break;
+        }
         rayLength += max(0.0, getDistance(uvCoordinates + direction * rayLength));
     }
-    return min(1.0, pow(rayLength / lightCenterDistance, 0.3));
+    return min(1.0, pow(rayLength / max(lightCenterDistance, 0.00000001), 0.3));
 }
 
 #ifdef CIRCLE_LIGHT_COUNT
@@ -101,6 +104,10 @@ void main() {
             lightCenterDistance / circleLightIntensities[i] + 1.0, 2.0
         );
 
+        if (dot(lightColorAtPosition, lightColorAtPosition) < 0.000001) {
+            continue;
+        }
+
         vec2 direction = normalize(circleLightCenters[i] - position) / squareToAspectRatioTimes2;
         vec3 shadowed = lightColorAtPosition * shadowTransparency(
             startingDistance,
@@ -128,11 +135,11 @@ void main() {
                 lightCenterDistance / flashlightIntensities[i] + 1.0, 2.0
             );
 
-        vec2 direction = originalDirection / squareToAspectRatioTimes2;
-
-        if (length(lightColorAtPosition) < 0.0) {
+        if (dot(lightColorAtPosition, lightColorAtPosition) < 0.000001) {
             continue;
         }
+
+        vec2 direction = originalDirection / squareToAspectRatioTimes2;
 
         vec3 shadowed = lightColorAtPosition * shadowTransparency(
             startingDistance,
@@ -155,7 +162,7 @@ void main() {
     vec3 outsideColor = {backgroundColor}.rgb * lighting;
     vec3 insideColor = colorAtPosition * lightingInside * INTENSITY_INSIDE_RATIO;
 
-    float edge = clamp(startingDistance / shadingNdcPixelSize, 0.0, 1.0);
+    float edge = clamp(startingDistance / shadingNdcPixelSize + 0.5, 0.0, 1.0);
     vec3 antialiasedColor = mix(insideColor, outsideColor, edge);
     gl_FragColor = vec4(
         antialiasedColor + ditherNoise() * ditherStrength / 255.0,
