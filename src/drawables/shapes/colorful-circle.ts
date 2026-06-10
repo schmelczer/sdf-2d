@@ -16,7 +16,7 @@ export class ColorfulCircle extends Drawable {
                 float dist = distance(colorfulCircleCenters[i], target) - colorfulCircleRadii[i];
                 if (dist < minDistance) {
                   color = readFromPalette(colorfulCircleColorIndex[i]);
-                  dist = minDistance;
+                  minDistance = dist;
                 }
               }
   
