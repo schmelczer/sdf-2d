@@ -22,18 +22,14 @@ export class LightsRenderPass extends RenderPass {
       commonUniforms.uvToWorld
     );
 
+    const halfViewAreaX = commonUniforms.worldAreaInView.x / 2;
+    const halfViewAreaY = commonUniforms.worldAreaInView.y / 2;
+
     const drawablesNearTile = this.drawables.filter((l) => {
-      const d = vec2.subtract(
-        vec2.create(),
-        [
-          Math.abs(l.center.x - tileCenterWorldCoordinates.x),
-          Math.abs(l.center.y - tileCenterWorldCoordinates.y),
-        ],
-        vec2.scale(vec2.create(), commonUniforms.worldAreaInView, 0.5)
-      );
+      const dX = Math.abs(l.center.x - tileCenterWorldCoordinates.x) - halfViewAreaX;
+      const dY = Math.abs(l.center.y - tileCenterWorldCoordinates.y) - halfViewAreaY;
       const distance =
-        vec2.length([Math.max(d.x, 0), Math.max(d.y, 0)]) +
-        Math.min(Math.max(d.x, d.y), 0.0);
+        Math.hypot(Math.max(dX, 0), Math.max(dY, 0)) + Math.min(Math.max(dX, dY), 0);
       l.setLightnessRatio(clamp01(1 - distance / this.lightCutoffDistance));
 
       return distance < this.lightCutoffDistance;

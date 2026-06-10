@@ -14,21 +14,27 @@ export class PaletteTexture extends Texture {
   }
 
   public setPalette(colors: Array<vec3 | vec4>) {
-    const canvas = document.createElement('canvas');
-    canvas.width = this.paletteSize;
-    canvas.height = 1;
-
-    const ctx = canvas.getContext('2d')!;
-    const imageData = ctx.createImageData(this.paletteSize, 1);
+    const data = new Uint8Array(this.paletteSize * 4);
+    const toByte = (v: number) => Math.min(255, Math.max(0, Math.round(v * 255)));
 
     colors.forEach((c, i) => {
-      imageData.data[4 * i + 0] = c[0] * 255;
-      imageData.data[4 * i + 1] = c[1] * 255;
-      imageData.data[4 * i + 2] = c[2] * 255;
-      imageData.data[4 * i + 3] = c.length == 4 ? c[3] * 255 : 255;
+      data[4 * i + 0] = toByte(c[0]);
+      data[4 * i + 1] = toByte(c[1]);
+      data[4 * i + 2] = toByte(c[2]);
+      data[4 * i + 3] = c.length == 4 ? toByte(c[3]) : 255;
     });
-    ctx.putImageData(imageData, 0, 0);
 
-    this.setImage(canvas);
+    this.bind();
+    this.gl.texImage2D(
+      this.gl.TEXTURE_2D,
+      0,
+      this.gl.RGBA,
+      this.paletteSize,
+      1,
+      0,
+      this.gl.RGBA,
+      this.gl.UNSIGNED_BYTE,
+      data
+    );
   }
 }
