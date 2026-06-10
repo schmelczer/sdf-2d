@@ -29,13 +29,24 @@ export class DistanceRenderPass extends RenderPass {
     const radiusInNDC = worldR * commonUniforms.scaleWorldLengthToNDC;
 
     const stepsInNDC = 2 * stepsInUV;
+    const maxMinDistance = radiusInNDC * (this.isWorldInverted ? -1 : 1);
+
+    const serializedDrawables = this.drawables.map((drawable) => {
+      const drawableUniforms: { [name: string]: Array<any> } = {};
+      drawable.serializeToUniforms(
+        drawableUniforms,
+        commonUniforms.transformWorldToNDC,
+        commonUniforms.scaleWorldLengthToNDC
+      );
+      return { drawable, drawableUniforms };
+    });
 
     let drawnDrawablesCount = 0;
     for (let x = -1; x < 1; x += stepsInNDC) {
       for (let y = -1; y < 1; y += stepsInNDC) {
-        const uniforms = {
+        const uniforms: any = {
           ...commonUniforms,
-          maxMinDistance: radiusInNDC * (this.isWorldInverted ? -1 : 1),
+          maxMinDistance,
         };
 
         const uvBottomLeft = vec2.fromValues(x / 2 + 0.5, y / 2 + 0.5);
@@ -55,19 +66,20 @@ export class DistanceRenderPass extends RenderPass {
           uniforms.uvToWorld
         );
 
-        const drawablesNearTile = this.drawables.filter(
-          (d) => d.minDistance(tileCenterWorldCoordinates) < 2 * worldR
-        );
+        for (const { drawable, drawableUniforms } of serializedDrawables) {
+          if (drawable.minDistance(tileCenterWorldCoordinates) >= 2 * worldR) {
+            continue;
+          }
 
-        drawnDrawablesCount += drawablesNearTile.length;
+          drawnDrawablesCount++;
 
-        drawablesNearTile.forEach((p) =>
-          p.serializeToUniforms(
-            uniforms,
-            uniforms.transformWorldToNDC,
-            uniforms.scaleWorldLengthToNDC
-          )
-        );
+          for (const name in drawableUniforms) {
+            if (!Object.prototype.hasOwnProperty.call(uniforms, name)) {
+              uniforms[name] = [];
+            }
+            uniforms[name].push(...drawableUniforms[name]);
+          }
+        }
 
         this.program.draw(uniforms);
       }
