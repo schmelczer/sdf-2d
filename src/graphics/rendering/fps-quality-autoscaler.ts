@@ -1,5 +1,7 @@
 import { clamp } from '../../helper/clamp';
 import { Renderer } from './renderer/renderer';
+import { defaultRuntimeSettings } from './settings/default-runtime-settings';
+import { RuntimeSettings } from './settings/runtime-settings';
 
 /**
  * Set the quality of rendering based on FPS values.
@@ -23,7 +25,24 @@ export class FpsQualityAutoscaler {
   public static fpsTarget = 30;
   public fpsHysteresis = 5;
 
-  constructor(private readonly renderer: Renderer) {}
+  /**
+   * When `false`, FPS is still measured but the render scales are left alone.
+   */
+  public scalingEnabled = true;
+
+  constructor(
+    private readonly renderer: Renderer,
+    initialScales: Partial<
+      Pick<RuntimeSettings, 'distanceRenderScale' | 'lightsRenderScale'>
+    > = {}
+  ) {
+    // Starting from the renderer's actual scales avoids a quality jump on
+    // the first adjustment.
+    this.distanceScale =
+      initialScales.distanceRenderScale ?? defaultRuntimeSettings.distanceRenderScale;
+    this.lightsScale =
+      initialScales.lightsRenderScale ?? defaultRuntimeSettings.lightsRenderScale;
+  }
 
   public get FPS(): number {
     return this.fps;
@@ -59,10 +78,14 @@ export class FpsQualityAutoscaler {
     this.fps = 1000 / ninetiethPercentile;
   }
 
-  private distanceScale = 0.33;
-  private lightsScale = 1;
+  private distanceScale: number;
+  private lightsScale: number;
 
   private adjustQuality() {
+    if (!this.scalingEnabled) {
+      return;
+    }
+
     if (this.fps >= FpsQualityAutoscaler.fpsTarget + this.fpsHysteresis) {
       this.distanceScale = this.distanceScale + 0.1;
       this.lightsScale = this.lightsScale + 0.1;
