@@ -1,6 +1,6 @@
 #version 100
 
-precision lowp float;
+precision highp float;
 
 {macroDefinitions}
 

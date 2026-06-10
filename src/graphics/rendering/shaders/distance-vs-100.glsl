@@ -1,6 +1,6 @@
 #version 100
 
-precision lowp float;
+precision highp float;
 
 uniform mat3 modelTransform;
 uniform vec2 squareToAspectRatio;

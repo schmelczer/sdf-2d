@@ -1,6 +1,6 @@
 #version 300 es
 
-precision lowp float;
+precision highp float;
 
 #define FLOAT_LINEAR_ENABLED {floatLinearEnabled}
 
