@@ -29,7 +29,10 @@
   "license": "ISC",
   "exports": {
     ".": {
-      "import": "./lib/main.js"
+      "types": "./lib/src/main.d.ts",
+      "import": "./lib/main.js",
+      "require": "./lib/main.js",
+      "default": "./lib/main.js"
     }
   },
   "scripts": {
