@@ -147,7 +147,8 @@ export class ParallelCompiler {
         console.error(
           formatLog(
             'parallel-compiler',
-            `Error: ${error}\nSource (line ${line}):\n${shader.source.split('\n')[line - 1]
+            `Error: ${error}\nSource (line ${line}):\n${
+              shader.source.split('\n')[line - 1]
             }`
           )
         );
