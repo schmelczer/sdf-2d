@@ -79,11 +79,16 @@ export class ParallelCompiler {
     let replaceHappened: boolean;
     do {
       replaceHappened = false;
-      processedSource = processedSource.replace(/{(.+)}/gm, (_, name: string): string => {
-        replaceHappened = true;
-        const value = substitutions[name];
-        return numberToGlslFloat(value);
-      });
+      processedSource = processedSource.replace(
+        /{(\w+)}/gm,
+        (_, name: string): string => {
+          replaceHappened = true;
+          if (!(name in substitutions)) {
+            throw new Error(`Unknown shader substitution: '{${name}}'`);
+          }
+          return numberToGlslFloat(substitutions[name]);
+        }
+      );
     } while (replaceHappened);
 
     const shader = this.gl.createShader(type)!;
@@ -142,8 +147,7 @@ export class ParallelCompiler {
         console.error(
           formatLog(
             'parallel-compiler',
-            `Error: ${error}\nSource (line ${line}):\n${
-              shader.source.split('\n')[line - 1]
+            `Error: ${error}\nSource (line ${line}):\n${shader.source.split('\n')[line - 1]
             }`
           )
         );
