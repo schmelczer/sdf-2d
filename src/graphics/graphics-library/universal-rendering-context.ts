@@ -64,8 +64,10 @@ export const getUniversalRenderingContext = (
   };
   canvas.addEventListener('webglcontextlost', handleContextLost, false);
 
+  const boundFunctions = new Map<string | symbol, any>();
+
   const contextLostHandler = {
-    get: function (target: UniversalRenderingContext, prop: string) {
+    get: function (target: UniversalRenderingContext, prop: string | symbol) {
       const value = (target as any)[prop];
 
       if (typeof value === 'function') {
@@ -74,7 +76,13 @@ export const getUniversalRenderingContext = (
           throw new ContextLostException();
         }
 
-        return value.bind(target);
+        let bound = boundFunctions.get(prop);
+        if (bound === undefined) {
+          bound = value.bind(target);
+          boundFunctions.set(prop, bound);
+        }
+
+        return bound;
       }
 
       return value;
