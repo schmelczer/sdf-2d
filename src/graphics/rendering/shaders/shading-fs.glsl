@@ -1,6 +1,7 @@
 #version 300 es
 
-precision lowp float;
+precision highp float;
+precision highp sampler2D;
 
 #define INTENSITY_INSIDE_RATIO {intensityInsideRatio}
 #define SHADOW_TRACE_COUNT {shadowTraceCount}
@@ -13,6 +14,8 @@ precision lowp float;
 
 uniform float shadingNdcPixelSize;
 uniform float distanceNdcPixelSize;
+uniform float ditherStrength;
+uniform float ditherSeed;
 uniform vec2 squareToAspectRatioTimes2;
 uniform vec3 ambientLight;
 
@@ -82,6 +85,14 @@ float shadowTransparency(float startingDistance, float lightCenterDistance, vec2
     }
 #endif
 #endif
+
+float ditherNoise() {
+    float ign = fract(52.9829189 * fract(
+        dot(gl_FragCoord.xy + ditherSeed, vec2(0.06711056, 0.00583715))
+    ));
+    float t = 2.0 * ign - 1.0;
+    return sign(t) * (1.0 - sqrt(1.0 - abs(t)));
+}
 
 out vec4 fragmentColor;
 void main() {
@@ -167,7 +178,7 @@ void main() {
     float edge = clamp(startingDistance / shadingNdcPixelSize, 0.0, 1.0);
     vec3 antialiasedColor = mix(insideColor, outsideColor, edge);
     fragmentColor = vec4(
-        antialiasedColor,
+        antialiasedColor + ditherNoise() * ditherStrength / 255.0,
         rgbaColorAtPosition.a
     );
 }

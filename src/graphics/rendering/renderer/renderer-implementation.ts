@@ -51,6 +51,7 @@ export class RendererImplementation implements Renderer {
   private _canvasSize: vec2;
   private blendFactor!: number;
   private canvasResizeObserver!: ResizeObserver;
+  private frameIndex = 0;
 
   private applyRuntimeSettings: {
     [key in keyof RuntimeSettings]: (value: any) => void;
@@ -247,6 +248,18 @@ export class RendererImplementation implements Renderer {
 
       distanceNdcPixelSize: 2 / Math.max(...this.distanceFieldFrameBuffer.getSize()),
       shadingNdcPixelSize: 2 / Math.max(...this.lightingFrameBuffer.getSize()),
+
+      // The motion-blur blend multiplies the lights pass' output by
+      // blendFactor before it reaches the 8-bit canvas, which would attenuate
+      // the anti-banding dither below the quantization step it has to mask.
+      // Pre-scale the dither to arrive at full strength after blending; the
+      // clamp keeps extreme motion-blur values from injecting visible grain.
+      ditherStrength: lightsSizeChanged ? 1 : 1 / Math.max(this.blendFactor, 0.125),
+
+      // Scroll the dither pattern every frame (golden-ratio offset), so the
+      // motion-blur blend averages independently dithered frames instead of
+      // freezing into a banded fixed point.
+      ditherSeed: (this.frameIndex = (this.frameIndex + 1) & 63) * 5.588238,
     };
 
     this.distancePass.render(this.uniformsProvider.getUniforms(common), [
