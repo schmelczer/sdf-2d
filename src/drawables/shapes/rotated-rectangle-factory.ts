@@ -39,7 +39,7 @@ export const RotatedRectangleFactory = (
               vec2 top = rotatedRectangleTopCenters[i];
               vec2 bottom = rotatedRectangleBottomCenters[i];
               float height = length(bottom - top);
-              vec2 d = (bottom - top) / height;
+              vec2 d = height > 0.00000001 ? (bottom - top) / height : vec2(0.0, 1.0);
 
               vec2 q = (target - (top + bottom) * 0.5);
               q = mat2(d.x, -d.y, d.y, d.x) * q;

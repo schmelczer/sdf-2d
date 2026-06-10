@@ -40,7 +40,8 @@ export const NoisyPolygonFactory = (
             vec2 targetFromDelta = target - from;
             vec2 toFromDelta = to - from;
             float h = clamp(
-              dot(targetFromDelta, toFromDelta) / dot(toFromDelta, toFromDelta),
+              dot(targetFromDelta, toFromDelta)
+                / max(dot(toFromDelta, toFromDelta), 0.00000001),
               0.0, 1.0
             );
 
@@ -135,9 +136,13 @@ export const NoisyPolygonFactory = (
       vec2.scale(center, center, 1 / transformedVertices.length);
 
       let length = 0;
-      for (let i = 1; i < this.vertices.length; i++) {
+      for (let i = 1; i < transformedVertices.length; i++) {
         length += vec2.distance(transformedVertices[i - 1], transformedVertices[i]);
       }
+      length += vec2.distance(
+        transformedVertices[transformedVertices.length - 1],
+        transformedVertices[0]
+      );
 
       return {
         vertices: transformedVertices,

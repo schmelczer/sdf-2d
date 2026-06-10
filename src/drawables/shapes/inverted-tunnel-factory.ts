@@ -63,7 +63,7 @@ export const InvertedTunnelFactory = (
             vec2 targetFromDelta = target - froms[i];
 
             float h = dot(targetFromDelta, toFromDeltas[i])
-              / dot(toFromDeltas[i], toFromDeltas[i]);
+              / max(dot(toFromDeltas[i], toFromDeltas[i]), 0.00000001);
 
             float clampedH = clamp(h, 0.0, 1.0);
 

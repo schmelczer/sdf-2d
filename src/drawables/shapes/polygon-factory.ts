@@ -31,7 +31,8 @@ export const PolygonFactory = (
             vec2 targetFromDelta = target - from;
             vec2 toFromDelta = to - from;
             float h = clamp(
-              dot(targetFromDelta, toFromDelta) / dot(toFromDelta, toFromDelta),
+              dot(targetFromDelta, toFromDelta)
+                / max(dot(toFromDelta, toFromDelta), 0.00000001),
               0.0, 1.0
             );
 
@@ -93,6 +94,10 @@ export const PolygonFactory = (
     constructor(vertices: Array<vec2>) {
       super(vertices);
 
+      if (vertices.length === 0) {
+        throw new Error('Polygons must have at least one vertex');
+      }
+
       if (vertices.length > vertexCount) {
         throw new Error(
           `Too many vertices, expected ${vertexCount}, got ${vertices.length}`
@@ -104,7 +109,7 @@ export const PolygonFactory = (
       const startEnd = this.vertices[0];
       let vb = startEnd;
 
-      let d = vec2.squaredDistance(target, vb);
+      let d = vec2.distance(target, vb);
       let sign = 1;
 
       for (let i = 1; i <= this.vertices.length; i++) {
@@ -141,9 +146,9 @@ export const PolygonFactory = (
     private get actualVertices(): Array<vec2> {
       return this.vertices.length < vertexCount
         ? ([
-            ...this.vertices,
-            ...new Array(vertexCount - this.vertices.length).fill(this.vertices[0]),
-          ] as Array<vec2>)
+          ...this.vertices,
+          ...new Array(vertexCount - this.vertices.length).fill(this.vertices[0]),
+        ] as Array<vec2>)
         : this.vertices;
     }
 

@@ -41,7 +41,7 @@ export const DropletFactory = (color: vec3 | vec4 | number): typeof DropletBase 
             
             float h = clamp(
                 dot(targetFromDelta, toFromDeltas[i])
-              / dot(toFromDeltas[i], toFromDeltas[i]),
+              / max(dot(toFromDeltas[i], toFromDeltas[i]), 0.00000001),
               0.0, 1.0
             );
 
