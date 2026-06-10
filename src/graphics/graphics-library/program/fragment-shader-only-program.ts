@@ -28,7 +28,7 @@ export class FragmentShaderOnlyProgram extends Program {
     if (this.gl.isWebGL2) {
       this.gl.bindVertexArray(this.vao!);
     } else {
-      this.vertexArrayExtension.createVertexArrayOES();
+      this.vertexArrayExtension.bindVertexArrayOES(this.vao!);
     }
   }
 
