@@ -53,6 +53,13 @@ export class UniformArrayAutoScalingProgram implements IProgram {
     }
 
     await Promise.all(promises);
+
+    // draw() takes the first program with enough capacity; ordering by total
+    // capacity makes that the cheapest sufficient variant instead of an
+    // arbitrary one full of phantom objects.
+    this.programs.sort(
+      (a, b) => a.values.reduce((s, v) => s + v, 0) - b.values.reduce((s, v) => s + v, 0)
+    );
   }
 
   private checkDescriptorValidity(descriptors: Array<DrawableDescriptor>) {
