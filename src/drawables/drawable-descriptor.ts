@@ -6,7 +6,7 @@ import { Drawable } from './drawable';
  *
  * Each [[Drawable]] must have a static property of this type, called descriptor.
  *
- * For more information on how to create your own DrawableDescriptor-s, look at the
+ * For more information on how to create your own DrawableDescriptors, look at the
  * code of [[CircleFactory]] or [[InvertedTunnelFactory]].
  */
 export interface DrawableDescriptor {
@@ -27,9 +27,9 @@ export interface DrawableDescriptor {
    */
   sdf?: {
     /**
-     * The actual GLSL code for observing the drawables represented by this descriptor.
+     * The actual GLSL code that defines the drawables represented by this descriptor.
      *
-     * Your code should work with both version 100 and version 300 es
+     * Your code should work with both GLSL version 100 and version 300 es.
      */
     shader: string;
     /**
@@ -59,8 +59,8 @@ export interface DrawableDescriptor {
   /**
    * Number of possible drawables around each tile.
    *
-   * For each step, a shader will be generated. And at runtime the closes matching
-   * shader will be used to render a given part of the scene.
+   * For each step, a shader is generated, and at runtime the closest matching
+   * shader is used to render a given part of the scene.
    *
    * Must contain 0 as a value.
    */

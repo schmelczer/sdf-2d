@@ -12,7 +12,7 @@ export interface Renderer {
   /**
    * Get the actual resolution of the canvas without triggering a reflow.
    *
-   * A ResizeObserver is utilised fot achieving this.
+   * A ResizeObserver is used to achieve this.
    */
   readonly canvasSize: ReadonlyVec2;
 
@@ -26,7 +26,7 @@ export interface Renderer {
   /**
    * Set the camera transformation.
    *
-   * @param topLeft top (!) left. By default, equals to [0, canvasHeight].
+   * @param topLeft top (!) left. By default, equal to [0, canvasHeight].
    * @param size need not be equal to the canvas size, though their aspect ratio
    * should be the same to avoid stretching.
    */
@@ -89,9 +89,9 @@ export interface Renderer {
   /**
    * Get useful information about the hardware and the SDF2D renderer.
    *
-   * Its scheme is subject to change.
+   * Its schema is subject to change.
    *
-   * During context lost it might be null.
+   * During a context-lost event, it might be null.
    */
   readonly insights: RendererInfo | null;
 }

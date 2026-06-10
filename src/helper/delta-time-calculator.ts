@@ -1,8 +1,8 @@
 /**
  * A helper class for calculating the elapsed time between frames.
  *
- * Handles the case, where the browser tab is not in focus and `requestAnimationFrame`
- * does not get called for performance reasons. In this case, the return deltaTime won't be
+ * Handles the case where the browser tab is not in focus and `requestAnimationFrame`
+ * does not get called for performance reasons. In this case, the returned deltaTime won't be
  * an unreasonably large value.
  */
 export class DeltaTimeCalculator {

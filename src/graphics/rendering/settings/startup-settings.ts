@@ -11,7 +11,7 @@ export interface StartupSettings {
    * Creates a stopwatch used for measuring the GPU render time
    * when its required extension is available.
    *
-   * You should only have one renderer with enabled stopwatch.
+   * You should only have one renderer with the stopwatch enabled.
    */
   enableStopwatch: boolean;
 
@@ -20,7 +20,7 @@ export interface StartupSettings {
    * Sensible values for this are between 8 and 32.
    *
    * The higher the number, the harder the shadows will get.
-   * Some ambient occlusion like effects can be visible on lower trace counts.
+   * Some ambient-occlusion-like effects can be visible at lower trace counts.
    */
   shadowTraceCount: number;
 
@@ -55,7 +55,7 @@ export interface StartupSettings {
   paletteSize: number;
 
   /**
-   * Many context lost event will be simulated when enabled.
+   * Many context-lost events will be simulated when enabled.
    *
    * Useful for testing.
    */

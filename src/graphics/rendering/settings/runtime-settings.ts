@@ -9,16 +9,16 @@ import { TextureWithOptions } from '../../graphics-library/texture/texture-optio
  */
 export interface RuntimeSettings {
   /**
-   * When set to `true` rendering will be done on the screen's real resolution.
+   * When set to `true`, rendering will be done at the screen's real resolution.
    */
   enableHighDpiRendering: boolean;
 
   /**
    * First, the SDF of the scene is evaluated at every single pixel.
-   * For speeding this process up, the screen is divided up into tiles,
-   * this way each having to deal with a fewer objects.
+   * To speed this process up, the screen is divided into tiles,
+   * so each one has to deal with fewer objects.
    *
-   * For each tile, it is decided which objects are near its close vicinity.
+   * For each tile, it is decided which objects are in its vicinity.
    * This comes with some overhead for the CPU, while saving the GPU from loads of
    * calculations. The workload can be balanced between the CPU and the GPU by setting
    * this number.
@@ -27,24 +27,24 @@ export interface RuntimeSettings {
 
   /**
    * By default, every pixel is outside of objects. Flipping this value to `true` will
-   * result in every pixel being inside a large object. From then it only makes sense to
+   * result in every pixel being inside a large object. From then on, it only makes sense to
    * draw inverted objects.
    */
   isWorldInverted: boolean;
 
   /**
-   * When lights reach the end of the display, they are slowly faded out. The length
-   * of this phaseout can be set through this value.
+   * When lights reach the edge of the display, they are slowly faded out. The length
+   * of this fade-out can be set through this value.
    */
   lightCutoffDistance: number;
 
   /**
-   * Its length should be less than the one specified in [[StartupSettings]].paletteSize.
-   *
    * The possible colors for the objects. Each color is referenced by its index in the
    * palette.
    *
-   * Can have transparency, but only if WebGL2 support is enabled.
+   * Its length should be less than the `paletteSize` specified in [[StartupSettings]].
+   *
+   * Colors can have transparency, but only if WebGL2 support is enabled.
    */
   colorPalette: Array<vec3 | vec4>;
 
@@ -76,10 +76,10 @@ export interface RuntimeSettings {
   /**
    * It is possible to use your own textures in your SDF definitions.
    *
-   * The keys of the object should be the name used to reference them in the GLSL code,
-   * and the values should be the textures themselves or a TextureWithOptions specifying
+   * The keys of the object should be the names used to reference them in the GLSL code,
+   * and the values should be the textures themselves, or a TextureWithOptions specifying
    * the texture's [[TextureOptions]].
-   * It can be a canvas, img element, Image and so on.
+   * A texture can be a canvas, an img element, an Image, and so on.
    */
   textures: {
     [textureName: string]: TexImageSource | TextureWithOptions;

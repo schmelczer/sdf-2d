@@ -17,8 +17,8 @@ export abstract class Drawable {
   /**
    * The lower bound of the distance between the target and the object.
    *
-   * It can return 0 by default, the only consequence of this, is a reduced performance.
-   * Because this object won't benefit from tile-based rendering.
+   * It can return 0 by default; the only consequence is reduced performance,
+   * because this object won't benefit from tile-based rendering.
    * @param target
    */
   public abstract minDistance(target: vec2): number;

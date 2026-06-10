@@ -4,12 +4,12 @@ import { StartupSettings } from './graphics/rendering/settings/startup-settings'
 import { DrawableDescriptor, Renderer } from './main';
 
 /**
- * Compiles a new renderer instance. There can multiple renderers on a single page.
+ * Compiles a new renderer instance. There can be multiple renderers on a single page.
  * > Asynchronous behaviour is required for parallel shader compiling.
- * > Trying to draw before the returned promise resolves, results in no action taken.
- * > Settings can be set before promise resolution and they will be applied later.
+ * > Trying to draw before the returned promise resolves results in no action being taken.
+ * > Settings can be set before the promise resolves and they will be applied later.
  *
- * The descriptors of every to-be-drawn objects are required before creating the renderer,
+ * The descriptors of all to-be-drawn objects are required before creating the renderer,
  * allowing the compiler to only create the shaders that will actually be used.
  *
  * Example usage:

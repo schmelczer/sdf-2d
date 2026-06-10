@@ -6,7 +6,7 @@ import { RuntimeSettings } from './settings/runtime-settings';
 /**
  * Set the quality of rendering based on FPS values.
  *
- * When using this the size of the canvas must be fixed with CSS.
+ * When using this, the size of the canvas must be fixed with CSS.
  *
  * The `addDeltaTime` method should be called once every frame.
  *
@@ -52,7 +52,8 @@ export class FpsQualityAutoscaler {
   private deltaTimeSinceLastAdjustment = 0;
 
   /**
-   * Autoscaling is also done by calling this function
+   * Record the time taken by the latest frame. Autoscaling is also performed
+   * as part of this call.
    * @param deltaTimeInMilliseconds
    */
   public addDeltaTime(deltaTimeInMilliseconds: DOMHighResTimeStamp) {

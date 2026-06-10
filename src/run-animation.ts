@@ -8,8 +8,8 @@ import { DrawableDescriptor, Renderer } from './main';
 
 /**
  * Implements the boilerplate code required to run real-time animations
- * in the browser. An FPS based autoscaler is also used. This creates an additional `fps`
- * key in the renderers `insights` property.
+ * in the browser. An FPS-based autoscaler is also used. This creates an additional `fps`
+ * key in the renderer's `insights` property.
  *
  * Example usage:
  *
@@ -17,7 +17,7 @@ import { DrawableDescriptor, Renderer } from './main';
  *   <canvas id="main" style="width: 300px; height: 150px"></canvas>
  * ```
  * > The canvas needs to have a fixed size specified by CSS.
- 
+ *
  * ```js
  * import { CircleFactory, CircleLight, hsl, runAnimation } from 'sdf-2d';
  *
