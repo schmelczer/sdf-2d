@@ -31,11 +31,11 @@ export const getUniversalRenderingContext = (
       result.isWebGL2 = true;
     }
   } else {
-    result = (canvas.getContext('webgl') ||
-      canvas.getContext('experimental-webgl', {
-        ...contextAttributes,
-        alpha: false,
-      })) as UniversalRenderingContext;
+    result = (canvas.getContext('webgl', contextAttributes) ||
+      canvas.getContext(
+        'experimental-webgl',
+        contextAttributes
+      )) as UniversalRenderingContext;
 
     if (!result) {
       throw new Error('Neither WebGL nor WebGL2 is supported');
