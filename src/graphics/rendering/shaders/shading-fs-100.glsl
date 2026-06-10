@@ -4,6 +4,9 @@ precision lowp float;
 
 #define INTENSITY_INSIDE_RATIO {intensityInsideRatio}
 #define SHADOW_TRACE_COUNT {shadowTraceCount}
+// 0.0 == lights add (overlaps brighten & merge); 1.0 == lights take the
+// per-channel max (overlaps never exceed the brighter light). See main().
+#define LIGHT_OVERLAP_REDUCTION float({lightOverlapReduction})
 
 {macroDefinitions}
 
@@ -65,8 +68,15 @@ void main() {
 
     vec3 colorAtPosition = rgbaColorAtPosition.rgb;
 
-    vec3 lighting = ambientLight;
-    vec3 lightingInside = ambientLight;
+    // Each light contributes to two accumulators: an additive sum (overlaps
+    // brighten and glows bridge into one another) and a per-channel max
+    // (overlaps read as just the brightest light). LIGHT_OVERLAP_REDUCTION
+    // blends between them. Ambient stays a separate additive base, so a single
+    // light is identical to pure-additive (sum == max for one light).
+    vec3 lightSum = vec3(0.0);
+    vec3 lightMax = vec3(0.0);
+    vec3 lightSumInside = vec3(0.0);
+    vec3 lightMaxInside = vec3(0.0);
 
     #ifdef CIRCLE_LIGHT_COUNT
     #if CIRCLE_LIGHT_COUNT > 0
@@ -78,13 +88,16 @@ void main() {
         );
 
         vec2 direction = normalize(circleLightCenters[i] - position) / squareToAspectRatioTimes2;
-        lighting += lightColorAtPosition * shadowTransparency(
-            startingDistance, 
-            lightCenterDistance, 
+        vec3 shadowed = lightColorAtPosition * shadowTransparency(
+            startingDistance,
+            lightCenterDistance,
             direction
         );
 
-        lightingInside += lightColorAtPosition;
+        lightSum += shadowed;
+        lightMax = max(lightMax, shadowed);
+        lightSumInside += lightColorAtPosition;
+        lightMaxInside = max(lightMaxInside, lightColorAtPosition);
     }
     #endif
     #endif
@@ -96,7 +109,7 @@ void main() {
 
         float lightCenterDistance = distance(flashlightCenters[i], position);
 
-        vec3 lightColorAtPosition = intensityInDirection(flashlightDirections[i], originalDirection) 
+        vec3 lightColorAtPosition = intensityInDirection(flashlightDirections[i], originalDirection)
             * flashlightColors[i] / pow(
                 lightCenterDistance / flashlightIntensities[i] + 1.0, 2.0
             );
@@ -107,16 +120,23 @@ void main() {
             continue;
         }
 
-        lighting += lightColorAtPosition * shadowTransparency(
-            startingDistance, 
-            lightCenterDistance, 
+        vec3 shadowed = lightColorAtPosition * shadowTransparency(
+            startingDistance,
+            lightCenterDistance,
             direction
         );
 
-        lightingInside += lightColorAtPosition;
+        lightSum += shadowed;
+        lightMax = max(lightMax, shadowed);
+        lightSumInside += lightColorAtPosition;
+        lightMaxInside = max(lightMaxInside, lightColorAtPosition);
     }
     #endif
     #endif
+
+    vec3 lighting = ambientLight + mix(lightSum, lightMax, LIGHT_OVERLAP_REDUCTION);
+    vec3 lightingInside =
+        ambientLight + mix(lightSumInside, lightMaxInside, LIGHT_OVERLAP_REDUCTION);
 
     vec3 outsideColor = {backgroundColor}.rgb * lighting;
     vec3 insideColor = colorAtPosition * lightingInside * INTENSITY_INSIDE_RATIO;

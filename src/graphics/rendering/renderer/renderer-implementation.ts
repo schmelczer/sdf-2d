@@ -167,6 +167,7 @@ export class RendererImplementation implements Renderer {
         {
           shadowTraceCount: settings.shadowTraceCount.toString(),
           intensityInsideRatio: settings.lightPenetrationRatio,
+          lightOverlapReduction: settings.lightOverlapReduction,
           floatLinearEnabled: this.gl.insights.floatInterpolationEnabled ? '1' : '0',
           backgroundColor: colorToString(settings.backgroundColor),
         }

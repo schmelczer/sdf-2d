@@ -10,6 +10,7 @@ export const defaultStartupSettings: StartupSettings = {
   ignoreWebGL2: false,
   backgroundColor: vec4.fromValues(1, 1, 1, 1),
   lightPenetrationRatio: 0.75,
+  lightOverlapReduction: 0,
   enableStopwatch: false,
   enableContextLostSimulator: false,
 };

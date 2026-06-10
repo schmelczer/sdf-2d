@@ -33,6 +33,19 @@ export interface StartupSettings {
   lightPenetrationRatio: number;
 
   /**
+   * Controls how overlapping lights combine.
+   *
+   * At `0` lights are summed additively (the physically-correct default):
+   * two nearby lights brighten their overlap and their glows merge into a
+   * shape larger than either alone. At `1` overlapping lights instead take
+   * the per-channel maximum, so a combination never reads brighter or larger
+   * than its strongest contributor. Values in between blend the two.
+   *
+   * A single light looks the same at any value. Should be between 0 and 1.
+   */
+  lightOverlapReduction: number;
+
+  /**
    * Gives the number of possible object colors for the scene.
    *
    * When using WebGL, only 256 different colors can be used.
