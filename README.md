@@ -1,6 +1,6 @@
 # ![SDF-2D logo](media/logo-colored.svg) SDF-2D library
 
-A graphics library to enable the real-time rendering of 2D signed distance fields on the web.
+A graphics library for real-time rendering of 2D signed distance fields on the web.
 
 ![screenshot of a bumpy tunnel](media/tunnels-screenshot.png)
 
@@ -16,18 +16,18 @@ A graphics library to enable the real-time rendering of 2D signed distance field
 ## Features
 
 - Works with both WebGL and WebGL2
-  > The former is mostly required for supporting iPhones.
+  > The former is mainly needed to support older iPhones.
 - Performant even on low-end mobile devices
   > Try it out yourself!
-- Has a number of built-in shapes and lights
+- Comes with a number of built-in shapes and lights
 - Easily extensible with new shapes
-- Antialiasing is implemented
-- Has built-in quality autoscaling
+- Antialiasing is built in
+- Built-in quality autoscaling
 - Requires no boilerplate code
-  - Automatic detection of WebGL and its extensions is provided
-  - Parallel, non-blocking shader compiling
-  - Context lost is handled with automatic restoration
-  - Can be used without thinking of the GPU _(although for stunning results it, should be kept in mind)_
+  - WebGL and its extensions are detected automatically
+  - Shaders are compiled in parallel, without blocking
+  - Context loss is handled with automatic restoration
+  - Can be used without thinking about the GPU _(although for stunning results, it should be kept in mind)_
 
 ![four screenshots from mobiles](media/mobile-screenshots.png)
 
@@ -65,7 +65,7 @@ main();
 For further examples, please visit the following repositories:
 
 - [Minimal example (using Webpack)](https://github.com/schmelczerandras/sdf-2d-minimal-example)
-- [More complex example](https://github.com/schmelczerandras/sdf-2d-minimal-example)
+- [More complex example](https://github.com/schmelczerandras/sdf-2d-more-complex-example)
 - [Source for the demo page](https://github.com/schmelczerandras/sdf-2d-demo)
 - [Source for decla.red, the multiplayer game](https://github.com/schmelczerandras/decla.red)
 

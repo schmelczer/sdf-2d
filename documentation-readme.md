@@ -12,46 +12,46 @@ The motivation behind this library and more in-depth information about the rende
 
 ## Usage (1st option)
 
-- To start using cutting-edge 2D graphics, first you have get a renderer instance. This is possible by calling the [compile function](globals.html#compile).
-  - For this, some [DrawableDescriptors](interfaces/drawabledescriptor.html) has to be provided.
-  - Optionally, default compile settings can overridden using [StartupSettings](interfaces/startupsettings.html).
-- After acquiring a renderer, the drawing of objects can be started through the [Renderer](interfaces/renderer.html) interface.
+- To start using cutting-edge 2D graphics, you first need a renderer instance. You can get one by calling the [compile function](globals.html#compile).
+  - For this, you have to provide one or more [DrawableDescriptors](interfaces/drawabledescriptor.html).
+  - Optionally, the default compile settings can be overridden using [StartupSettings](interfaces/startupsettings.html).
+- Once you have a renderer, you can start drawing objects through the [Renderer](interfaces/renderer.html) interface.
 
 ## Usage (2nd option)
 
-If you're planning on creating animated content, use the [runAnimation function](globals.html#runanimation) to spare yourself from writing boilerplate code.
-Further documentation on its usage is available in its [documentation](globals.html#runanimation).
+If you're planning to create animated content, use the [runAnimation function](globals.html#runanimation) to save yourself from writing boilerplate code.
+See its [documentation](globals.html#runanimation) for more details.
 
 ## Extending drawables
 
-> Iñigo Quilez has some great [2D SDF-s](https://iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm)
+> Iñigo Quilez has a great collection of [2D SDFs](https://iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm)
 
 - Subclass [Drawable](classes/drawable.html)
 - Implement its abstract methods
-- Add a static property to your class called `descriptor` of type [DrawableDescriptors](interfaces/drawabledescriptor.html)
-- Follow the instructions given in [Usage](#usage)
+- Add a static `descriptor` property of type [DrawableDescriptor](interfaces/drawabledescriptor.html) to your class
+- Follow the instructions given in [Usage](#usage-1st-option)
 
 ## Useful to know
 
 ### Math
 
-The `vec2`, `vec3`, and `vec4` types seen in the documentation come from the [glMatrix](http://glmatrix.net/) library and are equivalent to regular JS Arrays or Float32Arrays. So, feel free to give `[x, y]` as an input for functions requiring `vec2`.
+The `vec2`, `vec3`, and `vec4` types seen in the documentation come from the [glMatrix](http://glmatrix.net/) library and are equivalent to regular JS Arrays or Float32Arrays, so feel free to pass `[x, y]` to functions that expect a `vec2`.
 
 ### Coordinates
 
-Anywhere, where positions need to be specified, the `y` values grow upwards. That means, when setting the view area, the origin is at the bottom left corner of the display.
+Wherever positions need to be specified, the `y` axis grows upwards. This means that when you set the view area, the origin is at the bottom-left corner of the display.
 
 ### Tile-based rendering
 
-For optimising the evaluation of the distance field, the display is divided up into a grid of tiles. The shaders for each tile are compiled to support a fix maximum number of objects on it. When using the built-in drawables it is possible that after a certain number of on-screen objects new ones won't be visible.
+To optimise the evaluation of the distance field, the display is divided into a grid of tiles. The shaders for each tile are compiled to support a fixed maximum number of objects. When using the built-in drawables, this means that beyond a certain number of on-screen objects, new ones may stop appearing.
 
-Mitigating this issue is quite easy. Instead of the following code:
+Mitigating this is easy. Instead of the following code:
 
 ```js
 this.renderer = await compile(canvas, [Circle.descriptor, CircleLight.descriptor]);
 ```
 
-Modify it to something similar:
+modify it to something like this:
 
 ```js
 this.renderer = await compile(canvas, [
@@ -66,6 +66,6 @@ this.renderer = await compile(canvas, [
 ]);
 ```
 
-The usage of too large numbers is not advised for compatibility and performance reasons alike.
+Using very large numbers is not advised, for both compatibility and performance reasons.
 
-> Steps are very useful for tile-based rendering, because it is possible for one tile (at a given moment) to be empty or contain just a few objects, while others have a large cluster of objects. The compiled shaders only take into account the necessary number of objects on each tile.
+> Steps are especially useful for tile-based rendering: at any given moment, one tile may be empty or contain just a few objects, while another holds a large cluster. The compiled shaders only account for the number of objects actually present on each tile.
