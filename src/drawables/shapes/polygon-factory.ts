@@ -148,9 +148,9 @@ export const PolygonFactory = (
     private get actualVertices(): Array<vec2> {
       return this.vertices.length < vertexCount
         ? ([
-          ...this.vertices,
-          ...new Array(vertexCount - this.vertices.length).fill(this.vertices[0]),
-        ] as Array<vec2>)
+            ...this.vertices,
+            ...new Array(vertexCount - this.vertices.length).fill(this.vertices[0]),
+          ] as Array<vec2>)
         : this.vertices;
     }
 
