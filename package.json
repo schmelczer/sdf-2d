@@ -72,7 +72,7 @@
     "ts-loader": "^9.6.0",
     "typedoc": "^0.28.19",
     "typedoc-plugin-extras": "^4.0.1",
-    "typescript": "^6.0.3",
+    "typescript": "^7.0.0",
     "webpack": "^5.107.2",
     "webpack-cli": "^7.0.3"
   }
