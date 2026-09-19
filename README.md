@@ -10,8 +10,8 @@ A graphics library for real-time rendering of 2D signed distance fields on the w
 
 - [View it in action (demos)](https://sdf2d.schmelczer.dev)
 - [View it in action (video game)](https://decla.red)
-- [Documentation](https://schmelczerandras.github.io/sdf-2d/)
-- [In-depth information](https://github.com/schmelczerandras/sdf-2d/blob/master/media/thesis-andras-schmelczer.pdf)
+- [Documentation](https://sdf-2d-docs.schmelczer.dev/)
+- [In-depth information](https://git.schmelczer.dev/andras/sdf-2d/blob/master/media/thesis-andras-schmelczer.pdf)
 
 ## Features
 
@@ -66,12 +66,12 @@ For further examples, please visit the following repositories:
 
 - [Minimal example (using Webpack)](https://github.com/schmelczerandras/sdf-2d-minimal-example)
 - [More complex example](https://github.com/schmelczerandras/sdf-2d-more-complex-example)
-- [Source for the demo page](https://github.com/schmelczerandras/sdf-2d-demo)
+- [Source for the demo page](https://git.schmelczer.dev/andras/sdf-2d-demo)
 - [Source for decla.red, the multiplayer game](https://github.com/schmelczerandras/decla.red)
 
 ## Documentation
 
-For more technical details, please consult the documentation available in the repository and at [schmelczerandras.github.io/sdf-2d/](https://schmelczerandras.github.io/sdf-2d/).
+For more technical details, please consult the documentation available in the repository and at [sdf-2d-docs.schmelczer.dev/](https://sdf-2d-docs.schmelczer.dev/).
 
 ## Plans
 

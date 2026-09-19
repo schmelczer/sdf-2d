@@ -17,14 +17,14 @@
     "drawer"
   ],
   "author": "András Schmelczer <andras@schmelczer.dev> (https://schmelczer.dev/)",
-  "homepage": "https://github.com/schmelczerandras/sdf-2d#readme",
+  "homepage": "https://git.schmelczer.dev/andras/sdf-2d#readme",
   "bugs": {
-    "url": "https://github.com/schmelczerandras/sdf-2d/issues",
+    "url": "https://git.schmelczer.dev/andras/sdf-2d/issues",
     "email": "andras@schmelczer.dev"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/schmelczerandras/sdf-2d.git"
+    "url": "https://git.schmelczer.dev/andras/sdf-2d.git"
   },
   "license": "ISC",
   "exports": {
