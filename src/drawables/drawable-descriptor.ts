@@ -7,7 +7,8 @@ import { Drawable } from './drawable';
  * Each [[Drawable]] must have a static property of this type, called descriptor.
  *
  * For more information on how to create your own DrawableDescriptors, look at the
- * code of [[CircleFactory]] or [[InvertedTunnelFactory]].
+ * [complete custom drawable example](https://sdf-2d-docs.schmelczer.dev/index.html#custom-drawable-example),
+ * or the code of [[CircleFactory]] or [[InvertedTunnelFactory]].
  */
 export interface DrawableDescriptor {
   /**
@@ -34,10 +35,14 @@ export interface DrawableDescriptor {
     shader: string;
     /**
      * The name of the function defined in the value of `shader`.
-     * Its signature should look like this:
+     * Its signature must be:
      * ```glsl
-     *  float (in vec2 target, out float colorIndex)
+     * float distanceFunction(in vec2 target, out vec4 color)
      * ```
+     * Replace `distanceFunction` with the name given here. Return the signed
+     * distance to the closest drawable at `target` and assign its RGBA color
+     * to `color` on every code path. Both WebGL and WebGL2 pass a `vec4` to
+     * this output parameter.
      */
     distanceFunctionName: string;
 

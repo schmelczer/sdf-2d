@@ -31,6 +31,83 @@ See its [documentation](functions/run-animation.runAnimation.html) for more deta
 - Add a static `descriptor` property of type [DrawableDescriptor](interfaces/drawables_drawable-descriptor.DrawableDescriptor.html) to your class
 - Follow the instructions given in [Usage](#usage-1st-option)
 
+### Custom drawable example
+
+The function named by `sdf.distanceFunctionName` must have the signature
+`float distanceFunction(in vec2 target, out vec4 color)` in both GLSL 100 and GLSL 300 ES.
+It returns the signed distance (negative inside, zero on the boundary, positive outside)
+and writes the closest drawable's RGBA color to `color` on every code path.
+
+This complete example defines a custom orange circle, maps its serialized properties
+to shader uniforms, and compiles and renders it. Use it in a JavaScript module with
+`sdf-2d` and `gl-matrix` installed. Documentation CI runs this exact code with both
+WebGL 1 and WebGL 2.
+
+
+```js
+import { compile, Drawable } from 'sdf-2d';
+import { vec2 } from 'gl-matrix';
+
+class CustomCircle extends Drawable {
+  constructor(center, radius) {
+    super();
+    this.center = center;
+    this.radius = radius;
+  }
+
+  static descriptor = {
+    propertyUniformMapping: {
+      center: 'customCircleCenters',
+      radius: 'customCircleRadii',
+    },
+    uniformCountMacroName: 'CUSTOM_CIRCLE_COUNT',
+    shaderCombinationSteps: [0, 1, 4],
+    // Unused array entries are filled with this zero-radius circle and moved away.
+    empty: new CustomCircle([0, 0], 0),
+    sdf: {
+      distanceFunctionName: 'customCircleDistance',
+      shader: `
+        uniform vec2 customCircleCenters[CUSTOM_CIRCLE_COUNT];
+        uniform float customCircleRadii[CUSTOM_CIRCLE_COUNT];
+
+        float customCircleDistance(in vec2 target, out vec4 color) {
+          color = vec4(1.0, 0.25, 0.0, 1.0);
+          float minDistance = 1000.0;
+          for (int i = 0; i < CUSTOM_CIRCLE_COUNT; i++) {
+            float d = distance(target, customCircleCenters[i]) - customCircleRadii[i];
+            minDistance = min(minDistance, d);
+          }
+          return minDistance;
+        }
+      `,
+    },
+  };
+
+  minDistance(target) {
+    return vec2.distance(this.center, target) - this.radius;
+  }
+
+  getObjectToSerialize(transform2d, transform1d) {
+    return {
+      center: vec2.transformMat2d(vec2.create(), this.center, transform2d),
+      radius: this.radius * transform1d,
+    };
+  }
+}
+
+const canvas = document.createElement('canvas');
+canvas.width = 320;
+canvas.height = 240;
+document.body.appendChild(canvas);
+
+const renderer = await compile(canvas, [CustomCircle.descriptor]);
+renderer.setRuntimeSettings({ ambientLight: [1, 1, 1], motionBlur: 0 });
+renderer.addDrawable(new CustomCircle([160, 120], 50));
+renderer.renderDrawables();
+
+// Call renderer.destroy() when the renderer is no longer needed.
+```
+
 ## Useful to know
 
 ### Math

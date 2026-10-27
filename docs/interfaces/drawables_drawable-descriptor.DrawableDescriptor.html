@@ -16,11 +16,12 @@
 shader code.</p>
 <p>Each [[Drawable]] must have a static property of this type, called descriptor.</p>
 <p>For more information on how to create your own DrawableDescriptors, look at the
-code of [[CircleFactory]] or [[InvertedTunnelFactory]].</p>
+<a href="https://sdf-2d-docs.schmelczer.dev/index.html#custom-drawable-example">complete custom drawable example</a>,
+or the code of [[CircleFactory]] or [[InvertedTunnelFactory]].</p>
 </div></section>
 <div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">DrawableDescriptor</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#empty">empty</a><span class="tsd-signature-symbol">:</span> <a href="../classes/drawables_drawable.Drawable.html" class="tsd-signature-type tsd-kind-class">Drawable</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#objectcountscaler">objectCountScaler</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#propertyuniformmapping">propertyUniformMapping</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-signature-symbol">[</span><span class="tsd-kind-index-signature">property</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#sdf">sdf</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">{</span><br/>        <span class="tsd-kind-property">distanceFunctionName</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">isInverted</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">shader</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#shadercombinationsteps">shaderCombinationSteps</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#uniformcountmacroname">uniformCountMacroName</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in drawables/drawable-descriptor.ts:12</li></ul></aside>
+<li>Defined in drawables/drawable-descriptor.ts:13</li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -45,7 +46,7 @@ code of [[CircleFactory]] or [[InvertedTunnelFactory]].</p>
 the value of <code>empty</code> is used to pad out arrays.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in drawables/drawable-descriptor.ts:73</li></ul></aside></section>
+<li>Defined in drawables/drawable-descriptor.ts:78</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="objectcountscaler"><code class="tsd-tag">Optional</code><span>object<wbr/>Count<wbr/>Scaler</span><a href="#objectcountscaler" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">objectCountScaler</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">number</span></div>
@@ -54,7 +55,7 @@ the value of <code>empty</code> is used to pad out arrays.</p>
 <p>By default, its value is 1</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in drawables/drawable-descriptor.ts:57</li></ul></aside></section>
+<li>Defined in drawables/drawable-descriptor.ts:62</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="propertyuniformmapping"><span>property<wbr/>Uniform<wbr/>Mapping</span><a href="#propertyuniformmapping" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">propertyUniformMapping</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-signature-symbol">[</span><span class="tsd-kind-index-signature">property</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">}</span></div>
@@ -62,7 +63,7 @@ the value of <code>empty</code> is used to pad out arrays.</p>
 getObjectToSerialize and the name of the arrays used in the GLSL code.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in drawables/drawable-descriptor.ts:17</li></ul></aside></section>
+<li>Defined in drawables/drawable-descriptor.ts:18</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="sdf"><code class="tsd-tag">Optional</code><span>sdf</span><a href="#sdf" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">sdf</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">distanceFunctionName</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">isInverted</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">shader</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">}</span></div>
@@ -74,10 +75,14 @@ getObjectToSerialize and the name of the arrays used in the GLSL code.</p>
 <li class="tsd-parameter">
 <h5><span class="tsd-kind-property">distanceFunctionName</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
 <div class="tsd-comment tsd-typography"><p>The name of the function defined in the value of <code>shader</code>.
-Its signature should look like this:</p>
-<pre><code class="glsl"> float (in vec2 target, out float colorIndex)
+Its signature must be:</p>
+<pre><code class="glsl">float distanceFunction(in vec2 target, out vec4 color)
 </code><button type="button">Copy</button></pre>
 
+<p>Replace <code>distanceFunction</code> with the name given here. Return the signed
+distance to the closest drawable at <code>target</code> and assign its RGBA color
+to <code>color</code> on every code path. Both WebGL and WebGL2 pass a <code>vec4</code> to
+this output parameter.</p>
 </div></li>
 <li class="tsd-parameter">
 <h5><code class="tsd-tag">Optional</code><span class="tsd-kind-property">isInverted</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
@@ -89,7 +94,7 @@ Its signature should look like this:</p>
 <p>Your code should work with both GLSL version 100 and version 300 es.</p>
 </div></li></ul></div><aside class="tsd-sources">
 <ul>
-<li>Defined in drawables/drawable-descriptor.ts:28</li></ul></aside></section>
+<li>Defined in drawables/drawable-descriptor.ts:29</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="shadercombinationsteps"><span>shader<wbr/>Combination<wbr/>Steps</span><a href="#shadercombinationsteps" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">shaderCombinationSteps</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></div>
@@ -99,7 +104,7 @@ shader is used to render a given part of the scene.</p>
 <p>Must contain 0 as a value.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in drawables/drawable-descriptor.ts:67</li></ul></aside></section>
+<li>Defined in drawables/drawable-descriptor.ts:72</li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="uniformcountmacroname"><span>uniform<wbr/>Count<wbr/>Macro<wbr/>Name</span><a href="#uniformcountmacroname" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">uniformCountMacroName</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
@@ -107,7 +112,7 @@ shader is used to render a given part of the scene.</p>
 number of drawables of this type.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in drawables/drawable-descriptor.ts:23</li></ul></aside></section></section></details></div>
+<li>Defined in drawables/drawable-descriptor.ts:24</li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
