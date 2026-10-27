@@ -6,29 +6,29 @@ The motivation behind this library and more in-depth information about the rende
 
 - [Repository](https://git.schmelczer.dev/andras/sdf-2d)
 - [Demo](https://sdf2d.schmelczer.dev/)
-- [Minimal example](https://github.com/schmelczerandras/sdf-2d-minimal-example)
-- [More complex example](https://github.com/schmelczerandras/sdf-2d-more-complex-example)
+- [Minimal example](https://github.com/schmelczer/sdf-2d-minimal-example)
+- [More complex example](https://github.com/schmelczer/sdf-2d-more-complex-example)
 - [Source code of the demo](https://git.schmelczer.dev/andras/sdf-2d-demo)
 
 ## Usage (1st option)
 
-- To start using cutting-edge 2D graphics, you first need a renderer instance. You can get one by calling the [compile function](functions/compile.compile.html).
-  - For this, you have to provide one or more [DrawableDescriptors](interfaces/drawables_drawable-descriptor.DrawableDescriptor.html).
-  - Optionally, the default compile settings can be overridden using [StartupSettings](interfaces/graphics_rendering_settings_startup-settings.StartupSettings.html).
-- Once you have a renderer, you can start drawing objects through the [Renderer](interfaces/graphics_rendering_renderer_renderer.Renderer.html) interface.
+- To start using cutting-edge 2D graphics, you first need a renderer instance. You can get one by calling the {@link compile!compile | compile function}.
+  - For this, you have to provide one or more {@link drawables/drawable-descriptor!DrawableDescriptor | DrawableDescriptors}.
+  - Optionally, the default compile settings can be overridden using {@link graphics/rendering/settings/startup-settings!StartupSettings}.
+- Once you have a renderer, you can start drawing objects through the {@link graphics/rendering/renderer/renderer!Renderer} interface.
 
 ## Usage (2nd option)
 
-If you're planning to create animated content, use the [runAnimation function](functions/run-animation.runAnimation.html) to save yourself from writing boilerplate code.
-See its [documentation](functions/run-animation.runAnimation.html) for more details.
+If you're planning to create animated content, use the {@link run-animation!runAnimation | runAnimation function} to save yourself from writing boilerplate code.
+See its {@link run-animation!runAnimation | documentation} for more details.
 
 ## Extending drawables
 
-> Iñigo Quilez has a great collection of [2D SDFs](https://iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm)
+> Iñigo Quilez has a great collection of [2D SDFs](https://iquilezles.org/articles/distfunctions2d/)
 
-- Subclass [Drawable](classes/drawables_drawable.Drawable.html)
+- Subclass {@link drawables/drawable!Drawable}
 - Implement its abstract methods
-- Add a static `descriptor` property of type [DrawableDescriptor](interfaces/drawables_drawable-descriptor.DrawableDescriptor.html) to your class
+- Add a static `descriptor` property of type {@link drawables/drawable-descriptor!DrawableDescriptor} to your class
 - Follow the instructions given in [Usage](#usage-1st-option)
 
 ### Custom drawable example

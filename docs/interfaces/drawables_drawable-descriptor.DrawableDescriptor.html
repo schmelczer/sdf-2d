@@ -14,10 +14,10 @@
 <section class="tsd-panel tsd-comment">
 <div class="tsd-comment tsd-typography"><p>Used for containing the required information to compile drawables into
 shader code.</p>
-<p>Each [[Drawable]] must have a static property of this type, called descriptor.</p>
+<p>Each <a href="../classes/drawables_drawable.Drawable.html" class="tsd-kind-class">drawables/drawable!Drawable</a> must have a static property of this type, called descriptor.</p>
 <p>For more information on how to create your own DrawableDescriptors, look at the
 <a href="https://sdf-2d-docs.schmelczer.dev/index.html#custom-drawable-example">complete custom drawable example</a>,
-or the code of [[CircleFactory]] or [[InvertedTunnelFactory]].</p>
+or the code of <a href="../functions/drawables_shapes_circle-factory.CircleFactory.html" class="tsd-kind-function">drawables/shapes/circle-factory!CircleFactory</a> or <a href="../functions/drawables_shapes_inverted-tunnel-factory.InvertedTunnelFactory.html" class="tsd-kind-function">drawables/shapes/inverted-tunnel-factory!InvertedTunnelFactory</a>.</p>
 </div></section>
 <div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">DrawableDescriptor</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#empty">empty</a><span class="tsd-signature-symbol">:</span> <a href="../classes/drawables_drawable.Drawable.html" class="tsd-signature-type tsd-kind-class">Drawable</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#objectcountscaler">objectCountScaler</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#propertyuniformmapping">propertyUniformMapping</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-signature-symbol">[</span><span class="tsd-kind-index-signature">property</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#sdf">sdf</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">{</span><br/>        <span class="tsd-kind-property">distanceFunctionName</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">isInverted</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">shader</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#shadercombinationsteps">shaderCombinationSteps</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#uniformcountmacroname">uniformCountMacroName</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
 <ul>
@@ -59,7 +59,7 @@ the value of <code>empty</code> is used to pad out arrays.</p>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="propertyuniformmapping"><span>property<wbr/>Uniform<wbr/>Mapping</span><a href="#propertyuniformmapping" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">propertyUniformMapping</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-signature-symbol">[</span><span class="tsd-kind-index-signature">property</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">}</span></div>
-<div class="tsd-comment tsd-typography"><p>An object describing the relationship between the object returned by a [[Drawable]]'s
+<div class="tsd-comment tsd-typography"><p>An object describing the relationship between the object returned by a <a href="../classes/drawables_drawable.Drawable.html" class="tsd-kind-class">drawables/drawable!Drawable</a>'s
 getObjectToSerialize and the name of the arrays used in the GLSL code.</p>
 </div><aside class="tsd-sources">
 <ul>
@@ -76,7 +76,7 @@ getObjectToSerialize and the name of the arrays used in the GLSL code.</p>
 <h5><span class="tsd-kind-property">distanceFunctionName</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
 <div class="tsd-comment tsd-typography"><p>The name of the function defined in the value of <code>shader</code>.
 Its signature must be:</p>
-<pre><code class="glsl">float distanceFunction(in vec2 target, out vec4 color)
+<pre><code class="glsl"><span class="hl-4">float</span><span class="hl-1"> </span><span class="hl-8">distanceFunction</span><span class="hl-1">(in vec2 </span><span class="hl-2">target</span><span class="hl-1">, out vec4 </span><span class="hl-2">color</span><span class="hl-1">)</span>
 </code><button type="button">Copy</button></pre>
 
 <p>Replace <code>distanceFunction</code> with the name given here. Return the signed

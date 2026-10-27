@@ -58,16 +58,24 @@ const main = async () => {
 main();
 ```
 
-> A commented version of the above code can be found [in this repo](https://github.com/schmelczerandras/sdf-2d-minimal-example).
+> A commented version of the above code can be found [in this repo](https://github.com/schmelczer/sdf-2d-minimal-example).
 
 ## Examples
 
 For further examples, please visit the following repositories:
 
-- [Minimal example (using Webpack)](https://github.com/schmelczerandras/sdf-2d-minimal-example)
-- [More complex example](https://github.com/schmelczerandras/sdf-2d-more-complex-example)
+- [Minimal example (using Webpack)](https://github.com/schmelczer/sdf-2d-minimal-example)
+- [More complex example](https://github.com/schmelczer/sdf-2d-more-complex-example)
 - [Source for the demo page](https://git.schmelczer.dev/andras/sdf-2d-demo)
 - [Source for decla.red, the multiplayer game](https://github.com/schmelczerandras/decla.red)
+
+## Building the documentation
+
+Run `npm run docs` to regenerate `docs/`, or `npm run build` to build both the library and documentation. Documentation warnings fail the build, including unresolved `{@link Symbol}` references. Use these references for API links in source comments and `documentation-readme.md` so TypeDoc can validate them.
+
+`typedoc.json` selects the public modules exported by `src/main.ts`, along with the settings, defaults, and renderer information used by their signatures. Keep these entry points aligned when adding public APIs. The module layout preserves existing API URLs while leaving internal implementation modules out of navigation.
+
+The factory return types listed in `intentionallyNotExported` are private implementation types. Their constructor signatures, arguments, and examples are documented on each factory page instead of exporting the base classes. Keep that guidance up to date when changing a factory's constructor.
 
 ## Documentation
 

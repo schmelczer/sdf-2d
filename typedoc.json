@@ -1,7 +1,22 @@
 {
   "out": "docs",
   "name": "SDF-2D",
-  "entryPoints": ["src"],
+  "entryPoints": [
+    "src/compile.ts",
+    "src/run-animation.ts",
+    "src/drawables/drawable.ts",
+    "src/drawables/drawable-descriptor.ts",
+    "src/drawables/lights/circle-light.ts",
+    "src/drawables/lights/flashlight.ts",
+    "src/drawables/shapes/*.ts",
+    "src/graphics/graphics-library/texture/texture-options.ts",
+    "src/graphics/rendering/renderer/noise-renderer.ts",
+    "src/graphics/rendering/renderer/renderer.ts",
+    "src/graphics/rendering/renderer/renderer-info.ts",
+    "src/graphics/rendering/settings/*.ts",
+    "src/helper/colors/*.ts",
+    "src/helper/delta-time-calculator.ts"
+  ],
   "entryPointStrategy": "expand",
   "excludeExternals": true,
   "excludePrivate": true,
@@ -11,5 +26,20 @@
   "readme": "documentation-readme.md",
   "favicon": "media/favicon.ico",
   "skipErrorChecking": true,
+  "validation": {
+    "invalidLink": true,
+    "notExported": true
+  },
+  "treatWarningsAsErrors": true,
+  "intentionallyNotExported": [
+    "CircleBase",
+    "DropletBase",
+    "HexagonBase",
+    "InvertedTunnelBase",
+    "MetaCircleBase",
+    "NoisyPolygonBase",
+    "RotatedRectangleBase"
+  ],
+  "highlightLanguages": ["typescript", "javascript", "html", "glsl"],
   "plugin": ["typedoc-plugin-extras"]
 }
