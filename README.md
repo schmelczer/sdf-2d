@@ -9,9 +9,9 @@ A graphics library for real-time rendering of 2D signed distance fields on the w
 ## Links
 
 - [View it in action (demos)](https://sdf2d.schmelczer.dev)
-- [View it in action (video game)](https://decla.red)
+- [View it in action (video game)](https://doppler.schmelczer.dev/)
 - [Documentation](https://sdf-2d-docs.schmelczer.dev/)
-- [In-depth information](https://git.schmelczer.dev/andras/sdf-2d/blob/master/media/thesis-andras-schmelczer.pdf)
+- [In-depth information](https://schmelczer.dev/media/downloads/sdf2d-andras-schmelczer.pdf)
 
 ## Features
 

@@ -10,25 +10,25 @@
 </ul>
 <h2 id="usage-1st-option" class="tsd-anchor-link">Usage (1st option)<a href="#usage-1st-option" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
 <ul>
-<li>To start using cutting-edge 2D graphics, you first need a renderer instance. You can get one by calling the <a href="globals.html#compile">compile function</a>.
+<li>To start using cutting-edge 2D graphics, you first need a renderer instance. You can get one by calling the <a href="functions/compile.compile.html">compile function</a>.
 <ul>
-<li>For this, you have to provide one or more <a href="interfaces/drawabledescriptor.html">DrawableDescriptors</a>.</li>
-<li>Optionally, the default compile settings can be overridden using <a href="interfaces/startupsettings.html">StartupSettings</a>.</li>
+<li>For this, you have to provide one or more <a href="interfaces/drawables_drawable-descriptor.DrawableDescriptor.html">DrawableDescriptors</a>.</li>
+<li>Optionally, the default compile settings can be overridden using <a href="interfaces/graphics_rendering_settings_startup-settings.StartupSettings.html">StartupSettings</a>.</li>
 </ul>
 </li>
-<li>Once you have a renderer, you can start drawing objects through the <a href="interfaces/renderer.html">Renderer</a> interface.</li>
+<li>Once you have a renderer, you can start drawing objects through the <a href="interfaces/graphics_rendering_renderer_renderer.Renderer.html">Renderer</a> interface.</li>
 </ul>
 <h2 id="usage-2nd-option" class="tsd-anchor-link">Usage (2nd option)<a href="#usage-2nd-option" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
-<p>If you're planning to create animated content, use the <a href="globals.html#runanimation">runAnimation function</a> to save yourself from writing boilerplate code.
-See its <a href="globals.html#runanimation">documentation</a> for more details.</p>
+<p>If you're planning to create animated content, use the <a href="functions/run-animation.runAnimation.html">runAnimation function</a> to save yourself from writing boilerplate code.
+See its <a href="functions/run-animation.runAnimation.html">documentation</a> for more details.</p>
 <h2 id="extending-drawables" class="tsd-anchor-link">Extending drawables<a href="#extending-drawables" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
 <blockquote>
 <p>Iñigo Quilez has a great collection of <a href="https://iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm">2D SDFs</a></p>
 </blockquote>
 <ul>
-<li>Subclass <a href="classes/drawable.html">Drawable</a></li>
+<li>Subclass <a href="classes/drawables_drawable.Drawable.html">Drawable</a></li>
 <li>Implement its abstract methods</li>
-<li>Add a static <code>descriptor</code> property of type <a href="interfaces/drawabledescriptor.html">DrawableDescriptor</a> to your class</li>
+<li>Add a static <code>descriptor</code> property of type <a href="interfaces/drawables_drawable-descriptor.DrawableDescriptor.html">DrawableDescriptor</a> to your class</li>
 <li>Follow the instructions given in <a href="#usage-1st-option">Usage</a></li>
 </ul>
 <h2 id="useful-to-know" class="tsd-anchor-link">Useful to know<a href="#useful-to-know" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
