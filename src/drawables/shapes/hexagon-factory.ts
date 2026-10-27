@@ -18,6 +18,22 @@ class HexagonBase extends EmptyDrawable {
 let _id = 0;
 
 /**
+ * Creates a drawable hexagon class with a shared color.
+ *
+ * @param color RGB or RGBA color, or an index into {@link graphics/rendering/settings/runtime-settings!RuntimeSettings.colorPalette}.
+ * @returns A class with constructor `new Hexagon(center: vec2, radius: number)`.
+ * `center` is the position in world coordinates; `radius` controls the size in world units.
+ * Pass the class's static `descriptor` to {@link compile!compile}, then pass instances to
+ * {@link graphics/rendering/renderer/renderer!Renderer.addDrawable}.
+ *
+ * @example
+ * ```ts
+ * import { HexagonFactory } from 'sdf-2d';
+ *
+ * const Hexagon = HexagonFactory([1, 0.5, 0]);
+ * const hexagon = new Hexagon([160, 120], 30);
+ * ```
+ *
  * @category Drawable
  */
 export const HexagonFactory = (color: vec3 | vec4 | number): typeof HexagonBase => {

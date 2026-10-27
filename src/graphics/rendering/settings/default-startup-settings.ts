@@ -2,7 +2,7 @@ import { vec4 } from 'gl-matrix';
 import { StartupSettings } from './startup-settings';
 
 /**
- * Contains the default values used for [[StartupSettings]].
+ * Contains the default values used for {@link graphics/rendering/settings/startup-settings!StartupSettings}.
  */
 export const defaultStartupSettings: StartupSettings = {
   shadowTraceCount: 16,

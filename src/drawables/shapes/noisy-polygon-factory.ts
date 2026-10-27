@@ -11,6 +11,28 @@ interface NoisyPolygonBase extends PolygonBase {
 let _id = 0;
 
 /**
+ * Creates a drawable polygon class with a noisy outline and a shared color.
+ *
+ * Providing a `noiseTexture` in {@link graphics/rendering/settings/runtime-settings!RuntimeSettings.textures} is required for this
+ * drawable. A noise texture can be generated with {@link graphics/rendering/renderer/noise-renderer!renderNoise}.
+ *
+ * @param vertexCount Maximum number of vertices per polygon.
+ * @param color RGB or RGBA color, or an index into {@link graphics/rendering/settings/runtime-settings!RuntimeSettings.colorPalette}.
+ * @returns A class with constructor `new NoisyPolygon(vertices: Array<vec2>)`.
+ * `vertices` contains between one and `vertexCount` positions in world coordinates,
+ * ordered around the polygon's outline. Instances also have a `randomOffset` property
+ * (default 0) for varying the sampled noise.
+ * Pass the class's static `descriptor` to {@link compile!compile}, then pass instances to
+ * {@link graphics/rendering/renderer/renderer!Renderer.addDrawable}.
+ *
+ * @example
+ * ```ts
+ * import { NoisyPolygonFactory } from 'sdf-2d';
+ *
+ * const NoisyPolygon = NoisyPolygonFactory(3, [1, 0.5, 0]);
+ * const polygon = new NoisyPolygon([[100, 100], [200, 100], [150, 180]]);
+ * ```
+ *
  * @category Drawable
  */
 export const NoisyPolygonFactory = (

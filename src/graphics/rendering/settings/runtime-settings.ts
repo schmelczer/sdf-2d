@@ -5,7 +5,7 @@ import { TextureWithOptions } from '../../graphics-library/texture/texture-optio
  * Interface for a configuration object containing the settings
  * that can be changed during runtime.
  *
- * The default values for RuntimeSettings can be found in [[defaultRuntimeSettings]].
+ * The default values for RuntimeSettings can be found in {@link graphics/rendering/settings/default-runtime-settings!defaultRuntimeSettings}.
  */
 export interface RuntimeSettings {
   /**
@@ -42,7 +42,7 @@ export interface RuntimeSettings {
    * The possible colors for the objects. Each color is referenced by its index in the
    * palette.
    *
-   * Its length should be less than the `paletteSize` specified in [[StartupSettings]].
+   * Its length should be less than the `paletteSize` specified in {@link graphics/rendering/settings/startup-settings!StartupSettings}.
    *
    * Colors can have transparency, but only if WebGL2 support is enabled.
    */
@@ -78,7 +78,7 @@ export interface RuntimeSettings {
    *
    * The keys of the object should be the names used to reference them in the GLSL code,
    * and the values should be the textures themselves, or a TextureWithOptions specifying
-   * the texture's [[TextureOptions]].
+   * the texture's {@link graphics/graphics-library/texture/texture-options!TextureOptions}.
    * A texture can be a canvas, an img element, an Image, and so on.
    */
   textures: {

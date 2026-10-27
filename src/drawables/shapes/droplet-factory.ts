@@ -22,6 +22,24 @@ class DropletBase extends EmptyDrawable {
 let _id = 0;
 
 /**
+ * Creates a drawable droplet class with a shared color.
+ *
+ * @param color RGB or RGBA color, or an index into {@link graphics/rendering/settings/runtime-settings!RuntimeSettings.colorPalette}.
+ * @returns A class with constructor
+ * `new Droplet(from: vec2, to: vec2, fromRadius: number, toRadius: number)`.
+ * `from` and `to` are endpoint positions in world coordinates; `fromRadius` and
+ * `toRadius` are the radii at those endpoints in world units.
+ * Pass the class's static `descriptor` to {@link compile!compile}, then pass instances to
+ * {@link graphics/rendering/renderer/renderer!Renderer.addDrawable}.
+ *
+ * @example
+ * ```ts
+ * import { DropletFactory } from 'sdf-2d';
+ *
+ * const Droplet = DropletFactory([1, 0.5, 0]);
+ * const droplet = new Droplet([100, 100], [200, 140], 30, 10);
+ * ```
+ *
  * @category Drawable
  */
 export const DropletFactory = (color: vec3 | vec4 | number): typeof DropletBase => {

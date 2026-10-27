@@ -40,8 +40,7 @@ import { DrawableDescriptor, Renderer } from './main';
  * `renderDrawables` must not be called by the animate function. It should return `true`
  * if the animation should be continued. To break out of the animation loop, a `false` (falsy)
  * return value must be given.
- * @param startupSettingOverrides Sensible defaults are provided, but these can be overridden.
- * @param initialRuntimeSettingOverrides Sensible defaults are provided, but these can be overridden.
+ * @param settings Startup and runtime settings overrides. Sensible defaults are provided.
  * Set `enableAutoscaler` to `false` to keep the render scales exactly as configured
  * instead of letting the FPS-based autoscaler adjust them.
  */

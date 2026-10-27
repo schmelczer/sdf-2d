@@ -18,6 +18,27 @@ class CircleBase extends EmptyDrawable {
 let _id = 0;
 
 /**
+ * Creates a drawable circle class with a shared color.
+ *
+ * @param color RGB or RGBA color, or an index into {@link graphics/rendering/settings/runtime-settings!RuntimeSettings.colorPalette}.
+ * @returns A class with constructor `new Circle(center: vec2, radius: number)`.
+ * `center` is the position in world coordinates; `radius` is in world units.
+ * Pass the class's static `descriptor` to {@link compile!compile}, then pass instances to
+ * {@link graphics/rendering/renderer/renderer!Renderer.addDrawable}.
+ *
+ * @example
+ * ```ts
+ * import { CircleFactory, compile } from 'sdf-2d';
+ *
+ * const Circle = CircleFactory([1, 0.5, 0]);
+ * const circle = new Circle([160, 120], 30);
+ * const canvas = document.createElement('canvas');
+ * document.body.appendChild(canvas);
+ * const renderer = await compile(canvas, [Circle.descriptor]);
+ * renderer.addDrawable(circle);
+ * renderer.renderDrawables();
+ * ```
+ *
  * @category Drawable
  */
 export const CircleFactory = (color: vec3 | vec4 | number): typeof CircleBase => {

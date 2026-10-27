@@ -6,9 +6,15 @@ import { DrawableDescriptor } from '../drawable-descriptor';
 import { EmptyDrawable } from '../empty-drawable';
 
 /**
+ * Constructor and vertex storage shared by classes returned by {@link drawables/shapes/polygon-factory!PolygonFactory}
+ * and {@link drawables/shapes/noisy-polygon-factory!NoisyPolygonFactory}. Create drawable classes through those factories.
+ *
  * @category Drawable
  */
 export class PolygonBase extends EmptyDrawable {
+  /**
+   * @param vertices Positions in world coordinates, ordered around the polygon's outline.
+   */
   constructor(public vertices: Array<vec2>) {
     super();
   }
@@ -17,6 +23,24 @@ export class PolygonBase extends EmptyDrawable {
 let _id = 0;
 
 /**
+ * Creates a drawable polygon class with a shared color.
+ *
+ * @param vertexCount Maximum number of vertices per polygon.
+ * @param color RGB or RGBA color, or an index into {@link graphics/rendering/settings/runtime-settings!RuntimeSettings.colorPalette}.
+ * @returns A class with constructor `new Polygon(vertices: Array<vec2>)`.
+ * `vertices` contains between one and `vertexCount` positions in world coordinates,
+ * ordered around the polygon's outline. Fewer vertices are padded automatically.
+ * Pass the class's static `descriptor` to {@link compile!compile}, then pass instances to
+ * {@link graphics/rendering/renderer/renderer!Renderer.addDrawable}.
+ *
+ * @example
+ * ```ts
+ * import { PolygonFactory } from 'sdf-2d';
+ *
+ * const Polygon = PolygonFactory(3, [1, 0.5, 0]);
+ * const polygon = new Polygon([[100, 100], [200, 100], [150, 180]]);
+ * ```
+ *
  * @category Drawable
  */
 export const PolygonFactory = (

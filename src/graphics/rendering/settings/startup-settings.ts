@@ -4,7 +4,7 @@ import { vec3, vec4 } from 'gl-matrix';
  * Interface for a configuration object containing the settings
  * that need to be given before shader compilation.
  *
- * The default values for StartupSettings can be found in [[defaultStartupSettings]].
+ * The default values for StartupSettings can be found in {@link graphics/rendering/settings/default-startup-settings!defaultStartupSettings}.
  */
 export interface StartupSettings {
   /**

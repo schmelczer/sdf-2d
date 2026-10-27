@@ -66,7 +66,7 @@ export interface Renderer {
    * Schedule a drawable to be rendered during the next `renderDrawables` call.
    *
    * @param drawable Must be a subclass of drawable and its class must contain a
-   * static descriptor property of type [[DrawableDescriptor]].
+   * static descriptor property of type {@link drawables/drawable-descriptor!DrawableDescriptor}.
    */
   addDrawable<T extends Drawable>(drawable: T): void;
 

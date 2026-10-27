@@ -22,7 +22,26 @@ class InvertedTunnelBase extends EmptyDrawable {
 let _id = 0;
 
 /**
- * Providing a noise texture is required for this drawable.
+ * Creates a drawable inverted tunnel class with a shared color.
+ *
+ * Providing a `noiseTexture` in {@link graphics/rendering/settings/runtime-settings!RuntimeSettings.textures} is required for this
+ * drawable. A noise texture can be generated with {@link graphics/rendering/renderer/noise-renderer!renderNoise}.
+ *
+ * @param color RGB or RGBA color, or an index into {@link graphics/rendering/settings/runtime-settings!RuntimeSettings.colorPalette}.
+ * @returns A class with constructor
+ * `new InvertedTunnel(from: vec2, to: vec2, fromRadius: number, toRadius: number)`.
+ * `from` and `to` are endpoint positions in world coordinates; `fromRadius` and
+ * `toRadius` are the radii at those endpoints in world units.
+ * Pass the class's static `descriptor` to {@link compile!compile}, then pass instances to
+ * {@link graphics/rendering/renderer/renderer!Renderer.addDrawable}.
+ *
+ * @example
+ * ```ts
+ * import { InvertedTunnelFactory } from 'sdf-2d';
+ *
+ * const InvertedTunnel = InvertedTunnelFactory([1, 0.5, 0]);
+ * const tunnel = new InvertedTunnel([100, 100], [200, 140], 30, 20);
+ * ```
  *
  * @category Drawable
  */

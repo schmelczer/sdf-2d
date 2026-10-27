@@ -2,7 +2,7 @@ import { vec3 } from 'gl-matrix';
 import { RuntimeSettings } from './runtime-settings';
 
 /**
- * Contains the default values used for [[RuntimeSettings]].
+ * Contains the default values used for {@link graphics/rendering/settings/runtime-settings!RuntimeSettings}.
  */
 export const defaultRuntimeSettings: RuntimeSettings = {
   enableHighDpiRendering: false,

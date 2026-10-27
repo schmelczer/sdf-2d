@@ -4,15 +4,15 @@ import { Drawable } from './drawable';
  * Used for containing the required information to compile drawables into
  * shader code.
  *
- * Each [[Drawable]] must have a static property of this type, called descriptor.
+ * Each {@link drawables/drawable!Drawable} must have a static property of this type, called descriptor.
  *
  * For more information on how to create your own DrawableDescriptors, look at the
  * [complete custom drawable example](https://sdf-2d-docs.schmelczer.dev/index.html#custom-drawable-example),
- * or the code of [[CircleFactory]] or [[InvertedTunnelFactory]].
+ * or the code of {@link drawables/shapes/circle-factory!CircleFactory} or {@link drawables/shapes/inverted-tunnel-factory!InvertedTunnelFactory}.
  */
 export interface DrawableDescriptor {
   /**
-   * An object describing the relationship between the object returned by a [[Drawable]]'s
+   * An object describing the relationship between the object returned by a {@link drawables/drawable!Drawable}'s
    * getObjectToSerialize and the name of the arrays used in the GLSL code.
    */
   propertyUniformMapping: { [property: string]: string };

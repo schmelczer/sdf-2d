@@ -19,6 +19,24 @@ class RotatedRectangleBase extends EmptyDrawable {
 let _id = 0;
 
 /**
+ * Creates a drawable rotated rectangle class with a shared color.
+ *
+ * @param color RGB or RGBA color, or an index into {@link graphics/rendering/settings/runtime-settings!RuntimeSettings.colorPalette}.
+ * @returns A class with constructor
+ * `new RotatedRectangle(center: vec2, size: vec2, rotation: number)`.
+ * `center` is the position in world coordinates; `size` is `[width, height]` in world
+ * units; `rotation` is the angle in radians.
+ * Pass the class's static `descriptor` to {@link compile!compile}, then pass instances to
+ * {@link graphics/rendering/renderer/renderer!Renderer.addDrawable}.
+ *
+ * @example
+ * ```ts
+ * import { RotatedRectangleFactory } from 'sdf-2d';
+ *
+ * const RotatedRectangle = RotatedRectangleFactory([1, 0.5, 0]);
+ * const rectangle = new RotatedRectangle([160, 120], [80, 40], Math.PI / 4);
+ * ```
+ *
  * @category Drawable
  */
 export const RotatedRectangleFactory = (
@@ -27,7 +45,7 @@ export const RotatedRectangleFactory = (
   class RotatedRectangle extends RotatedRectangleBase {
     public static descriptor: DrawableDescriptor = {
       sdf: {
-        // Source: https://iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm
+        // Source: https://iquilezles.org/articles/distfunctions2d/
         shader: `
           uniform vec2 rotatedRectangleTopCenters${_id}[ROTATED_RECTANGLE_COUNT${_id}];
           uniform vec2 rotatedRectangleBottomCenters${_id}[ROTATED_RECTANGLE_COUNT${_id}];
