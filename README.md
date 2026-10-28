@@ -58,16 +58,12 @@ const main = async () => {
 main();
 ```
 
-> A commented version of the above code can be found [in this repo](https://github.com/schmelczer/sdf-2d-minimal-example).
-
 ## Examples
 
 For further examples, please visit the following repositories:
 
-- [Minimal example (using Webpack)](https://github.com/schmelczer/sdf-2d-minimal-example)
-- [More complex example](https://github.com/schmelczer/sdf-2d-more-complex-example)
 - [Source for the demo page](https://git.schmelczer.dev/andras/sdf-2d-demo)
-- [Source for decla.red, the multiplayer game](https://github.com/schmelczerandras/decla.red)
+- [Source for decla.red, the multiplayer game](https://git.schmelczer.dev/andras/decla-red)
 
 ## Building the documentation
 

@@ -6,8 +6,6 @@ The motivation behind this library and more in-depth information about the rende
 
 - [Repository](https://git.schmelczer.dev/andras/sdf-2d)
 - [Demo](https://sdf2d.schmelczer.dev/)
-- [Minimal example](https://github.com/schmelczer/sdf-2d-minimal-example)
-- [More complex example](https://github.com/schmelczer/sdf-2d-more-complex-example)
 - [Source code of the demo](https://git.schmelczer.dev/andras/sdf-2d-demo)
 
 ## Usage (1st option)
