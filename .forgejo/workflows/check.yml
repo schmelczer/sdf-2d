@@ -22,7 +22,7 @@ jobs:
       # package-lock.json is gitignored, so cache the global npm download cache
       # keyed on package.json rather than relying on `npm ci` + a lockfile.
       - name: Cache npm dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.npm
           key: ${{ runner.os }}-npm-${{ hashFiles('package.json') }}
