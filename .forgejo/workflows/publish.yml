@@ -5,11 +5,6 @@ on:
     branches: ['main']
     tags: ['*']
   workflow_dispatch:
-
-concurrency:
-  group: 'pages'
-  cancel-in-progress: false
-
 jobs:
   build:
     runs-on: ${{ (github.actor == 'renovate-bot' || github.event.pull_request.user.login == 'renovate-bot' || startsWith(github.ref, 'refs/heads/renovate/') || startsWith(github.head_ref,
@@ -99,30 +94,3 @@ jobs:
             || startsWith(github.head_ref, 'renovate/')) && (secrets.NPM_TOKEN) || '' }}
         if: ${{ !(github.actor == 'renovate-bot' || github.event.pull_request.user.login == 'renovate-bot' || startsWith(github.ref, 'refs/heads/renovate/') || startsWith(github.head_ref,
           'renovate/')) }}
-  build-pages:
-    name: Deploy static site artifacts
-    needs: build
-    if: ${{ contains(fromJSON('["andras","ruby336688","renovate-bot"]'), github.actor) && (!github.event.pull_request || contains(fromJSON('["andras","ruby336688","renovate-bot"]'),
-      github.event.pull_request.user.login)) && (!(github.actor == 'renovate-bot' || github.event.pull_request.user.login == 'renovate-bot' || startsWith(github.ref,
-      'refs/heads/renovate/') || startsWith(github.head_ref, 'renovate/'))) && ((github.event_name == 'push' && github.ref == 'refs/heads/main')) }}
-    runs-on: pages
-    container:
-      image: node:22-bookworm@sha256:63538dfe497cc29dfafdda25ada09b46db68a3f4cc205abf1f5d6bf0913f3384
-      volumes:
-        - /pages/sdf-2d-docs:/pages/sdf-2d-docs
-    concurrency:
-      group: pages-deploy-sdf-2d
-      cancel-in-progress: false
-    steps:
-      - name: Download static site artifact 1
-        uses: https://github.com/actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
-        with:
-          name: pages-build-0
-          path: docs
-      - name: Deploy docs to pages mount
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: https://git.schmelczer.dev/andras/ci-actions/deploy-pages@c80f2f0701d7618f1f0b2bb52ebd332ea34b6e28
-        with:
-          source: docs
-          target: sdf-2d-docs
-
