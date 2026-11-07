@@ -11,10 +11,10 @@ jobs:
     runs-on: docker
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: https://github.com/actions/checkout@11d5960a326750d5838078e36cf38b85af677262
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: https://github.com/actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '22.x'
           check-latest: true
@@ -22,7 +22,7 @@ jobs:
       # package-lock.json is gitignored, so cache the global npm download cache
       # keyed on package.json rather than relying on `npm ci` + a lockfile.
       - name: Cache npm dependencies
-        uses: actions/cache@v4
+        uses: https://github.com/actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
         with:
           path: ~/.npm
           key: ${{ runner.os }}-npm-${{ hashFiles('package.json') }}
@@ -43,3 +43,4 @@ jobs:
 
       - name: Build
         run: npm run build
+    if: ${{ github.actor != 'renovate-bot' && !startsWith(github.ref, 'refs/heads/renovate/') && !startsWith(github.head_ref, 'renovate/') }}
