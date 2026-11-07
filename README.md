@@ -1,14 +1,14 @@
-# ![SDF-2D logo](media/logo-colored.svg) SDF-2D library
+# ![SDF-2D logo](https://git.schmelczer.dev/andras/sdf-2d/raw/branch/main/media/logo-colored.svg) SDF-2D library
 
 A graphics library for real-time rendering of 2D signed distance fields on the web.
 
-![screenshot of a bumpy tunnel](media/tunnels-screenshot.png)
+![screenshot of a bumpy tunnel](https://git.schmelczer.dev/andras/sdf-2d/raw/branch/main/media/tunnels-screenshot.png)
 
-![screenshot of merging circles](media/circles-screenshot.png)
+![screenshot of merging circles](https://git.schmelczer.dev/andras/sdf-2d/raw/branch/main/media/circles-screenshot.png)
 
 ## Links
 
-- [View it in action (demos)](https://sdf2d.schmelczer.dev)
+- [View it in action (demos)](https://sdf2d.schmelczer.dev/)
 - [View it in action (video game)](https://doppler.schmelczer.dev/)
 - [Documentation](https://sdf-2d-docs.schmelczer.dev/)
 - [In-depth information](https://schmelczer.dev/media/downloads/sdf2d-andras-schmelczer.pdf)
@@ -29,7 +29,7 @@ A graphics library for real-time rendering of 2D signed distance fields on the w
   - Context loss is handled with automatic restoration
   - Can be used without thinking about the GPU _(although for stunning results, it should be kept in mind)_
 
-![four screenshots from mobiles](media/mobile-screenshots.png)
+![four screenshots from mobiles](https://git.schmelczer.dev/andras/sdf-2d/raw/branch/main/media/mobile-screenshots.png)
 
 > Four separate screenshots taken on a mobile device
 

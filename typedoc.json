@@ -1,6 +1,7 @@
 {
   "out": "docs",
   "name": "SDF-2D",
+  "hostedBaseUrl": "https://sdf-2d-docs.schmelczer.dev/",
   "entryPoints": [
     "src/compile.ts",
     "src/run-animation.ts",
