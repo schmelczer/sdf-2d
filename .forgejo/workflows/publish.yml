@@ -2,25 +2,24 @@ name: Publish
 
 on:
   push:
-    branches: ['main']
-    tags: ['*']
+    branches:
+      - '**'
+    tags:
+      - '*'
   workflow_dispatch:
 jobs:
   build:
-    runs-on: ${{ (github.actor == 'renovate-bot' || github.event.pull_request.user.login == 'renovate-bot' || startsWith(github.ref, 'refs/heads/renovate/') || startsWith(github.head_ref,
-      'renovate/')) && 'renovate' || 'docker' }}
+    runs-on: docker
 
     steps:
       - uses: https://github.com/actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-
         with:
           persist-credentials: false
       - name: Setup Node
         uses: https://github.com/actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
-          node-version: '22.x'
+          node-version: 22.x
           check-latest: true
-
       - name: Cache npm dependencies
         uses: https://github.com/actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
         with:
@@ -28,51 +27,39 @@ jobs:
           key: ${{ runner.os }}-npm-${{ hashFiles('package.json') }}
           restore-keys: |
             ${{ runner.os }}-npm-
-
       - name: Install dependencies
         run: npm install
-
       - name: Check formatting
         run: npm run format
-
       - name: Lint
         run: npm run lint
-
       - name: Type-check
         run: npm test
-
       - name: Build library and docs
         run: npm run build
-
       - name: Upload static site artifact 1
-        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
+        if: ${{ github.ref == 'refs/heads/main' }}
         uses: https://github.com/actions/upload-artifact@ff15f0306b3f739f7b6fd43fb5d26cd321bd4de5
         with:
           name: pages-build-0
           path: docs
           if-no-files-found: error
           retention-days: 1
-    if: ${{ contains(fromJSON('["andras","ruby336688","renovate-bot"]'), github.actor) && (!github.event.pull_request || contains(fromJSON('["andras","ruby336688","renovate-bot"]'),
-      github.event.pull_request.user.login)) }}
   publish-npm:
     needs: build
-    runs-on: ${{ (github.actor == 'renovate-bot' || github.event.pull_request.user.login == 'renovate-bot' || startsWith(github.ref, 'refs/heads/renovate/') || startsWith(github.head_ref,
-      'renovate/')) && 'renovate' || 'docker' }}
-    if: ${{ contains(fromJSON('["andras","ruby336688","renovate-bot"]'), github.actor) && (!github.event.pull_request || contains(fromJSON('["andras","ruby336688","renovate-bot"]'),
-      github.event.pull_request.user.login)) && (startsWith(github.ref, 'refs/tags/')) }}
+    runs-on: docker
+    if: ${{ startsWith(github.ref, 'refs/tags/') }}
 
     steps:
       - uses: https://github.com/actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-
         with:
           persist-credentials: false
       - name: Setup Node
         uses: https://github.com/actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
-          node-version: '22.x'
+          node-version: 22.x
           check-latest: true
-          registry-url: 'https://registry.npmjs.org'
-
+          registry-url: https://registry.npmjs.org
       - name: Cache npm dependencies
         uses: https://github.com/actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
         with:
@@ -80,17 +67,12 @@ jobs:
           key: ${{ runner.os }}-npm-${{ hashFiles('package.json') }}
           restore-keys: |
             ${{ runner.os }}-npm-
-
       - name: Install dependencies
         run: npm install
-
       - name: Build library
         run: npm run build
-
       - name: Publish to NPM
         run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ !(github.actor == 'renovate-bot' || github.event.pull_request.user.login == 'renovate-bot' || startsWith(github.ref, 'refs/heads/renovate/')
-            || startsWith(github.head_ref, 'renovate/')) && (secrets.NPM_TOKEN) || '' }}
-        if: ${{ !(github.actor == 'renovate-bot' || github.event.pull_request.user.login == 'renovate-bot' || startsWith(github.ref, 'refs/heads/renovate/') || startsWith(github.head_ref,
-          'renovate/')) }}
+          NODE_AUTH_TOKEN: ${{ (secrets.NPM_TOKEN || '') }}
+        if: ${{ (github.ref == 'refs/heads/main' || github.ref_type == 'tag') }}

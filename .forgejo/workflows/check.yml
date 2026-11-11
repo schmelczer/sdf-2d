@@ -2,14 +2,10 @@ name: Check
 
 on:
   push:
-    branches: ['main']
-  pull_request:
-    branches: ['main']
 
 jobs:
   check:
-    runs-on: ${{ (github.actor == 'renovate-bot' || github.event.pull_request.user.login == 'renovate-bot' || startsWith(github.ref, 'refs/heads/renovate/') || startsWith(github.head_ref,
-      'renovate/')) && 'renovate' || 'docker' }}
+    runs-on: docker
 
     steps:
       - uses: https://github.com/actions/checkout@11d5960a326750d5838078e36cf38b85af677262
@@ -46,5 +42,3 @@ jobs:
 
       - name: Build
         run: npm run build
-    if: ${{ contains(fromJSON('["andras","ruby336688","renovate-bot"]'), github.actor) && (!github.event.pull_request || contains(fromJSON('["andras","ruby336688","renovate-bot"]'),
-      github.event.pull_request.user.login)) }}
