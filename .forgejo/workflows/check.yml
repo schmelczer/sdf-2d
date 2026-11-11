@@ -15,7 +15,7 @@ jobs:
       - name: Setup Node
         uses: https://github.com/actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
-          node-version: '22.x'
+          node-version: '26.x'
           check-latest: true
 
       # package-lock.json is gitignored, so cache the global npm download cache
